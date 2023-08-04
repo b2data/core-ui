@@ -2,8 +2,13 @@
   "name": "@b2data/core-ui",
   "version": "1.0.0",
   "description": "",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.ts",
   "scripts": {
     "start": "vite",
+    "babel": "babel --copy-files src/ -d lib/ --ignore 'src/assets/','src/main.ts','src/*d.ts','src/**/**/*.stories.@(tsx|ts)'",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts,.tsx src",
@@ -13,10 +18,11 @@
     "storybook": "storybook dev -p 6006",
     "storybook:docs": "storybook dev --docs -p 6006",
     "storybook:build": "storybook build",
-    "storybook:build-docs": "storybook build --docs"
+    "storybook:deploy": "npm run storybook:build && touch ./storybook-static/.nojekyll && gh-pages -d storybook-static -t true"
   },
   "author": "Nikolai Turov",
   "license": "MIT",
+  "homepage": "https://b2data.github.io/core-ui",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -39,9 +45,11 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "babel-cli": "^6.26.0",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-storybook": "^0.6.13",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.0",
     "prettier": "^3.0.0",
     "storybook": "^7.2.1",
