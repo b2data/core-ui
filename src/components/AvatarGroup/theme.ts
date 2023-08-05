@@ -3,8 +3,8 @@ import { Theme } from "@mui/system";
 
 export default {
   styleOverrides: {
-    fontSizeMedium: {
-      fontSize: "18px",
+    root: {
+      justifyContent: "start",
     },
-  } as ComponentsOverrides<Theme>["MuiSvgIcon"],
+  } as ComponentsOverrides<Theme>["MuiAvatarGroup"],
 };

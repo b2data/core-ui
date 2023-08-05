@@ -3,8 +3,9 @@ import { FolderIcon } from "src/icons";
 import { Preview } from ".storybook/components";
 
 import { Avatar, AvatarProps } from "./Avatar";
+import Avatar1 from "src/assets/images/avatar/1.jpg";
 
-const meta: Meta<typeof Avatar> = {
+const meta: Meta<AvatarProps> = {
   title: "Components/Avatar",
   component: Avatar,
   tags: ["autodocs"],
@@ -12,16 +13,15 @@ const meta: Meta<typeof Avatar> = {
 
 export default meta;
 
-type Story = StoryObj<AvatarProps>;
+export const Base: StoryObj<AvatarProps> = {};
 
-export const Base: Story = {};
-
-export const Mixed: Story = {
+export const Mixed: StoryObj<AvatarProps> = {
   render: () => (
     <Preview>
-      <Avatar alt="Cindy Baker" src="/images/avatar/1.jpg" />
-      <Avatar alt="Cindy Baker" src="/images/avatar/brocken.jpg" />
-      <Avatar>CB</Avatar>
+      <Avatar alt="Remy Sharp" src={Avatar1} />
+      <Avatar alt="Remy Sharp" src="unknown.jpg" />
+      <Avatar src="unknown.jpg" />
+      <Avatar>RS</Avatar>
       <Avatar>
         <FolderIcon />
       </Avatar>
@@ -29,7 +29,7 @@ export const Mixed: Story = {
   ),
 };
 
-export const Sizes: Story = {
+export const Sizes: StoryObj<AvatarProps> = {
   render: () => (
     <Preview>
       <Avatar size="small" />
@@ -39,7 +39,7 @@ export const Sizes: Story = {
   ),
 };
 
-export const Variants: Story = {
+export const Variants: StoryObj<AvatarProps> = {
   render: () => (
     <Preview>
       <Avatar variant="circular" />

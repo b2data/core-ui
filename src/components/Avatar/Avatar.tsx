@@ -3,8 +3,6 @@ import {
   AvatarProps as MuiAvatarProps,
 } from "@mui/material";
 
-export type AvatarSize = "small" | "medium" | "large";
-
 export interface AvatarProps
   extends Pick<MuiAvatarProps, "variant" | "sx" | "src" | "alt" | "children"> {
   /**
@@ -15,7 +13,7 @@ export interface AvatarProps
    * The size of the avatar.
    * @default medium
    */
-  size?: AvatarSize;
+  size?: "small" | "medium" | "large";
   /**
    * @default circular
    */

@@ -4,6 +4,8 @@ import { createTheme } from "@mui/material";
 import { blueGrey, cyan, pink } from "@mui/material/colors";
 
 import AvatarOverwrite from "../components/Avatar/theme";
+import AvatarGroupOverwrite from "../components/AvatarGroup/theme";
+import BadgeOverwrite from "../components/Badge/theme";
 import SvgIconOverwrite from "../components/SvgIcon/theme";
 
 export const lightTheme = createTheme({
@@ -18,6 +20,8 @@ export const lightTheme = createTheme({
   },
   components: {
     MuiAvatar: AvatarOverwrite,
+    MuiAvatarGroup: AvatarGroupOverwrite,
+    MuiBadge: BadgeOverwrite,
     MuiSvgIcon: SvgIconOverwrite,
   },
 });
