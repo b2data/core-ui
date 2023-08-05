@@ -18,7 +18,9 @@
     "storybook": "storybook dev -p 6006",
     "storybook:docs": "storybook dev --docs -p 6006",
     "storybook:build": "storybook build",
-    "storybook:deploy": "npm run storybook:build && touch ./storybook-static/.nojekyll && gh-pages -d storybook-static -t true"
+    "storybook:build-docs": "storybook build",
+    "storybook:prepare": "npm run storybook:build-docs && touch ./storybook-static/.nojekyll",
+    "storybook:deploy": "npm run storybook:prepare && gh-pages -d storybook-static -t true"
   },
   "author": "Nikolai Turov",
   "license": "MIT",
