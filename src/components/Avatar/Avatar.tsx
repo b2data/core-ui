@@ -4,7 +4,10 @@ import {
 } from "@mui/material";
 
 export interface AvatarProps
-  extends Pick<MuiAvatarProps, "variant" | "sx" | "src" | "alt" | "children"> {
+  extends Omit<
+    MuiAvatarProps,
+    "srcSet" | "classes" | "imgProps" | "className" | "sizes" | "style"
+  > {
   /**
    * Used in combination with `src` to provide an alt attribute for the rendered img element.
    */

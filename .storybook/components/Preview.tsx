@@ -6,6 +6,7 @@ export const Preview: React.FC<any> = ({ children, style }) => (
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
+      alignItems: "center",
       gap: "16px",
       ...style,
     }}

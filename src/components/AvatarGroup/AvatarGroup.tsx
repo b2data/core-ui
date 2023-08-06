@@ -4,9 +4,9 @@ import {
 } from "@mui/material";
 
 export interface AvatarGroupProps
-  extends Pick<
+  extends Omit<
     MuiAvatarGroupProps,
-    "variant" | "sx" | "max" | "spacing" | "total" | "children"
+    "className" | "classes" | "componentsProps" | "slotProps" | "style"
   > {
   /**
    * Spacing between avatars.

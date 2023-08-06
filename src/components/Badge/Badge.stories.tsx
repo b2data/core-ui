@@ -35,6 +35,8 @@ export const Colors: StoryObj<BadgeProps> = {
       <Badge {...props} color="error" />
       <Badge {...props} color="success" />
       <Badge {...props} color="warning" />
+      <Badge {...props} color="info" />
+      <Badge {...props} color="default" />
     </Preview>
   ),
 };
@@ -84,6 +86,16 @@ export const Live: StoryObj<BadgeProps> = {
     badgeContent: 4,
     children: <MailIcon />,
     variant: "dot",
+    overlap: "circular",
     showLive: true,
   },
+  render: (props) => (
+    <Preview>
+      <Badge {...props} />
+      <Badge
+        {...props}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      />
+    </Preview>
+  ),
 };

@@ -9,7 +9,7 @@ import Avatar2 from "src/assets/images/avatar/2.jpg";
 import Avatar3 from "src/assets/images/avatar/3.jpg";
 
 const meta: Meta<AvatarGroupProps> = {
-  title: "Components/AvatarGroup",
+  title: "Components/Avatar/Avatar Group",
   component: AvatarGroup,
   tags: ["autodocs"],
 };
@@ -76,7 +76,6 @@ export const Spacing: StoryObj<AvatarGroupProps> = {
     </Preview>
   ),
 };
-
 
 export const Variants: StoryObj<AvatarGroupProps> = {
   render: (props) => (

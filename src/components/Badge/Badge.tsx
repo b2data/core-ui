@@ -1,19 +1,18 @@
 import { Badge as MuiBadge, BadgeProps as MuiBadgeProps } from "@mui/material";
 
 export interface BadgeProps
-  extends Pick<
+  extends Omit<
     MuiBadgeProps,
-    | "badgeContent"
-    | "invisible"
-    | "max"
-    | "showZero"
-    | "variant"
-    | "color"
-    | "children"
-    | "sx"
+    | "className"
+    | "classes"
+    | "style"
+    | "componentsProps"
+    | "components"
+    | "slotProps"
+    | "slots"
   > {
   /**
-   * Show live badge for component. Required `variant` as `dot`.
+   * Show live badge for component. Required `variant="dot"`.
    * @default false
    */
   showLive?: boolean;
@@ -25,7 +24,17 @@ export interface BadgeProps
    * The color of the component.
    * @default primary
    */
-  color?: "primary" | "secondary" | "error" | "success" | "warning";
+  color?: MuiBadgeProps["color"];
+  /**
+   * The anchor of the badge.
+   * ```{ horizontal: 'left' | 'right', vertical: 'bottom' | 'top' }```
+   * @default { vertical: 'top', horizontal: 'right' }
+   */
+  anchorOrigin?: MuiBadgeProps["anchorOrigin"];
+  /**
+   * @default rectangular
+   */
+  overlap?: MuiBadgeProps["overlap"];
 }
 
 export const Badge = (props: BadgeProps) => <MuiBadge {...props} />;

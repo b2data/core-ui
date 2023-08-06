@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FolderIcon } from "src/icons";
+import { CheckCircleIcon, AccessTimeFilledIcon, CancelIcon } from "src/icons";
 import { Preview } from ".storybook/components";
 
 import { Avatar, AvatarProps } from "./Avatar";
+import { Badge } from "../Badge";
 import Avatar1 from "src/assets/images/avatar/1.jpg";
 
 const meta: Meta<AvatarProps> = {
-  title: "Components/Avatar",
+  title: "Components/Avatar/Avatar",
   component: Avatar,
   tags: ["autodocs"],
 };
@@ -23,7 +24,7 @@ export const Mixed: StoryObj<AvatarProps> = {
       <Avatar src="unknown.jpg" />
       <Avatar>RS</Avatar>
       <Avatar>
-        <FolderIcon />
+        <CheckCircleIcon />
       </Avatar>
     </Preview>
   ),
@@ -45,6 +46,75 @@ export const Variants: StoryObj<AvatarProps> = {
       <Avatar variant="circular" />
       <Avatar variant="rounded" />
       <Avatar variant="square" />
+    </Preview>
+  ),
+};
+
+export const WithBadge: StoryObj<AvatarProps> = {
+  render: () => (
+    <Preview>
+      <Badge
+        variant="dot"
+        showLive={true}
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Avatar alt="Remy Sharp" src={Avatar1} size="large" />
+      </Badge>
+      <Badge
+        overlap="circular"
+        color="default"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        badgeContent={
+          <CheckCircleIcon
+            color="success"
+            sx={({ palette }) => ({
+              fontSize: 18,
+              border: `1px solid ${palette.background.paper}`,
+              bgcolor: palette.background.paper,
+              borderRadius: 50,
+            })}
+          />
+        }
+      >
+        <Avatar alt="Remy Sharp" src={Avatar1} size="large" />
+      </Badge>
+      <Badge
+        overlap="circular"
+        color="default"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        badgeContent={
+          <AccessTimeFilledIcon
+            color="warning"
+            sx={({ palette }) => ({
+              fontSize: 14,
+              border: `1px solid ${palette.background.paper}`,
+              bgcolor: palette.background.paper,
+              borderRadius: 50,
+            })}
+          />
+        }
+      >
+        <Avatar alt="Remy Sharp" src={Avatar1} />
+      </Badge>
+      <Badge
+        overlap="circular"
+        color="default"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        badgeContent={
+          <CancelIcon
+            color="error"
+            sx={({ palette }) => ({
+              fontSize: 10,
+              border: `1px solid ${palette.background.paper}`,
+              bgcolor: palette.background.paper,
+              borderRadius: 50,
+            })}
+          />
+        }
+      >
+        <Avatar alt="Remy Sharp" src={Avatar1} size="small" />
+      </Badge>
     </Preview>
   ),
 };

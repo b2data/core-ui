@@ -4,7 +4,7 @@ import { Theme } from "@mui/system";
 const sizes: Record<string, number> = {
   small: 24,
   medium: 32,
-  large: 38,
+  large: 40,
 };
 
 export default {
