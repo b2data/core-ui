@@ -12,9 +12,11 @@ export interface BadgeProps
     | "slots"
   > {
   /**
+   * The variant to use.
+   * If `variant="liveDot"` then `badgeContnet=""`.
    * @default standard
    */
-  variant?: MuiBadgeProps["variant"];
+  variant?: MuiBadgeProps["variant"] | "liveDot";
   /**
    * The color of the component.
    * @default primary
