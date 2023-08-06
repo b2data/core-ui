@@ -78,25 +78,7 @@ export const Variants: StoryObj<BadgeProps> = {
     <Preview>
       <Badge {...props} variant="standard" />
       <Badge {...props} variant="dot" />
-      <Badge {...props} variant="liveDot" badgeContent="" />
-    </Preview>
-  )
-};
-
-export const Live: StoryObj<BadgeProps> = {
-  args: {
-    badgeContent: 4,
-    children: <MailIcon />,
-    variant: "liveDot",
-    overlap: "circular"
-  },
-  render: (props) => (
-    <Preview>
-      <Badge {...props} />
-      <Badge
-        {...props}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      />
+      <Badge {...props} variant="liveDot" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} />
     </Preview>
   )
 };

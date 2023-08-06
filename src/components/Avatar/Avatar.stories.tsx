@@ -7,6 +7,7 @@ import { Badge } from "../Badge";
 import { Avatar, AvatarProps } from "./Avatar";
 
 import type { Meta, StoryObj } from "@storybook/react";
+
 const meta: Meta<AvatarProps> = {
   title: "Components/Avatar/Avatar",
   component: Avatar,

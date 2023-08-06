@@ -1,7 +1,6 @@
-import { ComponentsOverrides, ComponentsProps } from "@mui/material";
-import { Theme } from "@mui/system";
+import { ComponentThemeOverride } from "src/types";
 
-export default {
+const iconButtonTheme: ComponentThemeOverride["MuiIconButton"] = {
   styleOverrides: {
     sizeSmall: {
       padding: 3,
@@ -21,8 +20,7 @@ export default {
         fontSize: 24
       }
     }
-  } as ComponentsOverrides<Theme>["MuiIconButton"],
-  defaultProps: {
-    disableElevation: true
-  } as ComponentsProps["MuiIconButton"]
+  }
 };
+
+export default iconButtonTheme;

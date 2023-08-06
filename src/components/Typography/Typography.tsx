@@ -1,6 +1,7 @@
 import {
   Typography as MuiTypography,
-  TypographyProps as MuiTypographyProps
+  TypographyProps as MuiTypographyProps,
+  styled
 } from "@mui/material";
 
 export interface TypographyProps
@@ -31,6 +32,16 @@ export interface TypographyProps
   wrapLines?: number;
 }
 
-export const Typography = (props: TypographyProps) => (
-  <MuiTypography {...props} />
+export const Typography = styled(MuiTypography)<TypographyProps>(
+  ({ wrapLines }) => ({
+    ...(wrapLines && wrapLines > 0
+      ? {
+          display: "-webkit-box",
+          "-webkit-line-clamp": `${wrapLines}`,
+          "-webkit-box-orient": "vertical",
+
+          whiteSpace: "normal"
+        }
+      : {})
+  })
 );

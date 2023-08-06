@@ -1,7 +1,6 @@
-import { ComponentsOverrides, ComponentsProps } from "@mui/material";
-import { Theme } from "@mui/system";
+import { ComponentThemeOverride } from "src/types";
 
-export default {
+const loadingButtonTheme: ComponentThemeOverride["MuiButton"] = {
   styleOverrides: {
     root: {
       "& .MuiSvgIcon-root": {
@@ -13,9 +12,11 @@ export default {
         fontSize: 24
       }
     }
-  } as ComponentsOverrides<Theme>["MuiButton"],
+  },
   defaultProps: {
     disableElevation: true,
     variant: "contained"
-  } as ComponentsProps["MuiButton"]
+  }
 };
+
+export default loadingButtonTheme;
