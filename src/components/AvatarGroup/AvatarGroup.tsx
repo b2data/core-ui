@@ -1,6 +1,6 @@
 import {
   AvatarGroup as MuiAvatarGroup,
-  AvatarGroupProps as MuiAvatarGroupProps,
+  AvatarGroupProps as MuiAvatarGroupProps
 } from "@mui/material";
 
 export interface AvatarGroupProps

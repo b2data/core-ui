@@ -1,6 +1,6 @@
 import {
   IconButton as MuiIconButton,
-  IconButtonProps as MuiIconButtonProps,
+  IconButtonProps as MuiIconButtonProps
 } from "@mui/material";
 
 export interface IconButtonProps

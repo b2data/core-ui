@@ -1,17 +1,17 @@
-import { ComponentsOverrides } from "@mui/material";
-import { Theme } from "@mui/system";
+import { ComponentThemeOverride } from "src/types";
 
-const sizes: Record<string, number> = {
+export const AVATAR_SIZES = {
   small: 24,
   medium: 32,
-  large: 40,
+  large: 40
+} as const;
+
+const avatarTheme: ComponentThemeOverride["MuiAvatar"] = {
+  styleOverrides: {},
+
+  defaultProps: {
+    variant: "circular"
+  }
 };
 
-export default {
-  styleOverrides: {
-    root: ({ ownerState: { size } }) => ({
-      width: sizes[(size as string) || "medium"],
-      height: sizes[(size as string) || "medium"],
-    }),
-  } as ComponentsOverrides<Theme>["MuiAvatar"],
-};
+export default avatarTheme;

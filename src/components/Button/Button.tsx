@@ -1,6 +1,6 @@
 import {
   Button as MuiButton,
-  ButtonProps as MuiButtonProps,
+  ButtonProps as MuiButtonProps
 } from "@mui/material";
 
 export interface ButtonProps

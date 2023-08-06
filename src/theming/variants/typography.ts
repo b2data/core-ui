@@ -20,7 +20,7 @@ export default {
     fontWeight: fontWeightLight,
     fontSize: 40,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   h2: {
@@ -28,7 +28,7 @@ export default {
     fontWeight: fontWeightLight,
     fontSize: 32,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   h3: {
@@ -36,7 +36,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 28,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   h4: {
@@ -44,7 +44,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 24,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   h5: {
@@ -52,7 +52,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 20,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   h6: {
@@ -60,7 +60,7 @@ export default {
     fontWeight: fontWeightMedium,
     fontSize: 16,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   subtitle1: {
@@ -68,7 +68,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 16,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   subtitle2: {
@@ -76,7 +76,7 @@ export default {
     fontWeight: fontWeightMedium,
     fontSize: 14,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   body1: {
@@ -84,7 +84,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 14,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   body2: {
@@ -92,7 +92,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 12,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   button: {
@@ -101,7 +101,7 @@ export default {
     fontSize: 14,
     letterSpacing: 0,
     lineHeight: "normal",
-    textTransform: "none" as const,
+    textTransform: "none" as const
   },
 
   caption: {
@@ -109,7 +109,7 @@ export default {
     fontWeight: fontWeightRegular,
     fontSize: 12,
     letterSpacing: 0,
-    lineHeight: "normal",
+    lineHeight: "normal"
   },
 
   overline: {
@@ -118,6 +118,6 @@ export default {
     fontSize: 14,
     letterSpacing: 0,
     lineHeight: "normal",
-    textTransform: "uppercase" as const,
-  },
+    textTransform: "uppercase" as const
+  }
 };

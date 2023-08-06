@@ -1,7 +1,10 @@
 import {
   Avatar as MuiAvatar,
   AvatarProps as MuiAvatarProps,
+  styled
 } from "@mui/material";
+
+import { AVATAR_SIZES } from "./theme";
 
 export interface AvatarProps
   extends Omit<
@@ -23,4 +26,7 @@ export interface AvatarProps
   variant?: MuiAvatarProps["variant"];
 }
 
-export const Avatar = (props: AvatarProps) => <MuiAvatar {...props} />;
+export const Avatar = styled(MuiAvatar)<AvatarProps>(({ size = "medium" }) => ({
+  width: AVATAR_SIZES[size],
+  height: AVATAR_SIZES[size]
+}));

@@ -12,12 +12,7 @@ export interface BadgeProps
     | "slots"
   > {
   /**
-   * Show live badge for component. Required `variant="dot"`.
-   * @default false
-   */
-  showLive?: boolean;
-  /**
-   * @default standart
+   * @default standard
    */
   variant?: MuiBadgeProps["variant"];
   /**

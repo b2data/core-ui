@@ -1,5 +1,6 @@
 import { ComponentsOverrides, ComponentsProps } from "@mui/material";
 import { Theme } from "@mui/system";
+
 import { TypographyProps } from "./Typography";
 
 export default {
@@ -7,7 +8,7 @@ export default {
     paragraph: { marginBottom: 16 },
     gutterBottom: { marginBottom: 8 },
     noWrap: ({
-      ownerState: { wrapLines },
+      ownerState: { wrapLines }
     }: {
       ownerState: TypographyProps;
     }) => ({
@@ -17,10 +18,10 @@ export default {
             "-webkit-line-clamp": `${wrapLines}`,
             "-webkit-box-orient": "vertical",
 
-            whiteSpace: "normal",
+            whiteSpace: "normal"
           }
-        : {}),
-    }),
+        : {})
+    })
   } as ComponentsOverrides<Theme>["MuiTypography"],
-  defaultProps: {} as ComponentsProps["MuiTypography"],
+  defaultProps: {} as ComponentsProps["MuiTypography"]
 };

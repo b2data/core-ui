@@ -1,13 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { DeleteIcon } from "src/icons";
 import { Preview } from ".storybook/components";
 
 import { IconButton, IconButtonProps } from "./IconButton";
 
+import type { Meta, StoryObj } from "@storybook/react";
+
 const meta: Meta<IconButtonProps> = {
   title: "Components/Buttons/Icon Button",
   component: IconButton,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 };
 
 export default meta;
@@ -17,7 +18,7 @@ export const Base: StoryObj<IconButtonProps> = {
     <IconButton {...props}>
       <DeleteIcon />
     </IconButton>
-  ),
+  )
 };
 
 export const Colors: StoryObj<IconButtonProps> = {
@@ -48,7 +49,7 @@ export const Colors: StoryObj<IconButtonProps> = {
         <DeleteIcon />
       </IconButton>
     </Preview>
-  ),
+  )
 };
 
 export const Sizes: StoryObj<IconButtonProps> = {
@@ -64,5 +65,5 @@ export const Sizes: StoryObj<IconButtonProps> = {
         <DeleteIcon />
       </IconButton>
     </Preview>
-  ),
+  )
 };

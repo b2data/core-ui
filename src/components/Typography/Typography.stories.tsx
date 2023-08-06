@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import { Typography, TypographyProps } from "./Typography";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<TypographyProps> = {
   title: "Components/Typography",
   component: Typography,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 };
 
 export default meta;
 
 export const Base: StoryObj<TypographyProps> = {
-  render: (props) => <Typography {...props}>Text</Typography>,
+  render: (props) => <Typography {...props}>Text</Typography>
 };
 
 export const Variant: StoryObj<TypographyProps> = {
@@ -66,7 +66,7 @@ export const Variant: StoryObj<TypographyProps> = {
         overline text
       </Typography>
     </div>
-  ),
+  )
 };
 
 export const Align: StoryObj<TypographyProps> = {
@@ -88,12 +88,12 @@ export const Align: StoryObj<TypographyProps> = {
         Align Justify
       </Typography>
     </div>
-  ),
+  )
 };
 
 export const Margin: StoryObj<TypographyProps> = {
   args: {
-    sx: { bgcolor: "success.main" },
+    sx: { bgcolor: "success.main" }
   },
   render: (props) => (
     <div style={{ background: "red" }}>
@@ -113,7 +113,7 @@ export const Margin: StoryObj<TypographyProps> = {
         gutterBottom
       </Typography>
     </div>
-  ),
+  )
 };
 
 export const Wrap: StoryObj<TypographyProps> = {
@@ -133,5 +133,5 @@ export const Wrap: StoryObj<TypographyProps> = {
         dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
       </Typography>
     </div>
-  ),
+  )
 };

@@ -2,8 +2,8 @@ export default {
   values: {
     mobile: 0,
     tablet: 640,
-    desktop: 1024,
-  },
+    desktop: 1024
+  }
 };
 
 declare module "@mui/material/styles" {

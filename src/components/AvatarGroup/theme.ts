@@ -1,10 +1,16 @@
-import { ComponentsOverrides } from "@mui/material";
-import { Theme } from "@mui/system";
+import { ComponentThemeOverride } from "src/types";
 
-export default {
+const avatarGroupTheme: ComponentThemeOverride["MuiAvatarGroup"] = {
   styleOverrides: {
     root: {
-      justifyContent: "start",
-    },
-  } as ComponentsOverrides<Theme>["MuiAvatarGroup"],
+      justifyContent: "start"
+    }
+  },
+
+  defaultProps: {
+    spacing: "medium",
+    variant: "circular"
+  }
 };
+
+export default avatarGroupTheme;

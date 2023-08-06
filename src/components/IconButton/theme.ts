@@ -6,23 +6,23 @@ export default {
     sizeSmall: {
       padding: 3,
       "& .MuiSvgIcon-root": {
-        fontSize: 18,
-      },
+        fontSize: 18
+      }
     },
     sizeMedium: {
       padding: 6,
       "& .MuiSvgIcon-root": {
-        fontSize: 20,
-      },
+        fontSize: 20
+      }
     },
     sizeLarge: {
       padding: 8,
       "& .MuiSvgIcon-root": {
-        fontSize: 24,
-      },
-    },
+        fontSize: 24
+      }
+    }
   } as ComponentsOverrides<Theme>["MuiIconButton"],
   defaultProps: {
-    disableElevation: true,
-  } as ComponentsProps["MuiIconButton"],
+    disableElevation: true
+  } as ComponentsProps["MuiIconButton"]
 };

@@ -1,14 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { ArrowDropDownIcon } from "src/icons";
 import { Preview } from ".storybook/components";
 
-import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
 import { Button } from "../Button";
+
+import { ButtonGroup, ButtonGroupProps } from "./ButtonGroup";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<ButtonGroupProps> = {
   title: "Components/Buttons/Button Group",
   component: ButtonGroup,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 };
 
 export default meta;
@@ -16,11 +18,11 @@ export default meta;
 const buttons = [
   <Button>One</Button>,
   <Button>Two</Button>,
-  <Button>Three</Button>,
+  <Button>Three</Button>
 ];
 
 export const Base: StoryObj<ButtonGroupProps> = {
-  render: (props) => <ButtonGroup {...props}>{buttons}</ButtonGroup>,
+  render: (props) => <ButtonGroup {...props}>{buttons}</ButtonGroup>
 };
 
 export const Variants: StoryObj<ButtonGroupProps> = {
@@ -36,12 +38,12 @@ export const Variants: StoryObj<ButtonGroupProps> = {
         {buttons}
       </ButtonGroup>
     </Preview>
-  ),
+  )
 };
 
 export const Colors: StoryObj<ButtonGroupProps> = {
   args: {
-    variant: "contained",
+    variant: "contained"
   },
   render: (props) => (
     <Preview style={{ flexDirection: "column", alignItems: "start" }}>
@@ -67,7 +69,7 @@ export const Colors: StoryObj<ButtonGroupProps> = {
         {buttons}
       </ButtonGroup>
     </Preview>
-  ),
+  )
 };
 
 export const Sizes: StoryObj<ButtonGroupProps> = {
@@ -83,7 +85,7 @@ export const Sizes: StoryObj<ButtonGroupProps> = {
         {buttons}
       </ButtonGroup>
     </Preview>
-  ),
+  )
 };
 
 export const Orientation: StoryObj<ButtonGroupProps> = {
@@ -99,15 +101,15 @@ export const Orientation: StoryObj<ButtonGroupProps> = {
         {buttons}
       </ButtonGroup>
     </Preview>
-  ),
+  )
 };
 
 export const FullWidth: StoryObj<ButtonGroupProps> = {
   args: {
     fullWidth: true,
     children: buttons,
-    size: "large",
-  },
+    size: "large"
+  }
 };
 
 export const SplitButton: StoryObj<ButtonGroupProps> = {
@@ -118,5 +120,5 @@ export const SplitButton: StoryObj<ButtonGroupProps> = {
         <ArrowDropDownIcon />
       </Button>
     </ButtonGroup>
-  ),
+  )
 };

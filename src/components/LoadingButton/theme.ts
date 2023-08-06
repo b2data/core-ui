@@ -5,17 +5,17 @@ export default {
   styleOverrides: {
     root: {
       "& .MuiSvgIcon-root": {
-        fontSize: 20,
-      },
+        fontSize: 20
+      }
     },
     sizeLarge: {
       "& .MuiSvgIcon-root": {
-        fontSize: 24,
-      },
-    },
+        fontSize: 24
+      }
+    }
   } as ComponentsOverrides<Theme>["MuiButton"],
   defaultProps: {
     disableElevation: true,
-    variant: "contained",
-  } as ComponentsProps["MuiButton"],
+    variant: "contained"
+  } as ComponentsProps["MuiButton"]
 };

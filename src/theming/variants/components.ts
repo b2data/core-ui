@@ -15,5 +15,5 @@ export default {
   MuiButtonGroup: ButtonGroupOverwrite,
   MuiIconButton: IconButtonOverwrite,
   MuiLoadingButton: LoadingButtonOverwrite,
-  MuiTypography: TypographyOverwrite,
+  MuiTypography: TypographyOverwrite
 };

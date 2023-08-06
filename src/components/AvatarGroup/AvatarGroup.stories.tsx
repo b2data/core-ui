@@ -1,17 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { Preview } from ".storybook/components";
-
-import { AvatarGroup, AvatarGroupProps } from "./AvatarGroup";
-import { Avatar } from "../Avatar";
-
 import Avatar1 from "src/assets/images/avatar/1.jpg";
 import Avatar2 from "src/assets/images/avatar/2.jpg";
 import Avatar3 from "src/assets/images/avatar/3.jpg";
 
+import { Avatar } from "../Avatar";
+
+import { AvatarGroup, AvatarGroupProps } from "./AvatarGroup";
+
+import type { Meta, StoryObj } from "@storybook/react";
+
 const meta: Meta<AvatarGroupProps> = {
   title: "Components/Avatar/Avatar Group",
   component: AvatarGroup,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 };
 
 export default meta;
@@ -23,7 +24,7 @@ export const Base: StoryObj<AvatarGroupProps> = {
       <Avatar src={Avatar2} />
       <Avatar src={Avatar3} />
     </AvatarGroup>
-  ),
+  )
 };
 
 export const Max: StoryObj<AvatarGroupProps> = {
@@ -40,7 +41,7 @@ export const Max: StoryObj<AvatarGroupProps> = {
         <Avatar src={Avatar3} />
       </AvatarGroup>
     </Preview>
-  ),
+  )
 };
 
 export const Total: StoryObj<AvatarGroupProps> = {
@@ -57,7 +58,7 @@ export const Total: StoryObj<AvatarGroupProps> = {
         <Avatar src={Avatar3} />
       </AvatarGroup>
     </Preview>
-  ),
+  )
 };
 
 export const Spacing: StoryObj<AvatarGroupProps> = {
@@ -74,7 +75,7 @@ export const Spacing: StoryObj<AvatarGroupProps> = {
         <Avatar src={Avatar3} />
       </AvatarGroup>
     </Preview>
-  ),
+  )
 };
 
 export const Variants: StoryObj<AvatarGroupProps> = {
@@ -96,5 +97,5 @@ export const Variants: StoryObj<AvatarGroupProps> = {
         <Avatar src={Avatar3} />
       </AvatarGroup>
     </Preview>
-  ),
+  )
 };
