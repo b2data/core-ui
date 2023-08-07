@@ -3,20 +3,17 @@ import {
   AvatarGroupProps as MuiAvatarGroupProps
 } from "@mui/material";
 import { FC } from "react";
-
 import { OverrideMuiProps } from "src/types";
 
 export interface AvatarGroupProps
-  extends OverrideMuiProps<
-    MuiAvatarGroupProps,
-    "variant" | "sx" | "max" | "spacing" | "total" | "children"
-  > {
+  extends OverrideMuiProps<MuiAvatarGroupProps, "sx" | "max" | "total"> {
   /**
    * Spacing between avatars.
    * @default medium
    */
   spacing?: "medium" | "small";
   /**
+   * The variant to use.
    * @default circular
    */
   variant?: MuiAvatarGroupProps["variant"];

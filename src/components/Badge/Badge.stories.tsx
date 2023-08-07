@@ -71,12 +71,11 @@ export const Visibility: StoryObj<BadgeProps> = {
 
 export const Variants: StoryObj<BadgeProps> = {
   args: {
-    badgeContent: 4,
     children: <MailIcon />
   },
   render: (props) => (
     <Preview>
-      <Badge {...props} variant="standard" />
+      <Badge {...props} variant="standard" badgeContent={4} />
       <Badge {...props} variant="dot" />
       <Badge
         {...props}

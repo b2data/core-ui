@@ -1,19 +1,19 @@
-import AvatarOverwrite from "../../components/Avatar/theme";
-import AvatarGroupOverwrite from "../../components/AvatarGroup/theme";
-import BadgeOverwrite from "../../components/Badge/theme";
-import ButtonOverwrite from "../../components/Button/theme";
-import ButtonGroupOverwrite from "../../components/ButtonGroup/theme";
-import IconButtonOverwrite from "../../components/IconButton/theme";
-import LoadingButtonOverwrite from "../../components/LoadingButton/theme";
-import TypographyOverwrite from "../../components/Typography/theme";
+import AvatarOverriden from "../../components/Avatar/theme";
+import AvatarGroupOverriden from "../../components/AvatarGroup/theme";
+import BadgeOverriden from "../../components/Badge/theme";
+import ButtonOverriden from "../../components/Button/theme";
+import ButtonGroupOverriden from "../../components/ButtonGroup/theme";
+import IconButtonOverriden from "../../components/IconButton/theme";
+import LoadingButtonOverriden from "../../components/LoadingButton/theme";
+import TypographyOverriden from "../../components/Typography/theme";
 
 export default {
-  MuiAvatar: AvatarOverwrite,
-  MuiAvatarGroup: AvatarGroupOverwrite,
-  MuiBadge: BadgeOverwrite,
-  MuiButton: ButtonOverwrite,
-  MuiButtonGroup: ButtonGroupOverwrite,
-  MuiIconButton: IconButtonOverwrite,
-  MuiLoadingButton: LoadingButtonOverwrite,
-  MuiTypography: TypographyOverwrite
+  MuiAvatar: AvatarOverriden,
+  MuiAvatarGroup: AvatarGroupOverriden,
+  MuiBadge: BadgeOverriden,
+  MuiButton: ButtonOverriden,
+  MuiButtonGroup: ButtonGroupOverriden,
+  MuiIconButton: IconButtonOverriden,
+  MuiLoadingButton: LoadingButtonOverriden,
+  MuiTypography: TypographyOverriden
 };

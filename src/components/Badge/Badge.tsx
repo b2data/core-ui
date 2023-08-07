@@ -1,16 +1,14 @@
 import { Badge as MuiBadge, BadgeProps as MuiBadgeProps } from "@mui/material";
 import { FC } from "react";
-
 import { OverrideMuiProps } from "src/types";
 
 export interface BadgeProps
   extends OverrideMuiProps<
     MuiBadgeProps,
-    "badgeContent" | "invisible" | "max" | "showZero" | "children" | "sx"
+    "badgeContent" | "invisible" | "max" | "showZero" | "sx"
   > {
   /**
    * The variant to use.
-   * If `variant="liveDot"` then `badgeContnet=""`.
    * @default standard
    */
   variant?: MuiBadgeProps["variant"] | "liveDot";
@@ -26,9 +24,18 @@ export interface BadgeProps
    */
   anchorOrigin?: MuiBadgeProps["anchorOrigin"];
   /**
+   * Wrapped shape the badge should overlap.
    * @default rectangular
    */
   overlap?: MuiBadgeProps["overlap"];
 }
 
-export const Badge: FC<BadgeProps> = (props) => <MuiBadge {...props} />;
+export const Badge: FC<BadgeProps> = ({ variant, badgeContent, ...props }) => (
+  <MuiBadge
+    {...props}
+    variant={variant}
+    badgeContent={
+      badgeContent ? badgeContent : variant === "liveDot" ? "" : null
+    }
+  />
+);

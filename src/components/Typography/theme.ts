@@ -3,7 +3,18 @@ import { ComponentThemeOverride } from "src/types";
 const typographyTheme: ComponentThemeOverride["MuiTypography"] = {
   styleOverrides: {
     paragraph: { marginBottom: 16 },
-    gutterBottom: { marginBottom: 8 }
+    gutterBottom: { marginBottom: 8 },
+    root: ({ ownerState: { wrapLines } }) => {
+      if (wrapLines && wrapLines > 0) {
+        return {
+          display: "-webkit-box",
+          "-webkit-line-clamp": `${wrapLines}`,
+          "-webkit-box-orient": "vertical",
+          whiteSpace: "normal"
+        };
+      }
+      return undefined;
+    }
   }
 };
 

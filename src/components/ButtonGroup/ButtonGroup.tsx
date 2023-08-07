@@ -3,34 +3,35 @@ import {
   ButtonGroupProps as MuiButtonGroupProps
 } from "@mui/material";
 import { FC } from "react";
+import { OverrideMuiProps } from "src/types";
 
 export interface ButtonGroupProps
-  extends Omit<
+  extends OverrideMuiProps<
     MuiButtonGroupProps,
-    | "className"
-    | "classes"
-    | "style"
-    | "disableElevation"
-    | "disableFocusRipple"
-    | "disableRipple"
+    "sx" | "fullWidth" | "component"
   > {
   /**
+   * The color of the component.
    * @default primary
    */
   color?: MuiButtonGroupProps["color"];
   /**
+   * The size of the component. `small` is equivalent to the dense button styling.
    * @default medium
    */
   size?: MuiButtonGroupProps["size"];
   /**
+   * The variant to use.
    * @default outlined
    */
   variant?: MuiButtonGroupProps["variant"];
   /**
+   * If `true`, the component is disabled.
    * @default false
    */
   disabled?: MuiButtonGroupProps["disabled"];
   /**
+   * The component orientation (layout flow direction).
    * @default horizontal
    */
   orientation?: MuiButtonGroupProps["orientation"];

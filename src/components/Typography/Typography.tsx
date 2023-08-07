@@ -4,20 +4,12 @@ import {
   styled
 } from "@mui/material";
 import { FC } from "react";
-
 import { OverrideMuiProps } from "src/types";
 
 export interface TypographyProps
   extends OverrideMuiProps<
     MuiTypographyProps,
-    | "children"
-    | "component"
-    | "gutterBottom"
-    | "noWrap"
-    | "paragraph"
-    | "sx"
-    | "color"
-    | "ref"
+    "component" | "gutterBottom" | "noWrap" | "paragraph" | "sx" | "color"
   > {
   /**
    * @default body1
@@ -33,16 +25,6 @@ export interface TypographyProps
   wrapLines?: number;
 }
 
-export const Typography: FC<TypographyProps> = styled(
-  MuiTypography
-)<TypographyProps>(({ wrapLines }) => ({
-  ...(wrapLines && wrapLines > 0
-    ? {
-        display: "-webkit-box",
-        "-webkit-line-clamp": `${wrapLines}`,
-        "-webkit-box-orient": "vertical",
-
-        whiteSpace: "normal"
-      }
-    : {})
-}));
+export const Typography: FC<TypographyProps> = (props) => (
+  <MuiTypography {...props} />
+);
