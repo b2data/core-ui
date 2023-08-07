@@ -15,9 +15,9 @@ const iconButtonTheme: ComponentThemeOverride["MuiIconButton"] = {
       }
     },
     sizeLarge: {
-      padding: 8,
+      padding: 7,
       "& .MuiSvgIcon-root": {
-        fontSize: 24
+        fontSize: 22
       }
     }
   }

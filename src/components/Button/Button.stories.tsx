@@ -184,10 +184,22 @@ export const Sizes: StoryObj<ButtonProps> = {
 export const Icons: StoryObj<ButtonProps> = {
   render: (props) => (
     <Preview>
+      <Button {...props} variant="outlined" startIcon={<DeleteIcon />} size="small">
+        Delete
+      </Button>
+      <Button {...props} variant="contained" endIcon={<SendIcon />} size="small">
+        Send
+      </Button>
       <Button {...props} variant="outlined" startIcon={<DeleteIcon />}>
         Delete
       </Button>
       <Button {...props} variant="contained" endIcon={<SendIcon />}>
+        Send
+      </Button>
+      <Button {...props} variant="outlined" startIcon={<DeleteIcon />} size="large">
+        Delete
+      </Button>
+      <Button {...props} variant="contained" endIcon={<SendIcon />} size="large">
         Send
       </Button>
     </Preview>

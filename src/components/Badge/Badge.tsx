@@ -35,8 +35,6 @@ export const Badge: FC<BadgeProps> = ({ variant, badgeContent, ...props }) => (
   <MuiBadge
     {...props}
     variant={variant}
-    badgeContent={
-      badgeContent ? badgeContent : variant === "liveDot" ? "" : null
-    }
+    badgeContent={badgeContent ?? (variant === "liveDot" ? "" : null)}
   />
 );

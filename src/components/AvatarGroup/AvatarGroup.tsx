@@ -1,10 +1,12 @@
 import {
   AvatarGroup as MuiAvatarGroup,
-  AvatarGroupProps as MuiAvatarGroupProps
+  AvatarGroupProps as MuiAvatarGroupProps,
+  styled
 } from "@mui/material";
 import { FC } from "react";
 
 import { OverrideMuiProps } from "src/types";
+import { AVATAR_SIZES } from "../Avatar/theme";
 
 export interface AvatarGroupProps
   extends OverrideMuiProps<MuiAvatarGroupProps, "sx" | "max" | "total"> {
@@ -14,12 +16,23 @@ export interface AvatarGroupProps
    */
   spacing?: "medium" | "small";
   /**
+   * The size of the avatar.
+   * @default medium
+   */
+  size?: "small" | "medium" | "large";
+  /**
    * The variant to use.
    * @default circular
    */
   variant?: MuiAvatarGroupProps["variant"];
 }
 
-export const AvatarGroup: FC<AvatarGroupProps> = (props) => (
-  <MuiAvatarGroup {...props} />
-);
+export const AvatarGroup: FC<AvatarGroupProps> = styled(
+  MuiAvatarGroup
+)<AvatarGroupProps>(({ size = "medium" }) => ({
+  "& .MuiAvatar-root": {
+    width: AVATAR_SIZES[size],
+    height: AVATAR_SIZES[size],
+    fontSize: size === "small" ? "1rem" : "1.4rem"
+  }
+}));

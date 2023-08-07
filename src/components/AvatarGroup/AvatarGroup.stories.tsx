@@ -27,6 +27,28 @@ export const Base: StoryObj<AvatarGroupProps> = {
   )
 };
 
+export const Sizes: StoryObj<AvatarGroupProps> = {
+  render: (props) => (
+    <Preview>
+      <AvatarGroup {...props} size="small" max={2}>
+        <Avatar src={Avatar1} />
+        <Avatar src={Avatar2} />
+        <Avatar src={Avatar3} />
+      </AvatarGroup>
+      <AvatarGroup {...props} size="medium" max={2}>
+        <Avatar src={Avatar1} />
+        <Avatar src={Avatar2} />
+        <Avatar src={Avatar3} />
+      </AvatarGroup>
+      <AvatarGroup {...props} size="large" max={2}>
+        <Avatar src={Avatar1} />
+        <Avatar src={Avatar2} />
+        <Avatar src={Avatar3} />
+      </AvatarGroup>
+    </Preview>
+  )
+};
+
 export const Max: StoryObj<AvatarGroupProps> = {
   render: (props) => (
     <Preview>

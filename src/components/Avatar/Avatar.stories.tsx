@@ -58,7 +58,6 @@ export const WithBadge: StoryObj<AvatarProps> = {
       <Badge
         variant="liveDot"
         overlap="circular"
-        badgeContent=""
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Avatar alt="Remy Sharp" src={Avatar1} size="large" />
