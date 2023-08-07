@@ -2,6 +2,7 @@ import {
   LoadingButton as MuiLoadingButton,
   LoadingButtonProps as MuiLoadingButtonProps
 } from "@mui/lab";
+import { FC } from "react";
 
 export interface LoadingButtonProps
   extends Omit<
@@ -44,6 +45,6 @@ export interface LoadingButtonProps
   loadingPosition?: MuiLoadingButtonProps["loadingPosition"];
 }
 
-export const LoadingButton = (props: LoadingButtonProps) => (
+export const LoadingButton: FC<LoadingButtonProps> = (props) => (
   <MuiLoadingButton {...props} />
 );

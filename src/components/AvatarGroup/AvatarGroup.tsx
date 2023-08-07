@@ -2,11 +2,14 @@ import {
   AvatarGroup as MuiAvatarGroup,
   AvatarGroupProps as MuiAvatarGroupProps
 } from "@mui/material";
+import { FC } from "react";
+
+import { OverrideMuiProps } from "src/types";
 
 export interface AvatarGroupProps
-  extends Omit<
+  extends OverrideMuiProps<
     MuiAvatarGroupProps,
-    "className" | "classes" | "componentsProps" | "slotProps" | "style"
+    "variant" | "sx" | "max" | "spacing" | "total" | "children"
   > {
   /**
    * Spacing between avatars.
@@ -19,6 +22,6 @@ export interface AvatarGroupProps
   variant?: MuiAvatarGroupProps["variant"];
 }
 
-export const AvatarGroup = (props: AvatarGroupProps) => (
+export const AvatarGroup: FC<AvatarGroupProps> = (props) => (
   <MuiAvatarGroup {...props} />
 );

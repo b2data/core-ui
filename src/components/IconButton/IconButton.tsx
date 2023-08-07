@@ -2,6 +2,7 @@ import {
   IconButton as MuiIconButton,
   IconButtonProps as MuiIconButtonProps
 } from "@mui/material";
+import { FC } from "react";
 
 export interface IconButtonProps
   extends Omit<
@@ -35,6 +36,6 @@ export interface IconButtonProps
   disabled?: MuiIconButtonProps["disabled"];
 }
 
-export const IconButton = (props: IconButtonProps) => (
+export const IconButton: FC<IconButtonProps> = (props) => (
   <MuiIconButton {...props} />
 );

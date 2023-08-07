@@ -2,6 +2,7 @@ import {
   Button as MuiButton,
   ButtonProps as MuiButtonProps
 } from "@mui/material";
+import { FC } from "react";
 
 export interface ButtonProps
   extends Omit<
@@ -40,4 +41,4 @@ export interface ButtonProps
   disabled?: MuiButtonProps["disabled"];
 }
 
-export const Button = (props: ButtonProps) => <MuiButton {...props} />;
+export const Button: FC<ButtonProps> = (props) => <MuiButton {...props} />;

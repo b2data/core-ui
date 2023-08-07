@@ -3,11 +3,13 @@ import {
   TypographyProps as MuiTypographyProps,
   styled
 } from "@mui/material";
+import { FC } from "react";
+
+import { OverrideMuiProps } from "src/types";
 
 export interface TypographyProps
-  extends Pick<
+  extends OverrideMuiProps<
     MuiTypographyProps,
-    | "align"
     | "children"
     | "component"
     | "gutterBottom"
@@ -15,7 +17,6 @@ export interface TypographyProps
     | "paragraph"
     | "sx"
     | "color"
-    | "variant"
     | "ref"
   > {
   /**
@@ -32,16 +33,16 @@ export interface TypographyProps
   wrapLines?: number;
 }
 
-export const Typography = styled(MuiTypography)<TypographyProps>(
-  ({ wrapLines }) => ({
-    ...(wrapLines && wrapLines > 0
-      ? {
-          display: "-webkit-box",
-          "-webkit-line-clamp": `${wrapLines}`,
-          "-webkit-box-orient": "vertical",
+export const Typography: FC<TypographyProps> = styled(
+  MuiTypography
+)<TypographyProps>(({ wrapLines }) => ({
+  ...(wrapLines && wrapLines > 0
+    ? {
+        display: "-webkit-box",
+        "-webkit-line-clamp": `${wrapLines}`,
+        "-webkit-box-orient": "vertical",
 
-          whiteSpace: "normal"
-        }
-      : {})
-  })
-);
+        whiteSpace: "normal"
+      }
+    : {})
+}));

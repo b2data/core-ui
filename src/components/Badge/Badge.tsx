@@ -1,15 +1,12 @@
 import { Badge as MuiBadge, BadgeProps as MuiBadgeProps } from "@mui/material";
+import { FC } from "react";
+
+import { OverrideMuiProps } from "src/types";
 
 export interface BadgeProps
-  extends Omit<
+  extends OverrideMuiProps<
     MuiBadgeProps,
-    | "className"
-    | "classes"
-    | "style"
-    | "componentsProps"
-    | "components"
-    | "slotProps"
-    | "slots"
+    "badgeContent" | "invisible" | "max" | "showZero" | "children" | "sx"
   > {
   /**
    * The variant to use.
@@ -34,4 +31,4 @@ export interface BadgeProps
   overlap?: MuiBadgeProps["overlap"];
 }
 
-export const Badge = (props: BadgeProps) => <MuiBadge {...props} />;
+export const Badge: FC<BadgeProps> = (props) => <MuiBadge {...props} />;

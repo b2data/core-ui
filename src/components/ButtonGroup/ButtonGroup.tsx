@@ -2,6 +2,7 @@ import {
   ButtonGroup as MuiButtonGroup,
   ButtonGroupProps as MuiButtonGroupProps
 } from "@mui/material";
+import { FC } from "react";
 
 export interface ButtonGroupProps
   extends Omit<
@@ -35,6 +36,6 @@ export interface ButtonGroupProps
   orientation?: MuiButtonGroupProps["orientation"];
 }
 
-export const ButtonGroup = (props: ButtonGroupProps) => (
+export const ButtonGroup: FC<ButtonGroupProps> = (props) => (
   <MuiButtonGroup {...props} />
 );

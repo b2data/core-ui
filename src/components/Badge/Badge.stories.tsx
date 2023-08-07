@@ -78,7 +78,11 @@ export const Variants: StoryObj<BadgeProps> = {
     <Preview>
       <Badge {...props} variant="standard" />
       <Badge {...props} variant="dot" />
-      <Badge {...props} variant="liveDot" anchorOrigin={{ vertical: "bottom", horizontal: "right" }} />
+      <Badge
+        {...props}
+        variant="liveDot"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      />
     </Preview>
   )
 };
