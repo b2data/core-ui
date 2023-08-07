@@ -3,12 +3,19 @@ import {
   ButtonProps as MuiButtonProps
 } from "@mui/material";
 import { FC } from "react";
+
 import { OverrideMuiProps } from "src/types";
 
 export interface ButtonProps
   extends OverrideMuiProps<
     MuiButtonProps,
-    "sx" | "startIcon" | "endIcon" | "fullWidth" | "component",
+    | "sx"
+    | "startIcon"
+    | "endIcon"
+    | "fullWidth"
+    | "component"
+    | "href"
+    | "LinkComponent",
     HTMLButtonElement
   > {
   /**

@@ -4,7 +4,7 @@ import {
   lightTheme,
   darkTheme,
   CssBaseline,
-  ThemeProvider,
+  ThemeProvider
 } from "../src/theming";
 
 export const preview: Preview = {
@@ -14,20 +14,20 @@ export const preview: Preview = {
       expanded: true,
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
-  },
+        date: /Date$/
+      }
+    }
+  }
 };
 
 export const decorators: Decorator[] = [
   withThemeFromJSXProvider({
     themes: {
       light: lightTheme,
-      dark: darkTheme,
+      dark: darkTheme
     },
     defaultTheme: "light",
     Provider: ThemeProvider,
-    GlobalStyles: CssBaseline,
-  }),
+    GlobalStyles: CssBaseline
+  })
 ];

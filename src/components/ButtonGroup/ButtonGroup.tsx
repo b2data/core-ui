@@ -3,6 +3,7 @@ import {
   ButtonGroupProps as MuiButtonGroupProps
 } from "@mui/material";
 import { FC } from "react";
+
 import { OverrideMuiProps } from "src/types";
 
 export interface ButtonGroupProps

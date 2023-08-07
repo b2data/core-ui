@@ -3,12 +3,19 @@ import {
   LoadingButtonProps as MuiLoadingButtonProps
 } from "@mui/lab";
 import { FC } from "react";
+
 import { OverrideMuiProps } from "src/types";
 
 export interface LoadingButtonProps
   extends OverrideMuiProps<
     MuiLoadingButtonProps,
-    "loading" | "loadingIndicator" | "sx" | "endIcon" | "startIcon",
+    | "loading"
+    | "loadingIndicator"
+    | "sx"
+    | "endIcon"
+    | "startIcon"
+    | "href"
+    | "LinkComponent",
     HTMLButtonElement
   > {
   /**

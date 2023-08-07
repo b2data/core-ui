@@ -5,7 +5,7 @@ const typographyTheme: ComponentThemeOverride["MuiTypography"] = {
     paragraph: { marginBottom: 16 },
     gutterBottom: { marginBottom: 8 },
     root: ({ ownerState: { wrapLines } }) => {
-      if (wrapLines && wrapLines > 0) {
+      if (typeof wrapLines === "number" && wrapLines > 0) {
         return {
           display: "-webkit-box",
           "-webkit-line-clamp": `${wrapLines}`,

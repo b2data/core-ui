@@ -3,6 +3,7 @@ import {
   IconButtonProps as MuiIconButtonProps
 } from "@mui/material";
 import { FC } from "react";
+
 import { OverrideMuiProps } from "src/types";
 
 export interface IconButtonProps

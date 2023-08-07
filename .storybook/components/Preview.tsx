@@ -8,7 +8,7 @@ export const Preview: React.FC<any> = ({ children, style }) => (
       flexWrap: "wrap",
       alignItems: "center",
       gap: "16px",
-      ...style,
+      ...style
     }}
   >
     {children}
