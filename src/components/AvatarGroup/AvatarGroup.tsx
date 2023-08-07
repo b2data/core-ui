@@ -6,6 +6,7 @@ import {
 import { FC } from "react";
 
 import { OverrideMuiProps } from "src/types";
+
 import { AVATAR_SIZES } from "../Avatar/theme";
 
 export interface AvatarGroupProps

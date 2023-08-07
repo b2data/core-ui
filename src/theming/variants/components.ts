@@ -6,6 +6,7 @@ import ButtonGroupOverriden from "../../components/ButtonGroup/theme";
 import IconButtonOverriden from "../../components/IconButton/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
 import TypographyOverriden from "../../components/Typography/theme";
+import ChipOverriden from "../../components/Chip/theme";
 
 export default {
   MuiAvatar: AvatarOverriden,
@@ -13,6 +14,7 @@ export default {
   MuiBadge: BadgeOverriden,
   MuiButton: ButtonOverriden,
   MuiButtonGroup: ButtonGroupOverriden,
+  MuiChip: ChipOverriden,
   MuiIconButton: IconButtonOverriden,
   MuiLoadingButton: LoadingButtonOverriden,
   MuiTypography: TypographyOverriden
