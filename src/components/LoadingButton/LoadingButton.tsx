@@ -1,25 +1,15 @@
 import {
   LoadingButton as MuiLoadingButton,
-  LoadingButtonProps as MuiLoadingButtonProps,
+  LoadingButtonProps as MuiLoadingButtonProps
 } from "@mui/lab";
+import { FC } from "react";
+import { OverrideMuiProps } from "src/types";
 
 export interface LoadingButtonProps
-  extends Omit<
+  extends OverrideMuiProps<
     MuiLoadingButtonProps,
-    | "className"
-    | "classes"
-    | "disableElevation"
-    | "disableFocusRipple"
-    | "disableTouchRipple"
-    | "disableRipple"
-    | "focusRipple"
-    | "focusVisibleClassName"
-    | "TouchRippleProps"
-    | "touchRippleRef"
-    | "onFocusVisible"
-    | "action"
-    | "centerRipple"
-    | "style"
+    "loading" | "loadingIndicator" | "sx" | "endIcon" | "startIcon",
+    HTMLButtonElement
   > {
   /**
    * The color of the component.
@@ -27,23 +17,27 @@ export interface LoadingButtonProps
    */
   color?: MuiLoadingButtonProps["color"];
   /**
+   * The size of the component. `small` is equivalent to the dense button styling.
    * @default medium
    */
   size?: MuiLoadingButtonProps["size"];
   /**
+   * If `true`, the component is disabled.
    * @default false
    */
   disabled?: MuiLoadingButtonProps["disabled"];
   /**
+   * The variant to use.
    * @default contained
    */
   variant?: MuiLoadingButtonProps["variant"];
   /**
+   * The loading indicator can be positioned on the start, end, or the center of the button.
    * @default center
    */
   loadingPosition?: MuiLoadingButtonProps["loadingPosition"];
 }
 
-export const LoadingButton = (props: LoadingButtonProps) => (
+export const LoadingButton: FC<LoadingButtonProps> = (props) => (
   <MuiLoadingButton {...props} />
 );

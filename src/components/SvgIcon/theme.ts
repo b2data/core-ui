@@ -1,10 +1,11 @@
-import { ComponentsOverrides } from "@mui/material";
-import { Theme } from "@mui/system";
+import { ComponentThemeOverride } from "src/types";
 
-export default {
+const svgIconTheme: ComponentThemeOverride["MuiSvgIcon"] = {
   styleOverrides: {
     fontSizeMedium: {
-      fontSize: "18px",
-    },
-  } as ComponentsOverrides<Theme>["MuiSvgIcon"],
+      fontSize: "18px"
+    }
+  }
 };
+
+export default svgIconTheme;

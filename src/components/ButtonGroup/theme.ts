@@ -1,9 +1,9 @@
-import { ComponentsOverrides, ComponentsProps } from "@mui/material";
-import { Theme } from "@mui/system";
+import { ComponentThemeOverride } from "src/types";
 
-export default {
-  styleOverrides: {} as ComponentsOverrides<Theme>["MuiButtonGroup"],
+const buttonGroupTheme: ComponentThemeOverride["MuiButtonGroup"] = {
   defaultProps: {
-    disableElevation: true,
-  } as ComponentsProps["MuiButtonGroup"],
+    disableElevation: true
+  }
 };
+
+export default buttonGroupTheme;

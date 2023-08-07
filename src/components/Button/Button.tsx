@@ -1,25 +1,15 @@
 import {
   Button as MuiButton,
-  ButtonProps as MuiButtonProps,
+  ButtonProps as MuiButtonProps
 } from "@mui/material";
+import { FC } from "react";
+import { OverrideMuiProps } from "src/types";
 
 export interface ButtonProps
-  extends Omit<
+  extends OverrideMuiProps<
     MuiButtonProps,
-    | "className"
-    | "classes"
-    | "disableFocusRipple"
-    | "disableElevation"
-    | "touchRippleRef"
-    | "TouchRippleProps"
-    | "onFocusVisible"
-    | "focusVisibleClassName"
-    | "focusRipple"
-    | "disableTouchRipple"
-    | "disableRipple"
-    | "centerRipple"
-    | "action"
-    | "style"
+    "sx" | "startIcon" | "endIcon" | "fullWidth" | "component",
+    HTMLButtonElement
   > {
   /**
    * The color of the component.
@@ -27,17 +17,20 @@ export interface ButtonProps
    */
   color?: MuiButtonProps["color"];
   /**
+   * The size of the component. `small` is equivalent to the dense button styling.
    * @default medium
    */
   size?: MuiButtonProps["size"];
   /**
+   * The variant to use.
    * @default contained
    */
   variant?: MuiButtonProps["variant"];
   /**
+   * If `true`, the component is disabled.
    * @default false
    */
   disabled?: MuiButtonProps["disabled"];
 }
 
-export const Button = (props: ButtonProps) => <MuiButton {...props} />;
+export const Button: FC<ButtonProps> = (props) => <MuiButton {...props} />;

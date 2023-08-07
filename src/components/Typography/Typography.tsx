@@ -1,21 +1,15 @@
 import {
   Typography as MuiTypography,
   TypographyProps as MuiTypographyProps,
+  styled
 } from "@mui/material";
+import { FC } from "react";
+import { OverrideMuiProps } from "src/types";
 
 export interface TypographyProps
-  extends Pick<
+  extends OverrideMuiProps<
     MuiTypographyProps,
-    | "align"
-    | "children"
-    | "component"
-    | "gutterBottom"
-    | "noWrap"
-    | "paragraph"
-    | "sx"
-    | "color"
-    | "variant"
-    | "ref"
+    "component" | "gutterBottom" | "noWrap" | "paragraph" | "sx" | "color"
   > {
   /**
    * @default body1
@@ -31,6 +25,6 @@ export interface TypographyProps
   wrapLines?: number;
 }
 
-export const Typography = (props: TypographyProps) => (
+export const Typography: FC<TypographyProps> = (props) => (
   <MuiTypography {...props} />
 );

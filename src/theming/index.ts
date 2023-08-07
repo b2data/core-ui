@@ -4,7 +4,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import { CssBaseline, ThemeProvider, withStyles } from "@mui/material";
-import { lightTheme, darkTheme } from "./variants";
+
+import { darkTheme, lightTheme } from "./variants";
 
 export * from "./utils";
 

@@ -1,15 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { CheckCircleIcon, AccessTimeFilledIcon, CancelIcon } from "src/icons";
+import { AccessTimeFilledIcon, CancelIcon, CheckCircleIcon } from "src/icons";
 import { Preview } from ".storybook/components";
+import Avatar1 from "src/assets/images/avatar/1.jpg";
+
+import { Badge } from "../Badge";
 
 import { Avatar, AvatarProps } from "./Avatar";
-import { Badge } from "../Badge";
-import Avatar1 from "src/assets/images/avatar/1.jpg";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<AvatarProps> = {
   title: "Components/Avatar/Avatar",
   component: Avatar,
-  tags: ["autodocs"],
+  tags: ["autodocs"]
 };
 
 export default meta;
@@ -27,7 +29,7 @@ export const Mixed: StoryObj<AvatarProps> = {
         <CheckCircleIcon />
       </Avatar>
     </Preview>
-  ),
+  )
 };
 
 export const Sizes: StoryObj<AvatarProps> = {
@@ -37,7 +39,7 @@ export const Sizes: StoryObj<AvatarProps> = {
       <Avatar size="medium" />
       <Avatar size="large" />
     </Preview>
-  ),
+  )
 };
 
 export const Variants: StoryObj<AvatarProps> = {
@@ -47,16 +49,16 @@ export const Variants: StoryObj<AvatarProps> = {
       <Avatar variant="rounded" />
       <Avatar variant="square" />
     </Preview>
-  ),
+  )
 };
 
 export const WithBadge: StoryObj<AvatarProps> = {
   render: () => (
     <Preview>
       <Badge
-        variant="dot"
-        showLive={true}
+        variant="liveDot"
         overlap="circular"
+        badgeContent=""
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Avatar alt="Remy Sharp" src={Avatar1} size="large" />
@@ -72,7 +74,7 @@ export const WithBadge: StoryObj<AvatarProps> = {
               fontSize: 18,
               border: `1px solid ${palette.background.paper}`,
               bgcolor: palette.background.paper,
-              borderRadius: 50,
+              borderRadius: 50
             })}
           />
         }
@@ -90,7 +92,7 @@ export const WithBadge: StoryObj<AvatarProps> = {
               fontSize: 14,
               border: `1px solid ${palette.background.paper}`,
               bgcolor: palette.background.paper,
-              borderRadius: 50,
+              borderRadius: 50
             })}
           />
         }
@@ -108,7 +110,7 @@ export const WithBadge: StoryObj<AvatarProps> = {
               fontSize: 10,
               border: `1px solid ${palette.background.paper}`,
               bgcolor: palette.background.paper,
-              borderRadius: 50,
+              borderRadius: 50
             })}
           />
         }
@@ -116,5 +118,5 @@ export const WithBadge: StoryObj<AvatarProps> = {
         <Avatar alt="Remy Sharp" src={Avatar1} size="small" />
       </Badge>
     </Preview>
-  ),
+  )
 };

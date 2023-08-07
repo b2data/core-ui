@@ -1,9 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+
 import * as Components from "./components";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <React.Fragment>
       <Typography variant="h1">Core UI Component</Typography>
@@ -21,5 +22,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         ))}
       </Box>
     </React.Fragment>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

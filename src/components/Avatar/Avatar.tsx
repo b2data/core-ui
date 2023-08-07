@@ -1,13 +1,15 @@
 import {
   Avatar as MuiAvatar,
   AvatarProps as MuiAvatarProps,
+  styled
 } from "@mui/material";
+import { FC } from "react";
+import { OverrideMuiProps } from "src/types";
+
+import { AVATAR_SIZES } from "./theme";
 
 export interface AvatarProps
-  extends Omit<
-    MuiAvatarProps,
-    "srcSet" | "classes" | "imgProps" | "className" | "sizes" | "style"
-  > {
+  extends OverrideMuiProps<MuiAvatarProps, "sx" | "src"> {
   /**
    * Used in combination with `src` to provide an alt attribute for the rendered img element.
    */
@@ -18,9 +20,15 @@ export interface AvatarProps
    */
   size?: "small" | "medium" | "large";
   /**
+   * The shape of the avatar.
    * @default circular
    */
   variant?: MuiAvatarProps["variant"];
 }
 
-export const Avatar = (props: AvatarProps) => <MuiAvatar {...props} />;
+export const Avatar: FC<AvatarProps> = styled(MuiAvatar)<AvatarProps>(
+  ({ size = "medium" }) => ({
+    width: AVATAR_SIZES[size],
+    height: AVATAR_SIZES[size]
+  })
+);
