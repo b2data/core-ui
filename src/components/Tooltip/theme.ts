@@ -1,10 +1,10 @@
 import { ComponentThemeOverride } from "src/types";
 
-const TooltipTheme: ComponentThemeOverride["MuiTooltip"] = {
+const tooltipTheme: ComponentThemeOverride["MuiTooltip"] = {
   styleOverrides: {},
   defaultProps: {
     arrow: true
   }
 };
 
-export default TooltipTheme;
+export default tooltipTheme;
