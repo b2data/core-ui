@@ -10,5 +10,6 @@ export * from "./Divider";
 export * from "./IconButton";
 export * from "./LinearProgress";
 export * from "./LoadingButton";
+export * from "./ProgressStatistic";
 export * from "./Tooltip";
 export * from "./Typography";
