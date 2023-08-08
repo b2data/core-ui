@@ -7,4 +7,5 @@ export * from "./Chip";
 export * from "./Divider";
 export * from "./IconButton";
 export * from "./LoadingButton";
+export * from "./Tooltip";
 export * from "./Typography";

@@ -7,6 +7,7 @@ import ChipOverriden from "../../components/Chip/theme";
 import DividerOverriden from "../../components/Divider/theme";
 import IconButtonOverriden from "../../components/IconButton/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
+import TooltipOverriden from "../../components/Tooltip/theme";
 import TypographyOverriden from "../../components/Typography/theme";
 
 export default {
@@ -19,5 +20,6 @@ export default {
   MuiDivider: DividerOverriden,
   MuiIconButton: IconButtonOverriden,
   MuiLoadingButton: LoadingButtonOverriden,
+  MuiTooltip: TooltipOverriden,
   MuiTypography: TypographyOverriden
 };
