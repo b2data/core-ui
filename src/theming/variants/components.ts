@@ -8,6 +8,7 @@ import ChipOverriden from "../../components/Chip/theme";
 import CircularProgressOverriden from "../../components/CircularProgress/theme";
 import DividerOverriden from "../../components/Divider/theme";
 import IconButtonOverriden from "../../components/IconButton/theme";
+import LinearProgressOverriden from "../../components/LinearProgress/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
 import TooltipOverriden from "../../components/Tooltip/theme";
 import TypographyOverriden from "../../components/Typography/theme";
@@ -23,6 +24,7 @@ export default {
   MuiCircularProgress: CircularProgressOverriden,
   MuiDivider: DividerOverriden,
   MuiIconButton: IconButtonOverriden,
+  MuiLinearProgress: LinearProgressOverriden,
   MuiLoadingButton: LoadingButtonOverriden,
   MuiTooltip: TooltipOverriden,
   MuiTypography: TypographyOverriden

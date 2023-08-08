@@ -8,6 +8,7 @@ export * from "./Chip";
 export * from "./CircularProgress";
 export * from "./Divider";
 export * from "./IconButton";
+export * from "./LinearProgress";
 export * from "./LoadingButton";
 export * from "./Tooltip";
 export * from "./Typography";

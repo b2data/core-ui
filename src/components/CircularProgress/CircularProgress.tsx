@@ -2,6 +2,8 @@ import {
   Box,
   CircularProgress as MuiCircularProgress,
   CircularProgressProps as MuiCircularProgressProps,
+  SxProps,
+  Theme,
   Typography
 } from "@mui/material";
 import { FC, isValidElement } from "react";
@@ -27,13 +29,18 @@ export interface CircularProgressProps
    * Show label inside progress
    */
   label?: string | number | React.ReactNode;
+  /**
+   * SX properties for wrap component
+   */
+  wrapSx?: SxProps<Theme>;
 }
 
 export const CircularProgress: FC<CircularProgressProps> = ({
   label,
+  wrapSx,
   ...props
 }) => (
-  <Box sx={{ position: "relative", display: "inline-flex" }}>
+  <Box sx={{ position: "relative", display: "inline-flex", ...wrapSx }}>
     <MuiCircularProgress {...props} />
     {label && (
       <Box
