@@ -14,3 +14,6 @@ export { default as AccessTimeIcon } from "@mui/icons-material/AccessTime";
 export { default as AccessTimeFilledIcon } from "@mui/icons-material/AccessTimeFilled";
 
 export { default as ArrowDropDownIcon } from "@mui/icons-material/ArrowDropDown";
+
+export { default as FavoriteIcon } from "@mui/icons-material/Favorite";
+export { default as FavoriteBorderIcon } from "@mui/icons-material/FavoriteBorder";

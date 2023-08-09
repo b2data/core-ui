@@ -6,7 +6,7 @@ export const FAB_SIZES = {
   large: 48
 } as const;
 
-const FabTheme: ComponentThemeOverride["MuiFab"] = {
+const fabTheme: ComponentThemeOverride["MuiFab"] = {
   styleOverrides: {
     root: ({ ownerState: { variant, size }, theme }) => ({
       width: variant === "extended" ? "auto" : FAB_SIZES[size || "medium"],
@@ -37,4 +37,4 @@ const FabTheme: ComponentThemeOverride["MuiFab"] = {
   }
 };
 
-export default FabTheme;
+export default fabTheme;
