@@ -9,16 +9,14 @@ createRoot(document.getElementById("root") as HTMLElement).render(
     <React.Fragment>
       <Typography variant="h1">Core UI Component</Typography>
       <Box
-        display="grid"
-        p="20px"
-        gridTemplateColumns="1fr 3fr"
-        alignItems="center"
+        display="flex"
+        p="16px"
+        gap="32px"
+        flexDirection="row"
+        flexWrap="wrap"
       >
-        {Object.entries(Components).map(([key, Component]) => (
-          <React.Fragment key={key}>
-            <Typography>{key}</Typography>
-            <Component />
-          </React.Fragment>
+        {Object.keys(Components).map((key) => (
+          <Typography>{key}</Typography>
         ))}
       </Box>
     </React.Fragment>
