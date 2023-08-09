@@ -5,7 +5,7 @@ import { FormControlLabel, FormControlLabelProps } from "./FormControlLabel";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<FormControlLabelProps> = {
-  title: "Components/Inputs/FormControlLabel",
+  title: "Components/Inputs/Form Control Label",
   component: FormControlLabel,
   tags: ["autodocs"]
 };

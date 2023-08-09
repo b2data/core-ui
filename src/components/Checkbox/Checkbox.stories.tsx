@@ -18,6 +18,7 @@ const meta: Meta<CheckboxProps> = {
 export default meta;
 
 export const Base: StoryObj<CheckboxProps> = {
+  argTypes: { onChange: { action: "onChange" } },
   render: (props) => <Checkbox {...props} />
 };
 

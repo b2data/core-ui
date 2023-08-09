@@ -16,6 +16,7 @@ import LinearProgressOverriden from "../../components/LinearProgress/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
 import TooltipOverriden from "../../components/Tooltip/theme";
 import TypographyOverriden from "../../components/Typography/theme";
+import RadioOverriden from "../../components/Radio/theme";
 import SwitchOverriden from "../../components/Switch/theme";
 
 export default {
@@ -37,5 +38,6 @@ export default {
   MuiLoadingButton: LoadingButtonOverriden,
   MuiTooltip: TooltipOverriden,
   MuiTypography: TypographyOverriden,
+  MuiRadio: RadioOverriden,
   MuiSwitch: SwitchOverriden
 };

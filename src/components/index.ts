@@ -17,4 +17,6 @@ export * from "./LoadingButton";
 export * from "./ProgressStatistic";
 export * from "./Tooltip";
 export * from "./Typography";
+export * from "./Radio";
+export * from "./RadioGroup";
 export * from "./Switch";

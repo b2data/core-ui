@@ -1,6 +1,6 @@
 import { ComponentThemeOverride } from "src/types";
 
-const FormHelperTextTheme: ComponentThemeOverride["MuiFormHelperText"] = {
+const formHelperTextTheme: ComponentThemeOverride["MuiFormHelperText"] = {
   styleOverrides: {
     contained: {
       marginLeft: 0,
@@ -10,4 +10,4 @@ const FormHelperTextTheme: ComponentThemeOverride["MuiFormHelperText"] = {
   defaultProps: {}
 };
 
-export default FormHelperTextTheme;
+export default formHelperTextTheme;

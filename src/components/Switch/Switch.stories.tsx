@@ -15,6 +15,7 @@ const meta: Meta<SwitchProps> = {
 export default meta;
 
 export const Base: StoryObj<SwitchProps> = {
+  argTypes: { onChange: { action: "onChange" } },
   render: (props) => <Switch {...props} />
 };
 

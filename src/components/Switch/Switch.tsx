@@ -11,7 +11,6 @@ export interface SwitchProps
     MuiSwitchProps,
     | "sx"
     | "checked"
-    | "checkedIcon"
     | "defaultChecked"
     | "disabled"
     | "icon"

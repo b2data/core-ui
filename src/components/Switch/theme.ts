@@ -1,6 +1,6 @@
 import { ComponentThemeOverride } from "src/types";
 
-const SwitchTheme: ComponentThemeOverride["MuiSwitch"] = {
+const switchTheme: ComponentThemeOverride["MuiSwitch"] = {
   styleOverrides: {
     root: ({ ownerState: { size } }) => ({
       padding: 0,
@@ -55,4 +55,4 @@ const SwitchTheme: ComponentThemeOverride["MuiSwitch"] = {
   }
 };
 
-export default SwitchTheme;
+export default switchTheme;
