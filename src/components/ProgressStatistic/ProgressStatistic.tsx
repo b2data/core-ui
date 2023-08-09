@@ -1,7 +1,7 @@
 import { Box, SxProps, Theme } from "@mui/material";
 import { FC } from "react";
 
-export type ProgressStatistic = {
+export type ProgressStatisticEntryType = {
   color: string;
   value: number;
 };
@@ -9,9 +9,9 @@ export type ProgressStatistic = {
 export interface ProgressStatisticProps {
   /**
    * Statistic data.
-   * `ProgressStatistic = { color: string; value: number }`
+   * `ProgressStatisticEntryType = { color: string; value: number }`
    */
-  data: ProgressStatistic[];
+  data: ProgressStatisticEntryType[];
   /**
    * SX properties for component
    */
