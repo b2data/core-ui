@@ -7,6 +7,7 @@ import ButtonGroupOverriden from "../../components/ButtonGroup/theme";
 import ChipOverriden from "../../components/Chip/theme";
 import CircularProgressOverriden from "../../components/CircularProgress/theme";
 import DividerOverriden from "../../components/Divider/theme";
+import FabOverriden from "../../components/Fab/theme";
 import IconButtonOverriden from "../../components/IconButton/theme";
 import LinearProgressOverriden from "../../components/LinearProgress/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
@@ -23,6 +24,7 @@ export default {
   MuiChip: ChipOverriden,
   MuiCircularProgress: CircularProgressOverriden,
   MuiDivider: DividerOverriden,
+  MuiFab: FabOverriden,
   MuiIconButton: IconButtonOverriden,
   MuiLinearProgress: LinearProgressOverriden,
   MuiLoadingButton: LoadingButtonOverriden,

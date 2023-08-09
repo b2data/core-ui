@@ -7,6 +7,7 @@ export * from "./ButtonGroup";
 export * from "./Chip";
 export * from "./CircularProgress";
 export * from "./Divider";
+export * from "./Fab";
 export * from "./IconButton";
 export * from "./LinearProgress";
 export * from "./LoadingButton";
