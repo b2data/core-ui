@@ -14,6 +14,8 @@ import FormHelperTextOverriden from "../../components/FormHelperText/theme";
 import IconButtonOverriden from "../../components/IconButton/theme";
 import LinearProgressOverriden from "../../components/LinearProgress/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
+import PopoverOverriden from "../../components/Popover/theme";
+import PopperOverriden from "../../components/Popper/theme";
 import TooltipOverriden from "../../components/Tooltip/theme";
 import TypographyOverriden from "../../components/Typography/theme";
 import RadioOverriden from "../../components/Radio/theme";
@@ -36,6 +38,8 @@ export default {
   MuiIconButton: IconButtonOverriden,
   MuiLinearProgress: LinearProgressOverriden,
   MuiLoadingButton: LoadingButtonOverriden,
+  MuiPopover: PopoverOverriden,
+  MuiPopper: PopperOverriden,
   MuiTooltip: TooltipOverriden,
   MuiTypography: TypographyOverriden,
   MuiRadio: RadioOverriden,
