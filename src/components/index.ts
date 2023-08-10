@@ -8,6 +8,7 @@ export * from "./ButtonGroup";
 export * from "./Checkbox";
 export * from "./Chip";
 export * from "./CircularProgress";
+export * from "./ClickAwayListener";
 export * from "./Divider";
 export * from "./Fab";
 export * from "./FormControlLabel";
