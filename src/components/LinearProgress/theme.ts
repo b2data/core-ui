@@ -1,13 +1,16 @@
 import { ComponentThemeOverride } from "src/types";
 
-const LinearProgressTheme: ComponentThemeOverride["MuiLinearProgress"] = {
+const linearProgressTheme: ComponentThemeOverride["MuiLinearProgress"] = {
   styleOverrides: {
     root: {
       width: "100%",
       borderRadius: 4
     }
   },
-  defaultProps: {}
+  defaultProps: {
+    color: "primary",
+    variant: "indeterminate"
+  }
 };
 
-export default LinearProgressTheme;
+export default linearProgressTheme;

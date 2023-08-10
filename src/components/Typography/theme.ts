@@ -15,6 +15,10 @@ const typographyTheme: ComponentThemeOverride["MuiTypography"] = {
       }
       return undefined;
     }
+  },
+  defaultProps: {
+    variant: "body1",
+    align: "inherit"
   }
 };
 
