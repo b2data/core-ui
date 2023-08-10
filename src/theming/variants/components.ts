@@ -7,7 +7,9 @@ import ButtonGroupOverriden from "../../components/ButtonGroup/theme";
 import CheckboxOverriden from "../../components/Checkbox/theme";
 import ChipOverriden from "../../components/Chip/theme";
 import CircularProgressOverriden from "../../components/CircularProgress/theme";
+import CollapseOverriden from "../../components/Collapse/theme";
 import DividerOverriden from "../../components/Divider/theme";
+import DrawerOverriden from "../../components/Drawer/theme";
 import FabOverriden from "../../components/Fab/theme";
 import FormControlLabelOverriden from "../../components/FormControlLabel/theme";
 import FormHelperTextOverriden from "../../components/FormHelperText/theme";
@@ -31,7 +33,9 @@ export default {
   MuiCheckbox: CheckboxOverriden,
   MuiChip: ChipOverriden,
   MuiCircularProgress: CircularProgressOverriden,
+  MuiCollapse: CollapseOverriden,
   MuiDivider: DividerOverriden,
+  MuiDrawer: DrawerOverriden,
   MuiFab: FabOverriden,
   MuiFormControlLabel: FormControlLabelOverriden,
   MuiFormHelperText: FormHelperTextOverriden,

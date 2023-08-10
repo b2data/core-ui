@@ -5,7 +5,7 @@ import { ClickAwayListener, ClickAwayListenerProps } from "./ClickAwayListener";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<ClickAwayListenerProps> = {
-  title: "Components/ClickAwayListener",
+  title: "Components/Click Away Listener",
   component: ClickAwayListener,
   tags: ["autodocs"]
 };
