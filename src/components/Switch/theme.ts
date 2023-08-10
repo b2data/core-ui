@@ -51,6 +51,7 @@ const switchTheme: ComponentThemeOverride["MuiSwitch"] = {
     })
   },
   defaultProps: {
+    color: "primary",
     size: "small"
   }
 };

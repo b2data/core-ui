@@ -4,7 +4,9 @@ const loadingButtonTheme: ComponentThemeOverride["MuiButton"] = {
   styleOverrides: {},
   defaultProps: {
     disableElevation: true,
-    variant: "contained"
+    variant: "contained",
+    color: "primary",
+    size: "medium"
   }
 };
 

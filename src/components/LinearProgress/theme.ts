@@ -7,7 +7,10 @@ const linearProgressTheme: ComponentThemeOverride["MuiLinearProgress"] = {
       borderRadius: 4
     }
   },
-  defaultProps: {}
+  defaultProps: {
+    color: "primary",
+    variant: "indeterminate"
+  }
 };
 
 export default linearProgressTheme;

@@ -10,6 +10,7 @@ const RadioTheme: ComponentThemeOverride["MuiRadio"] = {
     })
   },
   defaultProps: {
+    color: "primary",
     size: "small"
   }
 };

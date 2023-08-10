@@ -56,7 +56,9 @@ const badgeTheme: ComponentThemeOverride["MuiBadge"] = {
 
   defaultProps: {
     color: "primary",
-    variant: "standard"
+    variant: "standard",
+    overlap: "rectangular",
+    anchorOrigin: { vertical: "top", horizontal: "right" }
   }
 };
 

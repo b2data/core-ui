@@ -10,7 +10,8 @@ const checkboxTheme: ComponentThemeOverride["MuiCheckbox"] = {
     })
   },
   defaultProps: {
-    size: "small"
+    size: "small",
+    color: "primary"
   }
 };
 

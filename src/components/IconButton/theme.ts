@@ -20,6 +20,10 @@ const iconButtonTheme: ComponentThemeOverride["MuiIconButton"] = {
         fontSize: 22
       }
     }
+  },
+  defaultProps: {
+    color: "default",
+    size: "medium"
   }
 };
 

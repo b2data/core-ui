@@ -41,7 +41,9 @@ const buttonTheme: ComponentThemeOverride["MuiButton"] = {
 
   defaultProps: {
     disableElevation: true,
-    variant: "contained"
+    variant: "contained",
+    color: "primary",
+    size: "medium"
   }
 };
 

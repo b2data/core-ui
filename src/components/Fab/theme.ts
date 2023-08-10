@@ -33,7 +33,9 @@ const fabTheme: ComponentThemeOverride["MuiFab"] = {
     }
   },
   defaultProps: {
-    size: "medium"
+    color: "default",
+    size: "medium",
+    variant: "circular"
   }
 };
 
