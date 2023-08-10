@@ -10,7 +10,8 @@ const popoverTheme: ComponentThemeOverride["MuiPopover"] = {
   },
   defaultProps: {
     anchorOrigin: { vertical: "bottom", horizontal: "left" },
-    transformOrigin: { vertical: "top", horizontal: "left" }
+    transformOrigin: { vertical: "top", horizontal: "left" },
+    elevation: 3
   }
 };
 
