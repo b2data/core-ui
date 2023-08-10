@@ -1,10 +1,10 @@
 import { Radio as MuiRadio, RadioProps as MuiRadioProps } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideOnlyMuiProps } from "src/types";
 
 export interface RadioProps
-  extends OverrideMuiProps<
+  extends OverrideOnlyMuiProps<
     MuiRadioProps,
     | "sx"
     | "checked"
@@ -16,8 +16,7 @@ export interface RadioProps
     | "inputRef"
     | "onChange"
     | "required"
-    | "value",
-    HTMLButtonElement
+    | "value"
   > {
   /**
    * The color of the component.

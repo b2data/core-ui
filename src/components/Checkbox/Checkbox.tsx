@@ -4,10 +4,10 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideOnlyMuiProps } from "src/types";
 
 export interface CheckboxProps
-  extends OverrideMuiProps<
+  extends OverrideOnlyMuiProps<
     MuiCheckboxProps,
     | "sx"
     | "checked"
@@ -22,8 +22,7 @@ export interface CheckboxProps
     | "inputRef"
     | "onChange"
     | "required"
-    | "value",
-    HTMLButtonElement
+    | "value"
   > {
   /**
    * The color of the component.

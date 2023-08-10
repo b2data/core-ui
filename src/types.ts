@@ -8,3 +8,8 @@ export type OverrideMuiProps<
   TProps extends keyof TType,
   TElement = HTMLDivElement
 > = React.HTMLAttributes<TElement> & Pick<TType, TProps>;
+
+export type OverrideOnlyMuiProps<TType, TProps extends keyof TType> = Pick<
+  TType,
+  TProps
+>;
