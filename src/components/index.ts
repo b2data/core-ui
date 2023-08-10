@@ -16,6 +16,7 @@ export * from "./FormHelperText";
 export * from "./IconButton";
 export * from "./LinearProgress";
 export * from "./LoadingButton";
+export * from "./Portal";
 export * from "./ProgressStatistic";
 export * from "./Radio";
 export * from "./RadioGroup";
