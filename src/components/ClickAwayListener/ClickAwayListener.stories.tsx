@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import { Button } from "../Button";
-
 import { ClickAwayListener, ClickAwayListenerProps } from "./ClickAwayListener";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -21,7 +19,7 @@ export const Base: StoryObj<ClickAwayListenerProps> = {
     return (
       <ClickAwayListener {...props} onClickAway={() => setOpen(false)}>
         <div>
-          <Button onClick={() => setOpen(true)}>Open</Button>
+          <button onClick={() => setOpen(true)}>Open</button>
           {open && <div>opned</div>}
         </div>
       </ClickAwayListener>
