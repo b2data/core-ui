@@ -11,6 +11,7 @@ export * from "./CircularProgress";
 export * from "./ClickAwayListener";
 export * from "./Collapse";
 export * from "./Divider";
+export * from "./Drawer";
 export * from "./Fab";
 export * from "./FormControlLabel";
 export * from "./FormHelperText";
