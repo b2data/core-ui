@@ -4,10 +4,10 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideOnlyMuiProps } from "src/types";
 
 export interface SwitchProps
-  extends OverrideMuiProps<
+  extends OverrideOnlyMuiProps<
     MuiSwitchProps,
     | "sx"
     | "checked"
@@ -19,8 +19,7 @@ export interface SwitchProps
     | "inputRef"
     | "onChange"
     | "required"
-    | "value",
-    HTMLButtonElement
+    | "value"
   > {
   /**
    * The color of the component.

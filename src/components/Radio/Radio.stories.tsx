@@ -22,7 +22,6 @@ export const Base: StoryObj<RadioProps> = {
 export const Variants: StoryObj<RadioProps> = {
   render: (props) => (
     <Preview>
-      <Radio {...props} defaultChecked />
       <Radio {...props} />
       <Radio {...props} disabled />
       <Radio {...props} disabled checked />
