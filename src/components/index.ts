@@ -24,6 +24,8 @@ export * from "./Portal";
 export * from "./ProgressStatistic";
 export * from "./Radio";
 export * from "./RadioGroup";
+export * from "./Skeleton";
+export * from "./SkeletonGroup";
 export * from "./Stack";
 export * from "./Switch";
 export * from "./Tooltip";

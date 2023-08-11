@@ -21,6 +21,7 @@ import PopperOverriden from "../../components/Popper/theme";
 import TooltipOverriden from "../../components/Tooltip/theme";
 import TypographyOverriden from "../../components/Typography/theme";
 import RadioOverriden from "../../components/Radio/theme";
+import SkeletonOverriden from "../../components/Skeleton/theme";
 import SwitchOverriden from "../../components/Switch/theme";
 
 export default {
@@ -47,5 +48,6 @@ export default {
   MuiTooltip: TooltipOverriden,
   MuiTypography: TypographyOverriden,
   MuiRadio: RadioOverriden,
+  MuiSkeleton: SkeletonOverriden,
   MuiSwitch: SwitchOverriden
 };
