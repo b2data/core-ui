@@ -7,7 +7,7 @@ import { LinearProgress, LinearProgressProps } from "./LinearProgress";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<LinearProgressProps> = {
-  title: "Components/Progress/LinearProgress",
+  title: "Components/Progress/Linear Progress",
   component: LinearProgress,
   tags: ["autodocs"]
 };

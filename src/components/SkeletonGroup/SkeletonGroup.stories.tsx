@@ -3,7 +3,7 @@ import { SkeletonGroup, SkeletonGroupProps } from "./SkeletonGroup";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<SkeletonGroupProps> = {
-  title: "Components/SkeletonGroup",
+  title: "Components/Skeleton/Skeleton Group",
   component: SkeletonGroup,
   tags: ["autodocs"]
 };

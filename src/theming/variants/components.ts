@@ -20,11 +20,13 @@ import LinkOverriden from "../../components/Link/theme";
 import LoadingButtonOverriden from "../../components/LoadingButton/theme";
 import PopoverOverriden from "../../components/Popover/theme";
 import PopperOverriden from "../../components/Popper/theme";
-import TooltipOverriden from "../../components/Tooltip/theme";
-import TypographyOverriden from "../../components/Typography/theme";
 import RadioOverriden from "../../components/Radio/theme";
 import SkeletonOverriden from "../../components/Skeleton/theme";
 import SwitchOverriden from "../../components/Switch/theme";
+import TabOverriden from "../../components/Tab/theme";
+import TabsOverriden from "../../components/Tabs/theme";
+import TooltipOverriden from "../../components/Tooltip/theme";
+import TypographyOverriden from "../../components/Typography/theme";
 
 export default {
   MuiAvatar: AvatarOverriden,
@@ -49,9 +51,11 @@ export default {
   MuiLoadingButton: LoadingButtonOverriden,
   MuiPopover: PopoverOverriden,
   MuiPopper: PopperOverriden,
-  MuiTooltip: TooltipOverriden,
-  MuiTypography: TypographyOverriden,
   MuiRadio: RadioOverriden,
   MuiSkeleton: SkeletonOverriden,
-  MuiSwitch: SwitchOverriden
+  MuiSwitch: SwitchOverriden,
+  MuiTab: TabOverriden,
+  MuiTabs: TabsOverriden,
+  MuiTooltip: TooltipOverriden,
+  MuiTypography: TypographyOverriden
 };

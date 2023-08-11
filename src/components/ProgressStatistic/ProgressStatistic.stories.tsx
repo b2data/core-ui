@@ -3,7 +3,7 @@ import { ProgressStatistic, ProgressStatisticProps } from "./ProgressStatistic";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<ProgressStatisticProps> = {
-  title: "Components/Progress/ProgressStatistic",
+  title: "Components/Progress/Progress Statistic",
   component: ProgressStatistic,
   tags: ["autodocs"]
 };

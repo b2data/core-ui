@@ -4,7 +4,8 @@ const breadcrumbsTheme: ComponentThemeOverride["MuiBreadcrumbs"] = {
   styleOverrides: {
     li: ({ theme }) => ({
       "& a": {
-        display: "flex"
+        display: "flex",
+        alignItems: "center"
       },
       "& a>.MuiSvgIcon-root": {
         fontSize: "inherit",

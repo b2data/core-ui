@@ -30,5 +30,7 @@ export * from "./Skeleton";
 export * from "./SkeletonGroup";
 export * from "./Stack";
 export * from "./Switch";
+export * from "./Tab";
+export * from "./Tabs";
 export * from "./Tooltip";
 export * from "./Typography";
