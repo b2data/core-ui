@@ -1,8 +1,8 @@
 import { ComponentThemeOverride } from "src/types";
 
-const skeletonTheme: ComponentThemeOverride["MuiSkeleton"] = {
+const linkTheme: ComponentThemeOverride["MuiLink"] = {
   styleOverrides: {},
   defaultProps: {}
 };
 
-export default skeletonTheme;
+export default linkTheme;
