@@ -6,7 +6,7 @@ import { FC } from "react";
 
 import { OverrideMuiProps } from "src/types";
 
-export interface DrawerProps 
+export interface DrawerProps
   extends OverrideMuiProps<
     MuiDrawerProps,
     | "children"
@@ -14,20 +14,20 @@ export interface DrawerProps
     | "onClose"
     | "open"
     | "sx"
-    |"component"
-    |"ref"
-    |"container"
-    |"disableEscapeKeyDown"
-    |"disablePortal"
-    |"disableScrollLock"
-    |"hideBackdrop"
-    |"keepMounted"
+    | "component"
+    | "ref"
+    | "container"
+    | "disableEscapeKeyDown"
+    | "disablePortal"
+    | "disableScrollLock"
+    | "hideBackdrop"
+    | "keepMounted"
   > {
   /**
    * Side from which the drawer will appear.
    * @default left
    */
-   anchor?: MuiDrawerProps["anchor"];
+  anchor?: MuiDrawerProps["anchor"];
   /**
    * The variant to use.
    * @default temporary
@@ -35,6 +35,4 @@ export interface DrawerProps
   variant?: "temporary" | "persistent";
 }
 
-export const Drawer: FC<DrawerProps> = (props) => (
-  <MuiDrawer {...props} />
-);
+export const Drawer: FC<DrawerProps> = (props) => <MuiDrawer {...props} />;

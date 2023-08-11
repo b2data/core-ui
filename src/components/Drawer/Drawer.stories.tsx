@@ -19,11 +19,7 @@ export const Base: StoryObj<DrawerProps> = {
     return (
       <div>
         <button onClick={() => setOpen(true)}>Open</button>
-        <Drawer
-          open={open}
-          onClose={() => setOpen(false)}
-          {...props}
-        >
+        <Drawer open={open} onClose={() => setOpen(false)} {...props}>
           <div style={{ padding: 16 }}>Drawer content</div>
         </Drawer>
       </div>
