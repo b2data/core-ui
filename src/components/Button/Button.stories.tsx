@@ -90,6 +90,9 @@ export const Colors: StoryObj<ButtonProps> = {
         <Button {...props} color="inherit">
           Inherit
         </Button>
+        <Button {...props} color="default">
+          Default
+        </Button>
       </Preview>
       <Preview>
         <Button {...props} color="primary" variant="contained">
@@ -113,6 +116,9 @@ export const Colors: StoryObj<ButtonProps> = {
         <Button {...props} color="inherit" variant="contained">
           Inherit
         </Button>
+        <Button {...props} color="default" variant="contained">
+          Default
+        </Button>
       </Preview>
       <Preview>
         <Button {...props} color="primary" variant="outlined">
@@ -135,6 +141,9 @@ export const Colors: StoryObj<ButtonProps> = {
         </Button>
         <Button {...props} color="inherit" variant="outlined">
           Inherit
+        </Button>
+        <Button {...props} color="default" variant="outlined">
+          Default
         </Button>
       </Preview>
     </Preview>

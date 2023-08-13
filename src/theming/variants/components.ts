@@ -1,3 +1,4 @@
+import AlertOverriden from "../../components/Alert/theme";
 import AvatarOverriden from "../../components/Avatar/theme";
 import AvatarGroupOverriden from "../../components/AvatarGroup/theme";
 import BackdropOverriden from "../../components/Backdrop/theme";
@@ -29,6 +30,7 @@ import TooltipOverriden from "../../components/Tooltip/theme";
 import TypographyOverriden from "../../components/Typography/theme";
 
 export default {
+  MuiAlert: AlertOverriden,
   MuiAvatar: AvatarOverriden,
   MuiAvatarGroup: AvatarGroupOverriden,
   MuiBackdrop: BackdropOverriden,

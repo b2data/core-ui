@@ -36,6 +36,19 @@ const buttonTheme: ComponentThemeOverride["MuiButton"] = {
         marginTop: -2,
         marginBottom: -2
       }
+    },
+    outlined: ({ ownerState: { color } }) => {
+      if (color === "default") {
+        return {
+          borderColor: "rgba(0, 0, 0, 0.23)",
+          color: "#000",
+          "&:hover": {
+            borderColor: "rgba(0, 0, 0, 0.23)",
+            backgroundColor: "rgba(0, 0, 0, 0.04)"
+          }
+        };
+      }
+      return undefined;
     }
   },
 

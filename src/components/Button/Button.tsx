@@ -6,6 +6,12 @@ import { FC } from "react";
 
 import { OverrideMuiProps } from "src/types";
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    default: true;
+  }
+}
+
 export interface ButtonProps
   extends OverrideMuiProps<
     MuiButtonProps,
