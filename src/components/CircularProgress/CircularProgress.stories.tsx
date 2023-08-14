@@ -9,7 +9,7 @@ import { CircularProgress, CircularProgressProps } from "./CircularProgress";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<CircularProgressProps> = {
-  title: "Components/Progress/CircularProgress",
+  title: "Components/Progress/Circular Progress",
   component: CircularProgress,
   tags: ["autodocs"]
 };

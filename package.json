@@ -1,6 +1,6 @@
 {
   "name": "@b2data/core-ui",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "files": [
     "lib"
@@ -35,7 +35,8 @@
     "@mui/material": "^5.14.1",
     "@mui/x-date-pickers": "^6.10.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.2.1",
