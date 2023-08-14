@@ -7,43 +7,73 @@ const getColor = (theme: Theme) =>
 
 const alertTheme: ComponentThemeOverride["MuiAlert"] = {
   styleOverrides: {
-    root: ({ ownerState: { variant, severity }, theme }) => ({
-      padding: 14,
-      ...(variant === "standard" && severity
-        ? {
-            backgroundColor: getColor(theme)(
-              theme.palette[severity as AlertColor]?.light,
-              0.8
-            )
+    root: ({ ownerState: { variant, severity, color }, theme }) => {
+      const styles = {
+        padding: 14,
+        border: "1px solid"
+      };
+      if (color) {
+        return {
+          ...styles,
+          borderColor: theme.palette.grey[500],
+          color: theme.palette.text.primary
+        };
+      }
+      if (variant === "standard") {
+        return {
+          ...styles,
+          backgroundColor: getColor(theme)(
+            theme.palette[severity as AlertColor]?.light,
+            0.8
+          ),
+          borderColor: getColor(theme)(
+            theme.palette[severity as AlertColor]?.light,
+            0.8
+          )
+        };
+      }
+      if (variant === "outlined") {
+        return {
+          ...styles,
+          borderColor: theme.palette[severity as AlertColor]?.main
+        };
+      }
+
+      return undefined;
+    },
+    icon: ({ ownerState: { variant, severity, color }, theme }) => {
+      const styles = {
+        margin: "-14px 6px -14px -14px",
+        padding: "10px 6px",
+        width: 30
+      };
+
+      if (color) {
+        return {
+          ...styles,
+          "& .MuiSvgIcon-root": {
+            fontSize: 18,
+            color: theme.palette.text.primary
           }
-        : {}),
-      ...(variant === "outlined" && severity
-        ? {
-            borderColor: getColor(theme)(
-              theme.palette[severity as AlertColor]?.light,
-              0.6
-            )
-          }
-        : {})
-    }),
-    icon: ({ ownerState: { variant, severity }, theme }) => ({
-      margin: "-14px 6px -14px -14px",
-      padding: "10px 6px",
-      width: 30,
-      "& .MuiSvgIcon-root": {
-        fontSize: 18
-      },
-      ...(variant === "outlined" && severity
-        ? {
-            backgroundColor: getColor(theme)(
-              theme.palette[severity as AlertColor]?.light,
-              0.6
-            ),
-            borderTopLeftRadius: 3,
-            borderBottomLeftRadius: 3
-          }
-        : {})
-    }),
+        };
+      }
+
+      if (variant === "outlined") {
+        return {
+          ...styles,
+          "& .MuiSvgIcon-root": {
+            fontSize: 18,
+            color: theme.palette.background.default
+          },
+          backgroundColor: theme.palette[severity as AlertColor]?.main,
+          borderTopLeftRadius: 3,
+          borderBottomLeftRadius: 3
+        };
+      }
+
+      return styles;
+    },
+
     message: {
       padding: 0,
       overflow: "inherit",

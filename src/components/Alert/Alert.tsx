@@ -8,6 +8,9 @@ import { cloneElement, FC, ReactElement } from "react";
 import { OverrideMuiProps } from "src/types";
 
 declare module "@mui/material/Alert" {
+  interface AlertPropsColorOverrides {
+    default: true;
+  }
   interface AlertPropsVariantOverrides {
     standard: true;
     filled: false;
@@ -44,7 +47,6 @@ export interface AlertProps
   variant?: MuiAlertProps["variant"];
   /**
    * The title to show in the component
-   * @default standard
    */
   title?: string;
   /**
@@ -57,9 +59,14 @@ export const Alert: FC<AlertProps> = ({
   title,
   children,
   actions,
+  severity,
   ...props
 }) => (
-  <MuiAlert {...props} color={undefined}>
+  <MuiAlert
+    {...props}
+    color={!severity ? "default" : undefined}
+    severity={severity || "info"}
+  >
     {title && <MuiAlertTitle>{title}</MuiAlertTitle>}
     {children}
     {actions &&

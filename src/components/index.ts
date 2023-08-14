@@ -29,6 +29,7 @@ export * from "./Radio";
 export * from "./RadioGroup";
 export * from "./Skeleton";
 export * from "./SkeletonGroup";
+export * from "./Snackbar";
 export * from "./Stack";
 export * from "./Switch";
 export * from "./Tab";

@@ -33,7 +33,7 @@ const config: StorybookConfig = {
       // Filter out third-party props from node_modules except @mui packages
       propFilter: (prop) =>
         prop.parent
-          ? !/node_modules\/(?!@mui)/.test(prop.parent.fileName)
+          ? !/node_modules\/(?!@mui|notistack)/.test(prop.parent.fileName)
           : true
     }
   }
