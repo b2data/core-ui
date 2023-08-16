@@ -17,6 +17,7 @@ export interface RadioProps
     | "onChange"
     | "required"
     | "value"
+    | "edge"
   > {
   /**
    * The color of the component.

@@ -17,3 +17,6 @@ export { default as ArrowDropDownIcon } from "@mui/icons-material/ArrowDropDown"
 
 export { default as FavoriteIcon } from "@mui/icons-material/Favorite";
 export { default as FavoriteBorderIcon } from "@mui/icons-material/FavoriteBorder";
+
+export { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
+export { default as MoreHorizIcon } from "@mui/icons-material/MoreHoriz";
