@@ -1,4 +1,4 @@
-import { DeleteIcon, SendIcon } from "src/icons";
+import { DeleteIcon, SaveIcon, SendIcon } from "src/icons";
 import { Preview } from ".storybook/components";
 
 import { Button, ButtonProps } from "./Button";
@@ -241,4 +241,31 @@ export const FullWidth: StoryObj<ButtonProps> = {
     variant: "contained",
     children: "Full width"
   }
+};
+
+export const Loading: StoryObj<ButtonProps> = {
+  args: {
+    loading: true,
+    children: <span>Save</span>
+  }
+};
+
+export const LoadingIndicator: StoryObj<ButtonProps> = {
+  args: {
+    loading: true,
+    children: <span>Fetch data</span>,
+    loadingIndicator: "Loading..."
+  }
+};
+export const LoadingPosition: StoryObj<ButtonProps> = {
+  args: {
+    loading: true,
+    children: <span>Save</span>
+  },
+  render: (props) => (
+    <Preview>
+      <Button {...props} loadingPosition="start" startIcon={<SaveIcon />} />
+      <Button {...props} loadingPosition="end" endIcon={<SaveIcon />} />
+    </Preview>
+  )
 };

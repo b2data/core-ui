@@ -26,7 +26,6 @@ import ListItemButtonOverriden from "../../components/ListItemButton/theme";
 import ListItemIconOverriden from "../../components/ListItemIcon/theme";
 import ListItemTextOverriden from "../../components/ListItemText/theme";
 import ListSubheaderOverriden from "../../components/ListSubheader/theme";
-import LoadingButtonOverriden from "../../components/LoadingButton/theme";
 import MenuOverriden from "../../components/Menu/theme";
 import MenuItemOverriden from "../../components/MenuItem/theme";
 import MenuListOverriden from "../../components/MenuList/theme";
@@ -69,7 +68,7 @@ export default {
   MuiListItemIcon: ListItemIconOverriden,
   MuiListItemText: ListItemTextOverriden,
   MuiListSubheader: ListSubheaderOverriden,
-  MuiLoadingButton: LoadingButtonOverriden,
+  MuiLoadingButton: ButtonOverriden,
   MuiMenu: MenuOverriden,
   MuiMenuItem: MenuItemOverriden,
   MuiMenuList: MenuListOverriden,
