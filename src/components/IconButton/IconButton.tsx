@@ -9,7 +9,7 @@ import { OverrideMuiProps } from "src/types";
 export interface IconButtonProps
   extends OverrideMuiProps<
     MuiIconButtonProps,
-    "centerRipple" | "sx" | "component",
+    "centerRipple" | "sx" | "component" | "edge",
     HTMLButtonElement
   > {
   /**

@@ -19,6 +19,9 @@ const iconButtonTheme: ComponentThemeOverride["MuiIconButton"] = {
       "& .MuiSvgIcon-root": {
         fontSize: 22
       }
+    },
+    edgeEnd: {
+      marginRight: -12
     }
   },
   defaultProps: {

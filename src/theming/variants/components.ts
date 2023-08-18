@@ -18,7 +18,17 @@ import FormHelperTextOverriden from "../../components/FormHelperText/theme";
 import IconButtonOverriden from "../../components/IconButton/theme";
 import LinearProgressOverriden from "../../components/LinearProgress/theme";
 import LinkOverriden from "../../components/Link/theme";
-import LoadingButtonOverriden from "../../components/LoadingButton/theme";
+import ListOverriden from "../../components/List/theme";
+import ListItemOverriden from "../../components/ListItem/theme";
+import ListItemActionOverriden from "../../components/ListItemAction/theme";
+import ListItemAvatarOverriden from "../../components/ListItemAvatar/theme";
+import ListItemButtonOverriden from "../../components/ListItemButton/theme";
+import ListItemIconOverriden from "../../components/ListItemIcon/theme";
+import ListItemTextOverriden from "../../components/ListItemText/theme";
+import ListSubheaderOverriden from "../../components/ListSubheader/theme";
+import MenuOverriden from "../../components/Menu/theme";
+import MenuItemOverriden from "../../components/MenuItem/theme";
+import MenuListOverriden from "../../components/MenuList/theme";
 import PopoverOverriden from "../../components/Popover/theme";
 import PopperOverriden from "../../components/Popper/theme";
 import RadioOverriden from "../../components/Radio/theme";
@@ -50,7 +60,18 @@ export default {
   MuiIconButton: IconButtonOverriden,
   MuiLinearProgress: LinearProgressOverriden,
   MuiLink: LinkOverriden,
-  MuiLoadingButton: LoadingButtonOverriden,
+  MuiList: ListOverriden,
+  MuiListItem: ListItemOverriden,
+  MuiListItemSecondaryAction: ListItemActionOverriden,
+  MuiListItemAvatar: ListItemAvatarOverriden,
+  MuiListItemButton: ListItemButtonOverriden,
+  MuiListItemIcon: ListItemIconOverriden,
+  MuiListItemText: ListItemTextOverriden,
+  MuiListSubheader: ListSubheaderOverriden,
+  MuiLoadingButton: ButtonOverriden,
+  MuiMenu: MenuOverriden,
+  MuiMenuItem: MenuItemOverriden,
+  MuiMenuList: MenuListOverriden,
   MuiPopover: PopoverOverriden,
   MuiPopper: PopperOverriden,
   MuiRadio: RadioOverriden,

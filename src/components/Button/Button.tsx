@@ -1,7 +1,7 @@
 import {
-  Button as MuiButton,
-  ButtonProps as MuiButtonProps
-} from "@mui/material";
+  LoadingButton as MuiLoadingButton,
+  LoadingButtonProps as MuiLoadingButtonProps
+} from "@mui/lab";
 import { FC } from "react";
 
 import { OverrideMuiProps } from "src/types";
@@ -11,15 +11,15 @@ declare module "@mui/material/Button" {
     default: true;
   }
 }
-
 export interface ButtonProps
   extends OverrideMuiProps<
-    MuiButtonProps,
+    MuiLoadingButtonProps,
+    | "loading"
+    | "loadingIndicator"
     | "sx"
-    | "startIcon"
     | "endIcon"
+    | "startIcon"
     | "fullWidth"
-    | "component"
     | "href"
     | "LinkComponent",
     HTMLButtonElement
@@ -28,22 +28,33 @@ export interface ButtonProps
    * The color of the component.
    * @default primary
    */
-  color?: MuiButtonProps["color"];
+  color?: MuiLoadingButtonProps["color"];
   /**
    * The size of the component. `small` is equivalent to the dense button styling.
    * @default medium
    */
-  size?: MuiButtonProps["size"];
-  /**
-   * The variant to use.
-   * @default contained
-   */
-  variant?: MuiButtonProps["variant"];
+  size?: MuiLoadingButtonProps["size"];
   /**
    * If `true`, the component is disabled.
    * @default false
    */
-  disabled?: MuiButtonProps["disabled"];
+  disabled?: MuiLoadingButtonProps["disabled"];
+  /**
+   * The variant to use.
+   * @default contained
+   */
+  variant?: MuiLoadingButtonProps["variant"];
+  /**
+   * @default false
+   */
+  loading?: MuiLoadingButtonProps["loading"];
+  /**
+   * The loading indicator can be positioned on the start, end, or the center of the button.
+   * @default center
+   */
+  loadingPosition?: MuiLoadingButtonProps["loadingPosition"];
 }
 
-export const Button: FC<ButtonProps> = (props) => <MuiButton {...props} />;
+export const Button: FC<ButtonProps> = (props) => (
+  <MuiLoadingButton {...props} />
+);
