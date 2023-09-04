@@ -46,3 +46,4 @@ export * from "./Tab";
 export * from "./Tabs";
 export * from "./Tooltip";
 export * from "./Typography";
+export * from "./DataTable";
