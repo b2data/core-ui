@@ -5,8 +5,8 @@ import {
 import { cloneElement, FC, Fragment, ReactElement, useState } from "react";
 
 import { MoreVertIcon } from "src/icons";
-import { OverrideMuiProps } from "src/types";
 
+import { OverrideMuiProps } from "../types";
 import { IconButton } from "../IconButton";
 import { ListItemAction } from "../ListItemAction";
 import { ListItemAvatar } from "../ListItemAvatar";

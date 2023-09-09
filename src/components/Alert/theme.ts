@@ -1,6 +1,6 @@
 import { AlertColor, darken, lighten, Theme } from "@mui/material";
 
-import { ComponentThemeOverride } from "src/types";
+import { ComponentThemeOverride } from "../types";
 
 const getColor = (theme: Theme) =>
   theme.palette.mode === "light" ? lighten : darken;

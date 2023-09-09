@@ -1,8 +1,7 @@
 import { List as MuiList, ListProps as MuiListProps } from "@mui/material";
 import { FC, isValidElement } from "react";
 
-import { OverrideMuiProps } from "src/types";
-
+import { OverrideMuiProps } from "../types";
 import { ListSubheader } from "../ListSubheader";
 
 export interface ListProps

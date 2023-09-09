@@ -1,7 +1,7 @@
 import { Radio as MuiRadio, RadioProps as MuiRadioProps } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideOnlyMuiProps } from "src/types";
+import { OverrideOnlyMuiProps } from "../types";
 
 export interface RadioProps
   extends OverrideOnlyMuiProps<

@@ -9,4 +9,6 @@ import { darkTheme, lightTheme } from "./variants";
 
 export * from "./utils";
 
+export type Direction = "ltr" | "rtl";
+
 export { CssBaseline, ThemeProvider, withStyles, lightTheme, darkTheme };

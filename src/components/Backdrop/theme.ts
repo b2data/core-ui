@@ -1,5 +1,6 @@
 import { alpha } from "src/theming";
-import { ComponentThemeOverride } from "src/types";
+
+import { ComponentThemeOverride } from "../types";
 
 const backdropTheme: ComponentThemeOverride["MuiBackdrop"] = {
   styleOverrides: {

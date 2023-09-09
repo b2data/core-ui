@@ -5,8 +5,7 @@ import {
 import { FC, ReactElement } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { OverrideMuiProps } from "src/types";
-
+import { OverrideMuiProps } from "../types";
 import { Link } from "../Link";
 
 export type Breadcrumb = {

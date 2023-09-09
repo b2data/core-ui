@@ -4,7 +4,7 @@ import {
 } from "@mui/lab";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {

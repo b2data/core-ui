@@ -1,4 +1,4 @@
-import { ComponentThemeOverride } from "src/types";
+import { ComponentThemeOverride } from "../types";
 
 export const FAB_SIZES = {
   small: 32,

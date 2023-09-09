@@ -1,4 +1,4 @@
-import { ComponentThemeOverride } from "src/types";
+import { ComponentThemeOverride } from "../types";
 
 declare module "@mui/material/Badge" {
   interface BadgePropsVariantOverrides {
