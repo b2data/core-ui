@@ -1,5 +1,5 @@
 import { Fab as MuiFab, FabProps as MuiFabProps } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -26,4 +26,4 @@ export interface FabProps
   variant?: MuiFabProps["variant"];
 }
 
-export const Fab: FC<FabProps> = (props) => <MuiFab {...props} />;
+export const Fab: React.FC<FabProps> = (props) => <MuiFab {...props} />;

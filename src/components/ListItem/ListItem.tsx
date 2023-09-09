@@ -2,7 +2,7 @@ import {
   ListItem as MuiListItem,
   ListItemProps as MuiListItemProps
 } from "@mui/material";
-import { cloneElement, FC, Fragment, ReactElement, useState } from "react";
+import React, { cloneElement, Fragment, ReactElement, useState } from "react";
 import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
 
 import { OverrideMuiProps } from "../types";
@@ -60,7 +60,7 @@ export interface ListItemProps
   menuActions?: MenuItemProps[];
 }
 
-export const ListItem: FC<ListItemProps> = ({
+export const ListItem: React.FC<ListItemProps> = ({
   asButton,
   icon,
   avatar,

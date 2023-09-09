@@ -2,7 +2,7 @@ import {
   Typography as MuiTypography,
   TypographyProps as MuiTypographyProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -25,6 +25,6 @@ export interface TypographyProps
   wrapLines?: number;
 }
 
-export const Typography: FC<TypographyProps> = (props) => (
+export const Typography: React.FC<TypographyProps> = (props) => (
   <MuiTypography {...props} />
 );

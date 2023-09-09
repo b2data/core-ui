@@ -2,7 +2,7 @@ import {
   ListItemText as MuiListItemText,
   ListItemTextProps as MuiListItemTextProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -17,6 +17,6 @@ export interface ListItemTextProps
     | "children"
   > {}
 
-export const ListItemText: FC<ListItemTextProps> = (props) => (
+export const ListItemText: React.FC<ListItemTextProps> = (props) => (
   <MuiListItemText {...props} />
 );

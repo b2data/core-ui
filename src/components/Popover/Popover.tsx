@@ -2,7 +2,7 @@ import {
   Popover as MuiPopover,
   PopoverProps as MuiPopoverProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -48,4 +48,6 @@ export interface PopoverProps
   transformOrigin?: MuiPopoverProps["transformOrigin"];
 }
 
-export const Popover: FC<PopoverProps> = (props) => <MuiPopover {...props} />;
+export const Popover: React.FC<PopoverProps> = (props) => (
+  <MuiPopover {...props} />
+);

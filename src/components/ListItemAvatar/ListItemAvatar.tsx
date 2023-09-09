@@ -2,13 +2,13 @@ import {
   ListItemAvatar as MuiListItemAvatar,
   ListItemAvatarProps as MuiListItemAvatarProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
 export interface ListItemAvatarProps
   extends OverrideMuiProps<MuiListItemAvatarProps, "children" | "sx"> {}
 
-export const ListItemAvatar: FC<ListItemAvatarProps> = (props) => (
+export const ListItemAvatar: React.FC<ListItemAvatarProps> = (props) => (
   <MuiListItemAvatar {...props} />
 );

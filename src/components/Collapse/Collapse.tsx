@@ -2,7 +2,7 @@ import {
   Collapse as MuiCollapse,
   CollapseProps as MuiCollapseProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -32,6 +32,6 @@ export interface CollapseProps
   timeout?: MuiCollapseProps["timeout"];
 }
 
-export const Collapse: FC<CollapseProps> = (props) => (
+export const Collapse: React.FC<CollapseProps> = (props) => (
   <MuiCollapse {...props} />
 );

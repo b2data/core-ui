@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React from "react";
 import {
   SnackbarProvider as CoreSnackbarProvider,
   SnackbarProviderProps as CoreSnackbarProviderProps,
@@ -17,7 +17,7 @@ export interface SnackbarProviderProps
     "children" | "maxSnack" | "anchorOrigin" | "autoHideDuration" | "dense"
   > {}
 
-export const SnackbarProvider: FC<SnackbarProviderProps> = ({
+export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   children,
   maxSnack = 5,
   anchorOrigin = { horizontal: "left", vertical: "bottom" },

@@ -1,5 +1,5 @@
 import { Radio as MuiRadio, RadioProps as MuiRadioProps } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideOnlyMuiProps } from "../types";
 
@@ -31,4 +31,4 @@ export interface RadioProps
   size?: MuiRadioProps["size"];
 }
 
-export const Radio: FC<RadioProps> = (props) => <MuiRadio {...props} />;
+export const Radio: React.FC<RadioProps> = (props) => <MuiRadio {...props} />;

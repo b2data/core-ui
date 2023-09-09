@@ -3,7 +3,7 @@ import {
   MenuItem as MuiMenuItem,
   MenuItemProps as MuiMenuItemProps
 } from "@mui/material";
-import { FC, isValidElement, ReactElement } from "react";
+import React, { isValidElement, ReactElement } from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -23,7 +23,7 @@ export interface MenuItemProps
   endAdornment?: ReactElement;
 }
 
-export const MenuItem: FC<MenuItemProps> = ({
+export const MenuItem: React.FC<MenuItemProps> = ({
   startAdornment,
   endAdornment,
   children,

@@ -2,7 +2,7 @@ import {
   FormHelperText as MuiFormHelperText,
   FormHelperTextProps as MuiFormHelperTextProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -19,6 +19,6 @@ export interface FormHelperTextProps
     HTMLSpanElement
   > {}
 
-export const FormHelperText: FC<FormHelperTextProps> = (props) => (
+export const FormHelperText: React.FC<FormHelperTextProps> = (props) => (
   <MuiFormHelperText {...props} />
 );

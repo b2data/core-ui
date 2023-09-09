@@ -1,5 +1,5 @@
 import { Chip as MuiChip, ChipProps as MuiChipProps } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -42,4 +42,4 @@ export interface ChipProps
   variant?: MuiChipProps["variant"];
 }
 
-export const Chip: FC<ChipProps> = (props) => <MuiChip {...props} />;
+export const Chip: React.FC<ChipProps> = (props) => <MuiChip {...props} />;

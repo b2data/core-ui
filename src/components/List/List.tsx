@@ -1,5 +1,5 @@
 import { List as MuiList, ListProps as MuiListProps } from "@mui/material";
-import { FC, isValidElement } from "react";
+import React, { isValidElement } from "react";
 
 import { OverrideMuiProps } from "../types";
 import { ListSubheader } from "../ListSubheader";
@@ -11,7 +11,7 @@ export interface ListProps
     HTMLUListElement
   > {}
 
-export const List: FC<ListProps> = ({ subheader, ...props }) => (
+export const List: React.FC<ListProps> = ({ subheader, ...props }) => (
   <MuiList
     {...props}
     subheader={

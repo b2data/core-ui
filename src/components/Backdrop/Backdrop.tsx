@@ -2,7 +2,7 @@ import {
   Backdrop as MuiBackdrop,
   BackdropProps as MuiBackdropProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -18,6 +18,6 @@ export interface BackdropProps
   variant?: "dark" | "light";
 }
 
-export const Backdrop: FC<BackdropProps> = (props) => (
+export const Backdrop: React.FC<BackdropProps> = (props) => (
   <MuiBackdrop {...props} />
 );

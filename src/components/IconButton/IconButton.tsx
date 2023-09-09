@@ -2,7 +2,7 @@ import {
   IconButton as MuiIconButton,
   IconButtonProps as MuiIconButtonProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -29,6 +29,6 @@ export interface IconButtonProps
   disabled?: MuiIconButtonProps["disabled"];
 }
 
-export const IconButton: FC<IconButtonProps> = (props) => (
+export const IconButton: React.FC<IconButtonProps> = (props) => (
   <MuiIconButton {...props} />
 );

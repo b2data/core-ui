@@ -2,7 +2,7 @@ import {
   ListItemSecondaryAction as MuiListItemSecondaryAction,
   ListItemSecondaryActionProps as MuiListItemSecondaryActionProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -12,6 +12,6 @@ export interface ListItemActionProps
     "children" | "sx"
   > {}
 
-export const ListItemAction: FC<ListItemActionProps> = (props) => (
+export const ListItemAction: React.FC<ListItemActionProps> = (props) => (
   <MuiListItemSecondaryAction {...props} />
 );

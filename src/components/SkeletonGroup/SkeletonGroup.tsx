@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import React, { Fragment } from "react";
 import { SxProps, Theme } from "@mui/material";
 
 import { getGridTemplate } from "../../theming";
@@ -23,7 +23,7 @@ export interface SkeletonGroupProps
   rowSx?: SxProps<Theme>;
 }
 
-export const SkeletonGroup: FC<SkeletonGroupProps> = ({
+export const SkeletonGroup: React.FC<SkeletonGroupProps> = ({
   gridTemplate = [],
   rowsCount = 1,
   rowSx,

@@ -2,7 +2,7 @@ import {
   LoadingButton as MuiLoadingButton,
   LoadingButtonProps as MuiLoadingButtonProps
 } from "@mui/lab";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -55,6 +55,6 @@ export interface ButtonProps
   loadingPosition?: MuiLoadingButtonProps["loadingPosition"];
 }
 
-export const Button: FC<ButtonProps> = (props) => (
+export const Button: React.FC<ButtonProps> = (props) => (
   <MuiLoadingButton {...props} />
 );

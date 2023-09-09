@@ -2,7 +2,7 @@ import {
   Drawer as MuiDrawer,
   DrawerProps as MuiDrawerProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -35,4 +35,6 @@ export interface DrawerProps
   variant?: "temporary" | "persistent";
 }
 
-export const Drawer: FC<DrawerProps> = (props) => <MuiDrawer {...props} />;
+export const Drawer: React.FC<DrawerProps> = (props) => (
+  <MuiDrawer {...props} />
+);

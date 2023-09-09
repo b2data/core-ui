@@ -3,7 +3,7 @@ import {
   AvatarGroupProps as MuiAvatarGroupProps,
   styled
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 import { AVATAR_SIZES } from "../Avatar/theme";
@@ -27,7 +27,7 @@ export interface AvatarGroupProps
   variant?: MuiAvatarGroupProps["variant"];
 }
 
-export const AvatarGroup: FC<AvatarGroupProps> = styled(
+export const AvatarGroup: React.FC<AvatarGroupProps> = styled(
   MuiAvatarGroup
 )<AvatarGroupProps>(({ size = "medium" }) => ({
   "& .MuiAvatar-root": {

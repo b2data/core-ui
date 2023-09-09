@@ -2,7 +2,7 @@ import {
   Breadcrumbs as MuiBreadcrumbs,
   BreadcrumbsProps as MuiBreadcrumbsProps
 } from "@mui/material";
-import { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { OverrideMuiProps } from "../types";
@@ -47,7 +47,7 @@ export interface BreadcrumbsProps
   items?: Breadcrumb[];
 }
 
-export const Breadcrumbs: FC<BreadcrumbsProps> = ({
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   children,
   items = [],
   ...props
