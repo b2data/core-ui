@@ -2,7 +2,7 @@ import {
   MenuList as MuiMenuList,
   MenuListProps as MuiMenuListProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -13,6 +13,6 @@ export interface MenuListProps
     HTMLUListElement
   > {}
 
-export const MenuList: FC<MenuListProps> = (props) => (
+export const MenuList: React.FC<MenuListProps> = (props) => (
   <MuiMenuList dense {...props} />
 );

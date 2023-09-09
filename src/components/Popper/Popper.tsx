@@ -2,7 +2,7 @@ import {
   Popper as MuiPopper,
   PopperProps as MuiPopperProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -29,4 +29,6 @@ export interface PopperProps
   placement?: MuiPopperProps["placement"];
 }
 
-export const Popper: FC<PopperProps> = (props) => <MuiPopper {...props} />;
+export const Popper: React.FC<PopperProps> = (props) => (
+  <MuiPopper {...props} />
+);

@@ -1,5 +1,5 @@
 import { Menu as MuiMenu, MenuProps as MuiMenuProps } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -22,4 +22,4 @@ export interface MenuProps
     | "hideBackdrop"
   > {}
 
-export const Menu: FC<MenuProps> = (props) => <MuiMenu {...props} />;
+export const Menu: React.FC<MenuProps> = (props) => <MuiMenu {...props} />;

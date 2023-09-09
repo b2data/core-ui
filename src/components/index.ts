@@ -12,6 +12,7 @@ export * from "./Chip";
 export * from "./CircularProgress";
 export * from "./ClickAwayListener";
 export * from "./Collapse";
+export * from "./CssBaseline";
 export * from "./Divider";
 export * from "./Drawer";
 export * from "./Fab";

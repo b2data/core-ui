@@ -1,5 +1,5 @@
 import { Tabs as MuiTabs, TabsProps as MuiTabsProps } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideOnlyMuiProps } from "../types";
 
@@ -28,4 +28,4 @@ export interface TabsProps
   variant?: MuiTabsProps["variant"];
 }
 
-export const Tabs: FC<TabsProps> = (props) => <MuiTabs {...props} />;
+export const Tabs: React.FC<TabsProps> = (props) => <MuiTabs {...props} />;

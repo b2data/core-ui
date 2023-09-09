@@ -2,7 +2,7 @@ import {
   Tooltip as MuiTooltip,
   TooltipProps as MuiTooltipProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -29,4 +29,6 @@ export interface TooltipProps
   placement?: MuiTooltipProps["placement"];
 }
 
-export const Tooltip: FC<TooltipProps> = (props) => <MuiTooltip {...props} />;
+export const Tooltip: React.FC<TooltipProps> = (props) => (
+  <MuiTooltip {...props} />
+);

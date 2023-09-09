@@ -3,7 +3,7 @@ import {
   AlertProps as MuiAlertProps,
   AlertTitle as MuiAlertTitle
 } from "@mui/material";
-import { cloneElement, FC, ReactElement } from "react";
+import React, { cloneElement, ReactElement } from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -55,7 +55,7 @@ export interface AlertProps
   actions?: ReactElement;
 }
 
-export const Alert: FC<AlertProps> = ({
+export const Alert: React.FC<AlertProps> = ({
   title,
   children,
   actions,

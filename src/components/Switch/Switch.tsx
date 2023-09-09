@@ -2,7 +2,7 @@ import {
   Switch as MuiSwitch,
   SwitchProps as MuiSwitchProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideOnlyMuiProps } from "../types";
 
@@ -33,4 +33,6 @@ export interface SwitchProps
   size?: MuiSwitchProps["size"];
 }
 
-export const Switch: FC<SwitchProps> = (props) => <MuiSwitch {...props} />;
+export const Switch: React.FC<SwitchProps> = (props) => (
+  <MuiSwitch {...props} />
+);

@@ -1,4 +1,3 @@
-import { alpha } from "../../theming";
 import { ComponentThemeOverride } from "../types";
 
 const backdropTheme: ComponentThemeOverride["MuiBackdrop"] = {
@@ -6,7 +5,7 @@ const backdropTheme: ComponentThemeOverride["MuiBackdrop"] = {
     root: ({ variant = "light" }) => ({
       position: "absolute",
       backgroundColor:
-        variant == "light" ? alpha("#091E42", 0.08) : alpha("#091E42", 0.42)
+        variant == "light" ? "rgba(9, 30, 66, 0.08)" : "rgba(9, 30, 66, 0.42)"
     })
   },
   defaultProps: {}

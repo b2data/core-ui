@@ -6,7 +6,7 @@ import {
   Theme,
   Typography
 } from "@mui/material";
-import { FC, isValidElement } from "react";
+import React, { isValidElement } from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -36,7 +36,7 @@ export interface LinearProgressProps
   wrapSx?: SxProps<Theme>;
 }
 
-export const LinearProgress: FC<LinearProgressProps> = ({
+export const LinearProgress: React.FC<LinearProgressProps> = ({
   label,
   wrapSx,
   ...props

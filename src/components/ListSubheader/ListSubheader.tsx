@@ -2,7 +2,7 @@ import {
   ListSubheader as MuiListSubheader,
   ListSubheaderProps as MuiListSubheaderProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -23,6 +23,6 @@ export interface ListSubheaderProps
   color?: MuiListSubheaderProps["color"];
 }
 
-export const ListSubheader: FC<ListSubheaderProps> = (props) => (
+export const ListSubheader: React.FC<ListSubheaderProps> = (props) => (
   <MuiListSubheader {...props} />
 );

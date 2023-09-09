@@ -2,7 +2,7 @@ import {
   FormControlLabel as MuiFormControlLabel,
   FormControlLabelProps as MuiFormControlLabelProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -23,6 +23,6 @@ export interface FormControlLabelProps
     HTMLLabelElement
   > {}
 
-export const FormControlLabel: FC<FormControlLabelProps> = (props) => (
+export const FormControlLabel: React.FC<FormControlLabelProps> = (props) => (
   <MuiFormControlLabel {...props} />
 );

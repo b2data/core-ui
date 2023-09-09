@@ -3,7 +3,7 @@ import {
   AvatarProps as MuiAvatarProps,
   styled
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -27,7 +27,7 @@ export interface AvatarProps
   variant?: MuiAvatarProps["variant"];
 }
 
-export const Avatar: FC<AvatarProps> = styled(MuiAvatar)<AvatarProps>(
+export const Avatar: React.FC<AvatarProps> = styled(MuiAvatar)<AvatarProps>(
   ({ size = "medium" }) => ({
     width: AVATAR_SIZES[size],
     height: AVATAR_SIZES[size],

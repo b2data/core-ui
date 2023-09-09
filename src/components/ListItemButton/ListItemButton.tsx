@@ -2,7 +2,7 @@ import {
   ListItemButton as MuiListItemButton,
   ListItemButtonProps as MuiListItemButtonProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -12,6 +12,6 @@ export interface ListItemButtonProps
     "children" | "disabled" | "disableGutters" | "selected" | "sx" | "component"
   > {}
 
-export const ListItemButton: FC<ListItemButtonProps> = (props) => (
+export const ListItemButton: React.FC<ListItemButtonProps> = (props) => (
   <MuiListItemButton dense {...props} />
 );

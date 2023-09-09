@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 export type ProgressStatisticEntryType = {
   color: string;
@@ -18,7 +18,7 @@ export interface ProgressStatisticProps {
   sx?: SxProps<Theme>;
 }
 
-export const ProgressStatistic: FC<ProgressStatisticProps> = ({
+export const ProgressStatistic: React.FC<ProgressStatisticProps> = ({
   data,
   ...props
 }) => {

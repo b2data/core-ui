@@ -2,7 +2,7 @@ import {
   Checkbox as MuiCheckbox,
   CheckboxProps as MuiCheckboxProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideOnlyMuiProps } from "../types";
 
@@ -37,6 +37,6 @@ export interface CheckboxProps
   size?: MuiCheckboxProps["size"];
 }
 
-export const Checkbox: FC<CheckboxProps> = (props) => (
+export const Checkbox: React.FC<CheckboxProps> = (props) => (
   <MuiCheckbox {...props} />
 );

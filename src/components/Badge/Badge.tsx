@@ -1,5 +1,5 @@
 import { Badge as MuiBadge, BadgeProps as MuiBadgeProps } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -31,7 +31,11 @@ export interface BadgeProps
   overlap?: MuiBadgeProps["overlap"];
 }
 
-export const Badge: FC<BadgeProps> = ({ variant, badgeContent, ...props }) => (
+export const Badge: React.FC<BadgeProps> = ({
+  variant,
+  badgeContent,
+  ...props
+}) => (
   <MuiBadge
     {...props}
     variant={variant}

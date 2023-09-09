@@ -2,7 +2,7 @@ import {
   Divider as MuiDivider,
   DividerProps as MuiDividerProps
 } from "@mui/material";
-import { FC } from "react";
+import React from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -28,4 +28,6 @@ export interface DividerProps
   variant?: MuiDividerProps["variant"];
 }
 
-export const Divider: FC<DividerProps> = (props) => <MuiDivider {...props} />;
+export const Divider: React.FC<DividerProps> = (props) => (
+  <MuiDivider {...props} />
+);

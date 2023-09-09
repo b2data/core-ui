@@ -6,7 +6,7 @@ import {
   Theme,
   Typography
 } from "@mui/material";
-import { FC, isValidElement } from "react";
+import React, { isValidElement } from "react";
 
 import { OverrideMuiProps } from "../types";
 
@@ -35,7 +35,7 @@ export interface CircularProgressProps
   wrapSx?: SxProps<Theme>;
 }
 
-export const CircularProgress: FC<CircularProgressProps> = ({
+export const CircularProgress: React.FC<CircularProgressProps> = ({
   label,
   wrapSx,
   ...props
