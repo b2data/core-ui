@@ -1,8 +1,7 @@
 import { FC, Fragment } from "react";
 import { SxProps, Theme } from "@mui/material";
 
-import { getGridTemplate } from "src/theming";
-
+import { getGridTemplate } from "../../theming";
 import { Box } from "../Box";
 import { Skeleton, SkeletonProps } from "../Skeleton";
 
