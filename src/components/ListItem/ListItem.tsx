@@ -3,7 +3,7 @@ import {
   ListItemProps as MuiListItemProps
 } from "@mui/material";
 import { cloneElement, FC, Fragment, ReactElement, useState } from "react";
-export { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
+import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
 
 import { OverrideMuiProps } from "../types";
 import { IconButton } from "../IconButton";
