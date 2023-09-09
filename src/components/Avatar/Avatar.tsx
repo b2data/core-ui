@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 import { AVATAR_SIZES } from "./theme";
 

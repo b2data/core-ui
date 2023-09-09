@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC, isValidElement } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 export interface LinearProgressProps
   extends OverrideMuiProps<

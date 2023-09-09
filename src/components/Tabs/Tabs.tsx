@@ -1,7 +1,7 @@
 import { Tabs as MuiTabs, TabsProps as MuiTabsProps } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideOnlyMuiProps } from "src/types";
+import { OverrideOnlyMuiProps } from "../types";
 
 export interface TabsProps
   extends OverrideOnlyMuiProps<

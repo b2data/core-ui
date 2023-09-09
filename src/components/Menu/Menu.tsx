@@ -1,7 +1,7 @@
 import { Menu as MuiMenu, MenuProps as MuiMenuProps } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 export interface MenuProps
   extends OverrideMuiProps<

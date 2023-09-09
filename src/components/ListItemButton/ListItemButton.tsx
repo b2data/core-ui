@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 export interface ListItemButtonProps
   extends OverrideMuiProps<

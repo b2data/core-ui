@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import { cloneElement, FC, ReactElement } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 declare module "@mui/material/Alert" {
   interface AlertPropsColorOverrides {

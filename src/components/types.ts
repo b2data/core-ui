@@ -1,5 +1,5 @@
 import { ThemeOptions } from "@mui/material";
-import React from "react";
+import { HTMLAttributes } from "react";
 
 export type ComponentThemeOverride = NonNullable<ThemeOptions["components"]>;
 
@@ -7,7 +7,7 @@ export type OverrideMuiProps<
   TType,
   TProps extends keyof TType,
   TElement = HTMLDivElement
-> = React.HTMLAttributes<TElement> & Pick<TType, TProps>;
+> = HTMLAttributes<TElement> & Pick<TType, TProps>;
 
 export type OverrideOnlyMuiProps<TType, TProps extends keyof TType> = Pick<
   TType,

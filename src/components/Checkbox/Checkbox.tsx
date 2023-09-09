@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideOnlyMuiProps } from "src/types";
+import { OverrideOnlyMuiProps } from "../types";
 
 export interface CheckboxProps
   extends OverrideOnlyMuiProps<

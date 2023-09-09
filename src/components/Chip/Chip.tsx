@@ -1,7 +1,7 @@
 import { Chip as MuiChip, ChipProps as MuiChipProps } from "@mui/material";
 import { FC } from "react";
 
-import { OverrideMuiProps } from "src/types";
+import { OverrideMuiProps } from "../types";
 
 export interface ChipProps
   extends OverrideMuiProps<
