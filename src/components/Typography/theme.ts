@@ -10,16 +10,16 @@ const typographyTheme: ComponentThemeOverride["MuiTypography"] = {
           display: "-webkit-box",
           "-webkit-line-clamp": `${wrapLines}`,
           "-webkit-box-orient": "vertical",
-          whiteSpace: "normal"
+          whiteSpace: "normal",
         };
       }
       return undefined;
-    }
+    },
   },
   defaultProps: {
     variant: "body1",
-    align: "inherit"
-  }
+    align: "inherit",
+  },
 };
 
 export default typographyTheme;

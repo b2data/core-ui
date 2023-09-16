@@ -1,6 +1,6 @@
 import {
   Divider as MuiDivider,
-  DividerProps as MuiDividerProps
+  DividerProps as MuiDividerProps,
 } from "@mui/material";
 import React from "react";
 

@@ -1,9 +1,13 @@
+export const mobile = 0;
+export const tablet = 640;
+export const desktop = 1024;
+
 export default {
   values: {
-    mobile: 0,
-    tablet: 640,
-    desktop: 1024
-  }
+    mobile,
+    tablet,
+    desktop,
+  },
 };
 
 declare module "@mui/material/styles" {

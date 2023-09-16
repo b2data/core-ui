@@ -1,6 +1,6 @@
 import {
   Popover as MuiPopover,
-  PopoverProps as MuiPopoverProps
+  PopoverProps as MuiPopoverProps,
 } from "@mui/material";
 import React from "react";
 
@@ -36,7 +36,7 @@ export interface PopoverProps
   /**
    * This is the position that may be used to set the position of the popover.
    * The coordinates are relative to the application's client area.
-   * Type: `{ vertical: 'top', horizontal: 'left' }`
+   * Type: `{ top: 0 left: 0 }`
    */
   anchorPosition?: MuiPopoverProps["anchorPosition"];
 

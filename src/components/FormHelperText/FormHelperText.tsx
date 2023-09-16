@@ -1,6 +1,6 @@
 import {
   FormHelperText as MuiFormHelperText,
-  FormHelperTextProps as MuiFormHelperTextProps
+  FormHelperTextProps as MuiFormHelperTextProps,
 } from "@mui/material";
 import React from "react";
 

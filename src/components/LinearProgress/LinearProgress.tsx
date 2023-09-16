@@ -4,7 +4,7 @@ import {
   LinearProgressProps as MuiLinearProgressProps,
   SxProps,
   Theme,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { isValidElement } from "react";
 

@@ -6,7 +6,7 @@ export type ComponentThemeOverride = NonNullable<ThemeOptions["components"]>;
 export type OverrideMuiProps<
   TType,
   TProps extends keyof TType,
-  TElement = HTMLDivElement
+  TElement = HTMLDivElement,
 > = HTMLAttributes<TElement> & Pick<TType, TProps>;
 
 export type OverrideOnlyMuiProps<TType, TProps extends keyof TType> = Pick<

@@ -4,7 +4,7 @@ import {
   CircularProgressProps as MuiCircularProgressProps,
   SxProps,
   Theme,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { isValidElement } from "react";
 
@@ -52,7 +52,7 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
           position: "absolute",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         {isValidElement(label) ? (

@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 export const useDeepEqualMemo = <T>(
   value: T,
-  equalityCheck: (value: T, prev: T | undefined) => boolean = equals
+  equalityCheck: (value: T, prev: T | undefined) => boolean = equals,
 ) => {
   const valueRef = useRef<T>();
 

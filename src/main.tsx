@@ -20,5 +20,5 @@ createRoot(document.getElementById("root") as HTMLElement).render(
         ))}
       </Box>
     </React.Fragment>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

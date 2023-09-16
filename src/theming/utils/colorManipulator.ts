@@ -10,7 +10,7 @@ function clamp(value: number, min = 0, max = 1): number {
   if (process.env.NODE_ENV !== "production") {
     if (value < min || value > max) {
       console.warn(
-        `[Color Manipulator]: The value provided ${value} is out of range [${min}, ${max}].`
+        `[Color Manipulator]: The value provided ${value} is out of range [${min}, ${max}].`,
       );
     }
   }
@@ -38,7 +38,7 @@ export function hexToRgb(color: string) {
         .map((n: string, index: number) =>
           index < 3
             ? parseInt(n, 16)
-            : Math.round((parseInt(n, 16) / 255) * 1000) / 1000
+            : Math.round((parseInt(n, 16) / 255) * 1000) / 1000,
         )
         .join(", ")})`
     : "";
@@ -74,7 +74,7 @@ export function decomposeColor(color: string): DecomposeColor {
     throw new Error(
       "[Color Manipulator]: Unsupported `%s` color.\n" +
         "The following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()." +
-        color
+        color,
     );
   }
 
@@ -90,13 +90,13 @@ export function decomposeColor(color: string): DecomposeColor {
     }
     if (
       ["srgb", "display-p3", "a98-rgb", "prophoto-rgb", "rec-2020"].indexOf(
-        colorSpace
+        colorSpace,
       ) === -1
     ) {
       throw new Error(
         "[Color Manipulator]: unsupported `%s` color space.\n" +
           "The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020." +
-          colorSpace
+          colorSpace,
       );
     }
   } else {

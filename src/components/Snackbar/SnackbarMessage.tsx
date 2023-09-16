@@ -44,7 +44,7 @@ export const SnackbarMessage = forwardRef<HTMLDivElement, SnackbarMessageProps>(
       displayVariant,
       ...props
     },
-    ref
+    ref,
   ) => {
     const { closeSnackbar } = useSnackbar();
 
@@ -70,5 +70,5 @@ export const SnackbarMessage = forwardRef<HTMLDivElement, SnackbarMessageProps>(
         />
       </SnackbarContent>
     );
-  }
+  },
 );

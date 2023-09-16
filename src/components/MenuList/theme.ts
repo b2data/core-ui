@@ -3,8 +3,8 @@ import { ComponentThemeOverride } from "../types";
 const menuListTheme: ComponentThemeOverride["MuiMenuList"] = {
   styleOverrides: {},
   defaultProps: {
-    dense: true
-  }
+    dense: true,
+  },
 };
 
 export default menuListTheme;

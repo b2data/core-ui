@@ -1,6 +1,6 @@
 import {
   Checkbox as MuiCheckbox,
-  CheckboxProps as MuiCheckboxProps
+  CheckboxProps as MuiCheckboxProps,
 } from "@mui/material";
 import React from "react";
 

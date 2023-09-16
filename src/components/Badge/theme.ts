@@ -28,38 +28,38 @@ const badgeTheme: ComponentThemeOverride["MuiBadge"] = {
             borderRadius: "50%",
             animation: "ripple 1.2s infinite ease-in-out",
             border: "1px solid currentColor",
-            content: '""'
+            content: '""',
           },
           "@keyframes ripple": {
             "0%": {
               transform: "scale(.8)",
-              opacity: 1
+              opacity: 1,
             },
             "100%": {
               transform: "scale(2.4)",
-              opacity: 0
-            }
-          }
+              opacity: 0,
+            },
+          },
         };
       }
 
       return undefined;
     },
     root: {
-      justifyContent: "start"
+      justifyContent: "start",
     },
     standard: {
       fontSize: 10,
-      height: 16
-    }
+      height: 16,
+    },
   },
 
   defaultProps: {
     color: "primary",
     variant: "standard",
     overlap: "rectangular",
-    anchorOrigin: { vertical: "top", horizontal: "right" }
-  }
+    anchorOrigin: { vertical: "top", horizontal: "right" },
+  },
 };
 
 export default badgeTheme;

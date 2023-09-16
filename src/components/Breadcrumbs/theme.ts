@@ -5,19 +5,19 @@ const breadcrumbsTheme: ComponentThemeOverride["MuiBreadcrumbs"] = {
     li: ({ theme }) => ({
       "& a": {
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
       },
       "& a>.MuiSvgIcon-root": {
         fontSize: "inherit",
-        marginRight: 4
+        marginRight: 4,
       },
       "& a:not([href])": {
         cursor: "default",
-        color: theme.palette.text.disabled
-      }
-    })
+        color: theme.palette.text.disabled,
+      },
+    }),
   },
-  defaultProps: {}
+  defaultProps: {},
 };
 
 export default breadcrumbsTheme;

@@ -1,6 +1,6 @@
 import {
   ListSubheader as MuiListSubheader,
-  ListSubheaderProps as MuiListSubheaderProps
+  ListSubheaderProps as MuiListSubheaderProps,
 } from "@mui/material";
 import React from "react";
 

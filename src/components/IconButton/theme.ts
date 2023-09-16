@@ -5,29 +5,29 @@ const iconButtonTheme: ComponentThemeOverride["MuiIconButton"] = {
     sizeSmall: {
       padding: 3,
       "& .MuiSvgIcon-root": {
-        fontSize: 18
-      }
+        fontSize: 18,
+      },
     },
     sizeMedium: {
       padding: 6,
       "& .MuiSvgIcon-root": {
-        fontSize: 20
-      }
+        fontSize: 20,
+      },
     },
     sizeLarge: {
       padding: 7,
       "& .MuiSvgIcon-root": {
-        fontSize: 22
-      }
+        fontSize: 22,
+      },
     },
     edgeEnd: {
-      marginRight: -12
-    }
+      marginRight: -12,
+    },
   },
   defaultProps: {
     color: "default",
-    size: "medium"
-  }
+    size: "medium",
+  },
 };
 
 export default iconButtonTheme;

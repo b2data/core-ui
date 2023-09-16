@@ -1,6 +1,6 @@
 import {
   ListItem as MuiListItem,
-  ListItemProps as MuiListItemProps
+  ListItemProps as MuiListItemProps,
 } from "@mui/material";
 import React, { cloneElement, Fragment, ReactElement, useState } from "react";
 import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
@@ -72,7 +72,7 @@ export const ListItem: React.FC<ListItemProps> = ({
   ...props
 }) => {
   const [actionsAnchor, setActionsAnchor] = useState<HTMLButtonElement | null>(
-    null
+    null,
   );
 
   const content = (
@@ -80,7 +80,7 @@ export const ListItem: React.FC<ListItemProps> = ({
       {icon && <ListItemIcon>{icon}</ListItemIcon>}
       {avatar && (
         <ListItemAvatar>
-          {cloneElement(avatar, { size: "small" })}
+          {cloneElement(avatar, { size: "small", sx: { fontSize: "1rem" } })}
         </ListItemAvatar>
       )}
       {(text || secondaryText) && (
@@ -88,12 +88,12 @@ export const ListItem: React.FC<ListItemProps> = ({
       )}
       {children}
       {action && (
-        <ListItemAction>
+        <ListItemAction onClick={(e) => e.stopPropagation()}>
           {cloneElement(action, { size: "small", edge: "end" })}
         </ListItemAction>
       )}
       {!action && menuActions?.length && (
-        <ListItemAction>
+        <ListItemAction onClick={(e) => e.stopPropagation()}>
           <IconButton
             size="small"
             edge="end"
@@ -108,11 +108,11 @@ export const ListItem: React.FC<ListItemProps> = ({
             onClick={() => setActionsAnchor(null)}
             anchorOrigin={{
               vertical: "top",
-              horizontal: "right"
+              horizontal: "right",
             }}
             transformOrigin={{
               vertical: "top",
-              horizontal: "right"
+              horizontal: "right",
             }}
           >
             {menuActions.map((menuAction, index) => (

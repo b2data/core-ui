@@ -4,10 +4,10 @@ const formHelperTextTheme: ComponentThemeOverride["MuiFormHelperText"] = {
   styleOverrides: {
     contained: {
       marginLeft: 0,
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   },
-  defaultProps: {}
+  defaultProps: {},
 };
 
 export default formHelperTextTheme;

@@ -5,14 +5,14 @@ const checkboxTheme: ComponentThemeOverride["MuiCheckbox"] = {
     root: ({ ownerState: { size } }) => ({
       padding: size === "medium" ? 7 : 3,
       "& .MuiSvgIcon-root": {
-        fontSize: size === "medium" ? 22 : 18
-      }
-    })
+        fontSize: size === "medium" ? 22 : 18,
+      },
+    }),
   },
   defaultProps: {
     size: "small",
-    color: "primary"
-  }
+    color: "primary",
+  },
 };
 
 export default checkboxTheme;

@@ -3,10 +3,10 @@ import { ComponentThemeOverride } from "../types";
 const listItemAvatarTheme: ComponentThemeOverride["MuiListItemAvatar"] = {
   styleOverrides: {
     root: {
-      minWidth: 30
-    }
+      minWidth: 30,
+    },
   },
-  defaultProps: {}
+  defaultProps: {},
 };
 
 export default listItemAvatarTheme;

@@ -2,8 +2,8 @@ import { ComponentThemeOverride } from "../types";
 
 const popperTheme: ComponentThemeOverride["MuiPopper"] = {
   defaultProps: {
-    placement: "bottom"
-  }
+    placement: "bottom",
+  },
 };
 
 export default popperTheme;

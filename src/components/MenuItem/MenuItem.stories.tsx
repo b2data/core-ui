@@ -9,13 +9,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<MenuItemProps> = {
   title: "Components/Menu/MenuItem",
   component: MenuItem,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<MenuItemProps> = {
-  args: { children: "Text" }
+  args: { children: "Text" },
 };
 
 export const Variants: StoryObj<MenuItemProps> = {
@@ -36,5 +36,5 @@ export const Variants: StoryObj<MenuItemProps> = {
         Text
       </MenuItem>
     </div>
-  )
+  ),
 };

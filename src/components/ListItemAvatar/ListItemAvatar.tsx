@@ -1,6 +1,6 @@
 import {
   ListItemAvatar as MuiListItemAvatar,
-  ListItemAvatarProps as MuiListItemAvatarProps
+  ListItemAvatarProps as MuiListItemAvatarProps,
 } from "@mui/material";
 import React from "react";
 

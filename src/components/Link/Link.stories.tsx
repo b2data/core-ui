@@ -5,11 +5,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<LinkProps> = {
   title: "Components/Link",
   component: Link,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<LinkProps> = {
-  args: { children: "Text" }
+  args: { children: "Text" },
 };

@@ -1,7 +1,7 @@
 import {
   Box,
   MenuItem as MuiMenuItem,
-  MenuItemProps as MuiMenuItemProps
+  MenuItemProps as MuiMenuItemProps,
 } from "@mui/material";
 import React, { isValidElement, ReactElement } from "react";
 

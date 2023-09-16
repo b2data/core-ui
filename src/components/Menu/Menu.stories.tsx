@@ -10,7 +10,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<MenuProps> = {
   title: "Components/Menu/Menu",
   component: Menu,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -40,5 +40,5 @@ export const Base: StoryObj<MenuProps> = {
         </Menu>
       </div>
     );
-  }
+  },
 };

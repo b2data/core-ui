@@ -1,6 +1,9 @@
 import { Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
 import React from "react";
-import { LinkProps as RouterLinkProps } from "react-router-dom";
+import {
+  Link as RouterLink,
+  LinkProps as RouterLinkProps,
+} from "react-router-dom";
 
 export interface LinkProps
   extends Omit<
@@ -8,4 +11,6 @@ export interface LinkProps
     "className" | "classes"
   > {}
 
-export const Link: React.FC<LinkProps> = (props) => <MuiLink {...props} />;
+export const Link: React.FC<LinkProps> = (props) => (
+  <MuiLink component={RouterLink} {...props} />
+);

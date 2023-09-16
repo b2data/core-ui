@@ -8,13 +8,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ButtonProps> = {
   title: "Components/Buttons/Button",
   component: Button,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<ButtonProps> = {
-  render: (props) => <Button {...props}>Text</Button>
+  render: (props) => <Button {...props}>Text</Button>,
 };
 
 export const Text: StoryObj<ButtonProps> = {
@@ -30,7 +30,7 @@ export const Text: StoryObj<ButtonProps> = {
         Link
       </Button>
     </Preview>
-  )
+  ),
 };
 
 export const Contained: StoryObj<ButtonProps> = {
@@ -46,7 +46,7 @@ export const Contained: StoryObj<ButtonProps> = {
         Link
       </Button>
     </Preview>
-  )
+  ),
 };
 
 export const Outlined: StoryObj<ButtonProps> = {
@@ -62,7 +62,7 @@ export const Outlined: StoryObj<ButtonProps> = {
         Link
       </Button>
     </Preview>
-  )
+  ),
 };
 
 export const Colors: StoryObj<ButtonProps> = {
@@ -147,7 +147,7 @@ export const Colors: StoryObj<ButtonProps> = {
         </Button>
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Sizes: StoryObj<ButtonProps> = {
@@ -187,7 +187,7 @@ export const Sizes: StoryObj<ButtonProps> = {
         </Button>
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Icons: StoryObj<ButtonProps> = {
@@ -232,40 +232,40 @@ export const Icons: StoryObj<ButtonProps> = {
         Send
       </Button>
     </Preview>
-  )
+  ),
 };
 
 export const FullWidth: StoryObj<ButtonProps> = {
   args: {
     fullWidth: true,
     variant: "contained",
-    children: "Full width"
-  }
+    children: "Full width",
+  },
 };
 
 export const Loading: StoryObj<ButtonProps> = {
   args: {
     loading: true,
-    children: <span>Save</span>
-  }
+    children: <span>Save</span>,
+  },
 };
 
 export const LoadingIndicator: StoryObj<ButtonProps> = {
   args: {
     loading: true,
     children: <span>Fetch data</span>,
-    loadingIndicator: "Loading..."
-  }
+    loadingIndicator: "Loading...",
+  },
 };
 export const LoadingPosition: StoryObj<ButtonProps> = {
   args: {
     loading: true,
-    children: <span>Save</span>
+    children: <span>Save</span>,
   },
   render: (props) => (
     <Preview>
       <Button {...props} loadingPosition="start" startIcon={<SaveIcon />} />
       <Button {...props} loadingPosition="end" endIcon={<SaveIcon />} />
     </Preview>
-  )
+  ),
 };

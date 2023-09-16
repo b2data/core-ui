@@ -4,12 +4,12 @@ const listSubheaderTheme: ComponentThemeOverride["MuiListSubheader"] = {
   styleOverrides: {
     root: ({ ownerState: { disableGutters } }) => ({
       padding: disableGutters ? undefined : "0 10px",
-      lineHeight: "36px"
-    })
+      lineHeight: "36px",
+    }),
   },
   defaultProps: {
-    color: "default"
-  }
+    color: "default",
+  },
 };
 
 export default listSubheaderTheme;

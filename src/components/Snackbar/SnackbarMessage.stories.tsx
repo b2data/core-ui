@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<SnackbarMessageProps> = {
   title: "Components/Alert/Snackbar Message",
   component: SnackbarMessage,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -17,6 +17,6 @@ export const Base: StoryObj<SnackbarMessageProps> = {
     variant: "error",
     message: "Please trye again!",
     displayVariant: "outlined",
-    closeText: "Cancel"
-  }
+    closeText: "Cancel",
+  },
 };

@@ -4,8 +4,8 @@ const drawerTheme: ComponentThemeOverride["MuiDrawer"] = {
   styleOverrides: {},
   defaultProps: {
     anchor: "left",
-    variant: "temporary"
-  }
+    variant: "temporary",
+  },
 };
 
 export default drawerTheme;

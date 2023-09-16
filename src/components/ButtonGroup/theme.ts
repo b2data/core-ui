@@ -6,8 +6,8 @@ const buttonGroupTheme: ComponentThemeOverride["MuiButtonGroup"] = {
     orientation: "horizontal",
     color: "primary",
     variant: "outlined",
-    size: "medium"
-  }
+    size: "medium",
+  },
 };
 
 export default buttonGroupTheme;

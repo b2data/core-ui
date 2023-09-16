@@ -1,6 +1,6 @@
 import {
   ListItemButton as MuiListItemButton,
-  ListItemButtonProps as MuiListItemButtonProps
+  ListItemButtonProps as MuiListItemButtonProps,
 } from "@mui/material";
 import React from "react";
 

@@ -11,7 +11,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<TabsProps> = {
   title: "Components/Tabs/Tabs",
   component: Tabs,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -19,11 +19,11 @@ export default meta;
 const content = [
   <Tab label="Item One" />,
   <Tab label="Item Two" />,
-  <Tab label="Item Three" disabled />
+  <Tab label="Item Three" disabled />,
 ];
 
 export const Base: StoryObj<TabsProps> = {
-  args: { children: content, value: 1 }
+  args: { children: content, value: 1 },
 };
 
 export const Variants: StoryObj<TabsProps> = {
@@ -61,7 +61,7 @@ export const Variants: StoryObj<TabsProps> = {
         />
       </div>
     );
-  }
+  },
 };
 
 export const Vertical: StoryObj<TabsProps> = {
@@ -69,7 +69,7 @@ export const Vertical: StoryObj<TabsProps> = {
     children: content.concat(content),
     orientation: "vertical",
     variant: "scrollable",
-    value: 1
+    value: 1,
   },
   render: (props) => {
     return (
@@ -78,7 +78,7 @@ export const Vertical: StoryObj<TabsProps> = {
         <div style={{ flex: 1 }}>Content</div>
       </div>
     );
-  }
+  },
 };
 
 export const WithIcon: StoryObj<TabsProps> = {
@@ -89,5 +89,5 @@ export const WithIcon: StoryObj<TabsProps> = {
       <Tab label="Item Two" iconPosition="end" icon={<FavoriteIcon />} />
       <Tab label="Item Three" disabled />
     </Tabs>
-  )
+  ),
 };

@@ -2,7 +2,7 @@ import React from "react";
 import {
   SnackbarProvider as CoreSnackbarProvider,
   SnackbarProviderProps as CoreSnackbarProviderProps,
-  useSnackbar
+  useSnackbar,
 } from "notistack";
 
 import { SnackbarMessage } from "./SnackbarMessage";
@@ -22,7 +22,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   maxSnack = 5,
   anchorOrigin = { horizontal: "left", vertical: "bottom" },
   autoHideDuration = 10000,
-  dense
+  dense,
 }) => (
   <CoreSnackbarProvider
     maxSnack={maxSnack}
@@ -34,7 +34,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
       error: SnackbarMessage,
       warning: SnackbarMessage,
       success: SnackbarMessage,
-      info: SnackbarMessage
+      info: SnackbarMessage,
     }}
   >
     {children}

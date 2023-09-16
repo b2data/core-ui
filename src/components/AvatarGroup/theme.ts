@@ -3,14 +3,14 @@ import { ComponentThemeOverride } from "../types";
 const avatarGroupTheme: ComponentThemeOverride["MuiAvatarGroup"] = {
   styleOverrides: {
     root: {
-      justifyContent: "start"
-    }
+      justifyContent: "start",
+    },
   },
 
   defaultProps: {
     spacing: "medium",
-    variant: "circular"
-  }
+    variant: "circular",
+  },
 };
 
 export default avatarGroupTheme;

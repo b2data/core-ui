@@ -10,17 +10,17 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<AlertProps> = {
   title: "Components/Alert/Alert",
   component: Alert,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<AlertProps> = {
-  args: { title: "Title", children: "content" }
+  args: { title: "Title", children: "content" },
 };
 
 export const Outlined: StoryObj<AlertProps> = {
-  args: { title: "Title", children: "content", variant: "outlined" }
+  args: { title: "Title", children: "content", variant: "outlined" },
 };
 
 export const Variants: StoryObj<AlertProps> = {
@@ -42,12 +42,12 @@ export const Variants: StoryObj<AlertProps> = {
         <Alert {...props} severity="info" variant="outlined" />
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Close: StoryObj<AlertProps> = {
   args: { title: "Title", children: "content" },
-  argTypes: { onClose: { action: "onClose" } }
+  argTypes: { onClose: { action: "onClose" } },
 };
 
 export const Action: StoryObj<AlertProps> = {
@@ -63,6 +63,6 @@ export const Action: StoryObj<AlertProps> = {
           Confirm
         </Button>
       </Box>
-    )
-  }
+    ),
+  },
 };

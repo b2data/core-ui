@@ -1,6 +1,6 @@
 import {
   RadioGroup as MuiRadioGroup,
-  RadioGroupProps as MuiRadioGroupProps
+  RadioGroupProps as MuiRadioGroupProps,
 } from "@mui/material";
 import React from "react";
 

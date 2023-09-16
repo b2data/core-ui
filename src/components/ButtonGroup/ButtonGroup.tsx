@@ -1,6 +1,6 @@
 import {
   ButtonGroup as MuiButtonGroup,
-  ButtonGroupProps as MuiButtonGroupProps
+  ButtonGroupProps as MuiButtonGroupProps,
 } from "@mui/material";
 import React from "react";
 

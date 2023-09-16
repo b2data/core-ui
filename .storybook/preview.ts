@@ -1,11 +1,7 @@
 import { withThemeFromJSXProvider } from "@storybook/addon-styling";
 import type { Preview, Decorator } from "@storybook/react";
 import { CssBaseline } from "../src/components/CssBaseline";
-import {
-  lightTheme,
-  darkTheme,
-  ThemeProvider
-} from "../src/theming";
+import { lightTheme, darkTheme, ThemeProvider } from "../src/theming";
 
 export const preview: Preview = {
   parameters: {
@@ -14,20 +10,20 @@ export const preview: Preview = {
       expanded: true,
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/
-      }
-    }
-  }
+        date: /Date$/,
+      },
+    },
+  },
 };
 
 export const decorators: Decorator[] = [
   withThemeFromJSXProvider({
     themes: {
       light: lightTheme,
-      dark: darkTheme
+      dark: darkTheme,
     },
     defaultTheme: "light",
     Provider: ThemeProvider,
-    GlobalStyles: CssBaseline
-  })
+    GlobalStyles: CssBaseline,
+  }),
 ];

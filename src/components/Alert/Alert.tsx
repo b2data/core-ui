@@ -1,7 +1,7 @@
 import {
   Alert as MuiAlert,
   AlertProps as MuiAlertProps,
-  AlertTitle as MuiAlertTitle
+  AlertTitle as MuiAlertTitle,
 } from "@mui/material";
 import React, { cloneElement, ReactElement } from "react";
 
@@ -77,8 +77,8 @@ export const Alert: React.FC<AlertProps> = ({
           flexDirection: "row",
           justifyContent: "end",
           gap: "8px",
-          marginTop: 8
-        }
+          marginTop: 8,
+        },
       })}
   </MuiAlert>
 );

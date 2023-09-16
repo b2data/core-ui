@@ -7,13 +7,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ListItemIconProps> = {
   title: "Components/List/ListItemIcon",
   component: ListItemIcon,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<ListItemIconProps> = {
   args: {
-    children: <SaveIcon />
-  }
+    children: <SaveIcon />,
+  },
 };

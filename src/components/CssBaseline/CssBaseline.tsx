@@ -1,6 +1,6 @@
 import {
   CssBaseline as MuiCssBaseline,
-  CssBaselineProps as MuiCssBaselineProps
+  CssBaselineProps as MuiCssBaselineProps,
 } from "@mui/material";
 import React from "react";
 

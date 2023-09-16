@@ -40,7 +40,7 @@ export const SkeletonGroup: React.FC<SkeletonGroupProps> = ({
           minHeight: 36,
           padding: 2.5,
           gridTemplateColumns: getGridTemplate(gridTemplate),
-          ...rowSx
+          ...rowSx,
         }}
       >
         {Array.from({ length: Math.max(1, gridTemplate.length) }, () => (

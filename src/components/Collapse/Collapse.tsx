@@ -1,6 +1,6 @@
 import {
   Collapse as MuiCollapse,
-  CollapseProps as MuiCollapseProps
+  CollapseProps as MuiCollapseProps,
 } from "@mui/material";
 import React from "react";
 

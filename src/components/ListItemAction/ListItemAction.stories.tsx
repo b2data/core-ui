@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ListItemActionProps> = {
   title: "Components/List/ListItemAction",
   component: ListItemAction,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -23,5 +23,5 @@ export const Base: StoryObj<ListItemActionProps> = {
         </IconButton>
       </ListItemAction>
     </div>
-  )
+  ),
 };

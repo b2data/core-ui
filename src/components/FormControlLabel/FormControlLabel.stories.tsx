@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<FormControlLabelProps> = {
   title: "Components/Inputs/Form Control Label",
   component: FormControlLabel,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -15,6 +15,6 @@ export default meta;
 export const Base: StoryObj<FormControlLabelProps> = {
   args: {
     label: "Checkbox",
-    control: <Checkbox />
-  }
+    control: <Checkbox />,
+  },
 };

@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<CollapseProps> = {
   title: "Components/Collapse",
   component: Collapse,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -25,5 +25,5 @@ export const Base: StoryObj<CollapseProps> = {
         </Collapse>
       </div>
     );
-  }
+  },
 };

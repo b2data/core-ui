@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ClickAwayListenerProps> = {
   title: "Components/Click Away Listener",
   component: ClickAwayListener,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -24,5 +24,5 @@ export const Base: StoryObj<ClickAwayListenerProps> = {
         </div>
       </ClickAwayListener>
     );
-  }
+  },
 };

@@ -4,7 +4,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint"],
 
   "extends": [
     "eslint:recommended",
@@ -16,7 +16,11 @@
   ],
 
   "rules": {
-    "prettier/prettier": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "import/no-named-as-default-member": "off",
+    "import/default": "off",
 
     // Common rules
     "sort-imports": [
@@ -26,11 +30,6 @@
         "ignoreDeclarationSort": true
       }
     ],
-    "no-multiple-empty-lines": ["error", { "max": 1 }],
-
-    // Typescript rules
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "off",
 
     // Plugin rules
     "import/order": [
@@ -53,8 +52,7 @@
 
   "env": {
     "browser": true,
-    "es2021": true,
-    "jest": true
+    "es2021": true
   },
 
   "settings": {

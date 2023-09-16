@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<SkeletonProps> = {
   title: "Components/Skeleton/Skeleton",
   component: Skeleton,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -22,5 +22,5 @@ export const Variants: StoryObj<SkeletonProps> = {
       <Skeleton {...props} variant="rectangular" width={210} height={60} />
       <Skeleton {...props} variant="rounded" width={210} height={60} />
     </Preview>
-  )
+  ),
 };

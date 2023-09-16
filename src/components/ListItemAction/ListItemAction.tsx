@@ -1,6 +1,6 @@
 import {
   ListItemSecondaryAction as MuiListItemSecondaryAction,
-  ListItemSecondaryActionProps as MuiListItemSecondaryActionProps
+  ListItemSecondaryActionProps as MuiListItemSecondaryActionProps,
 } from "@mui/material";
 import React from "react";
 

@@ -1,6 +1,6 @@
 import {
   Typography as MuiTypography,
-  TypographyProps as MuiTypographyProps
+  TypographyProps as MuiTypographyProps,
 } from "@mui/material";
 import React from "react";
 
