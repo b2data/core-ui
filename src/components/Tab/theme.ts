@@ -6,13 +6,13 @@ const tabTheme: ComponentThemeOverride["MuiTab"] = {
       minHeight: 40,
       lineHeight: 1,
       "& .MuiSvgIcon-root": {
-        fontSize: 18
-      }
-    }
+        fontSize: 18,
+      },
+    },
   },
   defaultProps: {
-    iconPosition: "start"
-  }
+    iconPosition: "start",
+  },
 };
 
 export default tabTheme;

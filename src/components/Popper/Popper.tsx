@@ -1,6 +1,6 @@
 import {
   Popper as MuiPopper,
-  PopperProps as MuiPopperProps
+  PopperProps as MuiPopperProps,
 } from "@mui/material";
 import React from "react";
 

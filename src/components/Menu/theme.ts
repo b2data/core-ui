@@ -5,8 +5,8 @@ const menuTheme: ComponentThemeOverride["MuiMenu"] = {
   defaultProps: {
     elevation: 3,
     transformOrigin: { vertical: "top", horizontal: "left" },
-    anchorOrigin: { vertical: "top", horizontal: "left" }
-  }
+    anchorOrigin: { vertical: "top", horizontal: "left" },
+  },
 };
 
 export default menuTheme;

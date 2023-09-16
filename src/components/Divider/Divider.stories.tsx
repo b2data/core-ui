@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<DividerProps> = {
   title: "Components/Divider",
   component: Divider,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -43,7 +43,7 @@ export const Aligns: StoryObj<DividerProps> = {
       </Divider>
       {content}
     </div>
-  )
+  ),
 };
 
 export const Variants: StoryObj<DividerProps> = {
@@ -54,7 +54,7 @@ export const Variants: StoryObj<DividerProps> = {
           display: "flex",
           gap: "16px",
           border: "1px solid",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <div>{content}</div>
@@ -71,7 +71,7 @@ export const Variants: StoryObj<DividerProps> = {
           display: "flex",
           gap: "16px",
           border: "1px solid",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <div>{content}</div>
@@ -83,7 +83,7 @@ export const Variants: StoryObj<DividerProps> = {
           display: "flex",
           gap: "16px",
           border: "1px solid",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <div>{content}</div>
@@ -91,5 +91,5 @@ export const Variants: StoryObj<DividerProps> = {
         <div>{content}</div>
       </div>
     </Preview>
-  )
+  ),
 };

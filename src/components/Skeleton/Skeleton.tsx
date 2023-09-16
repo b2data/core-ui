@@ -1,6 +1,6 @@
 import {
   Skeleton as MuiSkeleton,
-  SkeletonProps as MuiSkeletonProps
+  SkeletonProps as MuiSkeletonProps,
 } from "@mui/material";
 import React from "react";
 

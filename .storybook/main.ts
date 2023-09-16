@@ -9,14 +9,14 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
     "@storybook/addon-essentials",
-    "@storybook/addon-styling"
+    "@storybook/addon-styling",
   ],
   framework: {
     name: "@storybook/react-vite",
-    options: {}
+    options: {},
   },
   docs: {
-    autodocs: "tag"
+    autodocs: "tag",
   },
   typescript: {
     check: false,
@@ -34,8 +34,8 @@ const config: StorybookConfig = {
       propFilter: (prop) =>
         prop.parent
           ? !/node_modules\/(?!@mui|notistack)/.test(prop.parent.fileName)
-          : true
-    }
-  }
+          : true,
+    },
+  },
 };
 export default config;

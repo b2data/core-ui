@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<PortalProps> = {
   title: "Components/Portal",
   component: Portal,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -36,5 +36,5 @@ export const Base: StoryObj<PortalProps> = {
         />
       </div>
     );
-  }
+  },
 };

@@ -36,7 +36,7 @@ export const ProgressStatistic: React.FC<ProgressStatisticProps> = ({
           key={color + value}
           sx={{
             backgroundColor: color,
-            width: `${(value / total) * 100}%`
+            width: `${(value / total) * 100}%`,
           }}
         />
       ))}

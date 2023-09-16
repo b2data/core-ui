@@ -5,11 +5,11 @@ const listItemIconTheme: ComponentThemeOverride["MuiListItemIcon"] = {
     root: {
       minWidth: 24,
       "& .MuiSvgIcon-root": {
-        fontSize: 18
-      }
-    }
+        fontSize: 18,
+      },
+    },
   },
-  defaultProps: {}
+  defaultProps: {},
 };
 
 export default listItemIconTheme;

@@ -1,6 +1,6 @@
 import {
   Tooltip as MuiTooltip,
-  TooltipProps as MuiTooltipProps
+  TooltipProps as MuiTooltipProps,
 } from "@mui/material";
 import React from "react";
 

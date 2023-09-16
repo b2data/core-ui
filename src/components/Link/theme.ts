@@ -2,7 +2,7 @@ import { ComponentThemeOverride } from "../types";
 
 const linkTheme: ComponentThemeOverride["MuiLink"] = {
   styleOverrides: {},
-  defaultProps: {}
+  defaultProps: {},
 };
 
 export default linkTheme;

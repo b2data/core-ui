@@ -10,13 +10,13 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
     root: ({ ownerState: { variant, severity, color }, theme }) => {
       const styles = {
         padding: 14,
-        border: "1px solid"
+        border: "1px solid",
       };
       if (color) {
         return {
           ...styles,
           borderColor: theme.palette.grey[500],
-          color: theme.palette.text.primary
+          color: theme.palette.text.primary,
         };
       }
       if (variant === "standard") {
@@ -24,18 +24,18 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
           ...styles,
           backgroundColor: getColor(theme)(
             theme.palette[severity as AlertColor]?.light,
-            0.8
+            0.8,
           ),
           borderColor: getColor(theme)(
             theme.palette[severity as AlertColor]?.light,
-            0.8
-          )
+            0.8,
+          ),
         };
       }
       if (variant === "outlined") {
         return {
           ...styles,
-          borderColor: theme.palette[severity as AlertColor]?.main
+          borderColor: theme.palette[severity as AlertColor]?.main,
         };
       }
 
@@ -45,7 +45,7 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
       const styles = {
         margin: "-14px 6px -14px -14px",
         padding: "10px 6px",
-        width: 30
+        width: 30,
       };
 
       if (color) {
@@ -53,8 +53,8 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
           ...styles,
           "& .MuiSvgIcon-root": {
             fontSize: 18,
-            color: theme.palette.text.primary
-          }
+            color: theme.palette.text.primary,
+          },
         };
       }
 
@@ -63,11 +63,11 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
           ...styles,
           "& .MuiSvgIcon-root": {
             fontSize: 18,
-            color: theme.palette.background.default
+            color: theme.palette.background.default,
           },
           backgroundColor: theme.palette[severity as AlertColor]?.main,
           borderTopLeftRadius: 3,
-          borderBottomLeftRadius: 3
+          borderBottomLeftRadius: 3,
         };
       }
 
@@ -77,14 +77,14 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
     message: {
       padding: 0,
       overflow: "inherit",
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   defaultProps: {
     elevation: 0,
     variant: "standard",
-    severity: "success"
-  }
+    severity: "success",
+  },
 };
 
 export default alertTheme;

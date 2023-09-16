@@ -9,23 +9,26 @@ import typography from "./typography";
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
-    ...palette
+    background: {
+      default: "#f9f9f9",
+    },
+    ...palette,
   },
   components,
   breakpoints,
   spacing: 4,
   mixins,
-  typography
+  typography,
 });
 
 export const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    ...palette
+    ...palette,
   },
   components,
   breakpoints,
   spacing: 4,
   mixins,
-  typography
+  typography,
 });

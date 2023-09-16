@@ -11,13 +11,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ChipProps> = {
   title: "Components/Chip",
   component: Chip,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<ChipProps> = {
-  args: { label: "Chip Component" }
+  args: { label: "Chip Component" },
 };
 
 export const Variants: StoryObj<ChipProps> = {
@@ -55,7 +55,7 @@ export const Variants: StoryObj<ChipProps> = {
         />
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Delete: StoryObj<ChipProps> = {
@@ -81,7 +81,7 @@ export const Delete: StoryObj<ChipProps> = {
         />
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Sizes: StoryObj<ChipProps> = {
@@ -97,7 +97,7 @@ export const Sizes: StoryObj<ChipProps> = {
         <Chip {...props} size="medium" variant="outlined" />
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Colors: StoryObj<ChipProps> = {
@@ -123,5 +123,5 @@ export const Colors: StoryObj<ChipProps> = {
         <Chip {...props} color="warning" variant="outlined" />
       </Preview>
     </Preview>
-  )
+  ),
 };

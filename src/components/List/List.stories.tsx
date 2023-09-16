@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ListProps> = {
   title: "Components/List/List",
   component: List,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -15,11 +15,11 @@ export default meta;
 const content = [
   <ListItem asButton text="List item 1" />,
   <ListItem asButton text="List item 2" />,
-  <ListItem asButton text="List item 3" />
+  <ListItem asButton text="List item 3" />,
 ];
 
 export const Base: StoryObj<ListProps> = {
-  render: (props) => <List {...props}>{content}</List>
+  render: (props) => <List {...props}>{content}</List>,
 };
 
 export const StickySubheader: StoryObj<ListProps> = {
@@ -31,5 +31,5 @@ export const StickySubheader: StoryObj<ListProps> = {
         ))}
       </List>
     </div>
-  )
+  ),
 };

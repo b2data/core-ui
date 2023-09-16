@@ -1,6 +1,6 @@
 import {
   Backdrop as MuiBackdrop,
-  BackdropProps as MuiBackdropProps
+  BackdropProps as MuiBackdropProps,
 } from "@mui/material";
 import React from "react";
 

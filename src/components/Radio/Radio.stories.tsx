@@ -9,14 +9,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<RadioProps> = {
   title: "Components/Inputs/Radio",
   component: Radio,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<RadioProps> = {
   argTypes: { onChange: { action: "onChange" } },
-  render: (props) => <Radio {...props} />
+  render: (props) => <Radio {...props} />,
 };
 
 export const Variants: StoryObj<RadioProps> = {
@@ -26,7 +26,7 @@ export const Variants: StoryObj<RadioProps> = {
       <Radio {...props} disabled />
       <Radio {...props} disabled checked />
     </Preview>
-  )
+  ),
 };
 
 export const Labels: StoryObj<RadioProps> = {
@@ -44,7 +44,7 @@ export const Labels: StoryObj<RadioProps> = {
         control={<Radio {...props} />}
       />
     </Preview>
-  )
+  ),
 };
 
 export const Sizes: StoryObj<RadioProps> = {
@@ -53,7 +53,7 @@ export const Sizes: StoryObj<RadioProps> = {
       <Radio {...props} size="small" />
       <Radio {...props} size="medium" />
     </Preview>
-  )
+  ),
 };
 
 export const Colors: StoryObj<RadioProps> = {
@@ -68,5 +68,5 @@ export const Colors: StoryObj<RadioProps> = {
       <Radio {...props} color="info" />
       <Radio {...props} color="warning" />
     </Preview>
-  )
+  ),
 };

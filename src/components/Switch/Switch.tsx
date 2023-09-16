@@ -1,6 +1,6 @@
 import {
   Switch as MuiSwitch,
-  SwitchProps as MuiSwitchProps
+  SwitchProps as MuiSwitchProps,
 } from "@mui/material";
 import React from "react";
 

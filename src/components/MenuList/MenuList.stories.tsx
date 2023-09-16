@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<MenuListProps> = {
   title: "Components/Menu/MenuList",
   component: MenuList,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -18,7 +18,7 @@ export const Base: StoryObj<MenuListProps> = {
     children: [
       <MenuItem>Profile</MenuItem>,
       <MenuItem>My account</MenuItem>,
-      <MenuItem>Logout</MenuItem>
-    ]
-  }
+      <MenuItem>Logout</MenuItem>,
+    ],
+  },
 };

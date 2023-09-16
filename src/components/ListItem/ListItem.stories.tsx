@@ -12,15 +12,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ListItemProps> = {
   title: "Components/List/ListItem",
   component: ListItem,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<ListItemProps> = {
   args: {
-    text: "Primary"
-  }
+    text: "Primary",
+  },
 };
 
 export const Variants: StoryObj<ListItemProps> = {
@@ -41,6 +41,14 @@ export const Variants: StoryObj<ListItemProps> = {
         text="Primary"
         secondaryText="Secondary"
         avatar={<Avatar src={Avatar1} />}
+        divider
+        {...props}
+      />
+      <ListItem
+        asButton
+        text="Primary"
+        secondaryText="Secondary"
+        avatar={<Avatar>NT</Avatar>}
         divider
         {...props}
       />
@@ -79,5 +87,5 @@ export const Variants: StoryObj<ListItemProps> = {
         {...props}
       />
     </div>
-  )
+  ),
 };

@@ -9,13 +9,13 @@ const listItemTheme: ComponentThemeOverride["MuiListItem"] = {
       paddingLeft: disablePadding || disableGutters ? undefined : 10,
       paddingRight: disablePadding || disableGutters ? undefined : 10,
       "& .MuiListItemText-root": {
-        margin: 0
-      }
-    })
+        margin: 0,
+      },
+    }),
   },
   defaultProps: {
-    dense: true
-  }
+    dense: true,
+  },
 };
 
 export default listItemTheme;

@@ -1,7 +1,7 @@
 import {
   AvatarGroup as MuiAvatarGroup,
   AvatarGroupProps as MuiAvatarGroupProps,
-  styled
+  styled,
 } from "@mui/material";
 import React from "react";
 
@@ -28,11 +28,11 @@ export interface AvatarGroupProps
 }
 
 export const AvatarGroup: React.FC<AvatarGroupProps> = styled(
-  MuiAvatarGroup
+  MuiAvatarGroup,
 )<AvatarGroupProps>(({ size = "medium" }) => ({
   "& .MuiAvatar-root": {
     width: AVATAR_SIZES[size],
     height: AVATAR_SIZES[size],
-    fontSize: size === "small" ? "1rem" : "1.4rem"
-  }
+    fontSize: size === "small" ? "1rem" : "1.4rem",
+  },
 }));

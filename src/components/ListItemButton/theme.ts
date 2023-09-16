@@ -7,12 +7,12 @@ const listItemButtonTheme: ComponentThemeOverride["MuiListItemButton"] = {
       paddingBottom: 6,
       minHeight: 36,
       paddingLeft: disableGutters ? undefined : 10,
-      paddingRight: disableGutters ? undefined : 10
-    })
+      paddingRight: disableGutters ? undefined : 10,
+    }),
   },
   defaultProps: {
-    dense: true
-  }
+    dense: true,
+  },
 };
 
 export default listItemButtonTheme;

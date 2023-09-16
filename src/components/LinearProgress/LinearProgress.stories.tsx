@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<LinearProgressProps> = {
   title: "Components/Progress/Linear Progress",
   component: LinearProgress,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -28,7 +28,7 @@ export const Colors: StoryObj<LinearProgressProps> = {
       <LinearProgress {...props} color="success" />
       <LinearProgress {...props} color="warning" />
     </div>
-  )
+  ),
 };
 
 export const Buffer: StoryObj<LinearProgressProps> = {
@@ -79,7 +79,7 @@ export const Buffer: StoryObj<LinearProgressProps> = {
         />
       </div>
     );
-  }
+  },
 };
 
 export const Determinate: StoryObj<LinearProgressProps> = {
@@ -89,7 +89,7 @@ export const Determinate: StoryObj<LinearProgressProps> = {
     useEffect(() => {
       const timer = setInterval(() => {
         setProgress((prevProgress) =>
-          prevProgress >= 100 ? 0 : prevProgress + 10
+          prevProgress >= 100 ? 0 : prevProgress + 10,
         );
       }, 800);
 
@@ -127,5 +127,5 @@ export const Determinate: StoryObj<LinearProgressProps> = {
         />
       </div>
     );
-  }
+  },
 };

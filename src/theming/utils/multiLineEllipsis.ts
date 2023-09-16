@@ -5,5 +5,5 @@ export const multiLineEllipsis = (lines: number): SxProps<Theme> => ({
   textOverflow: "ellipsis",
   display: "-webkit-box",
   WebkitLineClamp: lines,
-  WebkitBoxOrient: "vertical"
+  WebkitBoxOrient: "vertical",
 });

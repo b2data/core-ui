@@ -8,14 +8,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<FabProps> = {
   title: "Components/Buttons/Fab",
   component: Fab,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<FabProps> = {
   args: { children: <SendIcon /> },
-  render: (props) => <Fab {...props} />
+  render: (props) => <Fab {...props} />,
 };
 
 export const SizesAndVariants: StoryObj<FabProps> = {
@@ -39,7 +39,7 @@ export const SizesAndVariants: StoryObj<FabProps> = {
         </Fab>
       </Preview>
     </Preview>
-  )
+  ),
 };
 
 export const Colors: StoryObj<FabProps> = {
@@ -55,5 +55,5 @@ export const Colors: StoryObj<FabProps> = {
       <Fab {...props} color="info" />
       <Fab {...props} color="warning" />
     </Preview>
-  )
+  ),
 };

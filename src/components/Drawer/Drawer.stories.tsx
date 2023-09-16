@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<DrawerProps> = {
   title: "Components/Drawer",
   component: Drawer,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -24,5 +24,5 @@ export const Base: StoryObj<DrawerProps> = {
         </Drawer>
       </div>
     );
-  }
+  },
 };

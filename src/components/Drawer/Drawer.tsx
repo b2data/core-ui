@@ -1,6 +1,6 @@
 import {
   Drawer as MuiDrawer,
-  DrawerProps as MuiDrawerProps
+  DrawerProps as MuiDrawerProps,
 } from "@mui/material";
 import React from "react";
 

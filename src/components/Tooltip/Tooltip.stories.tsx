@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<TooltipProps> = {
   title: "Components/Tooltip",
   component: Tooltip,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -17,8 +17,8 @@ export default meta;
 export const Base: StoryObj<TooltipProps> = {
   args: {
     title: "Delete",
-    children: <Button color="inherit">Delete</Button>
-  }
+    children: <Button color="inherit">Delete</Button>,
+  },
 };
 
 export const Positions: StoryObj<TooltipProps> = {
@@ -36,14 +36,14 @@ export const Positions: StoryObj<TooltipProps> = {
         "right",
         "bottom-end",
         "bottom-start",
-        "bottom"
+        "bottom",
       ].map((key) => (
         <Tooltip {...props} key={key} title={key} placement={key as any}>
           <Button color="inherit">{key}</Button>
         </Tooltip>
       ))}
     </Preview>
-  )
+  ),
 };
 
 export const Follow: StoryObj<TooltipProps> = {
@@ -51,6 +51,6 @@ export const Follow: StoryObj<TooltipProps> = {
     title: "Delete",
     followCursor: true,
     placement: "top",
-    children: <Button color="inherit">Delete</Button>
-  }
+    children: <Button color="inherit">Delete</Button>,
+  },
 };

@@ -5,8 +5,8 @@ const chipTheme: ComponentThemeOverride["MuiChip"] = {
   defaultProps: {
     color: "default",
     variant: "filled",
-    size: "medium"
-  }
+    size: "medium",
+  },
 };
 
 export default chipTheme;

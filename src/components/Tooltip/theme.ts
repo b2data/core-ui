@@ -4,8 +4,8 @@ const tooltipTheme: ComponentThemeOverride["MuiTooltip"] = {
   styleOverrides: {},
   defaultProps: {
     arrow: true,
-    placement: "bottom"
-  }
+    placement: "bottom",
+  },
 };
 
 export default tooltipTheme;

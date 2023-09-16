@@ -3,7 +3,7 @@ import { CSSProperties } from "@mui/material/styles/createMixins";
 import scrollbars from "./scrollbars";
 
 export default {
-  scrollbars
+  scrollbars,
 };
 
 declare module "@mui/material/styles" {

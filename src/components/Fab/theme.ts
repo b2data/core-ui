@@ -3,7 +3,7 @@ import { ComponentThemeOverride } from "../types";
 export const FAB_SIZES = {
   small: 32,
   medium: 40,
-  large: 48
+  large: 48,
 } as const;
 
 const fabTheme: ComponentThemeOverride["MuiFab"] = {
@@ -15,28 +15,28 @@ const fabTheme: ComponentThemeOverride["MuiFab"] = {
       minHeight: FAB_SIZES[size || "medium"],
       boxShadow: theme.shadows[3],
       ":active": {
-        boxShadow: theme.shadows[5]
+        boxShadow: theme.shadows[5],
       },
       "& .MuiSvgIcon-root": {
-        fontSize: 28
-      }
+        fontSize: 28,
+      },
     }),
     sizeSmall: {
       "& .MuiSvgIcon-root": {
-        fontSize: 18
-      }
+        fontSize: 18,
+      },
     },
     sizeMedium: {
       "& .MuiSvgIcon-root": {
-        fontSize: 24
-      }
-    }
+        fontSize: 24,
+      },
+    },
   },
   defaultProps: {
     color: "default",
     size: "medium",
-    variant: "circular"
-  }
+    variant: "circular",
+  },
 };
 
 export default fabTheme;

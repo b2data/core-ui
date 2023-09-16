@@ -1,6 +1,6 @@
 import {
   Portal as MuiPortal,
-  PortalProps as MuiPortalProps
+  PortalProps as MuiPortalProps,
 } from "@mui/material";
 import React from "react";
 

@@ -12,14 +12,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<CheckboxProps> = {
   title: "Components/Inputs/Checkbox",
   component: Checkbox,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<CheckboxProps> = {
   argTypes: { onChange: { action: "onChange" } },
-  render: (props) => <Checkbox {...props} />
+  render: (props) => <Checkbox {...props} />,
 };
 
 export const Variants: StoryObj<CheckboxProps> = {
@@ -30,7 +30,7 @@ export const Variants: StoryObj<CheckboxProps> = {
       <Checkbox {...props} disabled />
       <Checkbox {...props} disabled checked />
     </Preview>
-  )
+  ),
 };
 
 export const Labels: StoryObj<CheckboxProps> = {
@@ -48,7 +48,7 @@ export const Labels: StoryObj<CheckboxProps> = {
         control={<Checkbox {...props} />}
       />
     </Preview>
-  )
+  ),
 };
 
 export const Sizes: StoryObj<CheckboxProps> = {
@@ -57,15 +57,15 @@ export const Sizes: StoryObj<CheckboxProps> = {
       <Checkbox {...props} size="small" />
       <Checkbox {...props} size="medium" />
     </Preview>
-  )
+  ),
 };
 
 export const Icons: StoryObj<CheckboxProps> = {
   args: {
     icon: <FavoriteBorderIcon />,
     checkedIcon: <FavoriteIcon />,
-    color: "error"
-  }
+    color: "error",
+  },
 };
 
 export const Colors: StoryObj<CheckboxProps> = {
@@ -80,7 +80,7 @@ export const Colors: StoryObj<CheckboxProps> = {
       <Checkbox {...props} color="info" />
       <Checkbox {...props} color="warning" />
     </Preview>
-  )
+  ),
 };
 
 export const Indeterminate: StoryObj<CheckboxProps> = {
@@ -138,5 +138,5 @@ export const Indeterminate: StoryObj<CheckboxProps> = {
         </div>
       </div>
     );
-  }
+  },
 };

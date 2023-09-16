@@ -1,6 +1,6 @@
 import {
   Breadcrumbs as MuiBreadcrumbs,
-  BreadcrumbsProps as MuiBreadcrumbsProps
+  BreadcrumbsProps as MuiBreadcrumbsProps,
 } from "@mui/material";
 import React, { ReactElement } from "react";
 import { Link as RouterLink } from "react-router-dom";

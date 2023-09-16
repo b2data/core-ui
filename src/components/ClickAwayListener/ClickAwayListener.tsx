@@ -1,6 +1,6 @@
 import {
   ClickAwayListener as MuiClickAwayListener,
-  ClickAwayListenerProps as MuiClickAwayListenerProps
+  ClickAwayListenerProps as MuiClickAwayListenerProps,
 } from "@mui/material";
 import React from "react";
 

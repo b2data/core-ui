@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export const useDebouncedEffect = (
   effect: () => void,
   deps: unknown[],
-  delay: number
+  delay: number,
 ) => {
   useEffect(() => {
     const handler = setTimeout(() => effect(), delay);

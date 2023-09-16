@@ -4,8 +4,8 @@ const circularProgressTheme: ComponentThemeOverride["MuiCircularProgress"] = {
   styleOverrides: {},
   defaultProps: {
     color: "primary",
-    variant: "indeterminate"
-  }
+    variant: "indeterminate",
+  },
 };
 
 export default circularProgressTheme;

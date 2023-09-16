@@ -8,7 +8,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<RadioGroupProps> = {
   title: "Components/Inputs/Radio Group",
   component: RadioGroup,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -21,5 +21,5 @@ export const Base: StoryObj<RadioGroupProps> = {
       <FormControlLabel value="best" control={<Radio />} label="The best!" />
       <FormControlLabel value="worst" control={<Radio />} label="The worst." />
     </RadioGroup>
-  )
+  ),
 };

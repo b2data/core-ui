@@ -1,6 +1,6 @@
 import {
   LoadingButton as MuiLoadingButton,
-  LoadingButtonProps as MuiLoadingButtonProps
+  LoadingButtonProps as MuiLoadingButtonProps,
 } from "@mui/lab";
 import React from "react";
 

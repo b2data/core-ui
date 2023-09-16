@@ -11,7 +11,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<CircularProgressProps> = {
   title: "Components/Progress/Circular Progress",
   component: CircularProgress,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -27,7 +27,7 @@ export const Sizes: StoryObj<CircularProgressProps> = {
       <CircularProgress {...props} size={40} />
       <CircularProgress {...props} size={40} thickness={10} />
     </Preview>
-  )
+  ),
 };
 
 export const Colors: StoryObj<CircularProgressProps> = {
@@ -41,7 +41,7 @@ export const Colors: StoryObj<CircularProgressProps> = {
       <CircularProgress {...props} color="success" />
       <CircularProgress {...props} color="warning" />
     </Preview>
-  )
+  ),
 };
 
 export const Determinate: StoryObj<CircularProgressProps> = {
@@ -50,7 +50,7 @@ export const Determinate: StoryObj<CircularProgressProps> = {
     useEffect(() => {
       const timer = setInterval(() => {
         setProgress((prevProgress) =>
-          prevProgress >= 100 ? 0 : prevProgress + 10
+          prevProgress >= 100 ? 0 : prevProgress + 10,
         );
       }, 800);
 
@@ -87,5 +87,5 @@ export const Determinate: StoryObj<CircularProgressProps> = {
         />
       </Preview>
     );
-  }
+  },
 };

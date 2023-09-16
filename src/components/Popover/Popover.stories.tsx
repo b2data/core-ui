@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<PopoverProps> = {
   title: "Components/Popover",
   component: Popover,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -40,5 +40,5 @@ export const Base: StoryObj<PopoverProps> = {
         </Popover>
       </>
     );
-  }
+  },
 };

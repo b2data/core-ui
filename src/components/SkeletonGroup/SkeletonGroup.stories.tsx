@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<SkeletonGroupProps> = {
   title: "Components/Skeleton/Skeleton Group",
   component: SkeletonGroup,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -14,8 +14,8 @@ export const Base: StoryObj<SkeletonGroupProps> = {};
 
 export const OneColumn: StoryObj<SkeletonGroupProps> = {
   args: {
-    rowsCount: 5
-  }
+    rowsCount: 5,
+  },
 };
 
 export const MultipleColumn: StoryObj<SkeletonGroupProps> = {
@@ -26,7 +26,7 @@ export const MultipleColumn: StoryObj<SkeletonGroupProps> = {
       "5fr",
       "minmax(110px, 1fr)",
       "minmax(80px, 1fr)",
-      "minmax(80px, 1fr)"
-    ]
-  }
+      "minmax(80px, 1fr)",
+    ],
+  },
 };

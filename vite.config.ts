@@ -9,7 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       src: path.resolve(__dirname, "./src"),
-      ".storybook": path.resolve(__dirname, "./.storybook")
-    }
-  }
+      ".storybook": path.resolve(__dirname, "./.storybook"),
+    },
+  },
 });

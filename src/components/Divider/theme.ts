@@ -5,8 +5,8 @@ const dividerTheme: ComponentThemeOverride["MuiDivider"] = {
   defaultProps: {
     orientation: "horizontal",
     textAlign: "center",
-    variant: "fullWidth"
-  }
+    variant: "fullWidth",
+  },
 };
 
 export default dividerTheme;

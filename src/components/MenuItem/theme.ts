@@ -7,13 +7,13 @@ const menuItemTheme: ComponentThemeOverride["MuiMenuItem"] = {
       minWidth: 100,
       padding: "6px 10px",
       "& .MuiSvgIcon-root": {
-        fontSize: 18
-      }
-    }
+        fontSize: 18,
+      },
+    },
   },
   defaultProps: {
-    dense: true
-  }
+    dense: true,
+  },
 };
 
 export default menuItemTheme;

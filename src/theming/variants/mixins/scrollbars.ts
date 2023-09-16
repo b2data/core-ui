@@ -4,11 +4,11 @@ export default {
   "&::-webkit-scrollbar": {
     backgroundColor: "#fff",
     width: 16,
-    height: 16
+    height: 16,
   },
 
   "&::-webkit-scrollbar-track": {
-    backgroundColor: trackColor
+    backgroundColor: trackColor,
   },
 
   "&::-webkit-scrollbar-thumb": {
@@ -20,11 +20,11 @@ export default {
 
     "&:hover": {
       backgroundColor: "#a0a0a5",
-      border: `4px solid ${trackColor}`
-    }
+      border: `4px solid ${trackColor}`,
+    },
   },
 
   "&::-webkit-scrollbar-button": {
-    display: "none"
-  }
+    display: "none",
+  },
 };

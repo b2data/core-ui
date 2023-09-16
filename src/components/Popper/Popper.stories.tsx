@@ -7,7 +7,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<PopperProps> = {
   title: "Components/Popper",
   component: Popper,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -35,5 +35,5 @@ export const Base: StoryObj<PopperProps> = {
         </Popper>
       </>
     );
-  }
+  },
 };

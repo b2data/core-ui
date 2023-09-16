@@ -5,13 +5,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<FormHelperTextProps> = {
   title: "Components/Inputs/Form Helper Text",
   component: FormHelperText,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<FormHelperTextProps> = {
   args: {
-    children: "Helper text"
-  }
+    children: "Helper text",
+  },
 };

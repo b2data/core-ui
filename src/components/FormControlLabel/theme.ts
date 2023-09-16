@@ -3,10 +3,10 @@ import { ComponentThemeOverride } from "../types";
 const formControlLabelTheme: ComponentThemeOverride["MuiFormControlLabel"] = {
   styleOverrides: {
     asterisk: ({ theme }) => ({
-      color: theme.palette.error.main
-    })
+      color: theme.palette.error.main,
+    }),
   },
-  defaultProps: {}
+  defaultProps: {},
 };
 
 export default formControlLabelTheme;

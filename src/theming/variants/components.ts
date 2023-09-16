@@ -10,6 +10,10 @@ import CheckboxOverride from "../../components/Checkbox/theme";
 import ChipOverride from "../../components/Chip/theme";
 import CircularProgressOverride from "../../components/CircularProgress/theme";
 import CollapseOverride from "../../components/Collapse/theme";
+import DialogOverride from "../../components/Dialog/theme";
+import DialogActionsOverride from "../../components/DialogActions/theme";
+import DialogContentOverride from "../../components/DialogContent/theme";
+import DialogTitleOverride from "../../components/DialogTitle/theme";
 import DividerOverride from "../../components/Divider/theme";
 import DrawerOverride from "../../components/Drawer/theme";
 import FabOverride from "../../components/Fab/theme";
@@ -29,6 +33,7 @@ import ListSubheaderOverride from "../../components/ListSubheader/theme";
 import MenuOverride from "../../components/Menu/theme";
 import MenuItemOverride from "../../components/MenuItem/theme";
 import MenuListOverride from "../../components/MenuList/theme";
+import PaperOverride from "../../components/Paper/theme";
 import PopoverOverride from "../../components/Popover/theme";
 import PopperOverride from "../../components/Popper/theme";
 import RadioOverride from "../../components/Radio/theme";
@@ -52,6 +57,10 @@ export default {
   MuiChip: ChipOverride,
   MuiCircularProgress: CircularProgressOverride,
   MuiCollapse: CollapseOverride,
+  MuiDialog: DialogOverride,
+  MuiDialogActions: DialogActionsOverride,
+  MuiDialogContent: DialogContentOverride,
+  MuiDialogTitle: DialogTitleOverride,
   MuiDivider: DividerOverride,
   MuiDrawer: DrawerOverride,
   MuiFab: FabOverride,
@@ -72,6 +81,7 @@ export default {
   MuiMenu: MenuOverride,
   MuiMenuItem: MenuItemOverride,
   MuiMenuList: MenuListOverride,
+  MuiPaper: PaperOverride,
   MuiPopover: PopoverOverride,
   MuiPopper: PopperOverride,
   MuiRadio: RadioOverride,
@@ -80,5 +90,5 @@ export default {
   MuiTab: TabOverride,
   MuiTabs: TabsOverride,
   MuiTooltip: TooltipOverride,
-  MuiTypography: TypographyOverride
+  MuiTypography: TypographyOverride,
 };

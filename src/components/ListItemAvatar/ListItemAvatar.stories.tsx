@@ -9,7 +9,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<ListItemAvatarProps> = {
   title: "Components/List/ListItemAvatar",
   component: ListItemAvatar,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -19,5 +19,5 @@ export const Base: StoryObj<ListItemAvatarProps> = {
     <ListItemAvatar {...props}>
       <Avatar size="small" alt="Remy Sharp" src={Avatar1} />
     </ListItemAvatar>
-  )
+  ),
 };

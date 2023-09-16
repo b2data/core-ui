@@ -1,6 +1,6 @@
 import {
   MenuList as MuiMenuList,
-  MenuListProps as MuiMenuListProps
+  MenuListProps as MuiMenuListProps,
 } from "@mui/material";
 import React from "react";
 

@@ -1,7 +1,7 @@
 import {
   Avatar as MuiAvatar,
   AvatarProps as MuiAvatarProps,
-  styled
+  styled,
 } from "@mui/material";
 import React from "react";
 
@@ -32,7 +32,7 @@ export const Avatar: React.FC<AvatarProps> = styled(MuiAvatar)<AvatarProps>(
     width: AVATAR_SIZES[size],
     height: AVATAR_SIZES[size],
     "& .MuiSvgIcon-root": {
-      fontSize: size === "small" ? 18 : 24
-    }
-  })
+      fontSize: size === "small" ? 18 : 24,
+    },
+  }),
 );

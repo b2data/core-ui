@@ -9,14 +9,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<SwitchProps> = {
   title: "Components/Inputs/Switch",
   component: Switch,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
 
 export const Base: StoryObj<SwitchProps> = {
   argTypes: { onChange: { action: "onChange" } },
-  render: (props) => <Switch {...props} />
+  render: (props) => <Switch {...props} />,
 };
 
 export const Variants: StoryObj<SwitchProps> = {
@@ -27,7 +27,7 @@ export const Variants: StoryObj<SwitchProps> = {
       <Switch {...props} disabled />
       <Switch {...props} disabled checked />
     </Preview>
-  )
+  ),
 };
 
 export const Labels: StoryObj<SwitchProps> = {
@@ -45,7 +45,7 @@ export const Labels: StoryObj<SwitchProps> = {
         control={<Switch {...props} />}
       />
     </Preview>
-  )
+  ),
 };
 
 export const Sizes: StoryObj<SwitchProps> = {
@@ -54,7 +54,7 @@ export const Sizes: StoryObj<SwitchProps> = {
       <Switch {...props} size="small" />
       <Switch {...props} size="medium" />
     </Preview>
-  )
+  ),
 };
 
 export const Colors: StoryObj<SwitchProps> = {
@@ -68,5 +68,5 @@ export const Colors: StoryObj<SwitchProps> = {
       <Switch {...props} color="info" />
       <Switch {...props} color="warning" />
     </Preview>
-  )
+  ),
 };

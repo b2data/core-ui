@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import {
   SnackbarProvider,
   SnackbarProviderProps,
-  useSnackbar
+  useSnackbar,
 } from "./SnackbarProvider";
 import { SnackbarMessageProps } from "./SnackbarMessage";
 
@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<SnackbarProviderProps> = {
   title: "Components/Alert/Snackbar Provider",
   component: SnackbarProvider,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -32,7 +32,7 @@ const Content = () => {
     { variant: "error", displayVariant: "outlined" },
     { variant: "warning", displayVariant: "outlined" },
     { variant: "info", displayVariant: "outlined" },
-    { variant: "success", displayVariant: "outlined" }
+    { variant: "success", displayVariant: "outlined" },
   ];
 
   return (
@@ -46,8 +46,8 @@ const Content = () => {
               {
                 autoHideDuration: 2000,
                 title: v.variant.toUpperCase(),
-                ...v
-              }
+                ...v,
+              },
             )
           }
         >
@@ -68,5 +68,5 @@ export const Base: StoryObj<SnackbarProviderProps> = {
         </SnackbarProvider>
       </div>
     );
-  }
+  },
 };
