@@ -3,7 +3,7 @@ import { DialogActions, DialogActionsProps } from "./DialogActions";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<DialogActionsProps> = {
-  title: "Components/Dialogs/DialogActions",
+  title: "Components/Dialogs/Dialog Actions",
   component: DialogActions,
   tags: ["autodocs"],
 };
