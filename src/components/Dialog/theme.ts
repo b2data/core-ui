@@ -6,6 +6,9 @@ const dialogTheme: ComponentThemeOverride["MuiDialog"] = {
     maxWidth: "tablet",
     scroll: "paper",
     fullWidth: true,
+    PaperProps: {
+      variant: "elevation",
+    },
   },
 };
 

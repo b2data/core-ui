@@ -41,6 +41,7 @@ import SkeletonOverride from "../../components/Skeleton/theme";
 import SwitchOverride from "../../components/Switch/theme";
 import TabOverride from "../../components/Tab/theme";
 import TabsOverride from "../../components/Tabs/theme";
+import TextFieldOverride from "../../components/TextField/theme";
 import TooltipOverride from "../../components/Tooltip/theme";
 import TypographyOverride from "../../components/Typography/theme";
 
@@ -89,6 +90,7 @@ export default {
   MuiSwitch: SwitchOverride,
   MuiTab: TabOverride,
   MuiTabs: TabsOverride,
+  MuiTextField: TextFieldOverride,
   MuiTooltip: TooltipOverride,
   MuiTypography: TypographyOverride,
 };

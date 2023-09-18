@@ -3,7 +3,7 @@ import { DialogTitle, DialogTitleProps } from "./DialogTitle";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<DialogTitleProps> = {
-  title: "Components/Dialogs/DialogTitle",
+  title: "Components/Dialogs/Dialog Title",
   component: DialogTitle,
   tags: ["autodocs"],
 };
