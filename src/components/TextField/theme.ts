@@ -32,7 +32,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         "& .MuiInputBase-input": {
           height: "unset",
           "&.Mui-disabled": {
-            "-webkit-text-fill-color": "unset",
+            WebkitTextFillColor: "unset",
           },
         },
         "& .MuiFormLabel-asterisk": {

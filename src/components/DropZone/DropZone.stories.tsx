@@ -1,6 +1,3 @@
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
-
 import { DropZone, DropZoneProps } from "./DropZone";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -26,9 +23,5 @@ export const Base: StoryObj<DropZoneProps> = {
     onSelect: { action: "onSelect" },
     onTypeError: { action: "onTypeError" },
   },
-  render: (props) => (
-    <DndProvider backend={HTML5Backend}>
-      <DropZone {...props} />
-    </DndProvider>
-  ),
+  render: (props) => <DropZone {...props} />,
 };
