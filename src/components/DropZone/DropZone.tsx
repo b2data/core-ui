@@ -1,6 +1,6 @@
 import React from "react";
-import { NativeTypes } from "react-dnd-html5-backend";
-import { useDrop } from "react-dnd";
+import { HTML5Backend, NativeTypes } from "react-dnd-html5-backend";
+import { DndProvider, useDrop } from "react-dnd";
 
 import { Typography } from "../Typography";
 import { Box, BoxProps } from "../Box";
@@ -48,7 +48,7 @@ export interface DropZoneProps {
   sx?: BoxProps["sx"];
 }
 
-export const DropZone: React.FC<DropZoneProps> = ({
+const DropZoneComp: React.FC<DropZoneProps> = ({
   onDrop,
   onSelect,
   accept,
@@ -85,57 +85,69 @@ export const DropZone: React.FC<DropZoneProps> = ({
   const TextContent = React.isValidElement(canDropText || hintText) ? (
     canDropText || hintText
   ) : (
-    <Typography variant="caption">{canDropText || hintText}</Typography>
+    <Typography variant="caption" sx={{ lineHeight: 1.2 }}>
+      {canDropText || hintText}
+    </Typography>
   );
 
+  console.log({ canDrop, isOver });
+
   return (
-    <Box
-      ref={drop}
-      onClick={() => inputRefInner.current?.click()}
-      bgcolor="#fafbfc"
-      border={({ palette }) =>
-        `1px dashed ${
-          Boolean(onDrop) && canDrop && isOver
-            ? palette.primary.main
-            : palette.grey[400]
-        }`
-      }
-      position="relative"
-      borderRadius={1}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      textAlign="center"
-      style={{
-        cursor: disabled ? "default" : "pointer",
-        opacity: disabled ? 0 : 1,
-      }}
-      {...props}
-    >
-      <input
-        type="file"
-        multiple={multiple}
-        disabled={disabled}
-        accept={accept}
-        ref={inputRefInner}
-        style={{ display: "none" }}
-        onChange={(e) => {
-          const currFiles = e.target.files;
-          const { isValid, files: valFiles } = validateFilesType(
-            currFiles,
-            accept,
-          );
-          if (!disabled) {
-            if (isValid) {
-              onSelect?.(valFiles);
-            } else {
-              onTypeError?.(valFiles);
-            }
-          }
-          e.target.files;
+    <div ref={drop}>
+      <Box
+        onClick={() => inputRefInner.current?.click()}
+        bgcolor="#fafbfc"
+        border={({ palette }) =>
+          `1px dashed ${
+            Boolean(onDrop) && canDrop && isOver
+              ? palette.primary.main
+              : palette.grey[400]
+          }`
+        }
+        position="relative"
+        borderRadius={1}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        style={{
+          cursor: disabled ? "default" : "pointer",
+          opacity: disabled ? 0 : 1,
         }}
-      />
-      {!disabled ? TextContent : null}
-    </Box>
+        padding={3}
+        {...props}
+      >
+        <input
+          type="file"
+          multiple={multiple}
+          disabled={disabled}
+          accept={accept}
+          ref={inputRefInner}
+          style={{ display: "none" }}
+          onChange={(e) => {
+            const currFiles = e.target.files;
+            const { isValid, files: valFiles } = validateFilesType(
+              currFiles,
+              accept,
+            );
+            if (!disabled) {
+              if (isValid) {
+                onSelect?.(valFiles);
+              } else {
+                onTypeError?.(valFiles);
+              }
+            }
+            e.target.files;
+          }}
+        />
+        {!disabled ? TextContent : null}
+      </Box>
+    </div>
   );
 };
+
+export const DropZone: React.FC<DropZoneProps> = (props) => (
+  <DndProvider backend={HTML5Backend}>
+    <DropZoneComp {...props} />
+  </DndProvider>
+);

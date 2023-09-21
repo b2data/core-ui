@@ -1,7 +1,13 @@
 import { ComponentThemeOverride } from "../types";
 
 const dialogTheme: ComponentThemeOverride["MuiDialog"] = {
-  styleOverrides: {},
+  styleOverrides: {
+    paper: {
+      "&.MuiDialog-paperWidthMobile": {
+        maxWidth: 360,
+      },
+    },
+  },
   defaultProps: {
     maxWidth: "tablet",
     scroll: "paper",

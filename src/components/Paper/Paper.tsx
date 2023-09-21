@@ -4,7 +4,7 @@ import React from "react";
 export interface PaperProps
   extends Pick<
     MuiPaperProps,
-    "component" | "elevation" | "square" | "sx" | "variant"
+    "component" | "elevation" | "square" | "sx" | "variant" | "children"
   > {
   /**
    * The variant to use.

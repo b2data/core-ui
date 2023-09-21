@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef, useCallback } from "react";
+import React, { cloneElement, forwardRef, useCallback } from "react";
 import { CustomContentProps, SnackbarContent, useSnackbar } from "notistack";
 
 import { Alert, AlertProps } from "../Alert";

@@ -62,22 +62,22 @@ export interface TextFieldProps
   endAdornment?: React.ReactNode;
 }
 
-export const TextField: React.FC<TextFieldProps> = ({
-  readOnly,
-  startAdornment,
-  endAdornment,
-  ...props
-}) => (
-  <MuiTextField
-    {...props}
-    InputProps={{
-      readOnly,
-      startAdornment: startAdornment ? (
-        <InputAdornment position="start">{startAdornment}</InputAdornment>
-      ) : undefined,
-      endAdornment: endAdornment ? (
-        <InputAdornment position="end">{endAdornment}</InputAdornment>
-      ) : undefined,
-    }}
-  />
+export const TextField: React.FC<TextFieldProps> = React.forwardRef(
+  (
+    { readOnly, startAdornment, endAdornment, ...props },
+    _ref?: React.Ref<any>,
+  ) => (
+    <MuiTextField
+      {...props}
+      InputProps={{
+        readOnly,
+        startAdornment: startAdornment ? (
+          <InputAdornment position="start">{startAdornment}</InputAdornment>
+        ) : undefined,
+        endAdornment: endAdornment ? (
+          <InputAdornment position="end">{endAdornment}</InputAdornment>
+        ) : undefined,
+      }}
+    />
+  ),
 );

@@ -49,6 +49,7 @@ export * from "./Skeleton";
 export * from "./SkeletonGroup";
 export * from "./Snackbar";
 export * from "./Stack";
+export * from "./SvgIcon";
 export * from "./Switch";
 export * from "./Tab";
 export * from "./Tabs";
