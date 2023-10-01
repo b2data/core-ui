@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 
 import {
@@ -9,14 +10,6 @@ import {
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<AutocompleteProps> = {
-  title: "Components/Inputs/Autocomplete",
-  component: Autocomplete,
-  tags: ["autodocs"],
-};
-
-export default meta;
-
 const options = [
   { id: "1", group: 1, label: "Option 1" },
   { id: "2", group: 1, label: "Option 2" },
@@ -25,6 +18,14 @@ const options = [
   { id: "5", group: 2, label: "Option 5" },
   { id: "6", group: 2, label: "Option 6" },
 ];
+
+const meta: Meta<AutocompleteProps<AutocompleteOption>> = {
+  title: "Components/Inputs/Autocomplete",
+  component: Autocomplete,
+  tags: ["autodocs"],
+};
+
+export default meta;
 
 export const Base: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   args: {
