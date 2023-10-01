@@ -23,7 +23,10 @@ export const Base: StoryObj<SectionTitleProps> = {
 export const WithButton: StoryObj<SectionTitleProps> = {
   args: {
     title: "Header",
-    actions: [{ label: "Save" }],
+    actions: [
+      { label: "Cancel", color: "default", variant: "outlined" },
+      { label: "Save" },
+    ],
   },
 };
 

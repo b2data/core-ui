@@ -5,9 +5,9 @@ import { MenuItem, MenuItemProps } from "../MenuItem";
 import { Tooltip } from "../Tooltip";
 import { IconButton } from "../IconButton";
 import { Menu } from "../Menu";
-import { Button } from "../Button";
+import { Button, ButtonProps } from "../Button";
 
-export interface SectionTitleActionProps {
+export interface SectionTitleActionProps extends ButtonProps {
   /**
    * Defines if the action will be shown or not
    */
