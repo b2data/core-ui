@@ -1,21 +1,15 @@
-import React, { cloneElement, forwardRef, useCallback } from "react";
+import React, { cloneElement, useCallback } from "react";
 import { CustomContentProps, SnackbarContent, useSnackbar } from "notistack";
 
 import { Alert, AlertProps } from "../Alert";
 
-export interface SnackbarMessageProps
-  extends Omit<
-    CustomContentProps,
-    | "className"
-    | "style"
-    | "anchorOrigin"
-    | "action"
-    | "hideIconVariant"
-    | "iconVariant"
-  > {
+export interface SnackbarMessageProps extends CustomContentProps {
   title?: AlertProps["title"];
   actions?: AlertProps["actions"];
   closeText?: AlertProps["closeText"];
+  /**
+   * @default outlined
+   */
   displayVariant?: AlertProps["variant"];
   /**
    * @default null
@@ -23,16 +17,7 @@ export interface SnackbarMessageProps
   autoHideDuration?: CustomContentProps["autoHideDuration"];
 }
 
-declare module "notistack" {
-  interface OptionsObject {
-    title?: AlertProps["title"];
-    actions?: AlertProps["actions"];
-    closeText?: AlertProps["closeText"];
-    displayVariant?: AlertProps["variant"];
-  }
-}
-
-export const SnackbarMessage = forwardRef<HTMLDivElement, SnackbarMessageProps>(
+export const SnackbarMessage = React.forwardRef<HTMLDivElement, SnackbarMessageProps>(
   (
     {
       id,
@@ -41,8 +26,8 @@ export const SnackbarMessage = forwardRef<HTMLDivElement, SnackbarMessageProps>(
       message,
       actions,
       closeText,
-      displayVariant,
-      ...props
+      displayVariant = "outlined",
+      style,
     },
     ref,
   ) => {
@@ -53,7 +38,7 @@ export const SnackbarMessage = forwardRef<HTMLDivElement, SnackbarMessageProps>(
     }, [id, closeSnackbar]);
 
     return (
-      <SnackbarContent ref={ref} {...props}>
+      <SnackbarContent ref={ref} role="alert" style={style}>
         <Alert
           variant={displayVariant}
           severity={variant === "default" ? undefined : variant}
