@@ -2,7 +2,6 @@ import {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
   AutocompleteCloseReason,
-  AutocompleteFreeSoloValueMapping,
   AutocompleteInputChangeReason,
   AutocompleteOwnerState,
   AutocompleteRenderGetTagProps,

@@ -17,7 +17,19 @@ export interface SnackbarMessageProps extends CustomContentProps {
   autoHideDuration?: CustomContentProps["autoHideDuration"];
 }
 
-export const SnackbarMessage = React.forwardRef<HTMLDivElement, SnackbarMessageProps>(
+declare module "notistack" {
+  interface OptionsObject {
+    title?: AlertProps["title"];
+    actions?: AlertProps["actions"];
+    closeText?: AlertProps["closeText"];
+    displayVariant?: AlertProps["variant"];
+  }
+}
+
+export const SnackbarMessage = React.forwardRef<
+  HTMLDivElement,
+  SnackbarMessageProps
+>(
   (
     {
       id,
