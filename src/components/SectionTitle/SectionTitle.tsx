@@ -53,6 +53,9 @@ export const SectionTitle: React.FC<SectionTitleProps> = React.forwardRef(
       <Box
         ref={ref}
         sx={({ palette }) => ({
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
           ...(withBorder
             ? { borderBottom: `1px solid ${palette.divider}`, pb: 1 }
             : {}),
@@ -76,17 +79,15 @@ export const SectionTitle: React.FC<SectionTitleProps> = React.forwardRef(
 
         <Box
           sx={({ palette }) => ({
-            display: "grid",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
             alignItems: "center",
-            columnGap: 20,
-            gridTemplateColumns: "1fr max-content",
+            gap: 3,
             "&:hover .MuiIconButton-root": {
               backgroundColor: palette.action.selected,
             },
-            ...(subtitle ? { pt: 2 } : {}),
-            ...(Boolean(helperText) && shownActions.length > 0
-              ? { gridTemplateColumns: "1fr max-content max-content" }
-              : {}),
           })}
         >
           <Tooltip followCursor placement="bottom" text={tooltip}>
@@ -100,33 +101,33 @@ export const SectionTitle: React.FC<SectionTitleProps> = React.forwardRef(
             </Typography>
           </Tooltip>
 
-          {helperText ? (
-            isValidElement(helperText) ? (
-              helperText
-            ) : (
-              <Typography variant="body2">{helperText}</Typography>
-            )
-          ) : null}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 2,
+              "& > *": {
+                minWidth: 32,
+                minHeight: 32,
+              },
+            }}
+          >
+            {helperText ? (
+              isValidElement(helperText) ? (
+                helperText
+              ) : (
+                <Typography variant="body2">{helperText}</Typography>
+              )
+            ) : null}
 
-          {shownActions.length > 0 && (
-            <Box
-              sx={{
-                display: "flex",
-                "& > *": {
-                  minWidth: 32,
-                  minHeight: 32,
-                  marginLeft: 10,
-                },
-              }}
-            >
-              {shownActions.map((actionProps, ind) => (
-                <SectionTitleAction
-                  key={`${actionProps?.label}-${ind}`}
-                  {...actionProps}
-                />
-              ))}
-            </Box>
-          )}
+            {shownActions.map((actionProps, ind) => (
+              <SectionTitleAction
+                key={`${actionProps?.label}-${ind}`}
+                {...actionProps}
+              />
+            ))}
+          </Box>
         </Box>
       </Box>
     );
