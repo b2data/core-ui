@@ -2,8 +2,9 @@ import React from "react";
 import {
   SnackbarProvider as CoreSnackbarProvider,
   SnackbarProviderProps as CoreSnackbarProviderProps,
-  useSnackbar,
 } from "notistack";
+
+export { useSnackbar } from "notistack";
 
 import { SnackbarMessage } from "./SnackbarMessage";
 
@@ -40,5 +41,3 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
     {children}
   </CoreSnackbarProvider>
 );
-
-export { useSnackbar };

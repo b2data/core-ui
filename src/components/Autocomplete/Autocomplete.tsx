@@ -24,7 +24,7 @@ export { createFilterOptions } from "@mui/material/Autocomplete";
 
 import { List } from "../List";
 import { Paper } from "../Paper";
-import { TextField } from "../TextField";
+import { TextField, TextFieldProps } from "../TextField";
 import { ListItem } from "../ListItem";
 import { CircularProgress } from "../CircularProgress";
 
@@ -34,7 +34,7 @@ export interface AutocompleteOption {
 }
 
 export interface AutocompleteProps<
-  Value extends object | null = AutocompleteOption,
+  Value,
   Multiple extends boolean | undefined = false,
   DisableClearable extends boolean | undefined = false,
   FreeSolo extends boolean | undefined = false,
@@ -340,29 +340,45 @@ export interface AutocompleteProps<
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
+  /**
+   * Properties that are passed renderInput
+   * @param {} value The `value` provided to the component.
+   */
+  inputProps?: TextFieldProps;
 }
 
-export function Autocomplete<
-  Value extends object | null,
+export const Autocomplete = React.forwardRef(function Autocomplete<
+  Value,
   Multiple extends boolean | undefined = false,
   DisableClearable extends boolean | undefined = false,
   FreeSolo extends boolean | undefined = false,
->({
-  label,
-  placeholder,
-  loading,
-  ...props
-}: AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo>) {
+>(
+  {
+    label,
+    placeholder,
+    loading,
+    inputProps,
+    ...props
+  }: AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo>,
+  ref: React.Ref<HTMLDialogElement>,
+) {
   return (
     <MuiAutocomplete
+      ref={ref}
       loading={loading}
       renderInput={(params) => (
         <TextField
           {...params}
+          {...inputProps}
           label={label}
           placeholder={placeholder}
+          inputProps={{
+            ...params.inputProps,
+            ...inputProps?.inputProps,
+          }}
           InputProps={{
             ...params.InputProps,
+            ...inputProps?.InputProps,
             endAdornment: (
               <React.Fragment>
                 {loading ? (
@@ -381,8 +397,8 @@ export function Autocomplete<
       renderOption={(
         props,
         option,
-        { selected, inputValue },
-        { getOptionLabel },
+        { selected, inputValue, ...q },
+        { getOptionLabel, ...p },
       ) => {
         const matches = match(getOptionLabel(option), inputValue, {
           insideWords: true,
@@ -427,4 +443,6 @@ export function Autocomplete<
       {...props}
     />
   );
-}
+});
+
+Autocomplete.displayName = "Autocomplete";

@@ -26,7 +26,7 @@ const options = [
   { id: "6", group: 2, label: "Option 6" },
 ];
 
-export const Base: StoryObj<AutocompleteProps> = {
+export const Base: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   args: {
     label: "Single",
     options,
@@ -41,7 +41,7 @@ export const Multiple: StoryObj<AutocompleteProps<AutocompleteOption, true>> = {
   },
 };
 
-export const Loading: StoryObj<AutocompleteProps> = {
+export const Loading: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   args: {
     label: "Loading",
     loading: true,
@@ -59,7 +59,7 @@ export const Grouped: StoryObj<
   },
 };
 
-export const OptionDisabled: StoryObj<AutocompleteProps> = {
+export const OptionDisabled: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   args: {
     label: "Options Disabled",
     getOptionDisabled: (opt) => ["1", "4"].includes(opt.id),
@@ -67,7 +67,7 @@ export const OptionDisabled: StoryObj<AutocompleteProps> = {
   },
 };
 
-export const Disabled: StoryObj<AutocompleteProps> = {
+export const Disabled: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   args: {
     label: "Disabled",
     disabled: true,

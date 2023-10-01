@@ -74,6 +74,8 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
             },
           },
           "& .MuiInputAdornment-root": {
+            height: "100%",
+            maxHeight: "auto",
             margin: 0,
             "&.MuiInputAdornment-positionStart": {
               paddingLeft: 12,
