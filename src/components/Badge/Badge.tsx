@@ -6,7 +6,7 @@ import { OverrideMuiProps } from "../types";
 export interface BadgeProps
   extends OverrideMuiProps<
     MuiBadgeProps,
-    "badgeContent" | "invisible" | "max" | "showZero" | "sx"
+    "badgeContent" | "invisible" | "max" | "showZero" | "sx" | "ref"
   > {
   /**
    * The variant to use.
@@ -31,14 +31,13 @@ export interface BadgeProps
   overlap?: MuiBadgeProps["overlap"];
 }
 
-export const Badge: React.FC<BadgeProps> = ({
-  variant,
-  badgeContent,
-  ...props
-}) => (
-  <MuiBadge
-    {...props}
-    variant={variant}
-    badgeContent={badgeContent ?? (variant === "liveDot" ? "" : null)}
-  />
+export const Badge: React.FC<BadgeProps> = React.forwardRef(
+  ({ variant, badgeContent, ...props }, ref) => (
+    <MuiBadge
+      ref={ref}
+      {...props}
+      variant={variant}
+      badgeContent={badgeContent ?? (variant === "liveDot" ? "" : null)}
+    />
+  ),
 );

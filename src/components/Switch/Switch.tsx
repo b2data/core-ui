@@ -18,6 +18,7 @@ export interface SwitchProps
     | "inputProps"
     | "inputRef"
     | "onChange"
+    | "ref"
     | "required"
     | "value"
   > {
@@ -33,6 +34,6 @@ export interface SwitchProps
   size?: MuiSwitchProps["size"];
 }
 
-export const Switch: React.FC<SwitchProps> = (props) => (
-  <MuiSwitch {...props} />
-);
+export const Switch: React.FC<SwitchProps> = React.forwardRef((props, ref) => (
+  <MuiSwitch ref={ref} {...props} />
+));

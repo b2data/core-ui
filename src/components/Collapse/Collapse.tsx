@@ -32,6 +32,6 @@ export interface CollapseProps
   timeout?: MuiCollapseProps["timeout"];
 }
 
-export const Collapse: React.FC<CollapseProps> = (props) => (
-  <MuiCollapse {...props} />
+export const Collapse: React.FC<CollapseProps> = React.forwardRef(
+  (props, ref) => <MuiCollapse ref={ref} {...props} />,
 );

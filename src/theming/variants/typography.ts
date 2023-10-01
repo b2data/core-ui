@@ -29,7 +29,7 @@ export default {
       fontSize: 28,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.2,
   },
 
   h2: {
@@ -40,7 +40,7 @@ export default {
       fontSize: 24,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.2,
   },
 
   h3: {
@@ -51,7 +51,7 @@ export default {
       fontSize: 22,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.2,
   },
 
   h4: {

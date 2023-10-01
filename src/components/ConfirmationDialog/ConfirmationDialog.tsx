@@ -10,8 +10,12 @@ import { IconButton } from "../IconButton";
 export interface ConfirmationDialogProps
   extends Pick<
     DialogProps,
-    "title" | "onClose" | "sx" | "open" | "children" | "maxWidth"
+    "onClose" | "sx" | "open" | "children" | "maxWidth"
   > {
+  /**
+   * Title of the Dialog, will be wrapped by `DialogTitle`
+   */
+  title: string;
   /**
    * Use `content` or `children` to privide dialog content
    */
@@ -111,7 +115,16 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
             placeholder={confirmProps.placeholder}
             helperText={confirmProps.helperText}
             onChange={(e) => setName(e.target.value)}
+            inputProps={{
+              onKeyDown: (e) => {
+                if (e.code === "Enter") {
+                  acceptBtn?.onClick?.(null as any);
+                }
+              },
+            }}
             value={name}
+            autoComplete="off"
+            autoFocus
           />
         </>
       )}

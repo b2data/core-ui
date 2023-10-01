@@ -15,10 +15,11 @@ export interface FormHelperTextProps
     | "error"
     | "margin"
     | "required"
-    | "variant",
+    | "variant"
+    | "ref",
     HTMLSpanElement
   > {}
 
-export const FormHelperText: React.FC<FormHelperTextProps> = (props) => (
-  <MuiFormHelperText {...props} />
+export const FormHelperText: React.FC<FormHelperTextProps> = React.forwardRef(
+  (props, ref) => <MuiFormHelperText ref={ref} {...props} />,
 );

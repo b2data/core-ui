@@ -9,6 +9,6 @@ import { OverrideMuiProps } from "../types";
 export interface ListItemIconProps
   extends OverrideMuiProps<MuiListItemIconProps, "children" | "sx"> {}
 
-export const ListItemIcon: React.FC<ListItemIconProps> = (props) => (
-  <MuiListItemIcon {...props} />
+export const ListItemIcon: React.FC<ListItemIconProps> = React.forwardRef(
+  (props, ref) => <MuiListItemIcon ref={ref} {...props} />,
 );

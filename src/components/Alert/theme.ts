@@ -11,6 +11,7 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
       const styles = {
         padding: 14,
         border: "1px solid",
+        backgroundColor: theme.palette.common.white,
       };
       if (color) {
         return {

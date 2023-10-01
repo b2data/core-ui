@@ -9,7 +9,13 @@ import { OverrideMuiProps } from "../types";
 export interface TypographyProps
   extends OverrideMuiProps<
     MuiTypographyProps,
-    "component" | "gutterBottom" | "noWrap" | "paragraph" | "sx" | "color"
+    | "component"
+    | "gutterBottom"
+    | "noWrap"
+    | "paragraph"
+    | "sx"
+    | "color"
+    | "ref"
   > {
   /**
    * @default body1
@@ -25,6 +31,6 @@ export interface TypographyProps
   wrapLines?: number;
 }
 
-export const Typography: React.FC<TypographyProps> = (props) => (
-  <MuiTypography {...props} />
+export const Typography: React.FC<TypographyProps> = React.forwardRef(
+  (props, ref) => <MuiTypography ref={ref} {...props} />,
 );

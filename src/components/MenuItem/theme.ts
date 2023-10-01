@@ -5,6 +5,7 @@ const menuItemTheme: ComponentThemeOverride["MuiMenuItem"] = {
     root: {
       gap: 8,
       minWidth: 100,
+      maxWidth: 300,
       padding: "6px 10px",
       "& .MuiSvgIcon-root": {
         fontSize: 18,

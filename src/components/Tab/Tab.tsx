@@ -28,4 +28,6 @@ export interface TabProps
   iconPosition?: MuiTabProps["iconPosition"];
 }
 
-export const Tab: React.FC<TabProps> = (props) => <MuiTab {...props} />;
+export const Tab: React.FC<TabProps> = React.forwardRef((props, ref) => (
+  <MuiTab ref={ref} {...props} />
+));

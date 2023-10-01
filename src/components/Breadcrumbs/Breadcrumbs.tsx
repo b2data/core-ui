@@ -47,34 +47,32 @@ export interface BreadcrumbsProps
   items?: Breadcrumb[];
 }
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
-  children,
-  items = [],
-  ...props
-}) => (
-  <MuiBreadcrumbs {...props}>
-    {children ||
-      items.map(({ label, icon, disabled, link, onClick, ...itemProps }) => (
-        <Link
-          key={`breadcrumb-${label}`}
-          underline={!(link || onClick) || disabled ? "none" : "hover"}
-          component={link && !disabled ? RouterLink : "a"}
-          to={link}
-          href={!link && !disabled && onClick ? "#" : undefined}
-          color="inherit"
-          onClick={
-            onClick && !link && !disabled
-              ? (e) => {
-                  e.preventDefault();
-                  onClick(e);
-                }
-              : undefined
-          }
-          {...itemProps}
-        >
-          {icon}
-          {label}
-        </Link>
-      ))}
-  </MuiBreadcrumbs>
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = React.forwardRef(
+  ({ children, items = [], ...props }, ref) => (
+    <MuiBreadcrumbs ref={ref} {...props}>
+      {children ||
+        items.map(({ label, icon, disabled, link, onClick, ...itemProps }) => (
+          <Link
+            key={`breadcrumb-${label}`}
+            underline={!(link || onClick) || disabled ? "none" : "hover"}
+            component={link && !disabled ? RouterLink : "a"}
+            to={link}
+            href={!link && !disabled && onClick ? "#" : undefined}
+            color="inherit"
+            onClick={
+              onClick && !link && !disabled
+                ? (e) => {
+                    e.preventDefault();
+                    onClick(e);
+                  }
+                : undefined
+            }
+            {...itemProps}
+          >
+            {icon}
+            {label}
+          </Link>
+        ))}
+    </MuiBreadcrumbs>
+  ),
 );

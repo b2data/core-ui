@@ -18,6 +18,6 @@ export interface BackdropProps
   variant?: "dark" | "light";
 }
 
-export const Backdrop: React.FC<BackdropProps> = (props) => (
-  <MuiBackdrop {...props} />
+export const Backdrop: React.FC<BackdropProps> = React.forwardRef(
+  (props, ref) => <MuiBackdrop ref={ref} {...props} />,
 );

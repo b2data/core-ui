@@ -24,6 +24,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-root": {
           height: multiline ? undefined : 40,
+          alignItems: "flex-end",
           fontSize: 14,
           "&.Mui-disabled": {
             color: "#b8bec8",
@@ -88,6 +89,9 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         "& .MuiFormLabel-root": {
           ...commonStyles["& .MuiFormLabel-root"],
           marginTop: -6,
+          "&.MuiInputLabel-shrink": {
+            marginTop: 0,
+          },
         },
         "& .MuiInputBase-root": {
           ...commonStyles["& .MuiInputBase-root"],
@@ -110,7 +114,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-input": {
           ...commonStyles["& .MuiInputBase-input"],
-          padding: "10px 0",
+          padding: "10px 0 6px",
         },
       };
     },

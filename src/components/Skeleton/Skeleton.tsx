@@ -18,6 +18,6 @@ export interface SkeletonProps
   variant?: MuiSkeletonProps["variant"];
 }
 
-export const Skeleton: React.FC<SkeletonProps> = (props) => (
-  <MuiSkeleton {...props} />
+export const Skeleton: React.FC<SkeletonProps> = React.forwardRef(
+  (props, ref) => <MuiSkeleton ref={ref} {...props} />,
 );

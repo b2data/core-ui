@@ -23,6 +23,7 @@ export interface FormControlLabelProps
     HTMLLabelElement
   > {}
 
-export const FormControlLabel: React.FC<FormControlLabelProps> = (props) => (
-  <MuiFormControlLabel {...props} />
-);
+export const FormControlLabel: React.FC<FormControlLabelProps> =
+  React.forwardRef((props, ref) => (
+    <MuiFormControlLabel ref={ref} {...props} />
+  ));

@@ -17,9 +17,13 @@ export interface MenuProps
     | "disablePortal"
     | "keepMounted"
     | "anchorOrigin"
+    | "anchorPosition"
+    | "anchorReference"
     | "disableScrollLock"
     | "disableEscapeKeyDown"
     | "hideBackdrop"
   > {}
 
-export const Menu: React.FC<MenuProps> = (props) => <MuiMenu {...props} />;
+export const Menu: React.FC<MenuProps> = React.forwardRef((props, ref) => (
+  <MuiMenu ref={ref} {...props} />
+));

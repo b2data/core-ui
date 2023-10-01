@@ -14,7 +14,8 @@ export interface ListSubheaderProps
     | "disableGutters"
     | "disableSticky"
     | "sx"
-    | "component",
+    | "component"
+    | "ref",
     HTMLLIElement
   > {
   /**
@@ -23,6 +24,6 @@ export interface ListSubheaderProps
   color?: MuiListSubheaderProps["color"];
 }
 
-export const ListSubheader: React.FC<ListSubheaderProps> = (props) => (
-  <MuiListSubheader {...props} />
+export const ListSubheader: React.FC<ListSubheaderProps> = React.forwardRef(
+  (props, ref) => <MuiListSubheader ref={ref} {...props} />,
 );

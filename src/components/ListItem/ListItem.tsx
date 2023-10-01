@@ -2,12 +2,18 @@ import {
   ListItem as MuiListItem,
   ListItemProps as MuiListItemProps,
 } from "@mui/material";
-import React, { cloneElement, Fragment, ReactElement, useState } from "react";
+import React, {
+  cloneElement,
+  Fragment,
+  ReactElement,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
 
 import { OverrideMuiProps } from "../types";
 import { IconButton } from "../IconButton";
-import { ListItemAction } from "../ListItemAction";
 import { ListItemAvatar } from "../ListItemAvatar";
 import { ListItemText } from "../ListItemText";
 import { ListItemButton } from "../ListItemButton";
@@ -25,7 +31,8 @@ export interface ListItemProps
     | "selected"
     | "divider"
     | "sx"
-    | "component",
+    | "component"
+    | "ref",
     HTMLLIElement
   > {
   /**
@@ -50,85 +57,151 @@ export interface ListItemProps
    */
   secondaryText?: string | ReactElement;
   /**
-   * The action component, normally `IconButton`. The action will be wrapped by `ListItemAction`
+   * The action component, normally `IconButton`.
    */
   action?: ReactElement;
   /**
-   * The array of actions for menu options. The values will be wrapped by `MenuItem` and placed into `ListItemAction` menu.
+   * The array of actions for menu options. The values will be wrapped by `MenuItem`.
    *
    */
   menuActions?: MenuItemProps[];
+  /**
+   * Disables `ripple` for ListItemButton
+   */
+  disableRipple?: boolean;
 }
 
-export const ListItem: React.FC<ListItemProps> = ({
-  asButton,
-  icon,
-  avatar,
-  text,
-  secondaryText,
-  action,
-  menuActions,
-  children,
-  ...props
-}) => {
-  const [actionsAnchor, setActionsAnchor] = useState<HTMLButtonElement | null>(
-    null,
-  );
+export const ListItem: React.FC<ListItemProps> = React.forwardRef(
+  (
+    {
+      asButton,
+      icon,
+      avatar,
+      text,
+      secondaryText,
+      action,
+      menuActions,
+      children,
+      disableRipple,
+      ...props
+    },
+    ref,
+  ) => {
+    const [actionsAnchor, setActionsAnchor] =
+      useState<HTMLButtonElement | null>(null);
+    const [contextMenu, setContextMenu] = React.useState<{
+      mouseX: number;
+      mouseY: number;
+    } | null>(null);
 
-  const content = (
-    <Fragment>
-      {icon && <ListItemIcon>{icon}</ListItemIcon>}
-      {avatar && (
-        <ListItemAvatar>
-          {cloneElement(avatar, { size: "small", sx: { fontSize: "1rem" } })}
-        </ListItemAvatar>
-      )}
-      {(text || secondaryText) && (
-        <ListItemText primary={text} secondary={secondaryText} />
-      )}
-      {children}
-      {action && (
-        <ListItemAction onClick={(e) => e.stopPropagation()}>
-          {cloneElement(action, { size: "small", edge: "end" })}
-        </ListItemAction>
-      )}
-      {!action && menuActions?.length && (
-        <ListItemAction onClick={(e) => e.stopPropagation()}>
-          <IconButton
-            size="small"
-            edge="end"
-            onClick={(e) => setActionsAnchor(e.currentTarget)}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            open={Boolean(actionsAnchor)}
-            anchorEl={actionsAnchor}
-            onClose={() => setActionsAnchor(null)}
-            onClick={() => setActionsAnchor(null)}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            {menuActions.map((menuAction, index) => (
-              <MenuItem key={index} {...menuAction} />
-            ))}
-          </Menu>
-        </ListItemAction>
-      )}
-    </Fragment>
-  );
+    const handleRightClick = useCallback(
+      (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (menuActions?.length) {
+          setContextMenu(
+            contextMenu === null
+              ? {
+                  mouseX: e.clientX + 100,
+                  mouseY: e.clientY + 5,
+                }
+              : null,
+          );
+        }
+      },
+      [menuActions, contextMenu],
+    );
 
-  return asButton ? (
-    <MuiListItem {...props} disablePadding>
-      <ListItemButton>{content}</ListItemButton>
-    </MuiListItem>
-  ) : (
-    <MuiListItem {...props}>{content}</MuiListItem>
-  );
-};
+    const handleClose = () => {
+      setActionsAnchor(null);
+      setContextMenu(null);
+    };
+
+    const content = (
+      <Fragment>
+        {icon && <ListItemIcon>{icon}</ListItemIcon>}
+        {avatar && (
+          <ListItemAvatar>
+            {cloneElement(avatar, { size: "small", sx: { fontSize: "1rem" } })}
+          </ListItemAvatar>
+        )}
+        {(text || secondaryText) && (
+          <ListItemText primary={text} secondary={secondaryText} />
+        )}
+        {children}
+      </Fragment>
+    );
+
+    const secondaryAction = useMemo(
+      () =>
+        action || menuActions?.length ? (
+          <Fragment>
+            {action && cloneElement(action, { size: "small", edge: "end" })}
+            {!action && menuActions?.length && (
+              <Fragment>
+                <IconButton
+                  size="small"
+                  edge="end"
+                  className="MenuActions"
+                  onClick={(e) => {
+                    setActionsAnchor(e.currentTarget);
+                  }}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  open={Boolean(actionsAnchor) || Boolean(contextMenu)}
+                  anchorEl={actionsAnchor ? actionsAnchor : undefined}
+                  onClose={handleClose}
+                  onClick={(e) => {
+                    e?.stopPropagation();
+                    e?.preventDefault();
+                    handleClose();
+                  }}
+                  anchorReference={contextMenu ? "anchorPosition" : "anchorEl"}
+                  anchorPosition={
+                    contextMenu !== null
+                      ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                      : undefined
+                  }
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  {menuActions.map((menuAction, index) => (
+                    <MenuItem key={index} {...menuAction} />
+                  ))}
+                </Menu>
+              </Fragment>
+            )}
+          </Fragment>
+        ) : undefined,
+      [action, menuActions],
+    );
+
+    return asButton ? (
+      <MuiListItem
+        ref={ref}
+        {...props}
+        disablePadding
+        secondaryAction={secondaryAction}
+        onContextMenu={handleRightClick}
+      >
+        <ListItemButton disableRipple={disableRipple}>{content}</ListItemButton>
+      </MuiListItem>
+    ) : (
+      <MuiListItem
+        ref={ref}
+        {...props}
+        secondaryAction={secondaryAction}
+        onContextMenu={handleRightClick}
+      >
+        {content}
+      </MuiListItem>
+    );
+  },
+);

@@ -4,7 +4,7 @@ import React from "react";
 export interface PaperProps
   extends Pick<
     MuiPaperProps,
-    "component" | "elevation" | "square" | "sx" | "variant" | "children"
+    "component" | "elevation" | "square" | "sx" | "variant" | "children" | "ref"
   > {
   /**
    * The variant to use.
@@ -13,4 +13,6 @@ export interface PaperProps
   variant?: MuiPaperProps["variant"];
 }
 
-export const Paper: React.FC<PaperProps> = (props) => <MuiPaper {...props} />;
+export const Paper: React.FC<PaperProps> = React.forwardRef((props, ref) => (
+  <MuiPaper ref={ref} {...props} />
+));

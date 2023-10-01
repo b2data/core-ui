@@ -29,6 +29,6 @@ export interface PopperProps
   placement?: MuiPopperProps["placement"];
 }
 
-export const Popper: React.FC<PopperProps> = (props) => (
-  <MuiPopper {...props} />
-);
+export const Popper: React.FC<PopperProps> = React.forwardRef((props, ref) => (
+  <MuiPopper ref={ref} {...props} />
+));

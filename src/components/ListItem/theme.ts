@@ -8,8 +8,15 @@ const listItemTheme: ComponentThemeOverride["MuiListItem"] = {
       paddingBottom: disablePadding ? undefined : 6,
       paddingLeft: disablePadding || disableGutters ? undefined : 10,
       paddingRight: disablePadding || disableGutters ? undefined : 10,
+      transition: "opacity 0.1s easy-in-out",
       "& .MuiListItemText-root": {
         margin: 0,
+      },
+      "& .MenuActions": {
+        opacity: 0,
+      },
+      "&:hover .MenuActions": {
+        opacity: 1,
       },
     }),
   },

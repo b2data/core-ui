@@ -9,9 +9,16 @@ import { OverrideMuiProps } from "../types";
 export interface ListItemButtonProps
   extends OverrideMuiProps<
     MuiListItemButtonProps,
-    "children" | "disabled" | "disableGutters" | "selected" | "sx" | "component"
+    | "children"
+    | "disabled"
+    | "disableGutters"
+    | "disableRipple"
+    | "selected"
+    | "sx"
+    | "component"
+    | "ref"
   > {}
 
-export const ListItemButton: React.FC<ListItemButtonProps> = (props) => (
-  <MuiListItemButton dense {...props} />
+export const ListItemButton: React.FC<ListItemButtonProps> = React.forwardRef(
+  (props, ref) => <MuiListItemButton ref={ref} dense {...props} />,
 );

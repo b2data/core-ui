@@ -48,6 +48,6 @@ export interface PopoverProps
   transformOrigin?: MuiPopoverProps["transformOrigin"];
 }
 
-export const Popover: React.FC<PopoverProps> = (props) => (
-  <MuiPopover {...props} />
+export const Popover: React.FC<PopoverProps> = React.forwardRef(
+  (props, ref) => <MuiPopover ref={ref} {...props} />,
 );
