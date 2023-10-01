@@ -17,6 +17,7 @@ export interface TextFieldProps
     | "helperText"
     | "id"
     | "inputProps"
+    | "InputProps"
     | "inputRef"
     | "label"
     | "margin"
@@ -31,6 +32,7 @@ export interface TextFieldProps
     | "sx"
     | "type"
     | "value"
+    | "ref"
   > {
   /**
    * The variant to use.
@@ -63,11 +65,9 @@ export interface TextFieldProps
 }
 
 export const TextField: React.FC<TextFieldProps> = React.forwardRef(
-  (
-    { readOnly, startAdornment, endAdornment, ...props },
-    _ref?: React.Ref<any>,
-  ) => (
+  ({ readOnly, startAdornment, endAdornment, ...props }, ref) => (
     <MuiTextField
+      ref={ref}
       {...props}
       InputProps={{
         readOnly,
@@ -77,6 +77,7 @@ export const TextField: React.FC<TextFieldProps> = React.forwardRef(
         endAdornment: endAdornment ? (
           <InputAdornment position="end">{endAdornment}</InputAdornment>
         ) : undefined,
+        ...props.InputProps,
       }}
     />
   ),

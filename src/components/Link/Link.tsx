@@ -11,6 +11,6 @@ export interface LinkProps
     "className" | "classes"
   > {}
 
-export const Link: React.FC<LinkProps> = (props) => (
-  <MuiLink component={RouterLink} {...props} />
-);
+export const Link: React.FC<LinkProps> = React.forwardRef((props, ref) => (
+  <MuiLink ref={ref} component={RouterLink} {...props} />
+));

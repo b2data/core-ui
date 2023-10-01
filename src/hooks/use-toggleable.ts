@@ -12,3 +12,21 @@ export const useToggleable = (initialState = false) => {
     toggle: () => setIsOpen((o) => !o),
   };
 };
+
+export const useToggleableDialog = () => {
+  const [type, setType] = useState<string | null>(null);
+  const [data, setData] = useState<any>(null);
+
+  return {
+    type,
+    data,
+    open: (t: string, d?: any) => {
+      setType(t);
+      setData(d || null);
+    },
+    close: () => {
+      setType(null);
+      setData(null);
+    },
+  };
+};

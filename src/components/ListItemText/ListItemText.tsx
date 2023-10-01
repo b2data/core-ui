@@ -17,6 +17,6 @@ export interface ListItemTextProps
     | "children"
   > {}
 
-export const ListItemText: React.FC<ListItemTextProps> = (props) => (
-  <MuiListItemText {...props} />
+export const ListItemText: React.FC<ListItemTextProps> = React.forwardRef(
+  (props, ref) => <MuiListItemText ref={ref} {...props} />,
 );

@@ -24,6 +24,7 @@ export interface CheckboxProps
     | "required"
     | "value"
     | "edge"
+    | "ref"
   > {
   /**
    * The color of the component.
@@ -37,6 +38,6 @@ export interface CheckboxProps
   size?: MuiCheckboxProps["size"];
 }
 
-export const Checkbox: React.FC<CheckboxProps> = (props) => (
-  <MuiCheckbox {...props} />
+export const Checkbox: React.FC<CheckboxProps> = React.forwardRef(
+  (props, ref) => <MuiCheckbox ref={ref} {...props} />,
 );

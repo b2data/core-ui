@@ -1,4 +1,5 @@
 import AlertOverride from "../../components/Alert/theme";
+import AutocompleteOverride from "../../components/Autocomplete/theme";
 import AvatarOverride from "../../components/Avatar/theme";
 import AvatarGroupOverride from "../../components/AvatarGroup/theme";
 import BackdropOverride from "../../components/Backdrop/theme";
@@ -47,6 +48,7 @@ import TypographyOverride from "../../components/Typography/theme";
 
 export default {
   MuiAlert: AlertOverride,
+  MuiAutocomplete: AutocompleteOverride,
   MuiAvatar: AvatarOverride,
   MuiAvatarGroup: AvatarGroupOverride,
   MuiBackdrop: BackdropOverride,

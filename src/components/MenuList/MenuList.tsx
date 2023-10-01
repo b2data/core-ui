@@ -13,6 +13,6 @@ export interface MenuListProps
     HTMLUListElement
   > {}
 
-export const MenuList: React.FC<MenuListProps> = (props) => (
-  <MuiMenuList dense {...props} />
+export const MenuList: React.FC<MenuListProps> = React.forwardRef(
+  (props, ref) => <MuiMenuList ref={ref} dense {...props} />,
 );

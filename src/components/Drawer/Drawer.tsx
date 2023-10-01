@@ -35,6 +35,6 @@ export interface DrawerProps
   variant?: "temporary" | "persistent";
 }
 
-export const Drawer: React.FC<DrawerProps> = (props) => (
-  <MuiDrawer {...props} />
-);
+export const Drawer: React.FC<DrawerProps> = React.forwardRef((props, ref) => (
+  <MuiDrawer ref={ref} {...props} />
+));

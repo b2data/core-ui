@@ -83,7 +83,7 @@ export const Variants: StoryObj<ListItemProps> = {
         text="Primary"
         secondaryText="Secondary"
         icon={<SaveIcon />}
-        menuActions={[{ children: "test" }]}
+        menuActions={[{ startAdornment: <SaveIcon />, children: "Save" }]}
         {...props}
       />
     </div>

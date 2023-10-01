@@ -9,7 +9,7 @@ import { OverrideMuiProps } from "../types";
 export interface ButtonGroupProps
   extends OverrideMuiProps<
     MuiButtonGroupProps,
-    "sx" | "fullWidth" | "component"
+    "sx" | "fullWidth" | "component" | "ref"
   > {
   /**
    * The color of the component.
@@ -38,6 +38,6 @@ export interface ButtonGroupProps
   orientation?: MuiButtonGroupProps["orientation"];
 }
 
-export const ButtonGroup: React.FC<ButtonGroupProps> = (props) => (
-  <MuiButtonGroup {...props} />
+export const ButtonGroup: React.FC<ButtonGroupProps> = React.forwardRef(
+  (props, ref) => <MuiButtonGroup ref={ref} {...props} />,
 );

@@ -21,7 +21,8 @@ export interface ButtonProps
     | "startIcon"
     | "fullWidth"
     | "href"
-    | "LinkComponent",
+    | "LinkComponent"
+    | "ref",
     HTMLButtonElement
   > {
   /**
@@ -55,6 +56,6 @@ export interface ButtonProps
   loadingPosition?: MuiLoadingButtonProps["loadingPosition"];
 }
 
-export const Button: React.FC<ButtonProps> = (props) => (
-  <MuiLoadingButton {...props} />
-);
+export const Button: React.FC<ButtonProps> = React.forwardRef((props, ref) => (
+  <MuiLoadingButton ref={ref} {...props} />
+));

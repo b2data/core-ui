@@ -9,7 +9,7 @@ import { OverrideMuiProps } from "../types";
 export interface IconButtonProps
   extends OverrideMuiProps<
     MuiIconButtonProps,
-    "centerRipple" | "sx" | "component" | "edge",
+    "centerRipple" | "sx" | "component" | "edge" | "ref",
     HTMLButtonElement
   > {
   /**
@@ -29,6 +29,6 @@ export interface IconButtonProps
   disabled?: MuiIconButtonProps["disabled"];
 }
 
-export const IconButton: React.FC<IconButtonProps> = (props) => (
-  <MuiIconButton {...props} />
+export const IconButton: React.FC<IconButtonProps> = React.forwardRef(
+  (props, ref) => <MuiIconButton ref={ref} {...props} />,
 );

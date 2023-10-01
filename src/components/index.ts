@@ -1,4 +1,5 @@
 export * from "./Alert";
+export * from "./Autocomplete";
 export * from "./Avatar";
 export * from "./AvatarGroup";
 export * from "./Backdrop";
@@ -45,6 +46,8 @@ export * from "./Portal";
 export * from "./ProgressStatistic";
 export * from "./Radio";
 export * from "./RadioGroup";
+export * from "./SectionTitle";
+export * from "./SectionTitleAction";
 export * from "./Skeleton";
 export * from "./SkeletonGroup";
 export * from "./Snackbar";

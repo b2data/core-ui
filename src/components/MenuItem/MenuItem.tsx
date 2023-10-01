@@ -10,7 +10,13 @@ import { OverrideMuiProps } from "../types";
 export interface MenuItemProps
   extends OverrideMuiProps<
     MuiMenuItemProps,
-    "children" | "disabled" | "selected" | "sx" | "ref" | "disableGutters",
+    | "children"
+    | "disabled"
+    | "selected"
+    | "sx"
+    | "ref"
+    | "disableGutters"
+    | "divider",
     HTMLLIElement
   > {
   /**
@@ -23,15 +29,12 @@ export interface MenuItemProps
   endAdornment?: ReactElement;
 }
 
-export const MenuItem: React.FC<MenuItemProps> = ({
-  startAdornment,
-  endAdornment,
-  children,
-  ...props
-}) => (
-  <MuiMenuItem dense {...props}>
-    {isValidElement(startAdornment) && startAdornment}
-    <Box flex={1}>{children}</Box>
-    {isValidElement(endAdornment) && endAdornment}
-  </MuiMenuItem>
+export const MenuItem: React.FC<MenuItemProps> = React.forwardRef(
+  ({ startAdornment, endAdornment, children, ...props }, ref) => (
+    <MuiMenuItem ref={ref} dense {...props}>
+      {isValidElement(startAdornment) && startAdornment}
+      <Box flex={1}>{children}</Box>
+      {isValidElement(endAdornment) && endAdornment}
+    </MuiMenuItem>
+  ),
 );

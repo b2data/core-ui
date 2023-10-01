@@ -55,30 +55,27 @@ export interface AlertProps
   actions?: ReactElement;
 }
 
-export const Alert: React.FC<AlertProps> = ({
-  title,
-  children,
-  actions,
-  severity,
-  ...props
-}) => (
-  <MuiAlert
-    {...props}
-    color={!severity ? "default" : undefined}
-    severity={severity || "info"}
-  >
-    {title && <MuiAlertTitle>{title}</MuiAlertTitle>}
-    {children}
-    {actions &&
-      cloneElement(actions, {
-        style: {
-          marginLeft: "auto",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "end",
-          gap: "8px",
-          marginTop: 8,
-        },
-      })}
-  </MuiAlert>
+export const Alert: React.FC<AlertProps> = React.forwardRef(
+  ({ title, children, actions, severity, ...props }, ref) => (
+    <MuiAlert
+      ref={ref}
+      {...props}
+      color={!severity ? "default" : undefined}
+      severity={severity || "info"}
+    >
+      {title && <MuiAlertTitle>{title}</MuiAlertTitle>}
+      {children}
+      {actions &&
+        cloneElement(actions, {
+          style: {
+            marginLeft: "auto",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "end",
+            gap: "8px",
+            marginTop: 8,
+          },
+        })}
+    </MuiAlert>
+  ),
 );

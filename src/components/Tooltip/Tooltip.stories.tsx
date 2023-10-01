@@ -38,7 +38,7 @@ export const Positions: StoryObj<TooltipProps> = {
         "bottom-start",
         "bottom",
       ].map((key) => (
-        <Tooltip {...props} key={key} title={key} placement={key as any}>
+        <Tooltip {...props} key={key} text={key} placement={key as any}>
           <Button color="inherit">{key}</Button>
         </Tooltip>
       ))}

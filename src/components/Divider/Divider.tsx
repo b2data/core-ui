@@ -9,7 +9,7 @@ import { OverrideMuiProps } from "../types";
 export interface DividerProps
   extends OverrideMuiProps<
     MuiDividerProps,
-    "component" | "absolute" | "flexItem" | "light" | "sx"
+    "component" | "absolute" | "flexItem" | "light" | "sx" | "ref"
   > {
   /**
    * The component orientation.
@@ -28,6 +28,6 @@ export interface DividerProps
   variant?: MuiDividerProps["variant"];
 }
 
-export const Divider: React.FC<DividerProps> = (props) => (
-  <MuiDivider {...props} />
+export const Divider: React.FC<DividerProps> = React.forwardRef(
+  (props, ref) => <MuiDivider ref={ref} {...props} />,
 );

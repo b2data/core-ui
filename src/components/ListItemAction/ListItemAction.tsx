@@ -12,6 +12,6 @@ export interface ListItemActionProps
     "children" | "sx"
   > {}
 
-export const ListItemAction: React.FC<ListItemActionProps> = (props) => (
-  <MuiListItemSecondaryAction {...props} />
+export const ListItemAction: React.FC<ListItemActionProps> = React.forwardRef(
+  (props, ref) => <MuiListItemSecondaryAction ref={ref} {...props} />,
 );

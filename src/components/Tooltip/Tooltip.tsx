@@ -2,9 +2,10 @@ import {
   Tooltip as MuiTooltip,
   TooltipProps as MuiTooltipProps,
 } from "@mui/material";
-import React from "react";
+import React, { isValidElement } from "react";
 
 import { OverrideMuiProps } from "../types";
+import { Typography } from "../Typography";
 
 export interface TooltipProps
   extends OverrideMuiProps<
@@ -19,7 +20,6 @@ export interface TooltipProps
     | "onClose"
     | "onOpen"
     | "open"
-    | "title"
     | "sx"
   > {
   /**
@@ -27,8 +27,23 @@ export interface TooltipProps
    * @default bottom
    */
   placement?: MuiTooltipProps["placement"];
+  /**
+   * Tooltip title. Zero-length titles string, undefined, null and false are never displayed.
+   */
+  text?: string | React.ReactNode;
 }
 
-export const Tooltip: React.FC<TooltipProps> = (props) => (
-  <MuiTooltip {...props} />
+export const Tooltip: React.FC<TooltipProps> = React.forwardRef(
+  ({ text, children, ...props }, ref) =>
+    text ? (
+      <MuiTooltip
+        ref={ref}
+        {...props}
+        title={isValidElement(text) ? text : <Typography>{text}</Typography>}
+      >
+        <span>{children}</span>
+      </MuiTooltip>
+    ) : (
+      children
+    ),
 );
