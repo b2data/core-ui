@@ -408,6 +408,7 @@ export const Autocomplete = React.forwardRef(function Autocomplete<
             {...props}
             asButton
             text={
+              // @ts-ignore
               option && "inputValue" in option ? (
                 getOptionLabel(option)
               ) : (
