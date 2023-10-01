@@ -7,7 +7,6 @@ import React, {
   Fragment,
   ReactElement,
   useCallback,
-  useMemo,
   useState,
 } from "react";
 import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
@@ -131,57 +130,56 @@ export const ListItem: React.FC<ListItemProps> = React.forwardRef(
       </Fragment>
     );
 
-    const secondaryAction = useMemo(
-      () =>
-        action || menuActions?.length ? (
-          <Fragment>
-            {action && cloneElement(action, { size: "small", edge: "end" })}
-            {!action && menuActions?.length && (
-              <Fragment>
-                <IconButton
-                  size="small"
-                  edge="end"
-                  className="MenuActions"
-                  onClick={(e) => {
-                    setActionsAnchor(e.currentTarget);
-                  }}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  open={Boolean(actionsAnchor) || Boolean(contextMenu)}
-                  anchorEl={actionsAnchor ? actionsAnchor : undefined}
-                  onClose={handleClose}
-                  onClick={(e) => {
-                    e?.stopPropagation();
-                    e?.preventDefault();
-                    handleClose();
-                  }}
-                  anchorReference={contextMenu ? "anchorPosition" : "anchorEl"}
-                  anchorPosition={
-                    contextMenu !== null
-                      ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
-                      : undefined
-                  }
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                >
-                  {menuActions.map((menuAction, index) => (
-                    <MenuItem key={index} {...menuAction} />
-                  ))}
-                </Menu>
-              </Fragment>
-            )}
-          </Fragment>
-        ) : undefined,
-      [action, menuActions],
-    );
+    const secondaryAction =
+      action || menuActions?.length ? (
+        <Fragment>
+          {action && cloneElement(action, { size: "small", edge: "end" })}
+          {!action && menuActions?.length && (
+            <Fragment>
+              <IconButton
+                size="small"
+                edge="end"
+                className="MenuActions"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setActionsAnchor(e.currentTarget);
+                }}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                open={Boolean(actionsAnchor) || Boolean(contextMenu)}
+                anchorEl={actionsAnchor ? actionsAnchor : undefined}
+                onClose={handleClose}
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  e?.preventDefault();
+                  handleClose();
+                }}
+                anchorReference={contextMenu ? "anchorPosition" : "anchorEl"}
+                anchorPosition={
+                  contextMenu !== null
+                    ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                    : undefined
+                }
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                {menuActions.map((menuAction, index) => (
+                  <MenuItem key={index} {...menuAction} />
+                ))}
+              </Menu>
+            </Fragment>
+          )}
+        </Fragment>
+      ) : undefined;
 
     return asButton ? (
       <MuiListItem
