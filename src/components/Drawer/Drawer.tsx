@@ -9,13 +9,11 @@ import { OverrideMuiProps } from "../types";
 export interface DrawerProps
   extends OverrideMuiProps<
     MuiDrawerProps,
-    | "children"
     | "elevation"
     | "onClose"
     | "open"
     | "sx"
     | "component"
-    | "ref"
     | "container"
     | "disableEscapeKeyDown"
     | "disablePortal"
@@ -32,9 +30,11 @@ export interface DrawerProps
    * The variant to use.
    * @default temporary
    */
-  variant?: "temporary" | "persistent";
+  variant?: Exclude<MuiDrawerProps["variant"], "permamend">;
 }
 
-export const Drawer: React.FC<DrawerProps> = React.forwardRef((props, ref) => (
-  <MuiDrawer ref={ref} {...props} />
-));
+export const Drawer = React.forwardRef(
+  (props: DrawerProps, ref: React.Ref<HTMLDivElement>) => (
+    <MuiDrawer ref={ref} {...props} />
+  ),
+);

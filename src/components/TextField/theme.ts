@@ -32,6 +32,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-input": {
           height: "unset",
+          padding: "10px 12px",
           "&.Mui-disabled": {
             WebkitTextFillColor: "unset",
           },
@@ -41,6 +42,17 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiSvgIcon-root": {
           fontSize: 20,
+        },
+        "& .MuiInputAdornment-root": {
+          height: "100%",
+          maxHeight: "none",
+          alignSelf: "center",
+          "&.MuiInputAdornment-positionStart > .MuiIconButton-root": {
+            marginLeft: 0,
+          },
+          "&.MuiInputAdornment-positionEnd > .MuiIconButton-root": {
+            marginRight: 0,
+          },
         },
       };
 
@@ -72,16 +84,14 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
               borderColor: palette.error.main,
               borderWidth: 2,
             },
-          },
-          "& .MuiInputAdornment-root": {
-            height: "100%",
-            maxHeight: "none",
-            margin: 0,
-            "&.MuiInputAdornment-positionStart": {
-              paddingLeft: 12,
-            },
-            "&.MuiInputAdornment-positionEnd": {
-              paddingRight: 12,
+            "& .MuiInputAdornment-root": {
+              margin: 0,
+              "&.MuiInputAdornment-positionStart": {
+                paddingLeft: 12,
+              },
+              "&.MuiInputAdornment-positionEnd": {
+                paddingRight: 12,
+              },
             },
           },
         };
@@ -90,10 +100,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         ...commonStyles,
         "& .MuiFormLabel-root": {
           ...commonStyles["& .MuiFormLabel-root"],
-          marginTop: -6,
-          "&.MuiInputLabel-shrink": {
-            marginTop: 0,
-          },
+          marginTop: -8,
         },
         "& .MuiInputBase-root": {
           ...commonStyles["& .MuiInputBase-root"],
@@ -116,7 +123,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-input": {
           ...commonStyles["& .MuiInputBase-input"],
-          padding: "10px 0 6px",
+          padding: "10px 0",
         },
       };
     },

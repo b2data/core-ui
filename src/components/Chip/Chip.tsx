@@ -19,7 +19,6 @@ export interface ChipProps
     | "variant"
     | "children"
     | "component"
-    | "ref"
   > {
   /**
    * If `true`, the component is disabled.
@@ -43,6 +42,8 @@ export interface ChipProps
   variant?: MuiChipProps["variant"];
 }
 
-export const Chip: React.FC<ChipProps> = React.forwardRef((props, ref) => (
-  <MuiChip ref={ref} {...props} />
-));
+export const Chip = React.forwardRef(
+  (props: ChipProps, ref: React.Ref<HTMLDivElement>) => (
+    <MuiChip ref={ref} {...props} />
+  ),
+);

@@ -18,7 +18,6 @@ export interface SwitchProps
     | "inputProps"
     | "inputRef"
     | "onChange"
-    | "ref"
     | "required"
     | "value"
   > {
@@ -26,7 +25,7 @@ export interface SwitchProps
    * The color of the component.
    * @default primary
    */
-  color?: "primary" | "secondary" | "error" | "info" | "success" | "warning";
+  color?: Exclude<MuiSwitchProps["color"], "default">;
   /**
    * The size of the component. `small` is equivalent to the dense Switch styling.
    * @default small
@@ -34,6 +33,8 @@ export interface SwitchProps
   size?: MuiSwitchProps["size"];
 }
 
-export const Switch: React.FC<SwitchProps> = React.forwardRef((props, ref) => (
-  <MuiSwitch ref={ref} {...props} />
-));
+export const Switch = React.forwardRef(
+  (props: SwitchProps, ref: React.Ref<HTMLButtonElement>) => (
+    <MuiSwitch ref={ref} {...props} />
+  ),
+);

@@ -12,6 +12,6 @@ export interface RadioGroupProps
     "sx" | "children" | "defaultValue" | "name" | "onChange" | "value"
   > {}
 
-export const RadioGroup: React.FC<RadioGroupProps> = React.forwardRef(
-  (props, ref) => <MuiRadioGroup ref={ref} {...props} />,
+export const RadioGroup = (props: RadioGroupProps) => (
+  <MuiRadioGroup {...props} />
 );

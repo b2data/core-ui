@@ -11,13 +11,8 @@ import { OverrideMuiProps } from "../types";
 export interface TypographyProps
   extends OverrideMuiProps<
     MuiTypographyProps,
-    | "component"
-    | "gutterBottom"
-    | "noWrap"
-    | "paragraph"
-    | "sx"
-    | "color"
-    | "ref"
+    "component" | "gutterBottom" | "noWrap" | "paragraph" | "sx" | "color",
+    HTMLSpanElement
   > {
   /**
    * @default body1
@@ -58,8 +53,11 @@ const highlightText = (text: string, search?: string) => {
   );
 };
 
-export const Typography: React.FC<TypographyProps> = React.forwardRef(
-  ({ highlight, children, ...props }, ref) => (
+export const Typography = React.forwardRef(
+  (
+    { highlight, children, ...props }: TypographyProps,
+    ref: React.Ref<HTMLSpanElement>,
+  ) => (
     <MuiTypography ref={ref} {...props}>
       {typeof children === "string"
         ? highlightText(children, highlight)

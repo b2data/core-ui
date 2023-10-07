@@ -6,7 +6,8 @@ import { OverrideMuiProps } from "../types";
 export interface BadgeProps
   extends OverrideMuiProps<
     MuiBadgeProps,
-    "badgeContent" | "invisible" | "max" | "showZero" | "sx" | "ref"
+    "badgeContent" | "invisible" | "max" | "showZero" | "sx",
+    HTMLSpanElement
   > {
   /**
    * The variant to use.
@@ -31,8 +32,11 @@ export interface BadgeProps
   overlap?: MuiBadgeProps["overlap"];
 }
 
-export const Badge: React.FC<BadgeProps> = React.forwardRef(
-  ({ variant, badgeContent, ...props }, ref) => (
+export const Badge = React.forwardRef(
+  (
+    { variant, badgeContent, ...props }: BadgeProps,
+    ref: React.Ref<HTMLSpanElement>,
+  ) => (
     <MuiBadge
       ref={ref}
       {...props}

@@ -7,11 +7,9 @@ export interface MenuProps
   extends OverrideMuiProps<
     MuiMenuProps,
     | "anchorEl"
-    | "children"
     | "onClose"
     | "open"
     | "sx"
-    | "ref"
     | "component"
     | "transformOrigin"
     | "disablePortal"
@@ -24,6 +22,8 @@ export interface MenuProps
     | "hideBackdrop"
   > {}
 
-export const Menu: React.FC<MenuProps> = React.forwardRef((props, ref) => (
-  <MuiMenu ref={ref} {...props} />
-));
+export const Menu = React.forwardRef(
+  (props: MenuProps, ref: React.Ref<HTMLDivElement>) => (
+    <MuiMenu ref={ref} {...props} />
+  ),
+);

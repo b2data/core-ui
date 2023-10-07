@@ -9,10 +9,12 @@ import { OverrideMuiProps } from "../types";
 export interface MenuListProps
   extends OverrideMuiProps<
     MuiMenuListProps,
-    "children" | "disablePadding" | "subheader" | "sx" | "ref" | "component",
+    "disablePadding" | "subheader" | "sx" | "component",
     HTMLUListElement
   > {}
 
-export const MenuList: React.FC<MenuListProps> = React.forwardRef(
-  (props, ref) => <MuiMenuList ref={ref} dense {...props} />,
+export const MenuList = React.forwardRef(
+  (props: MenuListProps, ref: React.Ref<HTMLUListElement>) => (
+    <MuiMenuList ref={ref} dense {...props} />
+  ),
 );

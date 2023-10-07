@@ -28,7 +28,6 @@ export interface AlertProps
     | "onClose"
     | "variant"
     | "sx"
-    | "ref"
     | "component"
   > {
   /**
@@ -55,8 +54,11 @@ export interface AlertProps
   actions?: ReactElement;
 }
 
-export const Alert: React.FC<AlertProps> = React.forwardRef(
-  ({ title, children, actions, severity, ...props }, ref) => (
+export const Alert = React.forwardRef(
+  (
+    { title, children, actions, severity, ...props }: AlertProps,
+    ref: React.Ref<HTMLDivElement>,
+  ) => (
     <MuiAlert
       ref={ref}
       {...props}

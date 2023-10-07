@@ -9,10 +9,8 @@ import { OverrideMuiProps } from "../types";
 export interface PopperProps
   extends OverrideMuiProps<
     MuiPopperProps,
-    | "children"
     | "container"
     | "disablePortal"
-    | "ref"
     | "open"
     | "anchorEl"
     | "keepMounted"
@@ -20,15 +18,23 @@ export interface PopperProps
     | "popperOptions"
     | "popperRef"
     | "component"
-    | "sx"
+    | "sx",
+    HTMLDivElement,
+    "children"
   > {
   /**
    * Popper placement.
    * @default bottom
    */
   placement?: MuiPopperProps["placement"];
+  /**
+   * Popper render function or node.
+   */
+  children?: MuiPopperProps["children"];
 }
 
-export const Popper: React.FC<PopperProps> = React.forwardRef((props, ref) => (
-  <MuiPopper ref={ref} {...props} />
-));
+export const Popper = React.forwardRef(
+  (props: PopperProps, ref: React.Ref<HTMLDivElement>) => (
+    <MuiPopper ref={ref} {...props} />
+  ),
+);

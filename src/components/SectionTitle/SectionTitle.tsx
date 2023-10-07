@@ -39,97 +39,99 @@ export interface SectionTitleProps {
   withBorder?: boolean;
 }
 
-export const SectionTitle: React.FC<SectionTitleProps> = React.forwardRef(
-  (
-    { title, titleProps, subtitle, tooltip, helperText, actions, withBorder },
-    ref,
-  ) => {
-    const shownActions = useMemo(
-      () => (actions || []).filter((a) => !a.hidden),
-      [actions],
-    );
+export const SectionTitle = ({
+  title,
+  titleProps,
+  subtitle,
+  tooltip,
+  helperText,
+  actions,
+  withBorder,
+}: SectionTitleProps) => {
+  const shownActions = useMemo(
+    () => (actions || []).filter((a) => !a.hidden),
+    [actions],
+  );
 
-    return (
+  return (
+    <Box
+      sx={({ palette }) => ({
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        ...(withBorder
+          ? { borderBottom: `1px solid ${palette.divider}`, pb: 1 }
+          : {}),
+      })}
+    >
+      {subtitle && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            height: 20,
+            color: "#6B778C",
+            "& *": {
+              color: "#6B778C",
+            },
+          }}
+        >
+          {subtitle}
+        </Box>
+      )}
+
       <Box
-        ref={ref}
         sx={({ palette }) => ({
           display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          ...(withBorder
-            ? { borderBottom: `1px solid ${palette.divider}`, pb: 1 }
-            : {}),
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 3,
+          "&:hover .MuiIconButton-root": {
+            backgroundColor: palette.action.selected,
+          },
         })}
       >
-        {subtitle && (
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              height: 20,
-              color: "#6B778C",
-              "& *": {
-                color: "#6B778C",
-              },
-            }}
+        <Tooltip followCursor placement="bottom" text={tooltip}>
+          <Typography
+            noWrap
+            style={{ lineHeight: 1.2 }}
+            variant="h2"
+            {...titleProps}
           >
-            {subtitle}
-          </Box>
-        )}
+            {title}
+          </Typography>
+        </Tooltip>
 
         <Box
-          sx={({ palette }) => ({
+          sx={{
             display: "flex",
             flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
             alignItems: "center",
-            gap: 3,
-            "&:hover .MuiIconButton-root": {
-              backgroundColor: palette.action.selected,
+            gap: 2,
+            "& > *": {
+              minWidth: 32,
+              minHeight: 32,
             },
-          })}
+          }}
         >
-          <Tooltip followCursor placement="bottom" text={tooltip}>
-            <Typography
-              noWrap
-              style={{ lineHeight: 1.2 }}
-              variant="h2"
-              {...titleProps}
-            >
-              {title}
-            </Typography>
-          </Tooltip>
+          {helperText ? (
+            isValidElement(helperText) ? (
+              helperText
+            ) : (
+              <Typography variant="body2">{helperText}</Typography>
+            )
+          ) : null}
 
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 2,
-              "& > *": {
-                minWidth: 32,
-                minHeight: 32,
-              },
-            }}
-          >
-            {helperText ? (
-              isValidElement(helperText) ? (
-                helperText
-              ) : (
-                <Typography variant="body2">{helperText}</Typography>
-              )
-            ) : null}
-
-            {shownActions.map((actionProps, ind) => (
-              <SectionTitleAction
-                key={`${actionProps?.label}-${ind}`}
-                {...actionProps}
-              />
-            ))}
-          </Box>
+          {shownActions.map((actionProps, ind) => (
+            <SectionTitleAction
+              key={`${actionProps?.label}-${ind}`}
+              {...actionProps}
+            />
+          ))}
         </Box>
       </Box>
-    );
-  },
-);
+    </Box>
+  );
+};

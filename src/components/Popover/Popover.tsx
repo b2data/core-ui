@@ -14,7 +14,6 @@ export interface PopoverProps
     | "anchorOrigin"
     | "anchorPosition"
     | "anchorReference"
-    | "children"
     | "container"
     | "elevation"
     | "onClose"
@@ -22,7 +21,6 @@ export interface PopoverProps
     | "sx"
     | "disablePortal"
     | "keepMounted"
-    | "ref"
     | "component"
     | "disableScrollLock"
   > {
@@ -48,6 +46,8 @@ export interface PopoverProps
   transformOrigin?: MuiPopoverProps["transformOrigin"];
 }
 
-export const Popover: React.FC<PopoverProps> = React.forwardRef(
-  (props, ref) => <MuiPopover ref={ref} {...props} />,
+export const Popover = React.forwardRef(
+  (props: PopoverProps, ref: React.Ref<HTMLDivElement>) => (
+    <MuiPopover ref={ref} {...props} />
+  ),
 );

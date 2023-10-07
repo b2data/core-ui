@@ -24,7 +24,7 @@ export const Base: StoryObj<ConfirmationDialogProps> = {
       label: "Удалить",
       color: "error",
       loading: false,
-      onClick: () => console.log("subbmitted"),
+      onClick: () => console.info("subbmitted"),
     },
     declineBtn: {
       label: "Отмена",
@@ -53,7 +53,7 @@ export const WithInput: StoryObj<ConfirmationDialogProps> = {
       label: "Удалить",
       color: "error",
       loading: false,
-      onClick: () => console.log("subbmitted"),
+      onClick: () => console.info("subbmitted"),
     },
     declineBtn: {
       label: "Отмена",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CopyAll as CopyIcon } from "@mui/icons-material";
 
 import { ButtonProps } from "../Button";
@@ -45,89 +45,102 @@ export interface ConfirmationDialogProps
   };
 }
 
-export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
-  acceptBtn,
-  declineBtn,
-  confirmProps,
-  onClose,
-  content,
-  children,
-  open,
-  ...props
-}) => {
-  const [name, setName] = useState("");
+export const ConfirmationDialog = React.forwardRef(
+  (
+    {
+      acceptBtn,
+      declineBtn,
+      confirmProps,
+      onClose,
+      content,
+      children,
+      open,
+      ...props
+    }: ConfirmationDialogProps,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
+    const [name, setName] = useState("");
+    const readOnlyInput = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    setName("");
-  }, [open]);
+    useEffect(() => {
+      setName("");
+    }, [open]);
 
-  const onCopy = () => {
-    navigator.clipboard.writeText(confirmProps?.value || "");
-  };
+    const onCopy = () => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(confirmProps?.value || "");
+      } else if (readOnlyInput.current) {
+        readOnlyInput.current.select();
+        document.execCommand("copy");
+      }
+    };
 
-  return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      {...props}
-      actions={[
-        ...(declineBtn
-          ? [
-              {
-                variant: "outlined",
-                color: "default",
-                ...declineBtn,
-                children: declineBtn.label || declineBtn.children,
-                onClick: onClose,
-              } as DialogAction,
-            ]
-          : []),
-        ...(acceptBtn
-          ? [
-              {
-                variant: "contained",
-                color: "primary",
-                ...acceptBtn,
-                children: acceptBtn.label || acceptBtn.children,
-                disabled: confirmProps && name !== confirmProps.value,
-              } as DialogAction,
-            ]
-          : []),
-      ]}
-    >
-      {content || children}
-      {confirmProps && (
-        <>
-          <TextField
-            readOnly
-            variant="outlined"
-            margin="normal"
-            value={confirmProps.value}
-            endAdornment={
-              <IconButton size="small" onClick={onCopy}>
-                <CopyIcon />
-              </IconButton>
-            }
-            sx={{ mt: 4 }}
-          />
-          <TextField
-            variant="outlined"
-            placeholder={confirmProps.placeholder}
-            helperText={confirmProps.helperText}
-            onChange={(e) => setName(e.target.value)}
-            inputProps={{
-              onKeyDown: (e) => {
-                if (e.code === "Enter") {
-                  acceptBtn?.onClick?.(null as any);
-                }
-              },
-            }}
-            value={name}
-            autoComplete="off"
-            autoFocus
-          />
-        </>
-      )}
-    </Dialog>
-  );
-};
+    return (
+      <Dialog
+        ref={ref}
+        open={open}
+        onClose={onClose}
+        {...props}
+        actions={[
+          ...(declineBtn
+            ? [
+                {
+                  variant: "outlined",
+                  color: "default",
+                  ...declineBtn,
+                  children: declineBtn.label || declineBtn.children,
+                  onClick: onClose,
+                } as DialogAction,
+              ]
+            : []),
+          ...(acceptBtn
+            ? [
+                {
+                  variant: "contained",
+                  color: "primary",
+                  ...acceptBtn,
+                  children: acceptBtn.label || acceptBtn.children,
+                  disabled: confirmProps && name !== confirmProps.value,
+                } as DialogAction,
+              ]
+            : []),
+        ]}
+      >
+        {content || children}
+        {confirmProps && (
+          <>
+            <TextField
+              readOnly
+              variant="outlined"
+              margin="normal"
+              value={confirmProps.value}
+              inputRef={readOnlyInput}
+              endAdornment={
+                <IconButton size="small" onClick={onCopy}>
+                  <CopyIcon />
+                </IconButton>
+              }
+              sx={{ mt: 4 }}
+            />
+            <TextField
+              variant="outlined"
+              placeholder={confirmProps.placeholder}
+              helperText={confirmProps.helperText}
+              onChange={(e) => setName(e.target.value)}
+              inputProps={{
+                onKeyDown: (e) => {
+                  if (e.code === "Enter") {
+                    acceptBtn?.onClick?.(null as any);
+                  }
+                },
+              }}
+              value={name}
+              autoComplete="off"
+              autoFocus
+            />
+          </>
+        )}
+      </Dialog>
+    );
+  },
+);

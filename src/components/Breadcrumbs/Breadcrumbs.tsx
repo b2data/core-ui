@@ -19,14 +19,13 @@ export type Breadcrumb = {
 export interface BreadcrumbsProps
   extends OverrideMuiProps<
     MuiBreadcrumbsProps,
-    | "children"
     | "itemsAfterCollapse"
     | "itemsBeforeCollapse"
     | "maxItems"
     | "separator"
     | "sx"
-    | "ref"
-    | "component"
+    | "component",
+    HTMLElement
   > {
   /**
    * Override the default label for the expand button.
@@ -47,8 +46,11 @@ export interface BreadcrumbsProps
   items?: Breadcrumb[];
 }
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = React.forwardRef(
-  ({ children, items = [], ...props }, ref) => (
+export const Breadcrumbs = React.forwardRef(
+  (
+    { children, items = [], ...props }: BreadcrumbsProps,
+    ref: React.Ref<HTMLElement>,
+  ) => (
     <MuiBreadcrumbs ref={ref} {...props}>
       {children ||
         items.map(({ label, icon, disabled, link, onClick, ...itemProps }) => (

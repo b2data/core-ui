@@ -18,7 +18,6 @@ export interface RadioProps
     | "required"
     | "value"
     | "edge"
-    | "ref"
   > {
   /**
    * The color of the component.
@@ -32,6 +31,8 @@ export interface RadioProps
   size?: MuiRadioProps["size"];
 }
 
-export const Radio: React.FC<RadioProps> = React.forwardRef((props, ref) => (
-  <MuiRadio ref={ref} {...props} />
-));
+export const Radio = React.forwardRef(
+  (props: RadioProps, ref: React.Ref<HTMLButtonElement>) => (
+    <MuiRadio ref={ref} {...props} />
+  ),
+);

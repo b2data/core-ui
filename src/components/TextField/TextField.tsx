@@ -32,18 +32,17 @@ export interface TextFieldProps
     | "sx"
     | "type"
     | "value"
-    | "ref"
   > {
   /**
    * The variant to use.
    * @default standard
    */
-  variant?: "outlined" | "standard";
+  variant?: Exclude<MuiTextFieldProps["variant"], "filled">;
   /**
    * If `normal` will adjust vertical spacing of this and contained components.
    * @default none
    */
-  margin?: "normal" | "none";
+  margin?: Exclude<MuiTextFieldProps["margin"], "dence">;
   /**
    * If `true`, the input will take up the full width of its container.
    * @default true
@@ -64,8 +63,11 @@ export interface TextFieldProps
   endAdornment?: React.ReactNode;
 }
 
-export const TextField: React.FC<TextFieldProps> = React.forwardRef(
-  ({ readOnly, startAdornment, endAdornment, ...props }, ref) => (
+export const TextField = React.forwardRef(
+  (
+    { readOnly, startAdornment, endAdornment, ...props }: TextFieldProps,
+    ref: React.Ref<HTMLDivElement>,
+  ) => (
     <MuiTextField
       ref={ref}
       {...props}

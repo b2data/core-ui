@@ -9,7 +9,8 @@ import { OverrideMuiProps } from "../types";
 export interface SkeletonProps
   extends OverrideMuiProps<
     MuiSkeletonProps,
-    "children" | "height" | "width" | "component" | "sx" | "ref"
+    "height" | "width" | "component" | "sx",
+    HTMLSpanElement
   > {
   /**
    * The variant to use.
@@ -18,6 +19,8 @@ export interface SkeletonProps
   variant?: MuiSkeletonProps["variant"];
 }
 
-export const Skeleton: React.FC<SkeletonProps> = React.forwardRef(
-  (props, ref) => <MuiSkeleton ref={ref} {...props} />,
+export const Skeleton = React.forwardRef(
+  (props: SkeletonProps, ref: React.Ref<HTMLSpanElement>) => (
+    <MuiSkeleton ref={ref} {...props} />
+  ),
 );

@@ -17,7 +17,6 @@ export interface TabsProps
     | "value"
     | "variant"
     | "sx"
-    | "ref"
   > {
   /**
    * @default horizontal
@@ -29,6 +28,6 @@ export interface TabsProps
   variant?: MuiTabsProps["variant"];
 }
 
-export const Tabs: React.FC<TabsProps> = React.forwardRef((props, ref) => (
-  <MuiTabs ref={ref} {...props} />
-));
+export const Tabs = React.forwardRef(
+  (props: TabsProps, ref: React.Ref<any>) => <MuiTabs ref={ref} {...props} />,
+);

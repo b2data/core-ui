@@ -9,14 +9,7 @@ import { OverrideMuiProps } from "../types";
 export interface CollapseProps
   extends OverrideMuiProps<
     MuiCollapseProps,
-    | "children"
-    | "collapsedSize"
-    | "component"
-    | "in"
-    | "orientation"
-    | "timeout"
-    | "sx"
-    | "ref"
+    "collapsedSize" | "component" | "in" | "orientation" | "timeout" | "sx"
   > {
   /**
    * @default 0px
@@ -32,6 +25,4 @@ export interface CollapseProps
   timeout?: MuiCollapseProps["timeout"];
 }
 
-export const Collapse: React.FC<CollapseProps> = React.forwardRef(
-  (props, ref) => <MuiCollapse ref={ref} {...props} />,
-);
+export const Collapse = (props: CollapseProps) => <MuiCollapse {...props} />;
