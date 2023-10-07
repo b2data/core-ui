@@ -5,7 +5,7 @@ import {
   AdapterDayjs,
   DatePicker,
   DatePickerProps,
-  LocalizationProvider,
+  DatePickerProvider,
 } from "./DatePicker";
 
 import type { Meta, StoryObj } from "@storybook/react";
@@ -21,27 +21,27 @@ export default meta;
 export const Base: StoryObj<DatePickerProps> = {
   args: {},
   render: (props) => (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <DatePickerProvider dateAdapter={AdapterDayjs}>
       <DatePicker {...props} />
-    </LocalizationProvider>
+    </DatePickerProvider>
   ),
 };
 
 export const DefaultValue: StoryObj<DatePickerProps> = {
   args: {},
   render: (props) => (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <DatePickerProvider dateAdapter={AdapterDayjs}>
       <DatePicker defaultValue={dayjs("2022-01-01T10:20:33")} {...props} />
       <DatePicker defaultValue={null} {...props} />
-    </LocalizationProvider>
+    </DatePickerProvider>
   ),
 };
 
 export const LocaleRU: StoryObj<DatePickerProps> = {
   args: {},
   render: (props) => (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+    <DatePickerProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
       <DatePicker defaultValue={dayjs("2022-01-01T10:20:33")} {...props} />
-    </LocalizationProvider>
+    </DatePickerProvider>
   ),
 };

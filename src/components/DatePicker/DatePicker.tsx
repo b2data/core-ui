@@ -1,4 +1,4 @@
-export { LocalizationProvider } from "@mui/x-date-pickers";
+export { LocalizationProvider as DatePickerProvider } from "@mui/x-date-pickers";
 export { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import {
