@@ -16,6 +16,7 @@ export * from "./Collapse";
 export * from "./ConfirmationDialog";
 export * from "./CssBaseline";
 export * from "./DataGrid";
+export * from "./DatePicker";
 export * from "./Dialog";
 export * from "./DialogActions";
 export * from "./DialogContent";
