@@ -24,6 +24,6 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["src", "src/components/DataGrid/components/.tsx"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
