@@ -48,7 +48,7 @@ export interface DropZoneProps {
   sx?: BoxProps["sx"];
 }
 
-const DropZoneComp: React.FC<DropZoneProps> = ({
+const DropZoneComp = ({
   onDrop,
   onSelect,
   accept,
@@ -58,7 +58,7 @@ const DropZoneComp: React.FC<DropZoneProps> = ({
   canDropText,
   onTypeError,
   ...props
-}) => {
+}: DropZoneProps) => {
   const inputRefInner = React.useRef<HTMLInputElement | null>(null);
 
   const [{ canDrop, isOver }, drop] = useDrop({
@@ -89,8 +89,6 @@ const DropZoneComp: React.FC<DropZoneProps> = ({
       {canDropText || hintText}
     </Typography>
   );
-
-  console.log({ canDrop, isOver });
 
   return (
     <div ref={drop}>
@@ -146,7 +144,7 @@ const DropZoneComp: React.FC<DropZoneProps> = ({
   );
 };
 
-export const DropZone: React.FC<DropZoneProps> = (props) => (
+export const DropZone = (props: DropZoneProps) => (
   <DndProvider backend={HTML5Backend}>
     <DropZoneComp {...props} />
   </DndProvider>

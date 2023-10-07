@@ -12,7 +12,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
       return item && item !== "undefined"
-        ? item[0] === '"' && item[item.length - 1] === '"'
+        ? ['"', "["].includes(item[0])
           ? JSON.parse(item)
           : item
         : initialValue;

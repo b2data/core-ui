@@ -18,27 +18,28 @@ export interface ProgressStatisticProps {
   sx?: SxProps<Theme>;
 }
 
-export const ProgressStatistic: React.FC<ProgressStatisticProps> =
-  React.forwardRef(({ data, ...props }, ref) => {
-    const total = data.reduce((sum, next) => sum + next.value, 0);
-    return (
-      <Box
-        ref={ref}
-        display="flex"
-        borderRadius={2}
-        overflow="hidden"
-        height={8}
-        {...props}
-      >
-        {data.map(({ color, value }) => (
-          <Box
-            key={color + value}
-            sx={{
-              backgroundColor: color,
-              width: `${(value / total) * 100}%`,
-            }}
-          />
-        ))}
-      </Box>
-    );
-  });
+export const ProgressStatistic = ({
+  data,
+  ...props
+}: ProgressStatisticProps) => {
+  const total = data.reduce((sum, next) => sum + next.value, 0);
+  return (
+    <Box
+      display="flex"
+      borderRadius={2}
+      overflow="hidden"
+      height={8}
+      {...props}
+    >
+      {data.map(({ color, value }) => (
+        <Box
+          key={color + value}
+          sx={{
+            backgroundColor: color,
+            width: `${(value / total) * 100}%`,
+          }}
+        />
+      ))}
+    </Box>
+  );
+};

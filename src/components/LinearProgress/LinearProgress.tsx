@@ -36,25 +36,27 @@ export interface LinearProgressProps
   wrapSx?: SxProps<Theme>;
 }
 
-export const LinearProgress: React.FC<LinearProgressProps> = React.forwardRef(
-  ({ label, wrapSx, ...props }, ref) => (
-    <Box ref={ref} sx={{ display: "flex", alignItems: "center", ...wrapSx }}>
-      <MuiLinearProgress {...props} />
-      {label && (
-        <Box sx={{ ml: 2 }}>
-          {isValidElement(label) ? (
-            label
-          ) : (
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ minWidth: 35 }}
-            >
-              {label}
-            </Typography>
-          )}
-        </Box>
-      )}
-    </Box>
-  ),
+export const LinearProgress = ({
+  label,
+  wrapSx,
+  ...props
+}: LinearProgressProps) => (
+  <Box sx={{ display: "flex", alignItems: "center", ...wrapSx }}>
+    <MuiLinearProgress {...props} />
+    {label && (
+      <Box sx={{ ml: 2 }}>
+        {isValidElement(label) ? (
+          label
+        ) : (
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ minWidth: 35 }}
+          >
+            {label}
+          </Typography>
+        )}
+      </Box>
+    )}
+  </Box>
 );

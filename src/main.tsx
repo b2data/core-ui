@@ -16,7 +16,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
         flexWrap="wrap"
       >
         {Object.keys(Components).map((key) => (
-          <Typography>{key}</Typography>
+          <Typography key={key}>{key}</Typography>
         ))}
       </Box>
     </React.Fragment>

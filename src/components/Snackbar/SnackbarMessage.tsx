@@ -26,10 +26,7 @@ declare module "notistack" {
   }
 }
 
-export const SnackbarMessage = React.forwardRef<
-  HTMLDivElement,
-  SnackbarMessageProps
->(
+export const SnackbarMessage = React.forwardRef(
   (
     {
       id,
@@ -40,8 +37,8 @@ export const SnackbarMessage = React.forwardRef<
       closeText,
       displayVariant = "outlined",
       style,
-    },
-    ref,
+    }: SnackbarMessageProps,
+    ref: React.Ref<HTMLDivElement>,
   ) => {
     const { closeSnackbar } = useSnackbar();
 

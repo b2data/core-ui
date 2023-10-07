@@ -35,34 +35,34 @@ export interface CircularProgressProps
   wrapSx?: SxProps<Theme>;
 }
 
-export const CircularProgress: React.FC<CircularProgressProps> =
-  React.forwardRef(({ label, wrapSx, ...props }, ref) => (
-    <Box
-      ref={ref}
-      sx={{ position: "relative", display: "inline-flex", ...wrapSx }}
-    >
-      <MuiCircularProgress {...props} />
-      {label && (
-        <Box
-          sx={{
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {isValidElement(label) ? (
-            label
-          ) : (
-            <Typography variant="caption" color="text.secondary">
-              {label}
-            </Typography>
-          )}
-        </Box>
-      )}
-    </Box>
-  ));
+export const CircularProgress = ({
+  label,
+  wrapSx,
+  ...props
+}: CircularProgressProps) => (
+  <Box sx={{ position: "relative", display: "inline-flex", ...wrapSx }}>
+    <MuiCircularProgress {...props} />
+    {label && (
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: "absolute",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {isValidElement(label) ? (
+          label
+        ) : (
+          <Typography variant="caption" color="text.secondary">
+            {label}
+          </Typography>
+        )}
+      </Box>
+    )}
+  </Box>
+);

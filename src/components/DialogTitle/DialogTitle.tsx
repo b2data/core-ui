@@ -7,6 +7,8 @@ import React from "react";
 export interface DialogTitleProps
   extends Pick<MuiDialogTitleProps, "sx" | "children"> {}
 
-export const DialogTitle: React.FC<DialogTitleProps> = (props) => (
-  <MuiDialogTitle {...props} />
+export const DialogTitle = React.forwardRef(
+  (props: DialogTitleProps, ref: React.Ref<HTMLSpanElement>) => (
+    <MuiDialogTitle ref={ref} {...props} />
+  ),
 );

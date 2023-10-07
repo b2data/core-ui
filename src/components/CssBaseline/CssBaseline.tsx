@@ -6,6 +6,6 @@ import React from "react";
 
 export interface CssBaselineProps extends MuiCssBaselineProps {}
 
-export const CssBaseline: React.FC<CssBaselineProps> = (props) => (
+export const CssBaseline = (props: CssBaselineProps) => (
   <MuiCssBaseline {...props} />
 );

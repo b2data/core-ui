@@ -6,7 +6,7 @@ import { OverrideMuiProps } from "../types";
 export interface FabProps
   extends OverrideMuiProps<
     MuiFabProps,
-    "sx" | "component" | "disabled" | "href" | "ref",
+    "sx" | "component" | "disabled" | "href",
     HTMLButtonElement
   > {
   /**
@@ -26,6 +26,8 @@ export interface FabProps
   variant?: MuiFabProps["variant"];
 }
 
-export const Fab: React.FC<FabProps> = React.forwardRef((props, ref) => (
-  <MuiFab ref={ref} {...props} />
-));
+export const Fab = React.forwardRef(
+  (props: FabProps, ref: React.Ref<HTMLButtonElement>) => (
+    <MuiFab ref={ref} {...props} />
+  ),
+);

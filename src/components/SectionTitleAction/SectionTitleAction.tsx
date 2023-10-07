@@ -35,14 +35,14 @@ export interface SectionTitleActionProps extends ButtonProps {
   menuActions?: MenuItemProps[];
 }
 
-export const SectionTitleAction: React.FC<SectionTitleActionProps> = ({
+export const SectionTitleAction = ({
   label,
   icon,
   onClick,
   tooltip,
   menuActions,
   ...props
-}) => {
+}: SectionTitleActionProps) => {
   const [actionsAnchor, setActionsAnchor] = useState<HTMLButtonElement | null>(
     null,
   );

@@ -6,7 +6,6 @@ import { OverrideMuiProps } from "../types";
 export interface TabProps
   extends OverrideMuiProps<
     MuiTabProps,
-    | "children"
     | "icon"
     | "iconPosition"
     | "label"
@@ -15,7 +14,7 @@ export interface TabProps
     | "LinkComponent"
     | "sx"
     | "component"
-    | "ref"
+    | "children"
   > {
   /**
    * If `true`, the component is disabled.
@@ -28,6 +27,6 @@ export interface TabProps
   iconPosition?: MuiTabProps["iconPosition"];
 }
 
-export const Tab: React.FC<TabProps> = React.forwardRef((props, ref) => (
+export const Tab = React.forwardRef((props: TabProps, ref: React.Ref<any>) => (
   <MuiTab ref={ref} {...props} />
 ));

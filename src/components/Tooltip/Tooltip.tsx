@@ -33,17 +33,14 @@ export interface TooltipProps
   text?: string | React.ReactNode;
 }
 
-export const Tooltip: React.FC<TooltipProps> = React.forwardRef(
-  ({ text, children, ...props }, ref) =>
-    text ? (
-      <MuiTooltip
-        ref={ref}
-        {...props}
-        title={isValidElement(text) ? text : <Typography>{text}</Typography>}
-      >
-        <span>{children}</span>
-      </MuiTooltip>
-    ) : (
-      children
-    ),
-);
+export const Tooltip = ({ text, children, ...props }: TooltipProps) =>
+  text ? (
+    <MuiTooltip
+      {...props}
+      title={isValidElement(text) ? text : <Typography>{text}</Typography>}
+    >
+      <span>{children}</span>
+    </MuiTooltip>
+  ) : (
+    children
+  );

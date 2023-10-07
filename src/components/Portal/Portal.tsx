@@ -6,6 +6,8 @@ import React from "react";
 
 export interface PortalProps extends MuiPortalProps {}
 
-export const Portal: React.FC<PortalProps> = (props) => (
-  <MuiPortal {...props} />
+export const Portal = React.forwardRef(
+  (props: PortalProps, ref: React.Ref<Element>) => (
+    <MuiPortal ref={ref} {...props} />
+  ),
 );

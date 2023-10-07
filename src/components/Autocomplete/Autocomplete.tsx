@@ -346,7 +346,7 @@ export interface AutocompleteProps<
   inputProps?: TextFieldProps;
 }
 
-export const Autocomplete = React.forwardRef(function Autocomplete<
+export const AutocompleteRaw = React.forwardRef(function Autocomplete<
   Value,
   Multiple extends boolean | undefined = false,
   DisableClearable extends boolean | undefined = false,
@@ -359,7 +359,7 @@ export const Autocomplete = React.forwardRef(function Autocomplete<
     inputProps,
     ...props
   }: AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo>,
-  ref: React.Ref<HTMLDialogElement>,
+  ref: React.ForwardedRef<HTMLDivElement>,
 ) {
   return (
     <MuiAutocomplete
@@ -396,8 +396,8 @@ export const Autocomplete = React.forwardRef(function Autocomplete<
       renderOption={(
         props,
         option,
-        { selected, inputValue, ...q },
-        { getOptionLabel, ...p },
+        { selected, inputValue },
+        { getOptionLabel, getOptionDisabled },
       ) => {
         const matches = match(getOptionLabel(option), inputValue, {
           insideWords: true,
@@ -408,21 +408,17 @@ export const Autocomplete = React.forwardRef(function Autocomplete<
             {...props}
             asButton
             text={
-              // @ts-ignore
-              option && "inputValue" in option ? (
+              (option as any)?.inputValue ? (
                 getOptionLabel(option)
               ) : (
                 <>
-                  {parts.map((part, index) => (
-                    <span
-                      key={index}
-                      style={{
-                        fontWeight: part.highlight ? 700 : 400,
-                      }}
-                    >
-                      {part.text}
-                    </span>
-                  ))}
+                  {parts.map((part, index) =>
+                    part.highlight && !getOptionDisabled?.(option) ? (
+                      <mark key={index}>{part.text}</mark>
+                    ) : (
+                      <span key={index}>{part.text}</span>
+                    ),
+                  )}
                 </>
               )
             }
@@ -445,4 +441,18 @@ export const Autocomplete = React.forwardRef(function Autocomplete<
   );
 });
 
-Autocomplete.displayName = "Autocomplete";
+interface AutocompleteComponent {
+  <
+    Value,
+    Multiple extends boolean | undefined = false,
+    DisableClearable extends boolean | undefined = false,
+    FreeSolo extends boolean | undefined = false,
+  >(
+    props: AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo> &
+      React.RefAttributes<HTMLDivElement>,
+  ): React.JSX.Element;
+}
+
+export const Autocomplete = React.memo(
+  AutocompleteRaw,
+) as AutocompleteComponent;

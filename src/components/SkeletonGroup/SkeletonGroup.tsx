@@ -23,12 +23,12 @@ export interface SkeletonGroupProps
   rowSx?: SxProps<Theme>;
 }
 
-export const SkeletonGroup: React.FC<SkeletonGroupProps> = ({
+export const SkeletonGroup = ({
   gridTemplate = [],
   rowsCount = 1,
   rowSx,
   ...props
-}) => (
+}: SkeletonGroupProps) => (
   <Fragment>
     {Array.from({ length: rowsCount }, () => (
       <Box

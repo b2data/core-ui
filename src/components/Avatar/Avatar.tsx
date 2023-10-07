@@ -27,12 +27,10 @@ export interface AvatarProps
   variant?: MuiAvatarProps["variant"];
 }
 
-export const Avatar: React.FC<AvatarProps> = styled(MuiAvatar)<AvatarProps>(
-  ({ size = "medium" }) => ({
-    width: AVATAR_SIZES[size],
-    height: AVATAR_SIZES[size],
-    "& .MuiSvgIcon-root": {
-      fontSize: size === "small" ? 18 : 24,
-    },
-  }),
-);
+export const Avatar = styled(MuiAvatar)<AvatarProps>(({ size = "medium" }) => ({
+  width: AVATAR_SIZES[size],
+  height: AVATAR_SIZES[size],
+  "& .MuiSvgIcon-root": {
+    fontSize: size === "small" ? 18 : 24,
+  },
+}));

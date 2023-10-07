@@ -9,17 +9,12 @@ import { OverrideMuiProps } from "../types";
 export interface FormHelperTextProps
   extends OverrideMuiProps<
     MuiFormHelperTextProps,
-    | "sx"
-    | "children"
-    | "disabled"
-    | "error"
-    | "margin"
-    | "required"
-    | "variant"
-    | "ref",
-    HTMLSpanElement
+    "sx" | "disabled" | "error" | "margin" | "required" | "variant",
+    HTMLParagraphElement
   > {}
 
-export const FormHelperText: React.FC<FormHelperTextProps> = React.forwardRef(
-  (props, ref) => <MuiFormHelperText ref={ref} {...props} />,
+export const FormHelperText = React.forwardRef(
+  (props: FormHelperTextProps, ref: React.Ref<HTMLParagraphElement>) => (
+    <MuiFormHelperText ref={ref} {...props} />
+  ),
 );

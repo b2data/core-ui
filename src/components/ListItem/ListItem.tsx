@@ -23,15 +23,13 @@ import { MenuItem, MenuItemProps } from "../MenuItem";
 export interface ListItemProps
   extends OverrideMuiProps<
     MuiListItemProps,
-    | "children"
     | "disabled"
     | "disableGutters"
     | "disablePadding"
     | "selected"
     | "divider"
     | "sx"
-    | "component"
-    | "ref",
+    | "component",
     HTMLLIElement
   > {
   /**
@@ -70,7 +68,7 @@ export interface ListItemProps
   disableRipple?: boolean;
 }
 
-export const ListItem: React.FC<ListItemProps> = React.forwardRef(
+export const ListItem = React.forwardRef(
   (
     {
       asButton,
@@ -83,8 +81,8 @@ export const ListItem: React.FC<ListItemProps> = React.forwardRef(
       children,
       disableRipple,
       ...props
-    },
-    ref,
+    }: ListItemProps,
+    ref: React.Ref<HTMLLIElement>,
   ) => {
     const [actionsAnchor, setActionsAnchor] =
       useState<HTMLButtonElement | null>(null);

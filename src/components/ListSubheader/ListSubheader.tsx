@@ -9,13 +9,7 @@ import { OverrideMuiProps } from "../types";
 export interface ListSubheaderProps
   extends OverrideMuiProps<
     MuiListSubheaderProps,
-    | "children"
-    | "color"
-    | "disableGutters"
-    | "disableSticky"
-    | "sx"
-    | "component"
-    | "ref",
+    "color" | "disableGutters" | "disableSticky" | "sx" | "component",
     HTMLLIElement
   > {
   /**
@@ -24,6 +18,8 @@ export interface ListSubheaderProps
   color?: MuiListSubheaderProps["color"];
 }
 
-export const ListSubheader: React.FC<ListSubheaderProps> = React.forwardRef(
-  (props, ref) => <MuiListSubheader ref={ref} {...props} />,
+export const ListSubheader = React.forwardRef(
+  (props: ListSubheaderProps, ref: React.Ref<HTMLLIElement>) => (
+    <MuiListSubheader ref={ref} {...props} />
+  ),
 );

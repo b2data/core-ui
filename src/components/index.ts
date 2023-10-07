@@ -15,6 +15,7 @@ export * from "./ClickAwayListener";
 export * from "./Collapse";
 export * from "./ConfirmationDialog";
 export * from "./CssBaseline";
+export * from "./DataGrid";
 export * from "./Dialog";
 export * from "./DialogActions";
 export * from "./DialogContent";

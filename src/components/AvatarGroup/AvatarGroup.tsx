@@ -14,7 +14,7 @@ export interface AvatarGroupProps
    * Spacing between avatars.
    * @default medium
    */
-  spacing?: "medium" | "small";
+  spacing?: MuiAvatarGroupProps["spacing"];
   /**
    * The size of the avatar.
    * @default medium
@@ -27,12 +27,12 @@ export interface AvatarGroupProps
   variant?: MuiAvatarGroupProps["variant"];
 }
 
-export const AvatarGroup: React.FC<AvatarGroupProps> = styled(
-  MuiAvatarGroup,
-)<AvatarGroupProps>(({ size = "medium" }) => ({
-  "& .MuiAvatar-root": {
-    width: AVATAR_SIZES[size],
-    height: AVATAR_SIZES[size],
-    fontSize: size === "small" ? "1rem" : "1.4rem",
-  },
-}));
+export const AvatarGroup = styled(MuiAvatarGroup)<AvatarGroupProps>(
+  ({ size = "medium" }) => ({
+    "& .MuiAvatar-root": {
+      width: AVATAR_SIZES[size],
+      height: AVATAR_SIZES[size],
+      fontSize: size === "small" ? "1rem" : "1.4rem",
+    },
+  }),
+);

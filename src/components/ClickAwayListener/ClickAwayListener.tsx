@@ -6,6 +6,6 @@ import React from "react";
 
 export interface ClickAwayListenerProps extends MuiClickAwayListenerProps {}
 
-export const ClickAwayListener: React.FC<ClickAwayListenerProps> = (props) => (
+export const ClickAwayListener = (props: ClickAwayListenerProps) => (
   <MuiClickAwayListener {...props} />
 );

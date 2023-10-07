@@ -7,7 +7,8 @@ export type OverrideMuiProps<
   TType,
   TProps extends keyof TType,
   TElement = HTMLDivElement,
-> = HTMLAttributes<TElement> & Pick<TType, TProps>;
+  OmitProps extends string = "",
+> = Omit<HTMLAttributes<TElement>, OmitProps> & Pick<TType, TProps>;
 
 export type OverrideOnlyMuiProps<TType, TProps extends keyof TType> = Pick<
   TType,

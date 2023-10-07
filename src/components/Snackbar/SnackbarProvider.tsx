@@ -18,13 +18,13 @@ export interface SnackbarProviderProps
     "children" | "maxSnack" | "anchorOrigin" | "autoHideDuration" | "dense"
   > {}
 
-export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
+export const SnackbarProvider = ({
   children,
   maxSnack = 5,
   anchorOrigin = { horizontal: "left", vertical: "bottom" },
   autoHideDuration = 10000,
   dense,
-}) => (
+}: SnackbarProviderProps) => (
   <CoreSnackbarProvider
     maxSnack={maxSnack}
     anchorOrigin={anchorOrigin}

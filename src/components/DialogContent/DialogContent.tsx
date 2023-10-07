@@ -12,9 +12,9 @@ export interface DialogContentProps
   disablePadding?: boolean;
 }
 
-export const DialogContent: React.FC<DialogContentProps> = ({
+export const DialogContent = ({
   disablePadding,
   ...props
-}) => (
+}: DialogContentProps) => (
   <MuiDialogContent {...props} style={{ padding: disablePadding ? 0 : 20 }} />
 );

@@ -7,12 +7,12 @@ import { ListSubheader } from "../ListSubheader";
 export interface ListProps
   extends OverrideMuiProps<
     MuiListProps,
-    "children" | "sx" | "disablePadding" | "subheader" | "component" | "ref",
+    "sx" | "disablePadding" | "subheader" | "component",
     HTMLUListElement
   > {}
 
-export const List: React.FC<ListProps> = React.forwardRef(
-  ({ subheader, ...props }, ref) => (
+export const List = React.forwardRef(
+  ({ subheader, ...props }: ListProps, ref: React.Ref<HTMLUListElement>) => (
     <MuiList
       ref={ref}
       {...props}
