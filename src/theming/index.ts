@@ -5,6 +5,7 @@ import "@fontsource/roboto/700.css";
 
 import { default as ThemeProvider } from "@mui/material/styles/ThemeProvider";
 import { default as withStyles } from "@mui/material/styles/withStyles";
+import { default as useTheme } from "@mui/material/styles/useTheme";
 
 import { darkTheme, lightTheme } from "./variants";
 
@@ -12,4 +13,4 @@ export * from "./utils";
 
 export type Direction = "ltr" | "rtl";
 
-export { ThemeProvider, withStyles, lightTheme, darkTheme };
+export { ThemeProvider, withStyles, useTheme, lightTheme, darkTheme };

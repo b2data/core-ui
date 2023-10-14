@@ -3,7 +3,7 @@ import {
   unstable_composeClasses as composeClasses,
   unstable_useEventCallback as useEventCallback,
 } from "@mui/utils";
-import { alpha, getOverlayAlpha, styled, useTheme } from "@mui/material/styles";
+import { alpha, getOverlayAlpha, styled } from "@mui/material/styles";
 import {
   getDataGridUtilityClass,
   gridClasses,
@@ -135,7 +135,6 @@ const GridColumnHeaders = React.forwardRef<
   const rootProps = useGridRootProps();
   const apiRef = useGridApiContext();
   const [scrollbarSize, setScrollbarSize] = React.useState(0);
-  const theme = useTheme();
 
   const handleContentSizeChange = useEventCallback(() => {
     const rootDimensions = apiRef.current.getRootDimensions();

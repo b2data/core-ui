@@ -2,7 +2,10 @@ import { ComponentThemeOverride } from "../types";
 
 const listItemTheme: ComponentThemeOverride["MuiListItem"] = {
   styleOverrides: {
-    root: ({ ownerState: { disablePadding, disableGutters } }) => ({
+    root: ({
+      ownerState: { disablePadding, disableGutters },
+      theme: { breakpoints },
+    }) => ({
       minHeight: 36,
       paddingTop: disablePadding ? undefined : 6,
       paddingBottom: disablePadding ? undefined : 6,
@@ -14,6 +17,9 @@ const listItemTheme: ComponentThemeOverride["MuiListItem"] = {
       },
       "& .MenuActions": {
         opacity: 0,
+        [breakpoints.down("tablet")]: {
+          opacity: 1,
+        },
       },
       "&:hover .MenuActions": {
         opacity: 1,
