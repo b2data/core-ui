@@ -6,8 +6,6 @@ import React from "react";
 
 export interface SvgIconProps extends MuiSvgIconProps {}
 
-export const SvgIcon = React.forwardRef(
-  (props: SvgIconProps, ref: React.Ref<SVGSVGElement>) => (
-    <MuiSvgIcon ref={ref} {...props} />
-  ),
+export const SvgIcon: React.FC<SvgIconProps> = React.forwardRef(
+  (props, ref) => <MuiSvgIcon ref={ref} {...props} />,
 );

@@ -1,5 +1,6 @@
 import {
   GridActionsCellItem,
+  GridColDef,
   GridRowParams,
   GridSortModel,
 } from "@mui/x-data-grid";
@@ -15,7 +16,7 @@ import { useGridApiRef } from "./hooks";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-const columns = [
+const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1 },
   { field: "website", headerName: "Website", flex: 1, sortable: false },
   { field: "rating", headerName: "Rating", flex: 0.5, sortable: false },

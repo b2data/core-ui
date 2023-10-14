@@ -1,13 +1,16 @@
 import * as React from "react";
 import {
+  enUS,
   GridBody,
   GridContextProvider,
   GridFooterPlaceholder,
   GridHeader,
   GridRoot,
   GridValidRowModel,
+  ruRU,
   useGridSelector,
 } from "@mui/x-data-grid";
+import { useTheme } from "@mui/material";
 
 import { DataGridProps } from "./models/dataGridProps";
 import { DataGridVirtualScroller } from "./components/DataGridVirtualScroller";
@@ -18,7 +21,13 @@ import { useDataGridComponent } from "./useDataGridComponent";
 const DataGridRaw = React.forwardRef(function DataGrid<
   R extends GridValidRowModel,
 >(inProps: DataGridProps<R>, ref: React.Ref<HTMLDivElement>) {
-  const props = useDataGridProps(inProps);
+  const theme = useTheme();
+  const localeText = (localStorage.getItem("i18nextLng") === "ru" ? ruRU : enUS)
+    .components.MuiDataGrid.defaultProps.localeText;
+  const props = useDataGridProps({
+    ...inProps,
+    localeText: { ...localeText, ...inProps.localeText },
+  });
   const privateApiRef = useDataGridComponent(props.apiRef, props);
 
   const pinnedColumns = useGridSelector(
@@ -32,16 +41,25 @@ const DataGridRaw = React.forwardRef(function DataGrid<
         className={props.className}
         style={props.style}
         sx={{
-          ...props.sx,
           ...(props.disableColumnResize
             ? { ".MuiDataGrid-columnSeparator": { display: "none" } }
             : {}),
           '& [data-field="actions"] > [role="menu"]': {
             opacity: 0,
+            [theme.breakpoints.down("tablet")]: {
+              opacity: 1,
+            },
           },
+          "& .MuiDataGrid-row.Mui-selected": { bgcolor: "#eff5ff" },
+          "& .MuiDataGrid-row:hover": { bgcolor: "#f5f5f5" },
+          "& .MuiDataGrid-row.Mui-hovered": { bgcolor: "#f5f5f5" },
           '& .Mui-hovered [data-field="actions"] > [role="menu"]': {
             opacity: 1,
           },
+          "& .MuiDataGrid-sortIcon": { fontSize: 18 },
+          "& .MuiDataGrid-filterIcon": { fontSize: 18 },
+          bgcolor: theme.palette.background.paper,
+          ...props.sx,
         }}
         ref={ref}
         {...props.forwardedProps}
