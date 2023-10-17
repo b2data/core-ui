@@ -123,7 +123,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-input": {
           ...commonStyles["& .MuiInputBase-input"],
-          padding: "10px 0",
+          padding: "8px 0",
         },
       };
     },
