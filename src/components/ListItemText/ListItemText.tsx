@@ -13,6 +13,7 @@ export interface ListItemTextProps
     | "primaryTypographyProps"
     | "secondary"
     | "secondaryTypographyProps"
+    | "disableTypography"
     | "sx"
     | "children"
   > {}

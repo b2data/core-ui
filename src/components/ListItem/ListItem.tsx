@@ -14,7 +14,7 @@ import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
 import { OverrideMuiProps } from "../types";
 import { IconButton } from "../IconButton";
 import { ListItemAvatar } from "../ListItemAvatar";
-import { ListItemText } from "../ListItemText";
+import { ListItemText, ListItemTextProps } from "../ListItemText";
 import { ListItemButton } from "../ListItemButton";
 import { ListItemIcon } from "../ListItemIcon";
 import { Menu } from "../Menu";
@@ -54,6 +54,10 @@ export interface ListItemProps
    */
   secondaryText?: string | ReactElement;
   /**
+   * Properties for `ListItemText` component
+   */
+  textProps?: ListItemTextProps;
+  /**
    * The action component, normally `IconButton`.
    */
   action?: ReactElement;
@@ -76,6 +80,7 @@ export const ListItem = React.forwardRef(
       avatar,
       text,
       secondaryText,
+      textProps,
       action,
       menuActions,
       children,
@@ -122,7 +127,7 @@ export const ListItem = React.forwardRef(
           </ListItemAvatar>
         )}
         {(text || secondaryText) && (
-          <ListItemText primary={text} secondary={secondaryText} />
+          <ListItemText primary={text} secondary={secondaryText} {...textProps} />
         )}
         {children}
       </Fragment>

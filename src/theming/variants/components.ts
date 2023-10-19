@@ -11,6 +11,7 @@ import CheckboxOverride from "../../components/Checkbox/theme";
 import ChipOverride from "../../components/Chip/theme";
 import CircularProgressOverride from "../../components/CircularProgress/theme";
 import CollapseOverride from "../../components/Collapse/theme";
+import { multiSectionDigitalClockSectionTheme as MuiMultiSectionDigitalClockSectionOverride } from "../../components/DateTimePicker/theme";
 import DialogOverride from "../../components/Dialog/theme";
 import DialogActionsOverride from "../../components/DialogActions/theme";
 import DialogContentOverride from "../../components/DialogContent/theme";
@@ -38,6 +39,7 @@ import PaperOverride from "../../components/Paper/theme";
 import PopoverOverride from "../../components/Popover/theme";
 import PopperOverride from "../../components/Popper/theme";
 import RadioOverride from "../../components/Radio/theme";
+import SliderOverride from "../../components/Slider/theme";
 import SkeletonOverride from "../../components/Skeleton/theme";
 import SwitchOverride from "../../components/Switch/theme";
 import TabOverride from "../../components/Tab/theme";
@@ -84,10 +86,13 @@ export default {
   MuiMenu: MenuOverride,
   MuiMenuItem: MenuItemOverride,
   MuiMenuList: MenuListOverride,
+  MuiMultiSectionDigitalClockSection:
+    MuiMultiSectionDigitalClockSectionOverride,
   MuiPaper: PaperOverride,
   MuiPopover: PopoverOverride,
   MuiPopper: PopperOverride,
   MuiRadio: RadioOverride,
+  MuiSlider: SliderOverride,
   MuiSkeleton: SkeletonOverride,
   MuiSwitch: SwitchOverride,
   MuiTab: TabOverride,
