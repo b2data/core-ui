@@ -4,6 +4,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
+import { ButtonProps } from "../Button"
 import { OverrideMuiProps } from "../types";
 
 export interface ButtonGroupProps
@@ -39,7 +40,16 @@ export interface ButtonGroupProps
 }
 
 export const ButtonGroup = React.forwardRef(
-  (props: ButtonGroupProps, ref: React.Ref<HTMLDivElement>) => (
-    <MuiButtonGroup ref={ref} {...props} />
+  (
+    { children, color, size, variant, disabled, ...props }: ButtonGroupProps,
+    ref: React.Ref<HTMLDivElement>,
+  ) => (
+    <MuiButtonGroup ref={ref} {...props}>
+      {React.Children.map(children, (c) =>
+        React.isValidElement<ButtonProps>(c)
+          ? React.cloneElement(c, { size, color, variant, disabled })
+          : c,
+      )}
+    </MuiButtonGroup>
   ),
 );

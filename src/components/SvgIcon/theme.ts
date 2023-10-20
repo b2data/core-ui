@@ -2,8 +2,11 @@ import { ComponentThemeOverride } from "../types";
 
 const svgIconTheme: ComponentThemeOverride["MuiSvgIcon"] = {
   styleOverrides: {
+    fontSizeSmall: {
+      fontSize: "16px",
+    },
     fontSizeMedium: {
-      fontSize: "18px",
+      fontSize: "20px",
     },
   },
 };

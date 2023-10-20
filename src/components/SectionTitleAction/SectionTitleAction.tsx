@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from "react";
-import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { MenuItem, MenuItemProps } from "../MenuItem";
 import { Tooltip } from "../Tooltip";
 import { IconButton } from "../IconButton";
 import { Menu } from "../Menu";
 import { Button, ButtonProps } from "../Button";
+import { ButtonGroup } from "../ButtonGroup";
 
 export interface SectionTitleActionProps extends ButtonProps {
   /**
@@ -33,6 +35,10 @@ export interface SectionTitleActionProps extends ButtonProps {
    *
    */
   menuActions?: MenuItemProps[];
+  /**
+   * The array of actions for `ButtonGroup`.
+   */
+  actions?: MenuItemProps[];
 }
 
 export const SectionTitleAction = ({
@@ -41,6 +47,7 @@ export const SectionTitleAction = ({
   onClick,
   tooltip,
   menuActions,
+  actions,
   ...props
 }: SectionTitleActionProps) => {
   const [actionsAnchor, setActionsAnchor] = useState<HTMLButtonElement | null>(
@@ -62,7 +69,7 @@ export const SectionTitleAction = ({
           onClose={() => setActionsAnchor(null)}
           onClick={() => setActionsAnchor(null)}
           anchorOrigin={{
-            vertical: "top",
+            vertical: "bottom",
             horizontal: "right",
           }}
           transformOrigin={{
@@ -72,6 +79,43 @@ export const SectionTitleAction = ({
         >
           {menuActions.map((menuAction, index) => (
             <MenuItem key={index} {...menuAction} />
+          ))}
+        </Menu>
+      </Fragment>
+    );
+  }
+  if (actions) {
+    return (
+      <Fragment>
+        <ButtonGroup
+          color={props.color === "default" ? undefined : props.color}
+          size={props.size || "small"}
+          variant={props.variant}
+          disabled={props.disabled}
+        >
+          <Button onClick={onClick} {...props}>
+            {label}
+          </Button>
+          <Button onClick={(e) => setActionsAnchor(e.currentTarget)}>
+            <ArrowDropDownIcon fontSize={props.size} />
+          </Button>
+        </ButtonGroup>
+        <Menu
+          open={Boolean(actionsAnchor)}
+          anchorEl={actionsAnchor}
+          onClose={() => setActionsAnchor(null)}
+          onClick={() => setActionsAnchor(null)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          {actions.map((action, index) => (
+            <MenuItem key={index} {...action} />
           ))}
         </Menu>
       </Fragment>

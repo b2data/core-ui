@@ -34,3 +34,10 @@ export const AsMenu: StoryObj<SectionTitleActionProps> = {
     menuActions: [{ children: "Save", startAdornment: <SaveIcon /> }],
   },
 };
+
+export const AsSplitButton: StoryObj<SectionTitleActionProps> = {
+  args: {
+    label: "Split button",
+    actions: [{ children: "Save", startAdornment: <SaveIcon /> }],
+  },
+};
