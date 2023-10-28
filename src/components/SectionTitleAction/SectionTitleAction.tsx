@@ -122,17 +122,19 @@ export const SectionTitleAction = ({
     );
   }
 
+  const content = icon ? (
+    <IconButton size="small" onClick={onClick} {...props}>
+      {icon}
+    </IconButton>
+  ) : (
+    <Button onClick={onClick} {...props}>
+      {label}
+    </Button>
+  );
+
   return (
     <Tooltip text={tooltip}>
-      {icon ? (
-        <IconButton size="small" onClick={onClick} {...props}>
-          {icon}
-        </IconButton>
-      ) : (
-        <Button onClick={onClick} {...props}>
-          {label}
-        </Button>
-      )}
+      {props.disabled ? <span>{content}</span> : content}
     </Tooltip>
   );
 };

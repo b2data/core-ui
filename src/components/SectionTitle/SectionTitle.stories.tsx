@@ -7,7 +7,7 @@ import { SectionTitle, SectionTitleProps } from "./SectionTitle";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<SectionTitleProps> = {
-  title: "Components/SectionTitle/SectionTitle",
+  title: "Components/Section/Section Title",
   component: SectionTitle,
   tags: ["autodocs"],
 };

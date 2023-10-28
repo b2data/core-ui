@@ -3,7 +3,7 @@ import { ListSubheader, ListSubheaderProps } from "./ListSubheader";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<ListSubheaderProps> = {
-  title: "Components/List/ListSubheader",
+  title: "Components/List/List Subheader",
   component: ListSubheader,
   tags: ["autodocs"],
 };

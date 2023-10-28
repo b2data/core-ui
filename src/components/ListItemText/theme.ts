@@ -1,7 +1,11 @@
 import { ComponentThemeOverride } from "../types";
 
 const listItemTextTheme: ComponentThemeOverride["MuiListItemText"] = {
-  styleOverrides: {},
+  styleOverrides: {
+    primary: {
+      lineHeight: 1.2
+    }
+  },
   defaultProps: {},
 };
 

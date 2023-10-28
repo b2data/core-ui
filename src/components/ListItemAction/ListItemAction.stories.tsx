@@ -7,7 +7,7 @@ import { ListItemAction, ListItemActionProps } from "./ListItemAction";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<ListItemActionProps> = {
-  title: "Components/List/ListItemAction",
+  title: "Components/List/List Item Action",
   component: ListItemAction,
   tags: ["autodocs"],
 };

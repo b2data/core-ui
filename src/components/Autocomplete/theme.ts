@@ -6,16 +6,25 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
       "& .MuiInput-input": {
         padding: "5px 5px 5px 0 !important",
       },
+      "& .MuiOutlinedInput-root .MuiAutocomplete-endAdornment": {
+        bottom: 8,
+      },
+      "& .MuiInputBase-root": {
+        minHeight: 40,
+        height: "auto !important"
+      },
+      "& .MuiAutocomplete-input": {
+        padding: "5px 4px 5px 8px !important"
+      }
     },
     clearIndicator: {
       padding: 2,
       "& .MuiSvgIcon-root": {
-        fontSize: 20,
+        fontSize: "20px !important",
       },
     },
     endAdornment: {
-      top: "auto",
-      bottom: 4,
+      top: "calc(50% - 12px) !important",
     },
     listbox: {
       padding: "4px 0",
@@ -51,6 +60,18 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
       },
       "& .MuiChip-label": {
         fontSize: 12,
+      },
+      "& .MuiChip-avatar": {
+        width: 16,
+        height: 16,
+        marginLeft: 3,
+        "& .MuiSvgIcon-root": {
+          fontSize: "16px !important",
+        },
+      },
+      "& .MuiChip-deleteIcon": {
+        margin: "0 1px 0",
+        fontSize: "18px",
       },
     },
   },

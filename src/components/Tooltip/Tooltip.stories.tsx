@@ -16,7 +16,7 @@ export default meta;
 
 export const Base: StoryObj<TooltipProps> = {
   args: {
-    title: "Delete",
+    text: "Delete",
     children: <Button color="inherit">Delete</Button>,
   },
 };
@@ -48,7 +48,7 @@ export const Positions: StoryObj<TooltipProps> = {
 
 export const Follow: StoryObj<TooltipProps> = {
   args: {
-    title: "Delete",
+    text: "Delete",
     followCursor: true,
     placement: "top",
     children: <Button color="inherit">Delete</Button>,

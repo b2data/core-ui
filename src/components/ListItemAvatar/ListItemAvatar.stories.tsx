@@ -7,7 +7,7 @@ import { ListItemAvatar, ListItemAvatarProps } from "./ListItemAvatar";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<ListItemAvatarProps> = {
-  title: "Components/List/ListItemAvatar",
+  title: "Components/List/List Item Avatar",
   component: ListItemAvatar,
   tags: ["autodocs"],
 };

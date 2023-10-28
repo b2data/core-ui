@@ -39,7 +39,7 @@ export const Tooltip = ({ text, children, ...props }: TooltipProps) =>
       {...props}
       title={isValidElement(text) ? text : <Typography>{text}</Typography>}
     >
-      <span>{children}</span>
+      {children}
     </MuiTooltip>
   ) : (
     children

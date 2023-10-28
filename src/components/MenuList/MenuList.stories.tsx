@@ -5,7 +5,7 @@ import { MenuList, MenuListProps } from "./MenuList";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<MenuListProps> = {
-  title: "Components/Menu/MenuList",
+  title: "Components/Menu/Menu List",
   component: MenuList,
   tags: ["autodocs"],
 };
