@@ -28,7 +28,9 @@ export interface AlertProps
     | "onClose"
     | "variant"
     | "sx"
-    | "component"
+    | "component",
+    HTMLDivElement,
+    "title"
   > {
   /**
    * Override the default label for the close popup icon button.
@@ -47,7 +49,7 @@ export interface AlertProps
   /**
    * The title to show in the component
    */
-  title?: string;
+  title?: string | React.ReactNode;
   /**
    * Draw actions that shows in the button-right of the alert
    */

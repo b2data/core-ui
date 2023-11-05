@@ -50,6 +50,7 @@ const DataGridRaw = React.forwardRef(function DataGrid<
               opacity: 1,
             },
           },
+          "& .MuiDataGrid-root": { lineHeight: 1.2 },
           "& .MuiDataGrid-row.Mui-selected": { bgcolor: "#eff5ff" },
           "& .MuiDataGrid-row:hover": { bgcolor: "#f5f5f5" },
           "& .MuiDataGrid-row.Mui-hovered": { bgcolor: "#f5f5f5" },

@@ -20,7 +20,7 @@ export const useToggleableDialog = () => {
   return {
     type,
     data,
-    open: (t: string, d?: any) => {
+    open: (t: string | null, d?: any) => {
       setType(t);
       setData(d || null);
     },

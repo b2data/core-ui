@@ -97,7 +97,7 @@ const DropZoneComp = ({
         bgcolor="#fafbfc"
         border={({ palette }) =>
           `1px dashed ${
-            Boolean(onDrop) && canDrop && isOver
+            Boolean(onDrop) && canDrop && isOver && !disabled
               ? palette.primary.main
               : palette.grey[400]
           }`
@@ -110,7 +110,6 @@ const DropZoneComp = ({
         textAlign="center"
         style={{
           cursor: disabled ? "default" : "pointer",
-          opacity: disabled ? 0 : 1,
         }}
         padding={3}
         {...props}
@@ -138,7 +137,7 @@ const DropZoneComp = ({
             e.target.files;
           }}
         />
-        {!disabled ? TextContent : null}
+        {TextContent}
       </Box>
     </div>
   );
