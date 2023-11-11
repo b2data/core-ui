@@ -55,7 +55,7 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
     tag: {
       margin: "5px 2px",
       height: 20,
-      "&:first-child": {
+      "&:first-of-type": {
         marginLeft: 0,
       },
       "& .MuiChip-label": {

@@ -57,11 +57,16 @@ export const Dialog = React.forwardRef(
   (
     { title, children, disablePadding, actions, ...props }: DialogProps,
     ref: React.Ref<HTMLDivElement>,
-  ) => (
-    <MuiDialog ref={ref} {...props}>
-      {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent disablePadding={disablePadding}>{children}</DialogContent>
-      {actions && <DialogActions items={actions} />}
-    </MuiDialog>
-  ),
+  ) =>
+    title ? (
+      <MuiDialog ref={ref} {...props}>
+        {title && <DialogTitle>{title}</DialogTitle>}
+        <DialogContent disablePadding={disablePadding}>
+          {children}
+        </DialogContent>
+        {actions && <DialogActions items={actions} />}
+      </MuiDialog>
+    ) : (
+      <MuiDialog ref={ref} {...props} children={children} />
+    ),
 );
