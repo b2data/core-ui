@@ -11,7 +11,8 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
       },
       "& .MuiInputBase-root": {
         minHeight: 40,
-        height: "auto !important"
+        height: "auto !important",
+        alignItems: "center !important",
       },
       "& .MuiAutocomplete-input": {
         padding: "5px 4px 5px 8px !important"

@@ -376,8 +376,14 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
             ...inputProps?.inputProps,
           }}
           InputProps={{
-            ...params.InputProps,
             ...inputProps?.InputProps,
+            ...params.InputProps,
+            startAdornment: (
+              <React.Fragment>
+                {inputProps?.InputProps?.startAdornment}
+                {params.InputProps.startAdornment}
+              </React.Fragment>
+            ),
             endAdornment: (
               <React.Fragment>
                 {loading ? (
