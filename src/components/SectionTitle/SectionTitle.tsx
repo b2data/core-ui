@@ -110,7 +110,7 @@ export const SectionTitle = ({
             flexDirection: "row",
             alignItems: "center",
             gap: 2,
-            "& > *": {
+            "& > .MuiIconButton-root": {
               minWidth: 32,
               minHeight: 32,
             },
