@@ -336,6 +336,17 @@ export interface AutocompleteProps<
   ) => React.ReactNode;
 
   /**
+   * Used to determine if the option represents the given value.
+   * Uses strict equality by default.
+   * ⚠️ Both arguments need to be handled, an option can only match with one value.
+   *
+   * @param {Value} option The option to test.
+   * @param {Value} value The value to test against.
+   * @returns {boolean}
+   */
+  isOptionEqualToValue?: (option: Value, value: Value) => boolean;
+
+  /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
