@@ -29,6 +29,7 @@ export * from "./Fab";
 export * from "./FormControlLabel";
 export * from "./FormHelperText";
 export * from "./IconButton";
+export * from "./InputBase";
 export * from "./LinearProgress";
 export * from "./Link";
 export * from "./List";

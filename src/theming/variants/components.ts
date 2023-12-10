@@ -22,6 +22,7 @@ import FabOverride from "../../components/Fab/theme";
 import FormControlLabelOverride from "../../components/FormControlLabel/theme";
 import FormHelperTextOverride from "../../components/FormHelperText/theme";
 import IconButtonOverride from "../../components/IconButton/theme";
+import InputBaseOverride from "../../components/InputBase/theme";
 import LinearProgressOverride from "../../components/LinearProgress/theme";
 import LinkOverride from "../../components/Link/theme";
 import ListOverride from "../../components/List/theme";
@@ -73,6 +74,7 @@ export default {
   MuiFormControlLabel: FormControlLabelOverride,
   MuiFormHelperText: FormHelperTextOverride,
   MuiIconButton: IconButtonOverride,
+  MuiInputBase: InputBaseOverride,
   MuiLinearProgress: LinearProgressOverride,
   MuiLink: LinkOverride,
   MuiList: ListOverride,
