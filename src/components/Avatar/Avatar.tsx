@@ -30,7 +30,5 @@ export interface AvatarProps
 export const Avatar = styled(MuiAvatar)<AvatarProps>(({ size = "medium" }) => ({
   width: AVATAR_SIZES[size],
   height: AVATAR_SIZES[size],
-  "& .MuiSvgIcon-root": {
-    fontSize: size === "small" ? 18 : 24,
-  },
+  fontSize: size === "small" ? 18 : 24,
 }));

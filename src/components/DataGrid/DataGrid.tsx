@@ -59,6 +59,7 @@ const DataGridRaw = React.forwardRef(function DataGrid<
           },
           "& .MuiDataGrid-sortIcon": { fontSize: 18 },
           "& .MuiDataGrid-filterIcon": { fontSize: 18 },
+          "& .MuiDataGrid-cellContent": { lineHeight: 1.1 },
           bgcolor: theme.palette.background.paper,
           ...props.sx,
         }}
