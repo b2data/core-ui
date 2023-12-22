@@ -1,0 +1,12 @@
+import{j as e}from"./jsx-runtime-4ca860c5.js";import{r as c}from"./index-61bf1805.js";import{C as d}from"./ClickAwayListener-a8bf2d4d.js";import"./_commonjsHelpers-de833af9.js";import"./useForkRef-80a5c2b4.js";import"./useEventCallback-1165b6b6.js";import"./useEnhancedEffect-e1879ff8.js";import"./ownerDocument-613eb639.js";const a=t=>e.jsx(d,{...t});try{a.displayName="ClickAwayListener",a.__docgenInfo={description:"",displayName:"ClickAwayListener",props:{children:{defaultValue:null,description:"The wrapped element.",name:"children",required:!0,type:{name:"ReactElement<any, string | JSXElementConstructor<any>>"}},disableReactTree:{defaultValue:{value:"false"},description:"If `true`, the React tree is ignored and only the DOM tree is considered.\nThis prop changes how portaled elements are handled.",name:"disableReactTree",required:!1,type:{name:"boolean"}},mouseEvent:{defaultValue:{value:"'onClick'"},description:"The mouse event to listen to. You can disable the listener by providing `false`.",name:"mouseEvent",required:!1,type:{name:"false | ClickAwayMouseEventHandler"}},onClickAway:{defaultValue:null,description:'Callback fired when a "click away" event is detected.',name:"onClickAway",required:!0,type:{name:"(event: MouseEvent | TouchEvent) => void"}},touchEvent:{defaultValue:{value:"'onTouchEnd'"},description:"The touch event to listen to. You can disable the listener by providing `false`.",name:"touchEvent",required:!1,type:{name:"false | ClickAwayTouchEventHandler"}}}}}catch{}const k={title:"Components/Click Away Listener",component:a,tags:["autodocs"]},n={render:t=>{const[l,r]=c.useState(!1);return e.jsx(a,{...t,onClickAway:()=>r(!1),children:e.jsxs("div",{children:[e.jsx("button",{onClick:()=>r(!0),children:"Open"}),l&&e.jsx("div",{children:"opned"})]})})}};var o,s,i;n.parameters={...n.parameters,docs:{...(o=n.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  render: props => {
+    const [open, setOpen] = useState(false);
+    return <ClickAwayListener {...props} onClickAway={() => setOpen(false)}>
+        <div>
+          <button onClick={() => setOpen(true)}>Open</button>
+          {open && <div>opned</div>}
+        </div>
+      </ClickAwayListener>;
+  }
+}`,...(i=(s=n.parameters)==null?void 0:s.docs)==null?void 0:i.source}}};const w=["Base"];export{n as Base,w as __namedExportsOrder,k as default};
+//# sourceMappingURL=ClickAwayListener.stories-2910228e.js.map

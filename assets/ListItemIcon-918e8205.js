@@ -1,0 +1,2 @@
+import{j as t}from"./jsx-runtime-4ca860c5.js";import{L as o}from"./ListItemIcon-abeeb146.js";const s=e=>t.jsx(o,{...e});try{s.displayName="ListItemIcon",s.__docgenInfo={description:"",displayName:"ListItemIcon",props:{sx:{defaultValue:null,description:"The system prop that allows defining system overrides as well as additional CSS styles.",name:"sx",required:!1,type:{name:"SxProps<Theme>"}}}}}catch{}export{s as L};
+//# sourceMappingURL=ListItemIcon-918e8205.js.map

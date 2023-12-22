@@ -1,0 +1,6 @@
+import{T as p}from"./Tab-c3808822.js";import"./jsx-runtime-4ca860c5.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./Tab-91d1d35b.js";import"./createTheme-f7fbaf76.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-5b0f5dab.js";import"./clsx-63d16a80.js";import"./useThemeProps-8e2a0e37.js";import"./styled-3543814b.js";import"./generateUtilityClasses-802c53db.js";import"./ButtonBase-031fb489.js";import"./emotion-react.browser.esm-13bdab44.js";import"./assertThisInitialized-081f9914.js";import"./inheritsLoose-c82a83d4.js";import"./TransitionGroupContext-adcba781.js";import"./useForkRef-80a5c2b4.js";import"./useIsFocusVisible-9ca792e3.js";import"./useEventCallback-1165b6b6.js";import"./useEnhancedEffect-e1879ff8.js";const h={title:"Components/Tabs/Tab",component:p,tags:["autodocs"]},o={args:{label:"Tab one"}};var r,t,m;o.parameters={...o.parameters,docs:{...(r=o.parameters)==null?void 0:r.docs,source:{originalSource:`{
+  args: {
+    label: "Tab one"
+  }
+}`,...(m=(t=o.parameters)==null?void 0:t.docs)==null?void 0:m.source}}};const j=["Base"];export{o as Base,j as __namedExportsOrder,h as default};
+//# sourceMappingURL=Tab.stories-88a201f6.js.map
