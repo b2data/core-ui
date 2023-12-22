@@ -1,8 +1,8 @@
 import { GridPushPinLeftIcon, GridPushPinRightIcon } from "./icons";
 
-import type { GridIconSlotsComponent } from "../models/gridIconSlotsComponent";
+import type { GridIconSlotsComponentCustom } from "../models";
 
-const iconSlots: GridIconSlotsComponent = {
+const iconSlots: GridIconSlotsComponentCustom = {
   ColumnMenuPinRightIcon: GridPushPinRightIcon,
   ColumnMenuPinLeftIcon: GridPushPinLeftIcon,
 };

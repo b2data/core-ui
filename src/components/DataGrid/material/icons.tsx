@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { createSvgIcon } from '@mui/material/utils';
+import * as React from "react";
+import { createSvgIcon } from "@mui/material/utils";
 
 export const GridPushPinRightIcon = createSvgIcon(
   <g transform="rotate(-30 15 10)">
@@ -8,7 +8,7 @@ export const GridPushPinRightIcon = createSvgIcon(
       fillRule="evenodd"
     />
   </g>,
-  'PushPinRight',
+  "PushPinRight",
 );
 
 export const GridPushPinLeftIcon = createSvgIcon(
@@ -18,5 +18,5 @@ export const GridPushPinLeftIcon = createSvgIcon(
       fillRule="evenodd"
     />
   </g>,
-  'PushPinLeft',
+  "PushPinLeft",
 );

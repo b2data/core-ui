@@ -1,3 +1,4 @@
-import { GridState } from '../../../models/gridState';
+import { GridState } from "../../../models";
 
-export const gridPinnedColumnsSelector = (state: GridState) => state.pinnedColumns;
+export const gridPinnedColumnsSelector = (state: GridState) =>
+  state.pinnedColumns;

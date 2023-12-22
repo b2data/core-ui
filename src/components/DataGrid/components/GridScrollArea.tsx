@@ -1,5 +1,5 @@
 import * as React from "react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   unstable_composeClasses as composeClasses,
   unstable_useEventCallback as useEventCallback,
@@ -18,7 +18,7 @@ import {
   useGridSelector,
 } from "@mui/x-data-grid";
 
-import { DataGridProcessedProps } from "../models/dataGridProps";
+import { DataGridProcessedProps } from "../models";
 import { useGridRootProps } from "../hooks/utils/useGridRootProps";
 
 const CLIFF = 1;

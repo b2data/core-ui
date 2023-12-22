@@ -39,8 +39,7 @@ import {
   findHeaderElementFromField,
   getFieldFromHeaderElem,
 } from "../../../utils/domUtils";
-import { GridPrivateApi } from "../../../models/gridApi";
-import { DataGridProcessedProps } from "../../../models/dataGridProps";
+import { DataGridProcessedProps, GridPrivateApi } from "../../../models";
 
 import {
   DEFAULT_GRID_AUTOSIZE_OPTIONS,

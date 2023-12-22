@@ -1,7 +1,6 @@
 import {
   GridActionsCellItem,
   GridColDef,
-  GridRowParams,
   GridSortModel,
 } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -25,7 +24,7 @@ const columns: GridColDef[] = [
     field: "actions",
     type: "actions",
     width: 24,
-    getActions: (params: GridRowParams) => [
+    getActions: () => [
       <GridActionsCellItem showInMenu label="Edit" />,
       <GridActionsCellItem showInMenu label="Delete" />,
     ],
@@ -47,7 +46,7 @@ export const Base: StoryObj<DataGridProps> = {
       <DataGrid
         {...props}
         columns={columns}
-        rows={mock.returnedRows.splice(0, 10)}
+        rows={[...mock.returnedRows].splice(0, 10)}
       />
     </div>
   ),
@@ -85,12 +84,15 @@ export const PinnedColumns: StoryObj<DataGridProps> = {
       pinnedColumns: { left: ["name"], right: ["rating"] },
     },
   },
+  argTypes: {
+    onPinnedColumnsChange: { action: "onPinnedColumnsChange" },
+  },
   render: (props) => (
     <div style={{ height: 300 }}>
       <DataGrid
         {...props}
         columns={columns}
-        rows={mock.returnedRows.splice(0, 10)}
+        rows={[...mock.returnedRows].splice(0, 10)}
       />
     </div>
   ),
@@ -100,12 +102,15 @@ export const ResizeColumns: StoryObj<DataGridProps> = {
   args: {
     disableColumnResize: false,
   },
+  argTypes: {
+    onColumnWidthChange: { action: "onColumnWidthChange" },
+  },
   render: (props) => (
     <div style={{ height: 300 }}>
       <DataGrid
         {...props}
         columns={columns}
-        rows={mock.returnedRows.splice(0, 10)}
+        rows={[...mock.returnedRows].splice(0, 10)}
       />
     </div>
   ),
@@ -115,15 +120,145 @@ export const ReorderColumns: StoryObj<DataGridProps> = {
   args: {
     disableColumnReorder: false,
   },
+  argTypes: {
+    onColumnOrderChange: { action: "onColumnOrderChange" },
+  },
   render: (props) => (
     <div style={{ height: 300 }}>
       <DataGrid
         {...props}
         columns={columns}
-        rows={mock.returnedRows.splice(0, 10)}
+        rows={[...mock.returnedRows].splice(0, 10)}
       />
     </div>
   ),
+};
+
+export const ColumnMenu: StoryObj<DataGridProps> = {
+  args: {
+    disableColumnMenu: false,
+    slots: {
+      columnMenu: () => <div style={{ padding: 10 }}>ColumnMenu</div>,
+    },
+  },
+  argTypes: {},
+  render: (props) => (
+    <div style={{ height: 300 }}>
+      <DataGrid
+        {...props}
+        columns={columns}
+        rows={[...mock.returnedRows].splice(0, 10)}
+      />
+    </div>
+  ),
+};
+
+export const PinnedRows: StoryObj<DataGridProps> = {
+  args: {
+    pinnedRows: {
+      top: [mock.returnedRows[0], mock.returnedRows[1]],
+      bottom: [mock.returnedRows[2]],
+    },
+  },
+  argTypes: {
+    onPinnedColumnsChange: { action: "onPinnedColumnsChange" },
+  },
+  render: (props) => (
+    <div style={{ height: 300 }}>
+      <DataGrid
+        {...props}
+        columns={columns}
+        rows={[...mock.returnedRows].splice(0, 10)}
+      />
+    </div>
+  ),
+};
+
+export const ReorderRows: StoryObj<DataGridProps> = {
+  args: {
+    rowReordering: true,
+  },
+  argTypes: {
+    onRowOrderChange: { action: "onRowOrderChange" },
+  },
+  render: (props) => (
+    <div style={{ height: 300 }}>
+      <DataGrid
+        {...props}
+        columns={columns}
+        rows={[...mock.returnedRows].splice(0, 10)}
+      />
+    </div>
+  ),
+};
+
+export const TreeData: StoryObj<DataGridProps> = {
+  args: {
+    treeData: true,
+    getTreeDataPath: (row) => row.path,
+    groupingColDef: {
+      headerName: "Hierarchy",
+    },
+  },
+  argTypes: {},
+  render: (props) => (
+    <div style={{ height: 300 }}>
+      <DataGrid
+        {...props}
+        columns={columns}
+        rows={[...mock.returnedRows].splice(0, 10)}
+      />
+    </div>
+  ),
+};
+
+export const RowOrCellSelection: StoryObj<DataGridProps> = {
+  args: {},
+  argTypes: {},
+  render: (props) => {
+    const [status, setStatus] = useState(false);
+    return (
+      <div style={{ height: 300 }}>
+        <button onClick={() => setStatus(!status)}>
+          {status ? "row selection" : "cell selection"}
+        </button>
+        <DataGrid
+          {...props}
+          rowSelection={status}
+          unstable_cellSelection={!status}
+          columns={columns}
+          rows={[...mock.returnedRows].splice(0, 50)}
+        />
+      </div>
+    );
+  },
+};
+
+export const ClipboardPaste: StoryObj<DataGridProps> = {
+  args: {
+    rowSelection: false,
+    unstable_cellSelection: true,
+    clipboardPaste: true,
+    disableClipboardPaste: false,
+  },
+  argTypes: {
+    processRowUpdate: { action: "processRowUpdate" },
+    onProcessRowUpdateError: { action: "onProcessRowUpdateError" },
+    onClipboardPasteStart: { action: "onClipboardPasteStart" },
+    onClipboardPasteEnd: { action: "onClipboardPasteEnd" },
+    onClipboardCopy: { action: "onClipboardCopy" },
+  },
+  render: (props) => {
+    return (
+      <div style={{ height: 300 }}>
+        <DataGrid
+          {...props}
+          columns={columns.map((c) => ({ ...c, editable: true }))}
+          rows={[...mock.returnedRows].splice(0, 50)}
+        />
+      </div>
+    );
+  },
 };
 
 export const LazyLoading: StoryObj<DataGridProps> = {
@@ -170,7 +305,7 @@ export const LazyLoading: StoryObj<DataGridProps> = {
     // Fetch rows as they become visible in the viewport
     const handleFetchRows = useCallback(
       async (params: GridFetchRowsParams) => {
-        console.log("handleFetchRows", params);
+        console.info("handleFetchRows", params);
         const { slice, total } = await fetchRow(params);
 
         apiRef.current.unstable_replaceRows(params.firstRowToRender, slice);
@@ -185,7 +320,7 @@ export const LazyLoading: StoryObj<DataGridProps> = {
     );
 
     const handleSortModelChange = (model: GridSortModel) => {
-      console.log(model);
+      console.info(model);
     };
 
     return (

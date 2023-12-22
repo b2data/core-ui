@@ -4,7 +4,5 @@ import React from "react";
 export interface BoxProps extends Omit<MuiBoxProps, "classes"> {}
 
 export const Box = React.forwardRef(
-  (props: BoxProps, ref: React.Ref<unknown>) => (
-    <MuiBox ref={ref} {...props} />
-  ),
+  (props: BoxProps, ref: React.Ref<unknown>) => <MuiBox ref={ref} {...props} />,
 );

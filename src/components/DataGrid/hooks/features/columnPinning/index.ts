@@ -1,2 +1,2 @@
-export * from './gridColumnPinningSelector';
-export * from './gridColumnPinningInterface';
+export * from "./gridColumnPinningSelector";
+export * from "./gridColumnPinningInterface";

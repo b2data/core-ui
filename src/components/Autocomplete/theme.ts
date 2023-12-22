@@ -15,8 +15,8 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
         alignItems: "center !important",
       },
       "& .MuiAutocomplete-input": {
-        padding: "5px 4px 5px 8px !important"
-      }
+        padding: "5px 4px 5px 8px !important",
+      },
     },
     clearIndicator: {
       padding: 2,

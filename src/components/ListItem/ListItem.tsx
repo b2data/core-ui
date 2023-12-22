@@ -127,7 +127,11 @@ export const ListItem = React.forwardRef(
           </ListItemAvatar>
         )}
         {(text || secondaryText) && (
-          <ListItemText primary={text} secondary={secondaryText} {...textProps} />
+          <ListItemText
+            primary={text}
+            secondary={secondaryText}
+            {...textProps}
+          />
         )}
         {children}
       </Fragment>

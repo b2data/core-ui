@@ -8,7 +8,7 @@ const menuItemTheme: ComponentThemeOverride["MuiMenuItem"] = {
       maxWidth: 300,
       padding: "6px 10px",
       "& .MuiListItemIcon-root": {
-        minWidth: 24
+        minWidth: 24,
       },
       "& .MuiSvgIcon-root": {
         fontSize: 18,

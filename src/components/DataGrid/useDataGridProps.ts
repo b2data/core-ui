@@ -18,7 +18,7 @@ import {
   DataGridProcessedProps,
   DataGridProps,
   DataGridPropsWithDefaultValue,
-} from "./models/dataGridProps";
+} from "./models";
 
 export const DATA_GRID_PROPS_DEFAULT_VALUES: DataGridPropsWithDefaultValue = {
   ...DATA_GRID_PROPS_DEFAULT_VALUES_COMMUNITY,
@@ -36,6 +36,8 @@ export const DATA_GRID_PROPS_DEFAULT_VALUES: DataGridPropsWithDefaultValue = {
   disableDensitySelector: true,
   disableMultipleColumnsFiltering: true,
   disableColumnReorder: true,
+  disableChildrenFiltering: true,
+  disableChildrenSorting: true,
 
   rowHeight: 36,
   columnHeaderHeight: 42,
@@ -45,6 +47,21 @@ export const DATA_GRID_PROPS_DEFAULT_VALUES: DataGridPropsWithDefaultValue = {
   hideFooterPagination: true,
   hideFooterRowCount: true,
   hideFooter: true,
+
+  rowReordering: false,
+
+  treeData: false,
+  defaultGroupingExpansionDepth: 0,
+  keepColumnPositionIfDraggedOutside: false,
+
+  unstable_cellSelection: false,
+  disableClipboardPaste: false,
+  unstable_splitClipboardPastedText: (pastedText) => {
+    // Excel on Windows adds an empty line break at the end of the copied text.
+    // See https://github.com/mui/mui-x/issues/9103
+    const text = pastedText.replace(/\r?\n$/, "");
+    return text.split(/\r\n|\n|\r/).map((row) => row.split("\t"));
+  },
 };
 
 const defaultSlots = uncapitalizeObjectKeys(

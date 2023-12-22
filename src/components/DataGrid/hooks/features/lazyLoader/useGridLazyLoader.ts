@@ -14,9 +14,11 @@ import {
   useGridVisibleRows,
 } from "@mui/x-data-grid/internals";
 
-import { GridPrivateApi } from "../../../models/gridApi";
-import { DataGridProcessedProps } from "../../../models/dataGridProps";
-import { GridFetchRowsParams } from "../../../models/gridFetchRowsParams";
+import {
+  DataGridProcessedProps,
+  GridFetchRowsParams,
+  GridPrivateApi,
+} from "../../../models";
 
 function findSkeletonRowsSection({
   apiRef,

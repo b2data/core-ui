@@ -1,8 +1,9 @@
-import { createSelector } from '@mui/x-data-grid/internals';
+import { createSelector } from "@mui/x-data-grid/internals";
 
-import { GridState } from '../../../models/gridState';
+import { GridState } from "../../../models";
 
-export const gridColumnReorderSelector = (state: GridState) => state.columnReorder;
+export const gridColumnReorderSelector = (state: GridState) =>
+  state.columnReorder;
 
 export const gridColumnReorderDragColSelector = createSelector(
   gridColumnReorderSelector,

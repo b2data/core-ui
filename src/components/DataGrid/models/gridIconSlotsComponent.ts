@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface GridIconSlotsComponent {
+export interface GridIconSlotsComponentCustom {
   /**
    * Icon displayed in column menu for left pinning
    * @default GridPushPinLeftIcon

@@ -17,10 +17,13 @@ import {
   useGridRegisterPipeProcessor,
 } from "@mui/x-data-grid/internals";
 
-import { GridPrivateApi } from "../../../models/gridApi";
-import { GridInitialState, GridState } from "../../../models/gridState";
-import { DataGridProcessedProps } from "../../../models/dataGridProps";
-import { filterColumns } from "../../../components/DataGridVirtualScroller";
+import {
+  DataGridProcessedProps,
+  GridInitialState,
+  GridPrivateApi,
+  GridState,
+} from "../../../models";
+import { filterColumns } from "../../../components";
 
 import {
   GridColumnPinningApi,

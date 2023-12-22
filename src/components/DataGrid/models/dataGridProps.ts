@@ -3,6 +3,7 @@ import {
   GridCallbackDetails,
   GridEventListener,
   GridFeatureMode,
+  GridGroupNode,
   GridSlotsComponent,
   GridValidRowModel,
   UncapitalizedGridSlotsComponent,
@@ -15,12 +16,19 @@ import {
   GridSlotsComponentsProps,
 } from "@mui/x-data-grid/internals";
 
-import { GridAutosizeOptions } from "../hooks";
+import {
+  GridAutosizeOptions,
+  GridPinnedColumns,
+  GridPinnedRowsProp,
+} from "../hooks";
+import { GridCellSelectionModel } from "../hooks/features/cellSelection";
 
 import { GridApi } from "./gridApi";
 import { GridInitialState } from "./gridState";
-
-import type { GridPinnedColumns } from "../hooks/features/columnPinning";
+import {
+  GridGroupingColDefOverride,
+  GridGroupingColDefOverrideParams,
+} from "./gridGroupingColDefOverride";
 
 interface DataGridPropsWithComplexDefaultValueBeforeProcessing
   extends Omit<
@@ -110,8 +118,6 @@ export type DataGridForcedPropsKey =
   | "onColumnVisibilityModelChange"
   | "nonce"
   | "experimentalFeatures"
-  | "processRowUpdate"
-  | "onProcessRowUpdateError"
   | "columnGroupingModel"
   | "className"
   | "style";
@@ -143,6 +149,11 @@ export interface DataGridPropsWithDefaultValue
    * @default true
    */
   disableColumnPinning: boolean;
+  /**
+   * If `true`, the reordering of rows is enabled.
+   * @default false
+   */
+  rowReordering: boolean;
   /**
    * Loading rows can be processed on the server or client-side.
    * Set it to 'client' if you would like enable infnite loading.
@@ -194,6 +205,50 @@ export interface DataGridPropsWithDefaultValue
    * @default true
    */
   disableColumnReorder: DataGridPropsWithDefaultValues["disableColumnReorder"];
+  /**
+   * If `true`, the rows will be gathered in a tree structure according to the `getTreeDataPath` prop.
+   * @default false
+   */
+  treeData: boolean;
+  /**
+   * If above 0, the row children will be expanded up to this depth.
+   * If equal to -1, all the row children will be expanded.
+   * @default 0
+   */
+  defaultGroupingExpansionDepth: number;
+  /**
+   * If `true`, the filtering will only be applied to the top level rows when grouping rows with the `treeData` prop.
+   * @default false
+   */
+  disableChildrenFiltering: boolean;
+  /**
+   * If `true`, the sorting will only be applied to the top level rows when grouping rows with the `treeData` prop.
+   * @default false
+   */
+  disableChildrenSorting: boolean;
+  /**
+   * If `true`, moving the mouse pointer outside the grid before releasing the mouse button
+   * in a column re-order action will not cause the column to jump back to its original position.
+   * @default false
+   */
+  keepColumnPositionIfDraggedOutside: boolean;
+  /**
+   * If `true`, the cell selection mode is enabled.
+   * @default false
+   */
+  unstable_cellSelection: boolean;
+  /**
+   * If `true`, the clipboard paste is disabled.
+   * @default false
+   */
+  disableClipboardPaste: boolean;
+  /**
+   * The function is used to split the pasted text into rows and cells.
+   * @param {string} text The text pasted from the clipboard.
+   * @returns {string[][] | null} A 2D array of strings. The first dimension is the rows, the second dimension is the columns.
+   * @default `(pastedText) => { const text = pastedText.replace(/\r?\n$/, ''); return text.split(/\r\n|\n|\r/).map((row) => row.split('\t')); }`
+   */
+  unstable_splitClipboardPastedText: (text: string) => string[][] | null;
 }
 
 export interface DataGridPropsWithoutDefaultValue<
@@ -216,6 +271,22 @@ export interface DataGridPropsWithoutDefaultValue<
    * If one of the data in `initialState` is also being controlled, then the control state wins.
    */
   initialState?: GridInitialState;
+  /**
+   * Determines the path of a row in the tree data.
+   * For instance, a row with the path ["A", "B"] is the child of the row with the path ["A"].
+   * Note that all paths must contain at least one element.
+   * @template R
+   * @param {R} row The row from which we want the path.
+   * @returns {string[]} The path to the row.
+   */
+  getTreeDataPath?: (row: R) => string[];
+  /**
+   * Determines if a group should be expanded after its creation.
+   * This prop takes priority over the `defaultGroupingExpansionDepth` prop.
+   * @param {GridGroupNode} node The node of the group to test.
+   * @returns {boolean} A boolean indicating if the group is expanded.
+   */
+  isGroupExpandedByDefault?: (node: GridGroupNode) => boolean;
   /**
    * Callback fired while a column is being resized.
    * @param {GridColumnResizeParams} params With all properties from [[GridColumnResizeParams]].
@@ -242,6 +313,10 @@ export interface DataGridPropsWithoutDefaultValue<
    */
   pinnedColumns?: GridPinnedColumns;
   /**
+   * Rows data to pin on top or bottom.
+   */
+  pinnedRows?: GridPinnedRowsProp<R>;
+  /**
    * Callback fired when the pinned columns have changed.
    * @param {GridPinnedColumns} pinnedColumns The changed pinned columns.
    * @param {GridCallbackDetails} details Additional details for this callback.
@@ -250,6 +325,28 @@ export interface DataGridPropsWithoutDefaultValue<
     pinnedColumns: GridPinnedColumns,
     details: GridCallbackDetails,
   ) => void;
+  /**
+   * The grouping column used by the tree data.
+   */
+  groupingColDef?:
+    | GridGroupingColDefOverride<R>
+    | ((
+        params: GridGroupingColDefOverrideParams,
+      ) => GridGroupingColDefOverride<R> | undefined | null);
+  /**
+   * Callback fired when a column is reordered.
+   * @param {GridColumnOrderChangeParams} params With all properties from [[GridColumnOrderChangeParams]].
+   * @param {MuiEvent<{}>} event The event object.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  onColumnOrderChange?: GridEventListener<"columnOrderChange">;
+  /**
+   * Callback fired when a row is being reordered.
+   * @param {GridRowOrderChangeParams} params With all properties from [[GridRowOrderChangeParams]].
+   * @param {MuiEvent<{}>} event The event object.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  onRowOrderChange?: GridEventListener<"rowOrderChange">;
   /**
    * Callback fired when rowCount is set and the next batch of virtualized rows is rendered.
    * @param {GridFetchRowsParams} params With all properties from [[GridFetchRowsParams]].
@@ -266,4 +363,29 @@ export interface DataGridPropsWithoutDefaultValue<
    * @deprecated Use the `slotProps` prop instead.
    */
   componentsProps?: GridSlotsComponentsProps;
+  /**
+   * Set the cell selection model of the grid.
+   */
+  unstable_cellSelectionModel?: GridCellSelectionModel;
+  /**
+   * Callback fired when the selection state of one or multiple cells changes.
+   * @param {GridCellSelectionModel} cellSelectionModel Object in the shape of [[GridCellSelectionModel]] containing the selected cells.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  unstable_onCellSelectionModelChange?: (
+    cellSelectionModel: GridCellSelectionModel,
+    details: GridCallbackDetails,
+  ) => void;
+  /**
+   * Callback fired when the clipboard paste operation starts.
+   */
+  onClipboardPasteStart?: GridEventListener<"clipboardPasteStart">;
+  /**
+   * Callback fired when the clipboard paste operation ends.
+   */
+  onClipboardPasteEnd?: GridEventListener<"clipboardPasteEnd">;
+  /**
+   * If `true`, the grid will allow to paste data from clipboard.
+   */
+  clipboardPaste?: boolean;
 }

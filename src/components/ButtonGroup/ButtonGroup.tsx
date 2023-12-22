@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import { ButtonProps } from "../Button"
+import { ButtonProps } from "../Button";
 import { OverrideMuiProps } from "../types";
 
 export interface ButtonGroupProps

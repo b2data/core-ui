@@ -1,7 +1,7 @@
 import { gridClasses } from "@mui/x-data-grid";
 import { findParentElementFromClassName } from "@mui/x-data-grid/internals";
 
-import { GridPrivateApi } from "../models/gridApi";
+import { GridPrivateApi } from "../models";
 
 export function getFieldFromHeaderElem(colCellEl: Element): string {
   return colCellEl.getAttribute("data-field")!;

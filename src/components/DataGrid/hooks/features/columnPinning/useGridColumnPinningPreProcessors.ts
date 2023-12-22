@@ -4,9 +4,12 @@ import {
   useGridRegisterPipeProcessor,
 } from "@mui/x-data-grid/internals";
 
-import { DataGridProcessedProps } from "../../../models/dataGridProps";
-import { GridApi, GridPrivateApi } from "../../../models/gridApi";
-import { filterColumns } from "../../../components/DataGridVirtualScroller";
+import {
+  DataGridProcessedProps,
+  GridApi,
+  GridPrivateApi,
+} from "../../../models";
+import { filterColumns } from "../../../components";
 
 import { gridPinnedColumnsSelector } from "./gridColumnPinningSelector";
 import { columnPinningStateInitializer } from "./useGridColumnPinning";

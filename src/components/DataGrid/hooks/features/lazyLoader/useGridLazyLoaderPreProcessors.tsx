@@ -9,8 +9,7 @@ import {
   GridSkeletonRowNode,
 } from "@mui/x-data-grid";
 
-import { GridPrivateApi } from "../../../models/gridApi";
-import { DataGridProcessedProps } from "../../../models/dataGridProps";
+import { DataGridProcessedProps, GridPrivateApi } from "../../../models";
 
 export const GRID_SKELETON_ROW_ROOT_ID = "auto-generated-skeleton-row-root";
 

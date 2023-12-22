@@ -20,18 +20,17 @@ export const GRID_COLUMN_MENU_SLOT_PROPS = {
   },
 };
 
-const GridColumnMenu = React.forwardRef<
-  HTMLUListElement,
-  GridColumnMenuProps
->(function GridProColumnMenu(props, ref) {
-  return (
-    <GridGenericColumnMenu
-      ref={ref}
-      {...props}
-      defaultSlots={GRID_COLUMN_MENU_SLOTS}
-      defaultSlotProps={GRID_COLUMN_MENU_SLOT_PROPS}
-    />
-  );
-});
+const GridColumnMenu = React.forwardRef<HTMLUListElement, GridColumnMenuProps>(
+  function GridProColumnMenu(props, ref) {
+    return (
+      <GridGenericColumnMenu
+        ref={ref}
+        {...props}
+        defaultSlots={GRID_COLUMN_MENU_SLOTS}
+        defaultSlotProps={GRID_COLUMN_MENU_SLOT_PROPS}
+      />
+    );
+  },
+);
 
 export { GridColumnMenu };

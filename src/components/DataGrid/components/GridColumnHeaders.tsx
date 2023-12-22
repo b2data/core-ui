@@ -19,11 +19,8 @@ import {
 
 import { useGridRootProps } from "../hooks/utils/useGridRootProps";
 import { useGridApiContext } from "../hooks/utils/useGridApiContext";
-import { DataGridProcessedProps } from "../models/dataGridProps";
-import {
-  GridPinnedColumns,
-  GridPinnedPosition,
-} from "../hooks/features/columnPinning";
+import { DataGridProcessedProps } from "../models";
+import { GridPinnedColumns, GridPinnedPosition } from "../hooks";
 
 import { filterColumns } from "./DataGridVirtualScroller";
 import { GridScrollArea } from "./GridScrollArea";

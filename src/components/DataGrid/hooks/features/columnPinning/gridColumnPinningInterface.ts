@@ -6,8 +6,8 @@ export interface GridPinnedColumns {
 export type GridColumnPinningState = GridPinnedColumns;
 
 enum GridPinnedPosition {
-  left = 'left',
-  right = 'right',
+  left = "left",
+  right = "right",
 }
 
 /**

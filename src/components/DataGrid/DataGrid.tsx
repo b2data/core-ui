@@ -12,8 +12,8 @@ import {
 } from "@mui/x-data-grid";
 import { useTheme } from "@mui/material";
 
-import { DataGridProps } from "./models/dataGridProps";
-import { DataGridVirtualScroller } from "./components/DataGridVirtualScroller";
+import { DataGridProps } from "./models";
+import { DataGridVirtualScroller } from "./components";
 import { gridPinnedColumnsSelector } from "./hooks";
 import { useDataGridProps } from "./useDataGridProps";
 import { useDataGridComponent } from "./useDataGridComponent";
@@ -46,16 +46,19 @@ const DataGridRaw = React.forwardRef(function DataGrid<
             : {}),
           '& [data-field="actions"] > [role="menu"]': {
             opacity: 0,
-            [theme.breakpoints.down("tablet")]: {
-              opacity: 1,
-            },
+            [theme.breakpoints.down("tablet")]: { opacity: 1 },
+          },
+          "& .MuiDataGrid-rowReorderCell": {
+            opacity: 0,
+            [theme.breakpoints.down("tablet")]: { opacity: 1 },
           },
           "& .MuiDataGrid-root": { lineHeight: 1.2 },
           "& .MuiDataGrid-row.Mui-selected": { bgcolor: "#eff5ff" },
           "& .MuiDataGrid-row:hover": { bgcolor: "#f5f5f5" },
           "& .MuiDataGrid-row.Mui-hovered": { bgcolor: "#f5f5f5" },
-          '& .Mui-hovered [data-field="actions"] > [role="menu"]': {
-            opacity: 1,
+          "& .Mui-hovered": {
+            '& [data-field="actions"] > [role="menu"]': { opacity: 1 },
+            "& .MuiDataGrid-rowReorderCell": { opacity: 1 },
           },
           "& .MuiDataGrid-sortIcon": { fontSize: 18 },
           "& .MuiDataGrid-filterIcon": { fontSize: 18 },

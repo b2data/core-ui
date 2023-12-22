@@ -11,7 +11,7 @@ import {
 } from "@mui/x-data-grid";
 import { gridEditRowsStateSelector } from "@mui/x-data-grid/internals";
 
-import { DataGridProcessedProps } from "../models/dataGridProps";
+import { DataGridProcessedProps } from "../models";
 import { useGridRootProps } from "../hooks/utils/useGridRootProps";
 
 type OwnerState = {
@@ -41,10 +41,11 @@ function GridRowReorderCell(params: GridRenderCellParams) {
 
   const isDraggable = React.useMemo(
     () =>
+      !!rootProps.rowReordering &&
       !sortModel.length &&
       treeDepth === 1 &&
       Object.keys(editRowsState).length === 0,
-    [sortModel, treeDepth, editRowsState],
+    [rootProps.rowReordering, sortModel, treeDepth, editRowsState],
   );
 
   const ownerState = { isDraggable, classes: rootProps.classes };
