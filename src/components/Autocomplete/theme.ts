@@ -4,7 +4,10 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
   styleOverrides: {
     root: {
       "& .MuiInput-input": {
-        padding: "5px 5px 5px 0 !important",
+        padding: "5px 4px 5px 0 !important",
+      },
+      "& .MuiOutlinedInput-input": {
+        padding: "5px 4px 5px 8px !important",
       },
       "& .MuiOutlinedInput-root .MuiAutocomplete-endAdornment": {
         bottom: 8,
@@ -13,9 +16,6 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
         minHeight: 40,
         height: "auto !important",
         alignItems: "center !important",
-      },
-      "& .MuiAutocomplete-input": {
-        padding: "5px 4px 5px 8px !important",
       },
     },
     clearIndicator: {

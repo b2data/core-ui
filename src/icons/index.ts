@@ -20,3 +20,22 @@ export { default as FavoriteBorderIcon } from "@mui/icons-material/FavoriteBorde
 
 export { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
 export { default as MoreHorizIcon } from "@mui/icons-material/MoreHoriz";
+export { default as SearchIcon } from "@mui/icons-material/Search";
+
+export { default as AlignCenterIcon } from "@mui/icons-material/FormatAlignCenter";
+export { default as AlignLeftIcon } from "@mui/icons-material/FormatAlignLeft";
+export { default as AlignRightIcon } from "@mui/icons-material/FormatAlignRight";
+export { default as AlignJustifyIcon } from "@mui/icons-material/FormatAlignJustify";
+export { default as IndentDecreaseIcon } from "@mui/icons-material/FormatIndentDecrease";
+export { default as IndentIncreaseIcon } from "@mui/icons-material/FormatIndentIncrease";
+export { default as ReadMoreIcon } from "@mui/icons-material/ReadMore";
+export { default as ThumbUpIcon } from "@mui/icons-material/ThumbUp";
+export { default as ExpandMoreIcon } from "@mui/icons-material/ExpandMore";
+export { default as AddIcon } from "@mui/icons-material/Add";
+export { default as PostAddIcon } from "@mui/icons-material/PostAdd";
+export { default as SwapHorizIcon } from "@mui/icons-material/SwapHoriz";
+
+export * from "./HeadingIcon";
+export * from "./TextIcon";
+export * from "./ListBulletedIcon";
+export * from "./ListNumberedIcon";

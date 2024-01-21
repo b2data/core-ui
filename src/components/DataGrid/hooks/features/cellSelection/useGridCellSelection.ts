@@ -24,6 +24,7 @@ import {
 } from "@mui/x-data-grid";
 
 import { DataGridProcessedProps, GridPrivateApi } from "../../../models";
+import { useDevice } from "../../../../../hooks";
 
 import { gridCellSelectionStateSelector } from "./gridCellSelectionSelector";
 import { GridCellSelectionApi } from "./gridCellSelectionInterfaces";
@@ -62,6 +63,7 @@ export const useGridCellSelection = (
   const lastMouseDownCell = React.useRef<GridCellCoordinates | null>();
   const mousePosition = React.useRef<{ x: number; y: number } | null>(null);
   const autoScrollRAF = React.useRef<number | null>();
+  const { isMacOs } = useDevice();
 
   const ignoreValueFormatterProp =
     props.unstable_ignoreValueFormatterDuringExport;
@@ -242,8 +244,6 @@ export const useGridCellSelection = (
     (params, event) => {
       // Skip if the click comes from the right-button or, only on macOS, Ctrl is pressed
       // Fix for https://github.com/mui/mui-x/pull/6567#issuecomment-1329155578
-      const isMacOs =
-        window.navigator.platform.toUpperCase().indexOf("MAC") >= 0;
       if (event.button !== 0 || (event.ctrlKey && isMacOs)) {
         return;
       }

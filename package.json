@@ -1,6 +1,6 @@
 {
   "name": "@b2data/core-ui",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "",
   "files": [
     "lib"
@@ -44,7 +44,8 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.15.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.2.1",
