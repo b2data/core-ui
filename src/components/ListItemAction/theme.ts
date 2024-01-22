@@ -2,7 +2,12 @@ import { ComponentThemeOverride } from "../types";
 
 const listItemSecondaryActionTheme: ComponentThemeOverride["MuiListItemSecondaryAction"] =
   {
-    styleOverrides: {},
+    styleOverrides: {
+      root: {
+        display: "flex",
+        alignItems: "center",
+      },
+    },
   };
 
 export default listItemSecondaryActionTheme;

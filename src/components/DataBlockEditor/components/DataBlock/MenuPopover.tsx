@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 
 import { Popover } from "../../../Popover";
 import { List } from "../../../List";
@@ -16,10 +16,16 @@ import {
   AlignLeftIcon,
   AlignRightIcon,
   DeleteIcon,
+  H1Icon,
+  H2Icon,
+  H3Icon,
+  H4Icon,
+  H5Icon,
+  H6Icon,
   IndentDecreaseIcon,
   IndentIncreaseIcon,
 } from "../../../../icons";
-import { useDevice, useWindowKeydown } from "../../../../hooks";
+import { useDevice } from "../../../../hooks";
 
 export const MenuPopover: React.FC<{
   data: DataBlockVariant["data"];
@@ -44,12 +50,30 @@ export const MenuPopover: React.FC<{
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [alignEl, setAlignEl] = useState<HTMLLIElement | null>(null);
+  const [headerEl, setHeaderEl] = useState<HTMLLIElement | null>(null);
   const { Symbols } = useDevice();
 
   const handleChangeAlign = (align: DataBlockAlign) => {
     onEdit(offset, { ...data, align });
     setAlignEl(null);
   };
+
+  const handleChangeHeader = (tag: string) => {
+    onEdit(offset, { ...data, tag });
+    setHeaderEl(null);
+  };
+
+  const HeadingIcons = useMemo<Record<string, ReactElement>>(
+    () => ({
+      h1: <H1Icon />,
+      h2: <H2Icon />,
+      h3: <H3Icon />,
+      h4: <H4Icon />,
+      h5: <H5Icon />,
+      h6: <H6Icon />,
+    }),
+    [],
+  );
 
   const handleChangeOffset = (num: number) => {
     onEdit(
@@ -67,6 +91,14 @@ export const MenuPopover: React.FC<{
     <>
       <Popover anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose}>
         <List>
+          {DataBlockType.Header === type && (
+            <ListItem
+              asButton
+              icon={HeadingIcons[data.tag]}
+              onClick={(e) => setHeaderEl(e.currentTarget)}
+              text={i18n.blocks.header}
+            />
+          )}
           {[DataBlockType.Header, DataBlockType.Paragraph].includes(type) && (
             <ListItem
               asButton
@@ -155,6 +187,24 @@ export const MenuPopover: React.FC<{
             icon={<AlignJustifyIcon />}
             onClick={() => handleChangeAlign(DataBlockAlign.Justify)}
           />
+        </List>
+      </Popover>
+      <Popover
+        anchorEl={headerEl}
+        open={Boolean(headerEl)}
+        onClose={() => setHeaderEl(null)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <List>
+          {Object.keys(HeadingIcons).map((k, ind) => (
+            <ListItem
+              key={k}
+              asButton
+              text={`${i18n.blocks.header} ${ind + 1}`}
+              icon={HeadingIcons[k]}
+              onClick={() => handleChangeHeader(k)}
+            />
+          ))}
         </List>
       </Popover>
     </>

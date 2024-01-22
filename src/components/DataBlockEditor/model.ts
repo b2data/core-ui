@@ -1,5 +1,5 @@
 import { SxProps } from "@mui/material";
-import { ReactNode } from "react";
+import { ReactNode, UIEventHandler } from "react";
 
 import { DataBlockEditorAction } from "./store";
 
@@ -169,6 +169,13 @@ export type DataBlockEditorProps = {
    * - data: { block?: DataBlockModel; oldIndex?: number; targetIndex?: number; };
    */
   onChange?: onChangeCallback;
+  /**
+   * Scroll event handler
+   */
+  onScroll?: UIEventHandler<HTMLDivElement>;
+  /**
+   * sx props
+   */
   sx?: SxProps;
 };
 

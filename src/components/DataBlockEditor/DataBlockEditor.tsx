@@ -13,7 +13,7 @@ export const DataBlockEditor = React.forwardRef<
   return (
     <DndProvider backend={HTML5Backend}>
       <DataBlockEditorProvider ref={ref} {...props}>
-        <DataBlockEditorRenderer sx={props.sx} />
+        <DataBlockEditorRenderer sx={props.sx} onScroll={props.onScroll} />
       </DataBlockEditorProvider>
     </DndProvider>
   );

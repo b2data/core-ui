@@ -7,15 +7,13 @@ export const navigationEvent = (
   onChange: (dir: "up" | "down") => void,
 ) => {
   if (e.code === "ArrowDown") {
-    if (
-      getCaretPosition(e.currentTarget) === e.currentTarget.innerHTML.length
-    ) {
+    if (getCaretPosition() === e.currentTarget.innerHTML.length) {
       onChange("down");
     }
   }
 
   if (e.code === "ArrowUp") {
-    if (getCaretPosition(e.currentTarget) === 0) {
+    if (getCaretPosition() === 0) {
       onChange("up");
     }
   }

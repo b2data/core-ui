@@ -35,7 +35,7 @@ export { default as AddIcon } from "@mui/icons-material/Add";
 export { default as PostAddIcon } from "@mui/icons-material/PostAdd";
 export { default as SwapHorizIcon } from "@mui/icons-material/SwapHoriz";
 
-export * from "./HeadingIcon";
+export * from "./heading";
 export * from "./TextIcon";
 export * from "./ListBulletedIcon";
 export * from "./ListNumberedIcon";

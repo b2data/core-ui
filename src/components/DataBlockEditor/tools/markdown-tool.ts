@@ -45,14 +45,14 @@ export const listenMarkdownEvent = (
   }
 
   if (e.currentTarget.tagName === "P") {
-    let content = html;
+    let text = html;
 
     if (
-      content.includes("<li>-&nbsp;</li>") ||
-      content.includes("<li>+&nbsp;</li>") ||
-      content.includes("<li>*&nbsp;</li>")
+      text.includes("<li>-&nbsp;</li>") ||
+      text.includes("<li>+&nbsp;</li>") ||
+      text.includes("<li>*&nbsp;</li>")
     ) {
-      content = html
+      text = html
         .replace(/<li>-&nbsp;<\/li>/g, "<ul><li></li></ul>")
         .replace(/<li>\+&nbsp;<\/li>/g, "<ul><li></li></ul>")
         .replace(/<li>\*&nbsp;<\/li>/g, "<ul><li></li></ul>");
@@ -60,38 +60,38 @@ export const listenMarkdownEvent = (
 
     if (
       e.currentTarget.childNodes[0]?.nodeType === 3 &&
-      (content.includes("-&nbsp;") ||
-        content.includes("+&nbsp;") ||
-        content.includes("*&nbsp;"))
+      (text.includes("-&nbsp;") ||
+        text.includes("+&nbsp;") ||
+        text.includes("*&nbsp;"))
     ) {
-      content = html
+      text = html
         .replace(/-&nbsp;/g, "<ul><li></li></ul>")
         .replace(/\+&nbsp;/g, "<ul><li></li></ul>")
         .replace(/\*&nbsp;/g, "<ul><li></li></ul>");
     }
 
     if (
-      content.includes("<div>-&nbsp;</div>") ||
-      content.includes("<div>+&nbsp;</div>") ||
-      content.includes("<div>*&nbsp;</div>")
+      text.includes("<div>-&nbsp;</div>") ||
+      text.includes("<div>+&nbsp;</div>") ||
+      text.includes("<div>*&nbsp;</div>")
     ) {
-      content = html
+      text = html
         .replace(/<div>-&nbsp;<\/div>/g, "<ul><li></li></ul>")
         .replace(/<div>\+&nbsp;<\/div>/g, "<ul><li></li></ul>")
         .replace(/<div>\*&nbsp;<\/div>/g, "<ul><li></li></ul>");
     }
 
-    if (content.includes("1.&nbsp;")) {
-      content = html.replace(/1.&nbsp;/g, "<ol><li></li></ol>");
+    if (text.includes("1.&nbsp;")) {
+      text = html.replace(/1.&nbsp;/g, "<ol><li></li></ol>");
     }
 
-    if (content.includes("<div>1.&nbsp;</div>")) {
-      content = html.replace(/<div>1.&nbsp;<\/div>/g, "<ol><li></li></ol>");
+    if (text.includes("<div>1.&nbsp;</div>")) {
+      text = html.replace(/<div>1.&nbsp;<\/div>/g, "<ol><li></li></ol>");
     }
 
-    if (content !== html) {
+    if (text !== html) {
       onChange(DataBlockType.Paragraph, {
-        text: content,
+        text,
       });
     }
   }

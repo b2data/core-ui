@@ -9,7 +9,7 @@ export const listenOffsetEvent = (
   if (e.code === "Tab") {
     e.stopPropagation();
     e.preventDefault();
-    if (getCaretPosition(e.currentTarget) === 0) {
+    if (getCaretPosition() === 0) {
       setOffset(e.shiftKey ? -1 : 1);
     }
   }

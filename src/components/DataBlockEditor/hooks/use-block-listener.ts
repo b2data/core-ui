@@ -1,8 +1,10 @@
 import { ClipboardEvent, Dispatch, KeyboardEvent } from "react";
 
+import { uuid } from "../../../hooks";
 import { DataBlockModel, DataBlockType, DataBlockVariant } from "../model";
 import { DataBlockEditorAction, DataBlockEditorActions } from "../store";
 import {
+  addShortcutEvent,
   listenMarkdownEvent,
   listenOffsetEvent,
   navigationEvent,
@@ -70,6 +72,24 @@ export const useBlockListener = (
     });
   };
 
+  const onAddBlock = () => {
+    dispatch({
+      action: DataBlockEditorAction.AddBlock,
+      block: {
+        id: uuid(),
+        type: block.type,
+        number: index + 2,
+        offset: block.offset,
+      },
+      variant: {
+        id: uuid(),
+        data: {},
+        isCurrent: true,
+      },
+      index: index + 1,
+    });
+  };
+
   const handlePaste = (e: ClipboardEvent<HTMLElement>) => {
     e.preventDefault();
     document.execCommand("insertHTML", false, e.clipboardData.getData("text"));
@@ -83,6 +103,7 @@ export const useBlockListener = (
       onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
         listenOffsetEvent(e, onOffsetChange);
         navigationEvent(e, onChangeNavigation);
+        addShortcutEvent(e, onAddBlock);
       },
       onPaste: handlePaste,
     };

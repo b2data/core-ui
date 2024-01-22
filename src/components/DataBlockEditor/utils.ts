@@ -1,43 +1,30 @@
 // @ts-nocheck
 
 /**
- * Get caret position in DIV
+ * Get caret position in editablecontent
  */
-export const getCaretPosition = (div: HTMLElement) => {
-  let caretPos = 0;
+const getParent = (n) => {
+  if (n?.getAttribute?.("contenteditable")) {
+    return n;
+  }
+  return getParent(n.parentNode);
+};
 
-  if (window.getSelection) {
-    const sel = window.getSelection();
-    if (sel && sel?.getRangeAt) {
-      const range = sel.getRangeAt(0);
-      caretPos = range.startOffset;
-      if (!sel?.anchorNode?.classList?.contains("MuiTypography-root")) {
-        const childNodes = sel?.anchorNode?.parentNode?.childNodes;
-        if (childNodes?.length) {
-          for (let i = 0; i < childNodes.length; i++) {
-            if (childNodes[i] == sel.anchorNode) {
-              break;
-            }
-            if (childNodes[i].outerHTML) {
-              caretPos += childNodes[i].outerHTML.length;
-            } else if (childNodes[i].nodeType == 3) {
-              caretPos += childNodes[i].textContent.length;
-            }
-          }
-        }
-      }
-    }
-  } else if (document.selection && document.selection.createRange) {
-    const range = document.selection.createRange();
+export const getCaretPosition = () => {
+  let caretPos = -1;
+  const sel = window.getSelection();
+  if (sel && sel?.getRangeAt) {
+    const _range = sel.getRangeAt(0);
 
-    if (range.parentElement() == div) {
-      const tempEl = document.createElement("span");
-      div.insertBefore(tempEl, div.firstChild);
-      const tempRange = range.duplicate();
-      tempRange.moveToElementText(tempEl);
-      tempRange.setEndPoint("EndToEnd", range);
-      caretPos = tempRange.text.length;
+    if (!_range.collapsed) {
+      return null;
     }
+    const target = getParent(sel.anchorNode);
+    const range = _range.cloneRange();
+    const temp = document.createTextNode("\0");
+    range.insertNode(temp);
+    caretPos = target.innerText.indexOf("\0");
+    temp.parentNode.removeChild(temp);
   }
 
   return caretPos;

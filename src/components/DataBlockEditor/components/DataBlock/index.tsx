@@ -174,7 +174,7 @@ export const DataBlock: React.FC<DataBlockProps> = ({
         alignItems="flex-start"
         gap={5}
         minHeight="inherit"
-        pl="60px"
+        pl={state.editable ? "60px" : undefined}
       >
         <Content
           index={index}
@@ -186,7 +186,8 @@ export const DataBlock: React.FC<DataBlockProps> = ({
           }
           maxOffset={maxOffset}
         />
-        {displayVariants && otherVariants.length > 0 && (
+
+        {displayVariants && otherVariants.length > 0 && state.editable && (
           <Variants
             index={index}
             block={blockData}
@@ -199,31 +200,35 @@ export const DataBlock: React.FC<DataBlockProps> = ({
           />
         )}
       </Box>
-      {!state.showVariants && otherVariants.length > 0 && (
-        <HasVariantIndicator
-          i18n={state.i18n}
-          forceShown={forceShowVariants}
-          onOpen={openShowVariants}
-          onClose={closeShowVariants}
-          sx={{
-            top: `calc(50% - ${forceShowVariants ? 32 : 16}px)`,
-          }}
-        />
-      )}
-      {!displayVariants && canAddVariant && (
-        <AddVariantIndicator
-          i18n={state.i18n}
-          onAdd={handleAddVariant}
-          sx={{
-            right: otherVariants.length > 0 ? "-66px" : "-32px",
-          }}
-        />
-      )}
-      {state.canChangeVariants && displayVariants && (
-        <SwapVariantIndicator
-          i18n={state.i18n}
-          onSwap={handleChangeCurrentVariant}
-        />
+      {state.editable && (
+        <>
+          {!state.showVariants && otherVariants.length > 0 && (
+            <HasVariantIndicator
+              i18n={state.i18n}
+              forceShown={forceShowVariants}
+              onOpen={openShowVariants}
+              onClose={closeShowVariants}
+              sx={{
+                top: `calc(50% - ${forceShowVariants ? 32 : 16}px)`,
+              }}
+            />
+          )}
+          {!displayVariants && canAddVariant && (
+            <AddVariantIndicator
+              i18n={state.i18n}
+              onAdd={handleAddVariant}
+              sx={{
+                right: otherVariants.length > 0 ? "-66px" : "-32px",
+              }}
+            />
+          )}
+          {state.canChangeVariants && displayVariants && (
+            <SwapVariantIndicator
+              i18n={state.i18n}
+              onSwap={handleChangeCurrentVariant}
+            />
+          )}
+        </>
       )}
     </Box>
   );

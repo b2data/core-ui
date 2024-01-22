@@ -1,12 +1,6 @@
-import { equals, omit } from "ramda";
+import { omit } from "ramda";
 
-import { uuid } from "../../../hooks";
-import {
-  DataBlockEditorState,
-  DataBlockModel,
-  DataBlockType,
-  DataBlockVariant,
-} from "../model";
+import { DataBlockEditorState, DataBlockModel, DataBlockType } from "../model";
 
 import { DataBlockEditorAction, DataBlockEditorActions } from "./actions";
 
@@ -138,7 +132,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
 
       blocks.splice(index, 0, {
         ...block,
-        variants: [variant],
+        createdBy: state.currentUserId,
+        variants: [{ ...variant, createdBy: state.currentUserId }],
       } as DataBlockModel);
 
       state.onChange?.(DataBlockEditorAction.AddBlock, {
@@ -152,28 +147,34 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
 
     case DataBlockEditorAction.EditBlock: {
       const { block, variant } = action;
-      const blocks = [...state.blocks];
-      const index = blocks.findIndex((b) => b.id === block.id);
+      const index = state.blocks.findIndex((b) => b.id === block.id);
       if (index > -1) {
-        const index2 = blocks[index].variants.findIndex(
-          (v) => v.id === variant.id,
-        );
+        const prefixes = { ...state.prefixes };
+        const blocks = [...state.blocks];
+        const variants = [...blocks[index].variants];
+        const index2 = variants.findIndex((v) => v.id === variant.id);
 
         if (index2 > -1) {
-          blocks[index].variants.splice(index2, 1, {
-            ...blocks[index].variants[index2],
-            ...variant,
+          variants.splice(index2, 1, {
+            ...variants[index2],
+            data: {
+              ...variants[index2].data,
+              ...variant.data,
+            },
           });
         }
+        blocks.splice(index, 1, { ...block, variants });
 
-        blocks.splice(index, 1, { ...block, variants: blocks[index].variants });
+        if (block.offset !== blocks[index].offset) {
+          delete prefixes[block.id];
+        }
 
         state.onChange?.(DataBlockEditorAction.EditBlock, {
           block: omit(["variants"], block),
           variant: omit(["votes", "createdByData"], variant),
         });
 
-        return { ...state, blocks };
+        return { ...state, blocks, prefixes };
       }
       return state;
     }
@@ -182,30 +183,38 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       const { id, oldIndex, targetIndex } = action;
       if (state.blocks[oldIndex]?.id === id) {
         const blocks = [...state.blocks];
+        const prefixes = { ...state.prefixes };
         const data = blocks.splice(oldIndex, 1);
         blocks.splice(targetIndex, 0, ...data);
+        for (let i = Math.min(oldIndex, targetIndex); i < blocks.length; i++) {
+          delete prefixes[blocks[i]?.id];
+        }
         state.onChange?.(DataBlockEditorAction.MoveBlock, {
-          block: omit(["variants"], data[0]),
+          block: omit(["variants"], {
+            ...data[0],
+            offset: blocks[targetIndex - 1]?.offset || data[0].offset,
+          }),
           oldIndex,
           targetIndex,
         });
-        return { ...state, blocks };
+        return { ...state, blocks, prefixes };
       }
       return state;
     }
 
     case DataBlockEditorAction.DeleteBlock: {
       const index = state.blocks.findIndex((b) => b.id === action.id);
-      const blocks = [...state.blocks];
-      const prefixes = { ...state.prefixes };
       if (index > -1) {
+        const blocks = [...state.blocks];
+        const prefixes = { ...state.prefixes };
         const deleted = blocks.splice(index, 1);
         delete state.prefixes[deleted[0].id];
         state.onChange?.(DataBlockEditorAction.DeleteBlock, {
           block: deleted[0],
         });
+        return { ...state, blocks, prefixes };
       }
-      return { ...state, blocks, prefixes };
+      return state;
     }
 
     case DataBlockEditorAction.AddVariant: {
