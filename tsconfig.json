@@ -15,10 +15,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "strictNullChecks": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": true,
-    "noImplicitThis": false,
+    "noImplicitThis": true,
     "sourceMap": true,
     "preserveSymlinks": true,
     "types": ["react", "react-dom", "node"]
