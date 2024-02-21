@@ -18,11 +18,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": true,
+    "noImplicitThis": false,
     "sourceMap": true,
     "preserveSymlinks": true,
-    "types": ["react", "react-dom", "node"],
-    "noImplicitThis": true,
-    "strictNullChecks": true
+    "types": ["react", "react-dom", "node"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

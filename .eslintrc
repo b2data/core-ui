@@ -4,62 +4,23 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "react-refresh"],
 
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:storybook/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript"
+    "prettier"
   ],
 
   "rules": {
-    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "no-multiple-empty-lines": ["error", { "max": 1 }],
-    "import/no-named-as-default-member": "off",
-    "import/default": "off",    
-
-    // Common rules
-    "sort-imports": [
-      "error",
-      {
-        "ignoreCase": true,
-        "ignoreDeclarationSort": true
-      }
-    ],
-
-    // Plugin rules
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index",
-          "object",
-          "type"
-        ]
-      }
-    ]
+    "react-refresh/only-export-components": "warn"
   },
 
   "env": {
     "browser": true,
     "es2021": true
-  },
-
-  "settings": {
-    "import/resolver": {
-      "typescript": true,
-      "node": true
-    }
   }
 }

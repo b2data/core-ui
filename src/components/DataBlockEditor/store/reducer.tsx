@@ -137,8 +137,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       } as DataBlockModel);
 
       state.onChange?.(DataBlockEditorAction.AddBlock, {
-        block: omit(["variants"], block),
-        variant: omit(["votes", "createdByData"], variant),
+        block,
+        variant,
         index,
       });
 
@@ -170,8 +170,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         }
 
         state.onChange?.(DataBlockEditorAction.EditBlock, {
-          block: omit(["variants"], block),
-          variant: omit(["votes", "createdByData"], variant),
+          block,
+          variant,
         });
 
         return { ...state, blocks, prefixes };
@@ -227,8 +227,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           { ...variant, votes: [] },
         ];
         state.onChange?.(DataBlockEditorAction.AddVariant, {
-          block: omit(["variants"], blocks[index]),
-          variant: omit(["votes", "createdByData"], variant),
+          block: blocks[index],
+          variant,
         });
         return { ...state, blocks };
       }

@@ -2648,7 +2648,7 @@
     "@types/express" "^4.7.0"
     file-system-cache "2.3.0"
 
-"@types/autosuggest-highlight@^3.2.0":
+"@types/autosuggest-highlight@^3.2.3":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@types/autosuggest-highlight/-/autosuggest-highlight-3.2.3.tgz#966b4f6b2b8fc9df2838481600500db6b3795aaa"
   integrity sha512-8Mb21KWtpn6PvRQXjsKhrXIcxbSloGqNH50RntwGeJsGPW4xvNhfml+3kKulaKpO/7pgZfOmzsJz7VbepArlGQ==
