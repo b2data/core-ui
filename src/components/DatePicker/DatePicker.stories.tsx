@@ -27,7 +27,6 @@ export const Base: StoryObj<DatePickerProps> = {
   ),
 };
 
-
 export const WithError: StoryObj<DatePickerProps> = {
   args: {
     error: true,
