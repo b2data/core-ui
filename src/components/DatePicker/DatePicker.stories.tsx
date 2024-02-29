@@ -27,6 +27,19 @@ export const Base: StoryObj<DatePickerProps> = {
   ),
 };
 
+
+export const WithError: StoryObj<DatePickerProps> = {
+  args: {
+    error: true,
+    helperText: 'Invalid date'
+  },
+  render: (props) => (
+    <DatePickerProvider dateAdapter={AdapterDayjs}>
+      <DatePicker {...props} />
+    </DatePickerProvider>
+  ),
+};
+
 export const DefaultValue: StoryObj<DatePickerProps> = {
   args: {},
   render: (props) => (
