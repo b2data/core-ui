@@ -57,12 +57,15 @@ export const SectionTitleAction = ({
   if (menuActions) {
     return (
       <Fragment>
-        <IconButton
-          size="small"
-          onClick={(e) => setActionsAnchor(e.currentTarget)}
-        >
-          <MoreVertIcon />
-        </IconButton>
+        <Tooltip text={tooltip}>
+          <IconButton
+            size="small"
+            onClick={(e) => setActionsAnchor(e.currentTarget)}
+            {...props}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        </Tooltip>
         <Menu
           open={Boolean(actionsAnchor)}
           anchorEl={actionsAnchor}
