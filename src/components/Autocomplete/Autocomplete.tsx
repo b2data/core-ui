@@ -404,6 +404,7 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
                     wrapSx={{ mb: 1.5 }}
                   />
                 ) : null}
+                {inputProps?.InputProps?.endAdornment}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),
@@ -416,6 +417,9 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
         { selected, inputValue },
         { getOptionLabel, getOptionDisabled },
       ) => {
+        if (typeof option === "string") {
+          return <ListItem text={option} />;
+        }
         const matches = match(getOptionLabel(option), inputValue, {
           insideWords: true,
         });

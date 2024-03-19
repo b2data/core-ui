@@ -35,6 +35,11 @@ export { default as AddIcon } from "@mui/icons-material/Add";
 export { default as PostAddIcon } from "@mui/icons-material/PostAdd";
 export { default as SwapHorizIcon } from "@mui/icons-material/SwapHoriz";
 
+export { default as ArrowUpwardIcon } from "@mui/icons-material/ArrowUpward";
+export { default as ArrowDownwardIcon } from "@mui/icons-material/ArrowDownward";
+export { default as ArrowForwardIcon } from "@mui/icons-material/ArrowForward";
+export { default as ArrowBackIcon } from "@mui/icons-material/ArrowBack";
+
 export * from "./heading";
 export * from "./TextIcon";
 export * from "./ListBulletedIcon";
