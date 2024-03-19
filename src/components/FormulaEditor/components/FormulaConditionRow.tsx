@@ -1,13 +1,15 @@
-import React from "react";
-import { DeleteIcon, ArrowDownwardIcon, ArrowUpwardIcon, MoreVertIcon } from "../../../icons";
+import React, { useState } from "react";
+
+import { ArrowDownwardIcon, ArrowUpwardIcon, DeleteIcon, MoreVertIcon } from "../../../icons";
 import { Box } from "../../Box";
 import { Typography } from "../../Typography";
 import { IconButton } from "../../IconButton";
 import { Menu } from "../../Menu";
 import { MenuItem } from "../../MenuItem";
+import { FormulaOperator, FormulaRow, FormulaTranslation } from "../model";
+
 import { FormulaTextField } from "./FormulaTextField";
 import { OperatorSelector } from "./OperatorSelector";
-import { FormulaOperator, FormulaRow, FormulaTranslation } from "../model";
 
 export type FormulaConditionRowProps = FormulaRow & {
   operators?: FormulaOperator[];

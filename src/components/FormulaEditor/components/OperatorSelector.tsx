@@ -5,9 +5,9 @@ import { Box } from "../../Box";
 import { List } from "../../List";
 import { ListItem } from "../../ListItem";
 import { Popover } from "../../Popover";
+import { FormulaOperator } from "../model";
 
 import { useOperators } from "./use-operators";
-import { FormulaOperator } from "../model";
 
 export type OperatorSelectorProps = {
   operators?: FormulaOperator[];

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { debounce, SxProps } from "@mui/material";
 import dayjs from "dayjs";
-
 import match from "autosuggest-highlight/match";
 
 import { Autocomplete, AutocompleteOption } from "../../Autocomplete";
@@ -9,7 +8,6 @@ import { CircularProgress } from "../../CircularProgress";
 import { DatePicker } from "../../DatePicker";
 import { InputBase } from "../../InputBase";
 import { Typography } from "../../Typography";
-
 import { FormulaRow, FormulaTranslation } from "../model";
 
 export type FormulaTextFieldProps = {

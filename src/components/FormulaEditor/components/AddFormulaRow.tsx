@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Box } from "../../Box";
 import { Typography } from "../../Typography";
 import { FormulaTranslation } from "../model";
