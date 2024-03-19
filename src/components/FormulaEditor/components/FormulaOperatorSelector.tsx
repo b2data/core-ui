@@ -7,9 +7,9 @@ import { ListItem } from "../../ListItem";
 import { Popover } from "../../Popover";
 import { FormulaOperator } from "../model";
 
-import { useOperators } from "./use-operators";
+import { useFormulaOperators } from "./use-formula-operators";
 
-export type OperatorSelectorProps = {
+export type FormulaOperatorSelectorProps = {
   operators?: FormulaOperator[];
   isEditable?: boolean;
   value?: FormulaOperator;
@@ -17,7 +17,7 @@ export type OperatorSelectorProps = {
   sx?: SxProps;
 };
 
-export const OperatorSelector: React.FC<OperatorSelectorProps> = ({
+export const FormulaOperatorSelector: React.FC<FormulaOperatorSelectorProps> = ({
   operators = Object.values(FormulaOperator),
   isEditable,
   value = FormulaOperator.Equal,
@@ -25,7 +25,7 @@ export const OperatorSelector: React.FC<OperatorSelectorProps> = ({
   sx,
 }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
-  const operatorsMap = useOperators();
+  const operatorsMap = useFormulaOperators();
 
   const options = useMemo(
     () => operators.map((id) => ({ label: operatorsMap[id], id })),

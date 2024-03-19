@@ -9,7 +9,7 @@ import { MenuItem } from "../../MenuItem";
 import { FormulaOperator, FormulaRow, FormulaTranslation } from "../model";
 
 import { FormulaTextField } from "./FormulaTextField";
-import { OperatorSelector } from "./OperatorSelector";
+import { FormulaOperatorSelector } from "./FormulaOperatorSelector";
 
 export type FormulaConditionRowProps = FormulaRow & {
   operators?: FormulaOperator[];
@@ -79,7 +79,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
           onSearch ? (q) => onSearch({ searchTerm: q, limit: 50 }) : undefined
         }
       />
-      <OperatorSelector
+      <FormulaOperatorSelector
         sx={{ gridArea: "operation" }}
         value={operator}
         operators={operators}

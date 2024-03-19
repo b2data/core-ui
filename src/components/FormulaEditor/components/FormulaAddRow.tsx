@@ -4,13 +4,13 @@ import { Box } from "../../Box";
 import { Typography } from "../../Typography";
 import { FormulaTranslation } from "../model";
 
-export type AddFormulaRowProps = {
+export type FormulaAddRowProps = {
   index: number;
   onClick: () => void;
   i18n?: FormulaTranslation;
 };
 
-export const AddFormulaRow: React.FC<AddFormulaRowProps> = ({
+export const FormulaAddRow: React.FC<FormulaAddRowProps> = ({
   index,
   onClick,
   i18n,

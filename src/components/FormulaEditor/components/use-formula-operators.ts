@@ -1,6 +1,6 @@
 import { FormulaOperator } from "../model";
 
-export const useOperators = () => {
+export const useFormulaOperators = () => {
   const options: Record<FormulaOperator, string> = {
     [FormulaOperator.Equal]: "=",
     [FormulaOperator.NotEqual]: "!=",

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { Box } from "../Box";
 
-import { AddFormulaRow, FormulaConditionRow } from "./components";
+import { FormulaAddRow, FormulaConditionRow } from "./components";
 import { FormulaOperator, FormulaRow, FormulaTranslation } from "./model";
 
 export type FormulaEditorProps = {
@@ -148,7 +148,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
         />
       ))}
       {isEditable && !disableRowCreation && (
-        <AddFormulaRow
+        <FormulaAddRow
           index={options.length + 1}
           onClick={handleAddFilter}
           i18n={i18n}
