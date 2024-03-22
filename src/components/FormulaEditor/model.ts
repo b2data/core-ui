@@ -20,6 +20,7 @@ export enum FormulaOperator {
 export type FormulaTranslation = {
   fieldPlaceholder?: string;
   valuePlaceholder?: string;
+  unitPlaceholder?: string;
   loading?: string;
   noOptions?: string;
   addFilter?: string;
@@ -27,4 +28,10 @@ export type FormulaTranslation = {
   moveFilterUp?: string;
   moveFilterDown?: string;
   addNewOption?: string;
+};
+
+export type FormulaUnit = {
+  id: string;
+  label: string;
+  isDate?: boolean;
 };

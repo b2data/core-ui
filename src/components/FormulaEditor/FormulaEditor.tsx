@@ -3,7 +3,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Box } from "../Box";
 
 import { FormulaAddRow, FormulaConditionRow } from "./components";
-import { FormulaOperator, FormulaRow, FormulaTranslation } from "./model";
+import {
+  FormulaOperator,
+  FormulaRow,
+  FormulaTranslation,
+  FormulaUnit,
+} from "./model";
 
 export type FormulaEditorProps = {
   /**
@@ -18,6 +23,14 @@ export type FormulaEditorProps = {
    * If `true` the editor will be in edit mode
    */
   isEditable?: boolean;
+  /**
+   * If `true` the unit selection will be enabled
+   */
+  hasUnitSelection?: boolean;
+  /**
+   * Units list for selection
+   */
+  units?: FormulaUnit[];
   /**
    * If `true` the creation of new row is hidden
    */
@@ -57,6 +70,8 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
   rows,
   operators,
   isEditable,
+  hasUnitSelection,
+  units,
   disableRowCreation,
   disableFieldSelection,
   disableActions,
@@ -136,6 +151,8 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
           key={opt.index}
           isLastRow={ind === options.length - 1}
           isEditable={isEditable}
+          hasUnitSelection={hasUnitSelection}
+          units={units}
           disableFieldSelection={disableFieldSelection}
           disableActions={disableActions}
           operators={operators}

@@ -1,19 +1,32 @@
 import React, { useState } from "react";
 
-import { ArrowDownwardIcon, ArrowUpwardIcon, DeleteIcon, MoreVertIcon } from "../../../icons";
+import {
+  ArrowDownwardIcon,
+  ArrowUpwardIcon,
+  DeleteIcon,
+  MoreVertIcon,
+} from "../../../icons";
 import { Box } from "../../Box";
 import { Typography } from "../../Typography";
 import { IconButton } from "../../IconButton";
 import { Menu } from "../../Menu";
 import { MenuItem } from "../../MenuItem";
-import { FormulaOperator, FormulaRow, FormulaTranslation } from "../model";
+import {
+  FormulaOperator,
+  FormulaRow,
+  FormulaTranslation,
+  FormulaUnit,
+} from "../model";
 
 import { FormulaTextField } from "./FormulaTextField";
 import { FormulaOperatorSelector } from "./FormulaOperatorSelector";
+import { FormulaUnitSelector } from "./FormulaUnitSelector";
 
 export type FormulaConditionRowProps = FormulaRow & {
   operators?: FormulaOperator[];
   isEditable?: boolean;
+  hasUnitSelection?: boolean;
+  units?: FormulaUnit[];
   disableFieldSelection?: boolean;
   disableActions?: boolean;
   isLastRow?: boolean;
@@ -35,9 +48,12 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
   field,
   type,
   value,
+  unit,
   operator,
   operators,
   isEditable,
+  hasUnitSelection,
+  units,
   disableFieldSelection,
   disableActions,
   isLastRow,
@@ -56,8 +72,12 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
       sx={{
         display: "grid",
         alignItems: "center",
-        gridTemplateAreas: "'number field operation value actions'",
-        gridTemplateColumns: "30px 1fr 20px 3fr 20px",
+        gridTemplateAreas: hasUnitSelection
+          ? "'number field unit operation value actions'"
+          : "'number field operation value actions'",
+        gridTemplateColumns: hasUnitSelection
+          ? "30px 1fr 50px 20px 3fr 20px"
+          : "30px 1fr 20px 3fr 20px",
         minHeight: 20,
         "&:hover .delete": { opacity: 1 },
       }}
@@ -79,6 +99,15 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
           onSearch ? (q) => onSearch({ searchTerm: q, limit: 50 }) : undefined
         }
       />
+      {hasUnitSelection && units?.length && (
+        <FormulaUnitSelector
+          i18n={i18n}
+          units={units}
+          value={unit}
+          isEditable={isEditable && !disabled}
+          onChange={(v) => onChange("unit", v)}
+        />
+      )}
       <FormulaOperatorSelector
         sx={{ gridArea: "operation" }}
         value={operator}

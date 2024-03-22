@@ -109,6 +109,15 @@ export const FreeSolo: StoryObj<
             setValue(newValue);
           }
         }}
+        getOptionLabel={(option) => {
+          if (typeof option === "string") {
+            return option;
+          }
+          if (option.inputValue) {
+            return option.inputValue || "";
+          }
+          return option.label;
+        }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
 

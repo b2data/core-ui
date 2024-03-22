@@ -1,9 +1,10 @@
 import React from "react";
 import { HTML5Backend, NativeTypes } from "react-dnd-html5-backend";
 import { DndProvider, useDrop } from "react-dnd";
+import { SxProps } from "@mui/material";
 
 import { Typography } from "../Typography";
-import { Box, BoxProps } from "../Box";
+import { Box } from "../Box";
 
 import { validateFilesType } from "./utils";
 
@@ -45,7 +46,7 @@ export interface DropZoneProps {
   /**
    * Box `sx` styles
    */
-  sx?: BoxProps["sx"];
+  sx?: SxProps;
 }
 
 const DropZoneComp = ({
