@@ -1,6 +1,6 @@
 {
   "name": "@b2data/core-ui",
-  "version": "1.0.47",
+  "version": "1.0.48",
   "description": "",
   "files": [
     "lib"
@@ -14,7 +14,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts,.tsx src",
     "lint:fix": "eslint --ext .js,.ts,.tsx src --fix",
-    "test:types": "tsc --noEmit --project .",
+    "test": "tsc --noEmit --project .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|tsx|json)\"",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",

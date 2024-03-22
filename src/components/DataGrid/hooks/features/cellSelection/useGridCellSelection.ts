@@ -662,6 +662,7 @@ export const useGridCellSelection = (
             const cellParams = apiRef.current.getCellParams(rowId, field);
             cellData = serializeCellValue(cellParams, {
               delimiterCharacter: clipboardCopyCellDelimiter,
+              shouldAppendQuotes: false,
               ignoreValueFormatter,
             });
           } else {
