@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { SxProps } from "@mui/material";
 
 import { Autocomplete } from "../../Autocomplete";
-
 import { FormulaTranslation, FormulaUnit } from "../model";
 
 export type FormulaUnitSelectorProps = {
