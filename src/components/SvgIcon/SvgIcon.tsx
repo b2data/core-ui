@@ -1,11 +1,5 @@
-import {
-  SvgIcon as MuiSvgIcon,
-  SvgIconProps as MuiSvgIconProps,
-} from "@mui/material";
-import React from "react";
+import { SvgIconProps as MuiSvgIconProps } from "@mui/material";
 
 export interface SvgIconProps extends MuiSvgIconProps {}
 
-export const SvgIcon: React.FC<SvgIconProps> = (props) => (
-  <MuiSvgIcon {...props} />
-);
+export { SvgIcon } from "@mui/material";

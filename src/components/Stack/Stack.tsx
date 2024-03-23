@@ -1,7 +1,6 @@
-import { Stack as MuiStack, StackProps as MuiStackProps } from "@mui/material";
-import React from "react";
+import { StackProps as MuiStackProps } from "@mui/material";
 
 export interface StackProps
   extends Omit<MuiStackProps, "classes" | "className"> {}
 
-export const Stack: React.FC<StackProps> = (props) => <MuiStack {...props} />;
+export { Stack } from "@mui/material";
