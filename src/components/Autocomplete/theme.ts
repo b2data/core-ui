@@ -25,7 +25,7 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
       },
     },
     endAdornment: {
-      top: "calc(50% - 12px) !important",
+      // top: "calc(50% - 12px) !important",
     },
     listbox: {
       padding: "4px 0",
