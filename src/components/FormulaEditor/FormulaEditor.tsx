@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { SxProps } from "@mui/material";
 
 import { Box } from "../Box";
 
@@ -6,8 +7,8 @@ import { FormulaAddRow, FormulaConditionRow } from "./components";
 import {
   FormulaOperator,
   FormulaRow,
+  FormulaSearchOption,
   FormulaTranslation,
-  FormulaUnit,
 } from "./model";
 
 export type FormulaEditorProps = {
@@ -23,14 +24,6 @@ export type FormulaEditorProps = {
    * If `true` the editor will be in edit mode
    */
   isEditable?: boolean;
-  /**
-   * If `true` the unit selection will be enabled
-   */
-  hasUnitSelection?: boolean;
-  /**
-   * Units list for selection
-   */
-  units?: FormulaUnit[];
   /**
    * If `true` the creation of new row is hidden
    */
@@ -58,20 +51,30 @@ export type FormulaEditorProps = {
   /**
    * Calls for searching autocomplete variants
    */
-  onSearch?: (query: {
-    searchTerm?: string;
-    field?: string;
-    limit?: number;
-    offset?: number;
-  }) => Promise<string[]>;
+  onSearch?: (request: {
+    key: "field" | "unit" | "value";
+    state: Partial<Pick<FormulaRow, "field" | "unit" | "value">>;
+    query: { searchTerm?: string; limit?: number; offset?: number };
+  }) => Promise<FormulaSearchOption[]>;
+  /**
+   * Calls before new field creation
+   */
+  onFieldCreation?: (data: {
+    label: string;
+    onCreate: (
+      data?: Partial<
+        Pick<FormulaRow, "field" | "unit" | "systemUnit" | "coeff">
+      >,
+    ) => void;
+  }) => void;
+  /** */
+  sx?: SxProps;
 };
 
 export const FormulaEditor: React.FC<FormulaEditorProps> = ({
   rows,
   operators,
   isEditable,
-  hasUnitSelection,
-  units,
   disableRowCreation,
   disableFieldSelection,
   disableActions,
@@ -79,6 +82,8 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
   onChange,
   onMove,
   onSearch,
+  onFieldCreation,
+  sx,
 }) => {
   const [options, setOptions] = useState<FormulaRow[]>([]);
 
@@ -111,11 +116,10 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
 
   const handleChangeField = (
     index: number,
-    key: string,
-    val?: string | string[],
+    changes: Record<string, string | string[] | undefined>,
   ) => {
     const newOptions = [...options];
-    newOptions.splice(index - 1, 1, { ...newOptions[index - 1], [key]: val });
+    newOptions.splice(index - 1, 1, { ...newOptions[index - 1], ...changes });
     const result = newOptions.map((opt, ind) => ({ ...opt, index: ind + 1 }));
     setOptions(result);
     commitChanges(result);
@@ -143,7 +147,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
       display="flex"
       flexDirection="column"
       gap={2}
-      sx={{ bgcolor: "#FAFAFA", borderRadius: 1, py: 2, pl: 3, pr: 1 }}
+      sx={{ bgcolor: "#FAFAFA", borderRadius: 1, py: 2, pl: 3, pr: 1, ...sx }}
     >
       {options.map((opt, ind) => (
         <FormulaConditionRow
@@ -151,8 +155,6 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
           key={opt.index}
           isLastRow={ind === options.length - 1}
           isEditable={isEditable}
-          hasUnitSelection={hasUnitSelection}
-          units={units}
           disableFieldSelection={disableFieldSelection}
           disableActions={disableActions}
           operators={operators}
@@ -160,8 +162,9 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
           excludeFields={excludeFields}
           onMove={onMove}
           onDelete={handleDeleteFilter}
-          onChange={(key, val) => handleChangeField(opt.index, key, val)}
+          onChange={(changes) => handleChangeField(opt.index, changes)}
           onSearch={onSearch}
+          onFieldCreation={onFieldCreation}
         />
       ))}
       {isEditable && !disableRowCreation && (

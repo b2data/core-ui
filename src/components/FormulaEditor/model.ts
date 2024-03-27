@@ -5,6 +5,8 @@ export type FormulaRow = {
   operator?: FormulaOperator;
   value?: string | string[];
   unit?: string;
+  systemUnit?: string;
+  coeff?: string;
   disabled?: boolean;
 };
 
@@ -30,8 +32,12 @@ export type FormulaTranslation = {
   addNewOption?: string;
 };
 
-export type FormulaUnit = {
+export type FormulaSearchOption = {
   id: string;
   label: string;
-  isDate?: boolean;
+  description?: string;
+  photo?: string;
+  unit?: string;
+  systemUnit?: string;
+  coeff?: string;
 };

@@ -1,14 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { debounce, SxProps } from "@mui/material";
+import React, { useMemo, useState } from "react";
+import {
+  debounce,
+  styled,
+  SxProps,
+  Tooltip,
+  TooltipProps,
+} from "@mui/material";
 import dayjs from "dayjs";
 import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
 
-import { Autocomplete, AutocompleteOption } from "../../Autocomplete";
+import {
+  Autocomplete,
+  AutocompleteOption,
+  AutocompleteProps,
+} from "../../Autocomplete";
 import { CircularProgress } from "../../CircularProgress";
 import { DatePicker } from "../../DatePicker";
 import { InputBase } from "../../InputBase";
 import { Typography } from "../../Typography";
-import { FormulaRow, FormulaTranslation } from "../model";
+import { ListItem } from "../../ListItem";
+import { IconButton } from "../../IconButton";
+import { Avatar } from "../../Avatar";
+import { InfoIcon } from "../../../icons";
+import { FormulaRow, FormulaSearchOption, FormulaTranslation } from "../model";
+
+const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .MuiTooltip-tooltip`]: {
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    boxShadow: theme.shadows[6],
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: "8px",
+    padding: "10px",
+    maxWidth: 300,
+  },
+  [`& .MuiTooltip-arrow`]: {
+    color: theme.palette.background.paper,
+  },
+}));
 
 export type FormulaTextFieldProps = {
   type: FormulaRow["type"];
@@ -16,11 +50,17 @@ export type FormulaTextFieldProps = {
   multiple?: boolean;
   placeholder?: string;
   isEditable?: boolean;
-  onChange?: (value?: string | string[]) => void;
-  onSearch?: (query: string) => Promise<string[]>;
+  onChange?: (
+    value?: string | string[],
+    optionData?: FormulaSearchOption & { inputValue?: string },
+  ) => void;
+  onSearch?: (query: string) => Promise<FormulaSearchOption[]>;
   sx?: SxProps;
   i18n?: FormulaTranslation;
   exclude?: string[];
+  autocompleteProps?: Partial<
+    Omit<AutocompleteProps<any, false, false, false>, "options" | "value">
+  >;
 };
 
 const transformToOption = (val: string): AutocompleteOption => ({
@@ -39,12 +79,10 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   sx,
   i18n,
   exclude,
+  autocompleteProps,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<AutocompleteOption[]>([]);
-  const [selectedValue, setSelectedValue] = useState<
-    AutocompleteOption | AutocompleteOption[] | null
-  >(multiple ? [] : null);
+  const [options, setOptions] = useState<FormulaSearchOption[]>([]);
 
   const loadData = (searchTerm: string) => {
     if (onSearch) {
@@ -52,41 +90,39 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       onSearch(searchTerm)
         .then((val) =>
           setOptions(
-            val
-              .filter(
-                (v) =>
-                  !exclude?.includes(v) ||
-                  (Array.isArray(value) ? value?.includes(v) : value === v),
-              )
-              .map(transformToOption),
+            val.filter(
+              (v) =>
+                !exclude?.includes(v.id) ||
+                (Array.isArray(value) ? value?.includes(v.id) : value === v.id),
+            ),
           ),
         )
         .finally(() => setIsLoading(false));
     }
   };
 
-  const handleChange = (val?: string | string[]) => {
-    onChange?.(val);
-    setSelectedValue(
-      Array.isArray(val)
-        ? val.map(transformToOption)
-        : val
-          ? transformToOption(val)
-          : null,
-    );
+  const handleChange = (
+    val?: string | string[],
+    optionData?: FormulaSearchOption,
+  ) => {
+    onChange?.(val, optionData);
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     loadData(e.target.value);
   };
 
-  useEffect(() => {
-    if (multiple && Array.isArray(value)) {
-      setSelectedValue(value.map(transformToOption));
-    } else if (value && !Array.isArray(value)) {
-      setSelectedValue(transformToOption(value));
-    }
-  }, [value, multiple]);
+  const selectedValue = useMemo(
+    () =>
+      multiple
+        ? Array.isArray(value)
+          ? value.map(transformToOption)
+          : []
+        : value && !Array.isArray(value)
+          ? transformToOption(value)
+          : null,
+    [value, multiple, type],
+  );
 
   if (type === "date") {
     return (
@@ -123,6 +159,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
 
   return (
     <Autocomplete
+      {...autocompleteProps}
       value={selectedValue}
       options={options}
       freeSolo
@@ -138,17 +175,22 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         if (typeof newValue !== "string") {
           handleChange(
             Array.isArray(newValue) ? newValue.map((v) => v.id) : newValue.id,
+            Array.isArray(newValue) ? undefined : newValue,
           );
         }
       }}
-      getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.label)}
+      getOptionLabel={(opt) =>
+        typeof opt === "string"
+          ? opt
+          : `${opt.label}${opt.unit ? ` (${opt.unit})` : ""}`
+      }
       sx={{
-        "& .MuiAutocomplete-endAdornment": { display: "none" },
+        "& .MuiAutocomplete-endAdornment button": { display: "none" },
         "& .MuiAutocomplete-input": { p: "0 !important" },
         "& .MuiInputBase-root": {
           minHeight: "auto !important",
           fontSize: 12,
-          p: 0,
+          p: "0 !important",
           color: "inherit",
           "&:before": { content: "none" },
           "&:after": { content: "none" },
@@ -164,11 +206,18 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       }}
       placeholder={isEditable ? placeholder : undefined}
       inputProps={{
+        ...autocompleteProps?.inputProps,
         onChange: debounce(handleSearch, 500),
         InputProps: {
-          endAdornment: isLoading ? (
-            <CircularProgress color="inherit" size={12} />
-          ) : undefined,
+          ...autocompleteProps?.inputProps?.InputProps,
+          endAdornment: (
+            <>
+              {isLoading ? (
+                <CircularProgress color="inherit" size={12} sx={{ pr: 1 }} />
+              ) : undefined}
+              {autocompleteProps?.inputProps?.InputProps?.endAdornment}
+            </>
+          ),
         },
       }}
       renderTags={(value, getTagProps) =>
@@ -178,6 +227,78 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           </Typography>
         ))
       }
+      renderOption={(
+        props,
+        option,
+        { selected, inputValue },
+        { getOptionLabel, getOptionDisabled },
+      ) => {
+        if (typeof option === "string") {
+          return <ListItem text={option} />;
+        }
+        const matches = match(getOptionLabel(option), inputValue, {
+          insideWords: true,
+        });
+        const parts = parse(getOptionLabel(option), matches);
+        return (
+          <ListItem
+            {...props}
+            asButton
+            text={
+              (option as any)?.inputValue ? (
+                getOptionLabel(option)
+              ) : (
+                <>
+                  {parts.map((part, index) =>
+                    part.highlight && !getOptionDisabled?.(option) ? (
+                      <mark key={index}>{part.text}</mark>
+                    ) : (
+                      <span key={index}>{part.text}</span>
+                    ),
+                  )}
+                </>
+              )
+            }
+            sx={{ "& > .MuiButtonBase-root": { pr: "28px" } }}
+            action={
+              option.description || option.photo ? (
+                <CustomTooltip
+                  arrow
+                  title={
+                    <>
+                      {option.photo && (
+                        <Avatar
+                          src={option.photo}
+                          variant="rounded"
+                          sx={{ width: 100, height: 100 }}
+                        />
+                      )}
+                      <Typography
+                        variant="body1"
+                        noWrap
+                        wrapLines={7}
+                        sx={{ wordBreak: "break-all" }}
+                      >
+                        {option.description}
+                      </Typography>
+                    </>
+                  }
+                >
+                  <IconButton
+                    size="small"
+                    edge="end"
+                    disableRipple
+                    sx={{ width: 18, height: 18 }}
+                  >
+                    <InfoIcon sx={{ width: 14, height: 14 }} />
+                  </IconButton>
+                </CustomTooltip>
+              ) : undefined
+            }
+            selected={selected}
+          />
+        );
+      }}
       filterOptions={(opts: any, { inputValue }) => {
         const filtered =
           inputValue === ""
@@ -187,10 +308,9 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
                   match(opt.label, inputValue, { insideWords: true }).length,
               );
 
-        const isExisting = opts.some((opt: any) => inputValue === opt.label);
-
-        if (inputValue !== "" && !isExisting) {
+        if (inputValue !== "") {
           filtered.push({
+            inputValue,
             label: `${i18n?.addNewOption || "Add new"}: ${inputValue}`,
             id: inputValue,
           });

@@ -33,6 +33,14 @@ export const Base: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   },
 };
 
+export const Outlined: StoryObj<AutocompleteProps<AutocompleteOption>> = {
+  args: {
+    label: "Single",
+    options,
+    inputProps: { variant: "outlined" },
+  },
+};
+
 export const Multiple: StoryObj<AutocompleteProps<AutocompleteOption, true>> = {
   args: {
     label: "Multiple",

@@ -39,6 +39,7 @@ export { default as ArrowUpwardIcon } from "@mui/icons-material/ArrowUpward";
 export { default as ArrowDownwardIcon } from "@mui/icons-material/ArrowDownward";
 export { default as ArrowForwardIcon } from "@mui/icons-material/ArrowForward";
 export { default as ArrowBackIcon } from "@mui/icons-material/ArrowBack";
+export { default as InfoIcon } from "@mui/icons-material/InfoOutlined";
 
 export * from "./heading";
 export * from "./TextIcon";

@@ -14,33 +14,37 @@ import { MenuItem } from "../../MenuItem";
 import {
   FormulaOperator,
   FormulaRow,
+  FormulaSearchOption,
   FormulaTranslation,
-  FormulaUnit,
 } from "../model";
 
 import { FormulaTextField } from "./FormulaTextField";
 import { FormulaOperatorSelector } from "./FormulaOperatorSelector";
-import { FormulaUnitSelector } from "./FormulaUnitSelector";
 
 export type FormulaConditionRowProps = FormulaRow & {
   operators?: FormulaOperator[];
   isEditable?: boolean;
-  hasUnitSelection?: boolean;
-  units?: FormulaUnit[];
   disableFieldSelection?: boolean;
   disableActions?: boolean;
   isLastRow?: boolean;
   i18n?: FormulaTranslation;
   excludeFields?: string[];
-  onChange: (key: string, val?: string | string[]) => void;
+  onChange: (changes: Record<string, string | string[] | undefined>) => void;
   onMove?: (field: string, index: number) => void;
   onDelete?: (index: number) => void;
-  onSearch?: (query: {
-    searchTerm?: string;
-    field?: string;
-    limit?: number;
-    offset?: number;
-  }) => Promise<string[]>;
+  onSearch?: (request: {
+    key: "field" | "value";
+    state: Partial<Pick<FormulaRow, "field" | "unit" | "value">>;
+    query: { searchTerm?: string; limit?: number; offset?: number };
+  }) => Promise<FormulaSearchOption[]>;
+  onFieldCreation?: (data: {
+    label: string;
+    onCreate: (
+      data?: Partial<
+        Pick<FormulaRow, "field" | "unit" | "systemUnit" | "coeff">
+      >,
+    ) => void;
+  }) => void;
 };
 
 export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
@@ -49,11 +53,10 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
   type,
   value,
   unit,
+  systemUnit,
   operator,
   operators,
   isEditable,
-  hasUnitSelection,
-  units,
   disableFieldSelection,
   disableActions,
   isLastRow,
@@ -64,6 +67,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
   onMove,
   onDelete,
   onSearch,
+  onFieldCreation,
 }) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLButtonElement | null>(null);
 
@@ -72,12 +76,8 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
       sx={{
         display: "grid",
         alignItems: "center",
-        gridTemplateAreas: hasUnitSelection
-          ? "'number field unit operation value actions'"
-          : "'number field operation value actions'",
-        gridTemplateColumns: hasUnitSelection
-          ? "30px 1fr 50px 20px 3fr 20px"
-          : "30px 1fr 20px 3fr 20px",
+        gridTemplateAreas: "'number field operation value actions'",
+        gridTemplateColumns: "30px 1fr 20px 3fr 20px",
         minHeight: 20,
         "&:hover .delete": { opacity: 1 },
       }}
@@ -93,27 +93,81 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         type="text"
         i18n={i18n}
         exclude={excludeFields}
-        placeholder={i18n?.fieldPlaceholder || "Enter attribute"}
-        onChange={(v) => onChange("field", v)}
+        placeholder={i18n?.fieldPlaceholder || "Attribute"}
+        onChange={(v, optData) => {
+          if (optData?.inputValue && onFieldCreation) {
+            onFieldCreation({
+              label: optData.inputValue,
+              onCreate: (changes) =>
+                onChange({
+                  ...changes,
+                  value: undefined,
+                  type:
+                    changes?.systemUnit === "s"
+                      ? "date"
+                      : operator !== FormulaOperator.Equal
+                        ? "number"
+                        : changes?.systemUnit
+                          ? "number"
+                          : "text",
+                }),
+            });
+          } else {
+            onChange({
+              field: v,
+              unit: optData?.unit,
+              systemUnit: optData?.systemUnit,
+              coeff: optData?.coeff,
+              value: undefined,
+              type:
+                optData?.systemUnit === "s"
+                  ? "date"
+                  : operator !== FormulaOperator.Equal
+                    ? "number"
+                    : optData?.systemUnit
+                      ? "number"
+                      : "text",
+            });
+          }
+        }}
         onSearch={
-          onSearch ? (q) => onSearch({ searchTerm: q, limit: 50 }) : undefined
+          onSearch
+            ? (q) =>
+                onSearch({
+                  key: "field",
+                  query: { searchTerm: q, limit: 50 },
+                  state: { field, unit, value },
+                })
+            : undefined
+        }
+        autocompleteProps={
+          unit
+            ? {
+                inputProps: {
+                  InputProps: { endAdornment: `[${unit}]` },
+                },
+              }
+            : undefined
         }
       />
-      {hasUnitSelection && units?.length && (
-        <FormulaUnitSelector
-          i18n={i18n}
-          units={units}
-          value={unit}
-          isEditable={isEditable && !disabled}
-          onChange={(v) => onChange("unit", v)}
-        />
-      )}
       <FormulaOperatorSelector
         sx={{ gridArea: "operation" }}
         value={operator}
         operators={operators}
         isEditable={isEditable && !disabled}
-        onChange={(v) => onChange("operator", v)}
+        onChange={(v) =>
+          onChange({
+            operator: v,
+            type:
+              systemUnit === "s"
+                ? "date"
+                : v !== FormulaOperator.Equal
+                  ? "number"
+                  : systemUnit
+                    ? "number"
+                    : "text",
+          })
+        }
       />
       <FormulaTextField
         key="value"
@@ -123,11 +177,16 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         type={type}
         multiple={type === "text"}
         i18n={i18n}
-        placeholder={i18n?.valuePlaceholder || "Enter value"}
-        onChange={(v) => onChange("value", v)}
+        placeholder={i18n?.valuePlaceholder || "Value"}
+        onChange={(v) => onChange({ value: v })}
         onSearch={
           onSearch
-            ? (q) => onSearch({ searchTerm: q, field, limit: 50 })
+            ? (q) =>
+                onSearch({
+                  key: "value",
+                  query: { searchTerm: q, limit: 50 },
+                  state: { field, unit, value },
+                })
             : undefined
         }
       />
