@@ -1,0 +1,13 @@
+import{j as a}from"./jsx-runtime-4ca860c5.js";import{P as d}from"./Preview-607a0968.js";import{B as m}from"./Button-c61d662a.js";import{S as e}from"./SnackbarProvider-4ece4c68.js";import{u as l}from"./SnackbarMessage-9ca7782d.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./createTheme-dbf13da2.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-5b0f5dab.js";import"./generateUtilityClasses-2a7b4d5e.js";import"./styled-fa5f10e1.js";import"./clsx-5c20934d.js";import"./useThemeProps-af14b15e.js";import"./Button-79c74423.js";import"./ButtonBase-e3e89d5f.js";import"./emotion-react.browser.esm-9b27619f.js";import"./assertThisInitialized-081f9914.js";import"./inheritsLoose-c82a83d4.js";import"./TransitionGroupContext-adcba781.js";import"./useForkRef-80a5c2b4.js";import"./useIsFocusVisible-c78074a7.js";import"./useEventCallback-1165b6b6.js";import"./useEnhancedEffect-e1879ff8.js";import"./useId-65eea1c4.js";import"./CircularProgress-6310d3c8.js";import"./index-2801d3c9.js";import"./Alert-753ecc0e.js";import"./createSvgIcon-2385d4df.js";import"./Close-aec15d64.js";import"./Paper-08c921af.js";import"./IconButton-5d7db8b7.js";import"./Typography-55c28fbd.js";import"./extendSxProp-5fc992c6.js";const M={title:"Components/Alert/Snackbar Provider",component:e,tags:["autodocs"]},c=()=>{const{enqueueSnackbar:i}=l(),p=[{variant:"default",displayVariant:"standard"},{variant:"error",displayVariant:"standard"},{variant:"warning",displayVariant:"standard"},{variant:"info",displayVariant:"standard"},{variant:"success",displayVariant:"standard"},{variant:"default",displayVariant:"outlined"},{variant:"error",displayVariant:"outlined"},{variant:"warning",displayVariant:"outlined"},{variant:"info",displayVariant:"outlined"},{variant:"success",displayVariant:"outlined"}];return a.jsx(d,{children:p.map(r=>a.jsx(m,{onClick:()=>i(`Variant: ${r.variant}. Display variant: ${r.displayVariant}`,{autoHideDuration:2e3,title:r.variant.toUpperCase(),...r}),children:`${r.variant} - ${r.displayVariant}`},r.variant+r.displayVariant))})},t={args:{},render:i=>a.jsx("div",{style:{height:500},children:a.jsx(e,{...i,children:a.jsx(c,{})})})};var n,o,s;t.parameters={...t.parameters,docs:{...(n=t.parameters)==null?void 0:n.docs,source:{originalSource:`{
+  args: {},
+  render: props => {
+    return <div style={{
+      height: 500
+    }}>
+        <SnackbarProvider {...props}>
+          <Content />
+        </SnackbarProvider>
+      </div>;
+  }
+}`,...(s=(o=t.parameters)==null?void 0:o.docs)==null?void 0:s.source}}};const N=["Base"];export{t as Base,N as __namedExportsOrder,M as default};
+//# sourceMappingURL=Snackbar.stories-49605cf8.js.map
