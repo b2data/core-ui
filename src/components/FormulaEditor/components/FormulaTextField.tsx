@@ -46,27 +46,21 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export type FormulaTextFieldProps = {
   type: FormulaRow["type"];
-  value?: string | string[];
+  value?: AutocompleteOption | AutocompleteOption[];
   multiple?: boolean;
   placeholder?: string;
   isEditable?: boolean;
   onChange?: (
-    value?: string | string[],
+    value?: AutocompleteOption | AutocompleteOption[],
     optionData?: FormulaSearchOption & { inputValue?: string },
   ) => void;
   onSearch?: (query: string) => Promise<FormulaSearchOption[]>;
   sx?: SxProps;
   i18n?: FormulaTranslation;
-  exclude?: string[];
   autocompleteProps?: Partial<
     Omit<AutocompleteProps<any, false, false, false>, "options" | "value">
   >;
 };
-
-const transformToOption = (val: string): AutocompleteOption => ({
-  id: val,
-  label: val,
-});
 
 export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   type,
@@ -78,7 +72,6 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   onSearch,
   sx,
   i18n,
-  exclude,
   autocompleteProps,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -90,10 +83,10 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       onSearch(searchTerm)
         .then((val) =>
           setOptions(
-            val.filter(
-              (v) =>
-                !exclude?.includes(v.id) ||
-                (Array.isArray(value) ? value?.includes(v.id) : value === v.id),
+            val.filter((v) =>
+              Array.isArray(value)
+                ? value?.map((val) => val.id)?.includes(v.id)
+                : value?.id === v.id,
             ),
           ),
         )
@@ -102,7 +95,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   };
 
   const handleChange = (
-    val?: string | string[],
+    val?: AutocompleteOption | AutocompleteOption[],
     optionData?: FormulaSearchOption,
   ) => {
     onChange?.(val, optionData);
@@ -116,10 +109,10 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
     () =>
       multiple
         ? Array.isArray(value)
-          ? value.map(transformToOption)
+          ? value
           : []
         : value && !Array.isArray(value)
-          ? transformToOption(value)
+          ? value
           : null,
     [value, multiple, type],
   );
@@ -128,8 +121,14 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
     return (
       <DatePicker
         readOnly={!isEditable}
-        value={value ? dayjs(value as string) : null}
-        onChange={(val) => handleChange(val?.toISOString())}
+        value={value ? dayjs((value as AutocompleteOption).id) : null}
+        onChange={(val) =>
+          handleChange(
+            val
+              ? { id: val?.toISOString(), label: val?.toISOString() }
+              : undefined,
+          )
+        }
         sx={{
           "& .MuiInputBase-root": {
             height: "auto",
@@ -150,8 +149,10 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       <InputBase
         type="number"
         placeholder={isEditable ? placeholder : undefined}
-        defaultValue={value}
-        onBlur={(e) => handleChange(e.target.value)}
+        defaultValue={(value as AutocompleteOption)?.id || ""}
+        onBlur={(e) =>
+          handleChange({ id: e.target.value, label: e.target.value })
+        }
         sx={{ p: 0, fontSize: 12, ...sx, "&>input": { p: 0 } }}
       />
     );
@@ -173,10 +174,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       isOptionEqualToValue={(option, value) => option.id === value.id}
       onChange={(_, newValue: any) => {
         if (typeof newValue !== "string") {
-          handleChange(
-            Array.isArray(newValue) ? newValue.map((v) => v.id) : newValue.id,
-            Array.isArray(newValue) ? undefined : newValue,
-          );
+          handleChange(newValue);
         }
       }}
       getOptionLabel={(opt) =>
@@ -213,7 +211,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           endAdornment: (
             <>
               {isLoading ? (
-                <CircularProgress color="inherit" size={12} sx={{ pr: 1 }} />
+                <CircularProgress color="inherit" size={12} sx={{ mr: 1 }} />
               ) : undefined}
               {autocompleteProps?.inputProps?.InputProps?.endAdornment}
             </>
@@ -223,7 +221,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       renderTags={(value, getTagProps) =>
         value.map((v, index) => (
           <Typography {...getTagProps({ index })} variant="caption">
-            {v.label}
+            {v.inputValue || v.label}
           </Typography>
         ))
       }

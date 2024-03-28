@@ -6,6 +6,7 @@ import {
   DeleteIcon,
   MoreVertIcon,
 } from "../../../icons";
+import { AutocompleteOption } from "../../Autocomplete";
 import { Box } from "../../Box";
 import { Typography } from "../../Typography";
 import { IconButton } from "../../IconButton";
@@ -28,14 +29,13 @@ export type FormulaConditionRowProps = FormulaRow & {
   disableActions?: boolean;
   isLastRow?: boolean;
   i18n?: FormulaTranslation;
-  excludeFields?: string[];
-  onChange: (changes: Record<string, string | string[] | undefined>) => void;
-  onMove?: (field: string, index: number) => void;
+  onChange: (changes: Partial<FormulaRow>) => void;
+  onMove?: (field: AutocompleteOption, index: number) => void;
   onDelete?: (index: number) => void;
   onSearch?: (request: {
     key: "field" | "value";
-    state: Partial<Pick<FormulaRow, "field" | "unit" | "value">>;
     query: { searchTerm?: string; limit?: number; offset?: number };
+    state: Partial<FormulaRow>;
   }) => Promise<FormulaSearchOption[]>;
   onFieldCreation?: (data: {
     label: string;
@@ -54,6 +54,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
   value,
   unit,
   systemUnit,
+  coeff,
   operator,
   operators,
   isEditable,
@@ -62,7 +63,6 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
   isLastRow,
   disabled,
   i18n,
-  excludeFields,
   onChange,
   onMove,
   onDelete,
@@ -92,7 +92,6 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         value={field}
         type="text"
         i18n={i18n}
-        exclude={excludeFields}
         placeholder={i18n?.fieldPlaceholder || "Attribute"}
         onChange={(v, optData) => {
           if (optData?.inputValue && onFieldCreation) {
@@ -112,7 +111,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                           : "text",
                 }),
             });
-          } else {
+          } else if (!Array.isArray(v)) {
             onChange({
               field: v,
               unit: optData?.unit,
@@ -136,7 +135,15 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                 onSearch({
                   key: "field",
                   query: { searchTerm: q, limit: 50 },
-                  state: { field, unit, value },
+                  state: {
+                    field,
+                    type,
+                    value,
+                    unit,
+                    systemUnit,
+                    coeff,
+                    operator,
+                  },
                 })
             : undefined
         }
@@ -185,7 +192,15 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                 onSearch({
                   key: "value",
                   query: { searchTerm: q, limit: 50 },
-                  state: { field, unit, value },
+                  state: {
+                    field,
+                    type,
+                    value,
+                    unit,
+                    systemUnit,
+                    coeff,
+                    operator,
+                  },
                 })
             : undefined
         }

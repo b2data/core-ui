@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SxProps } from "@mui/material";
 
+import { AutocompleteOption } from "../Autocomplete";
 import { Box } from "../Box";
 
 import { FormulaAddRow, FormulaConditionRow } from "./components";
@@ -47,14 +48,14 @@ export type FormulaEditorProps = {
   /**
    * Fires when some row has moved up/down
    */
-  onMove?: (field: string, index: number) => void;
+  onMove?: (field: AutocompleteOption, index: number) => void;
   /**
    * Calls for searching autocomplete variants
    */
   onSearch?: (request: {
-    key: "field" | "unit" | "value";
-    state: Partial<Pick<FormulaRow, "field" | "unit" | "value">>;
+    key: "field" | "value";
     query: { searchTerm?: string; limit?: number; offset?: number };
+    state: Partial<FormulaRow>;
   }) => Promise<FormulaSearchOption[]>;
   /**
    * Calls before new field creation
@@ -100,24 +101,14 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
 
   const commitChanges = (result: FormulaRow[]) => {
     const isValidRows =
-      result.filter(
-        (opt) =>
-          !(
-            opt.field &&
-            opt.value &&
-            opt.operator &&
-            (FormulaOperator.Equal === opt.operator ? true : opt.unit)
-          ),
-      ).length === 0;
+      result.filter((opt) => !(opt.field && opt.value && opt.operator))
+        .length === 0;
     if (isValidRows && onChange) {
       onChange(result);
     }
   };
 
-  const handleChangeField = (
-    index: number,
-    changes: Record<string, string | string[] | undefined>,
-  ) => {
+  const handleChangeField = (index: number, changes: Partial<FormulaRow>) => {
     const newOptions = [...options];
     newOptions.splice(index - 1, 1, { ...newOptions[index - 1], ...changes });
     const result = newOptions.map((opt, ind) => ({ ...opt, index: ind + 1 }));
@@ -137,11 +128,6 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
     setOptions(rows);
   }, [rows]);
 
-  const excludeFields = useMemo(
-    () => Array.from(new Set(options.map((opt) => opt.field as string))),
-    [options],
-  );
-
   return (
     <Box
       display="flex"
@@ -159,7 +145,6 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
           disableActions={disableActions}
           operators={operators}
           i18n={i18n}
-          excludeFields={excludeFields}
           onMove={onMove}
           onDelete={handleDeleteFilter}
           onChange={(changes) => handleChangeField(opt.index, changes)}

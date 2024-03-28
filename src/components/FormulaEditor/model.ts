@@ -1,12 +1,14 @@
+import { AutocompleteOption } from "../Autocomplete";
+
 export type FormulaRow = {
   index: number;
   type: "text" | "number" | "date";
-  field?: string;
+  field?: AutocompleteOption;
   operator?: FormulaOperator;
-  value?: string | string[];
+  value?: AutocompleteOption | AutocompleteOption[];
   unit?: string;
   systemUnit?: string;
-  coeff?: string;
+  coeff?: number;
   disabled?: boolean;
 };
 
@@ -22,7 +24,6 @@ export enum FormulaOperator {
 export type FormulaTranslation = {
   fieldPlaceholder?: string;
   valuePlaceholder?: string;
-  unitPlaceholder?: string;
   loading?: string;
   noOptions?: string;
   addFilter?: string;
@@ -39,5 +40,5 @@ export type FormulaSearchOption = {
   photo?: string;
   unit?: string;
   systemUnit?: string;
-  coeff?: string;
+  coeff?: number;
 };
