@@ -45,6 +45,10 @@ export type FormulaConditionRowProps = FormulaRow & {
       >,
     ) => void;
   }) => void;
+  onValueCreation?: (data: {
+    label: string;
+    onCreate: (value: string) => void;
+  }) => void;
 };
 
 export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
@@ -68,6 +72,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
   onDelete,
   onSearch,
   onFieldCreation,
+  onValueCreation,
 }) => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLButtonElement | null>(null);
 
@@ -93,10 +98,10 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         type="text"
         i18n={i18n}
         placeholder={i18n?.fieldPlaceholder || "Attribute"}
-        onChange={(v, optData) => {
-          if (optData?.inputValue && onFieldCreation) {
+        onChange={(v) => {
+          if (!Array.isArray(v) && v?.inputValue && onFieldCreation) {
             onFieldCreation({
-              label: optData.inputValue,
+              label: v.inputValue,
               onCreate: (changes) =>
                 onChange({
                   ...changes,
@@ -114,16 +119,16 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
           } else if (!Array.isArray(v)) {
             onChange({
               field: v,
-              unit: optData?.unit,
-              systemUnit: optData?.systemUnit,
-              coeff: optData?.coeff,
+              unit: v?.unit,
+              systemUnit: v?.systemUnit,
+              coeff: v?.coeff,
               value: undefined,
               type:
-                optData?.systemUnit === "s"
+                v?.systemUnit === "s"
                   ? "date"
                   : operator !== FormulaOperator.Equal
                     ? "number"
-                    : optData?.systemUnit
+                    : v?.systemUnit
                       ? "number"
                       : "text",
             });
@@ -185,7 +190,24 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         multiple={type === "text"}
         i18n={i18n}
         placeholder={i18n?.valuePlaceholder || "Value"}
-        onChange={(v) => onChange({ value: v })}
+        onChange={(v) => {
+          if (Array.isArray(v) && onValueCreation) {
+            const index = v.findIndex((c) => c.inputValue);
+            if (index > -1) {
+              onValueCreation({
+                label: v[index].inputValue as string,
+                onCreate: (val) => {
+                  v[index].id = val;
+                  onChange({ value: v });
+                },
+              });
+            } else {
+              onChange({ value: v });
+            }
+          } else {
+            onChange({ value: v });
+          }
+        }}
         onSearch={
           onSearch
             ? (q) =>

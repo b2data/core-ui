@@ -68,6 +68,13 @@ export type FormulaEditorProps = {
       >,
     ) => void;
   }) => void;
+  /**
+   * Calls before new value creation
+   */
+  onValueCreation?: (data: {
+    label: string;
+    onCreate: (value: string) => void;
+  }) => void;
   /** */
   sx?: SxProps;
 };
@@ -84,6 +91,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
   onMove,
   onSearch,
   onFieldCreation,
+  onValueCreation,
   sx,
 }) => {
   const [options, setOptions] = useState<FormulaRow[]>([]);
@@ -150,6 +158,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
           onChange={(changes) => handleChangeField(opt.index, changes)}
           onSearch={onSearch}
           onFieldCreation={onFieldCreation}
+          onValueCreation={onValueCreation}
         />
       ))}
       {isEditable && !disableRowCreation && (

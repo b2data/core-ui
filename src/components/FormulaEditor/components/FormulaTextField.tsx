@@ -9,12 +9,9 @@ import {
 import dayjs from "dayjs";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
+import { equals } from "ramda";
 
-import {
-  Autocomplete,
-  AutocompleteOption,
-  AutocompleteProps,
-} from "../../Autocomplete";
+import { Autocomplete, AutocompleteProps } from "../../Autocomplete";
 import { CircularProgress } from "../../CircularProgress";
 import { DatePicker } from "../../DatePicker";
 import { InputBase } from "../../InputBase";
@@ -46,13 +43,14 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export type FormulaTextFieldProps = {
   type: FormulaRow["type"];
-  value?: AutocompleteOption | AutocompleteOption[];
+  value?: FormulaSearchOption | FormulaSearchOption[];
   multiple?: boolean;
   placeholder?: string;
   isEditable?: boolean;
   onChange?: (
-    value?: AutocompleteOption | AutocompleteOption[],
-    optionData?: FormulaSearchOption & { inputValue?: string },
+    value?:
+      | (FormulaSearchOption & { inputValue?: string })
+      | (FormulaSearchOption & { inputValue?: string })[],
   ) => void;
   onSearch?: (query: string) => Promise<FormulaSearchOption[]>;
   sx?: SxProps;
@@ -81,24 +79,19 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
     if (onSearch) {
       setIsLoading(true);
       onSearch(searchTerm)
-        .then((val) =>
-          setOptions(
-            val.filter((v) =>
-              Array.isArray(value)
-                ? value?.map((val) => val.id)?.includes(v.id)
-                : value?.id === v.id,
-            ),
-          ),
-        )
+        .then(setOptions)
         .finally(() => setIsLoading(false));
     }
   };
 
   const handleChange = (
-    val?: AutocompleteOption | AutocompleteOption[],
-    optionData?: FormulaSearchOption,
+    val?:
+      | (FormulaSearchOption & { inputValue?: string })
+      | FormulaSearchOption[],
   ) => {
-    onChange?.(val, optionData);
+    if (!equals(val, value)) {
+      onChange?.(val);
+    }
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +114,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
     return (
       <DatePicker
         readOnly={!isEditable}
-        value={value ? dayjs((value as AutocompleteOption).id) : null}
+        value={value ? dayjs((value as FormulaSearchOption).id) : null}
         onChange={(val) =>
           handleChange(
             val
@@ -148,8 +141,9 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
     return (
       <InputBase
         type="number"
+        readOnly={!isEditable}
         placeholder={isEditable ? placeholder : undefined}
-        defaultValue={(value as AutocompleteOption)?.id || ""}
+        defaultValue={(value as FormulaSearchOption)?.id || ""}
         onBlur={(e) =>
           handleChange({ id: e.target.value, label: e.target.value })
         }
@@ -172,7 +166,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       loadingText={i18n?.loading}
       noOptionsText={i18n?.noOptions}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      onChange={(_, newValue: any) => {
+      onChange={(_, newValue) => {
         if (typeof newValue !== "string") {
           handleChange(newValue);
         }
@@ -315,7 +309,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         }
         return (
           filtered.length ? filtered : i18n?.noOptions ? [i18n?.noOptions] : []
-        ) as AutocompleteOption[];
+        ) as FormulaSearchOption[];
       }}
     />
   );
