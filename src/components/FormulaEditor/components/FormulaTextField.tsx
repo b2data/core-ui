@@ -125,7 +125,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         sx={{
           "& .MuiInputBase-root": {
             height: "auto",
-            fontSize: 12,
+            fontSize: '12px !important',
             "&:before": { content: "none" },
             "&:after": { content: "none" },
           },
@@ -147,7 +147,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         onBlur={(e) =>
           handleChange({ id: e.target.value, label: e.target.value })
         }
-        sx={{ p: 0, fontSize: 12, ...sx, "&>input": { p: 0 } }}
+        sx={{ p: 0, fontSize: '12px !important', ...sx, "&>input": { p: 0 } }}
       />
     );
   }
@@ -181,7 +181,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         "& .MuiAutocomplete-input": { p: "0 !important" },
         "& .MuiInputBase-root": {
           minHeight: "auto !important",
-          fontSize: 12,
+          fontSize: '12px !important',
           p: "0 !important",
           color: "inherit",
           "&:before": { content: "none" },
