@@ -1,6 +1,6 @@
 {
   "name": "@b2data/core-ui",
-  "version": "1.0.55",
+  "version": "1.0.56",
   "description": "",
   "files": [
     "lib"
@@ -62,8 +62,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "vite": "^4.4.5"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.2.1",
@@ -80,5 +80,6 @@
     "gh-pages": "^5.0.0",
     "husky": "^8.0.0",
     "storybook": "^7.2.1"
-  }
+  },
+  "packageManager": "yarn@4.1.1"
 }

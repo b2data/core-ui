@@ -20,7 +20,14 @@ export const Base: StoryObj<FormulaEditorProps> = {
 
 export const WithUnit: StoryObj<FormulaEditorProps> = {
   args: {
-    rows: [],
+    rows: [
+      {
+        field: { id: "Option 1", label: "Option 1" },
+        value: [{ id: "Option 1", label: "Option 1" }],
+        type:'text',
+        disabled: true,
+      },
+    ],
     isEditable: true,
     onSearch: () =>
       Promise.resolve([

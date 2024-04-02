@@ -85,6 +85,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         gridTemplateColumns: "30px 1fr 20px 3fr 20px",
         minHeight: 20,
         "&:hover .delete": { opacity: 1 },
+        ...(disabled ? { opacity: ".6" } : {}),
       }}
     >
       <Typography sx={{ gridArea: "number" }} variant="caption">
