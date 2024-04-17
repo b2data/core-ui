@@ -110,7 +110,10 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                   type:
                     changes?.systemUnit === "s"
                       ? "date"
-                      : operator !== FormulaOperator.Equal
+                      : ![
+                            FormulaOperator.Equal,
+                            FormulaOperator.NotEqual,
+                          ].includes(operator as FormulaOperator)
                         ? "number"
                         : changes?.systemUnit
                           ? "number"
@@ -127,7 +130,9 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
               type:
                 v?.systemUnit === "s"
                   ? "date"
-                  : operator !== FormulaOperator.Equal
+                  : ![FormulaOperator.Equal, FormulaOperator.NotEqual].includes(
+                        operator as FormulaOperator,
+                      )
                     ? "number"
                     : v?.systemUnit
                       ? "number"
@@ -174,7 +179,9 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
             type:
               systemUnit === "s"
                 ? "date"
-                : v !== FormulaOperator.Equal
+                : ![FormulaOperator.Equal, FormulaOperator.NotEqual].includes(
+                      v as FormulaOperator,
+                    )
                   ? "number"
                   : systemUnit
                     ? "number"
@@ -191,8 +198,13 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         multiple={type === "text"}
         i18n={i18n}
         placeholder={i18n?.valuePlaceholder || "Value"}
+        disableValueCreation={field?.disableValueCreation}
         onChange={(v) => {
-          if (Array.isArray(v) && onValueCreation) {
+          if (
+            Array.isArray(v) &&
+            onValueCreation &&
+            !field?.disableValueCreation
+          ) {
             const index = v.findIndex((c) => c.inputValue);
             if (index > -1) {
               onValueCreation({

@@ -100,7 +100,9 @@ export const ConfirmationDialog = React.forwardRef(
                   color: "primary",
                   ...acceptBtn,
                   children: acceptBtn.label || acceptBtn.children,
-                  disabled: confirmProps && name !== confirmProps.value,
+                  disabled:
+                    acceptBtn.disabled ||
+                    (confirmProps && name !== confirmProps.value),
                 } as DialogAction,
               ]
             : []),

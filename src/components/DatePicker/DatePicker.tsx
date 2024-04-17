@@ -5,6 +5,7 @@ import {
   DatePicker as MuiDatePicker,
   DatePickerProps as MuiDatePickerProps,
 } from "@mui/x-date-pickers";
+import { TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import React from "react";
 import { Dayjs } from "dayjs";
 
@@ -43,6 +44,11 @@ export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * The helper text content.
    */
   helperText?: React.ReactNode;
+  /**
+   * If `normal` will adjust vertical spacing of this and contained components.
+   * @default none
+   */
+  margin?: Exclude<MuiTextFieldProps["margin"], "dence">;
 }
 
 export const DatePicker = React.forwardRef(function DatePicker<

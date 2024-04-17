@@ -10,7 +10,7 @@ import { OverrideMuiProps } from "../types";
 import { AVATAR_SIZES } from "./theme";
 
 export interface AvatarProps
-  extends OverrideMuiProps<MuiAvatarProps, "sx" | "src"> {
+  extends OverrideMuiProps<MuiAvatarProps, "sx" | "src" | "className"> {
   /**
    * Used in combination with `src` to provide an alt attribute for the rendered img element.
    */

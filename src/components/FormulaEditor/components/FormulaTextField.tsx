@@ -47,6 +47,7 @@ export type FormulaTextFieldProps = {
   multiple?: boolean;
   placeholder?: string;
   isEditable?: boolean;
+  disableValueCreation?: boolean;
   onChange?: (
     value?:
       | (FormulaSearchOption & { inputValue?: string })
@@ -66,6 +67,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   multiple,
   placeholder,
   isEditable,
+  disableValueCreation,
   onChange,
   onSearch,
   sx,
@@ -125,7 +127,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         sx={{
           "& .MuiInputBase-root": {
             height: "auto",
-            fontSize: '12px !important',
+            fontSize: "12px !important",
             "&:before": { content: "none" },
             "&:after": { content: "none" },
           },
@@ -147,7 +149,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         onBlur={(e) =>
           handleChange({ id: e.target.value, label: e.target.value })
         }
-        sx={{ p: 0, fontSize: '12px !important', ...sx, "&>input": { p: 0 } }}
+        sx={{ p: 0, fontSize: "12px !important", ...sx, "&>input": { p: 0 } }}
       />
     );
   }
@@ -181,7 +183,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         "& .MuiAutocomplete-input": { p: "0 !important" },
         "& .MuiInputBase-root": {
           minHeight: "auto !important",
-          fontSize: '12px !important',
+          fontSize: "12px !important",
           p: "0 !important",
           color: "inherit",
           "&:before": { content: "none" },
@@ -305,7 +307,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
                   match(opt.label, inputValue, { insideWords: true }).length,
               );
 
-        if (inputValue !== "") {
+        if (inputValue !== "" && !disableValueCreation) {
           filtered.push({
             inputValue,
             label: `${i18n?.addNewOption || "Add new"}: ${inputValue}`,

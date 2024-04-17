@@ -55,10 +55,24 @@ const highlightText = (text: string, search?: string) => {
 
 export const Typography = React.forwardRef(
   (
-    { highlight, children, ...props }: TypographyProps,
+    { highlight, children, wrapLines, ...props }: TypographyProps,
     ref: React.Ref<HTMLSpanElement>,
   ) => (
-    <MuiTypography ref={ref} {...props}>
+    <MuiTypography
+      ref={ref}
+      {...props}
+      sx={{
+        ...props.sx,
+        ...(wrapLines && wrapLines > 0
+          ? {
+              display: "-webkit-box",
+              WebkitLineClamp: `${wrapLines}`,
+              WebkitBoxOrient: "vertical",
+              whiteSpace: "normal",
+            }
+          : {}),
+      }}
+    >
       {typeof children === "string"
         ? highlightText(children, highlight)
         : children}

@@ -3,7 +3,7 @@ import { AutocompleteOption } from "../Autocomplete";
 export type FormulaRow = {
   index: number;
   type: "text" | "number" | "date";
-  field?: AutocompleteOption;
+  field?: AutocompleteOption & { disableValueCreation?: boolean };
   operator?: FormulaOperator;
   value?: AutocompleteOption | AutocompleteOption[];
   unit?: string;

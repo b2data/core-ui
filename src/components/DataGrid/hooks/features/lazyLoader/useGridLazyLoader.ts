@@ -40,10 +40,11 @@ function findSkeletonRowsSection({
 
   while (!isSkeletonSectionFound && firstRowIndex < lastRowIndex) {
     const isStartingWithASkeletonRow =
-      apiRef.current.getRowNode(visibleRowsSection[startIndex].id)!.type ===
+      apiRef.current.getRowNode(visibleRowsSection[startIndex]?.id)?.type ===
       "skeletonRow";
+
     const isEndingWithASkeletonRow =
-      apiRef.current.getRowNode(visibleRowsSection[endIndex].id)!.type ===
+      apiRef.current.getRowNode(visibleRowsSection[endIndex]?.id)?.type ===
       "skeletonRow";
 
     if (isStartingWithASkeletonRow && isEndingWithASkeletonRow) {
