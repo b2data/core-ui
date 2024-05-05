@@ -6,7 +6,6 @@ import {
   DeleteIcon,
   MoreVertIcon,
 } from "../../../icons";
-import { AutocompleteOption } from "../../Autocomplete";
 import { Box } from "../../Box";
 import { Typography } from "../../Typography";
 import { IconButton } from "../../IconButton";
@@ -30,7 +29,7 @@ export type FormulaConditionRowProps = FormulaRow & {
   isLastRow?: boolean;
   i18n?: FormulaTranslation;
   onChange: (changes: Partial<FormulaRow>) => void;
-  onMove?: (field: AutocompleteOption, index: number) => void;
+  onMove?: (field: FormulaSearchOption, index: number) => void;
   onDelete?: (index: number) => void;
   onSearch?: (request: {
     key: "field" | "value";
@@ -38,16 +37,12 @@ export type FormulaConditionRowProps = FormulaRow & {
     state: Partial<FormulaRow>;
   }) => Promise<FormulaSearchOption[]>;
   onFieldCreation?: (data: {
-    label: string;
-    onCreate: (
-      data?: Partial<
-        Pick<FormulaRow, "field" | "unit" | "systemUnit" | "coeff">
-      >,
-    ) => void;
+    inputValue: string;
+    onCreate: (data: FormulaSearchOption) => void;
   }) => void;
   onValueCreation?: (data: {
-    label: string;
-    onCreate: (value: string) => void;
+    inputValue: string;
+    onCreate: (data: FormulaSearchOption) => void;
   }) => void;
 };
 
@@ -102,10 +97,13 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         onChange={(v) => {
           if (!Array.isArray(v) && v?.inputValue && onFieldCreation) {
             onFieldCreation({
-              label: v.inputValue,
+              inputValue: v.inputValue,
               onCreate: (changes) =>
                 onChange({
-                  ...changes,
+                  field: changes,
+                  unit: changes.unit,
+                  systemUnit: changes.systemUnit,
+                  coeff: changes.coeff,
                   value: undefined,
                   type:
                     changes?.systemUnit === "s"
@@ -208,9 +206,9 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
             const index = v.findIndex((c) => c.inputValue);
             if (index > -1) {
               onValueCreation({
-                label: v[index].inputValue as string,
+                inputValue: v[index].inputValue as string,
                 onCreate: (val) => {
-                  v[index].id = val;
+                  v[index] = val;
                   onChange({ value: v });
                 },
               });

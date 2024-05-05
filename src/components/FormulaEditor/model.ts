@@ -1,11 +1,9 @@
-import { AutocompleteOption } from "../Autocomplete";
-
 export type FormulaRow = {
   index: number;
   type: "text" | "number" | "date";
-  field?: AutocompleteOption & { disableValueCreation?: boolean };
+  field?: FormulaSearchOption & { disableValueCreation?: boolean };
   operator?: FormulaOperator;
-  value?: AutocompleteOption | AutocompleteOption[];
+  value?: FormulaSearchOption | FormulaSearchOption[];
   unit?: string;
   systemUnit?: string;
   coeff?: number;
@@ -35,7 +33,7 @@ export type FormulaTranslation = {
 
 export type FormulaSearchOption = {
   id: string;
-  label: string;
+  name: string;
   description?: string;
   photo?: string;
   unit?: string;

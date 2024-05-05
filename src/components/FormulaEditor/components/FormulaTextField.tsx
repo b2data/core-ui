@@ -9,12 +9,12 @@ import {
 import dayjs from "dayjs";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { equals } from "ramda";
+import { equals, omit } from "ramda";
 
 import { Autocomplete, AutocompleteProps } from "../../Autocomplete";
 import { CircularProgress } from "../../CircularProgress";
 import { DatePicker } from "../../DatePicker";
-import { InputBase } from "../../InputBase";
+import { InputBase, InputBaseProps } from "../../InputBase";
 import { Typography } from "../../Typography";
 import { ListItem } from "../../ListItem";
 import { IconButton } from "../../IconButton";
@@ -59,6 +59,10 @@ export type FormulaTextFieldProps = {
   autocompleteProps?: Partial<
     Omit<AutocompleteProps<any, false, false, false>, "options" | "value">
   >;
+  inputProps?: InputBaseProps["inputProps"] & {
+    maxDate?: dayjs.Dayjs;
+    minDate?: dayjs.Dayjs;
+  };
 };
 
 export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
@@ -73,6 +77,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   sx,
   i18n,
   autocompleteProps,
+  inputProps,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<FormulaSearchOption[]>([]);
@@ -120,10 +125,12 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         onChange={(val) =>
           handleChange(
             val
-              ? { id: val?.toISOString(), label: val?.toISOString() }
+              ? { id: val?.toISOString(), name: val?.toISOString() }
               : undefined,
           )
         }
+        maxDate={inputProps?.maxDate}
+        minDate={inputProps?.minDate}
         sx={{
           "& .MuiInputBase-root": {
             height: "auto",
@@ -143,13 +150,19 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
     return (
       <InputBase
         type="number"
+        inputProps={omit(["minDate", "maxDate"], inputProps || {})}
         readOnly={!isEditable}
         placeholder={isEditable ? placeholder : undefined}
         defaultValue={(value as FormulaSearchOption)?.id || ""}
         onBlur={(e) =>
-          handleChange({ id: e.target.value, label: e.target.value })
+          handleChange({ id: e.target.value, name: e.target.value })
         }
-        sx={{ p: 0, fontSize: "12px !important", ...sx, "&>input": { p: 0 } }}
+        sx={{
+          p: 0,
+          fontSize: "12px !important",
+          ...sx,
+          "&>input": { p: 0 },
+        }}
       />
     );
   }
@@ -173,11 +186,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           handleChange(newValue);
         }
       }}
-      getOptionLabel={(opt) =>
-        typeof opt === "string"
-          ? opt
-          : `${opt.label}${opt.unit ? ` (${opt.unit})` : ""}`
-      }
+      getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.name)}
       sx={{
         "& .MuiAutocomplete-endAdornment button": { display: "none" },
         "& .MuiAutocomplete-input": { p: "0 !important" },
@@ -205,6 +214,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       }}
       placeholder={isEditable ? placeholder : undefined}
       inputProps={{
+        ...inputProps,
         ...autocompleteProps?.inputProps,
         onChange: debounce(handleSearch, 500),
         InputProps: {
@@ -222,7 +232,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       renderTags={(value, getTagProps) =>
         value.map((v, index) => (
           <Typography {...getTagProps({ index })} variant="caption">
-            {v.inputValue || v.label}
+            {v.inputValue || v.name}
           </Typography>
         ))
       }
@@ -304,13 +314,13 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
             ? opts
             : opts.filter(
                 (opt: any) =>
-                  match(opt.label, inputValue, { insideWords: true }).length,
+                  match(opt.name, inputValue, { insideWords: true }).length,
               );
 
         if (inputValue !== "" && !disableValueCreation) {
           filtered.push({
             inputValue,
-            label: `${i18n?.addNewOption || "Add new"}: ${inputValue}`,
+            name: `${i18n?.addNewOption || "Add new"}: ${inputValue}`,
             id: inputValue,
           });
         }

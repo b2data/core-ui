@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SxProps } from "@mui/material";
 
-import { AutocompleteOption } from "../Autocomplete";
 import { Box } from "../Box";
 
 import { FormulaAddRow, FormulaConditionRow } from "./components";
@@ -48,7 +47,7 @@ export type FormulaEditorProps = {
   /**
    * Fires when some row has moved up/down
    */
-  onMove?: (field: AutocompleteOption, index: number) => void;
+  onMove?: (field: FormulaSearchOption, index: number) => void;
   /**
    * Calls for searching autocomplete variants
    */
@@ -61,19 +60,15 @@ export type FormulaEditorProps = {
    * Calls before new field creation
    */
   onFieldCreation?: (data: {
-    label: string;
-    onCreate: (
-      data?: Partial<
-        Pick<FormulaRow, "field" | "unit" | "systemUnit" | "coeff">
-      >,
-    ) => void;
+    inputValue: string;
+    onCreate: (data: FormulaSearchOption) => void;
   }) => void;
   /**
    * Calls before new value creation
    */
   onValueCreation?: (data: {
-    label: string;
-    onCreate: (value: string) => void;
+    inputValue: string;
+    onCreate: (data: FormulaSearchOption) => void;
   }) => void;
   /** */
   sx?: SxProps;
