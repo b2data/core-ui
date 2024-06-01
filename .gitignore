@@ -28,3 +28,4 @@ lib
 .yarnrc*
 .npmrc
 .yarn*
+*.pem

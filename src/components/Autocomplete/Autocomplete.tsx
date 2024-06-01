@@ -69,6 +69,7 @@ export interface AutocompleteProps<
     | "renderOption"
     | "renderTags"
     | "isOptionEqualToValue"
+    | "slotProps"
     | "sx"
   > {
   /**
@@ -98,6 +99,7 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
     placeholder,
     loading,
     inputProps,
+    slotProps,
     ...props
   }: AutocompleteProps<Value, Multiple, DisableClearable, FreeSolo>,
   ref: React.ForwardedRef<HTMLDivElement>,
@@ -183,6 +185,7 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
       clearIcon={<ClearIcon />}
       slotProps={{
         clearIndicator: { size: "small" },
+        ...slotProps,
       }}
       ChipProps={{
         size: "small",

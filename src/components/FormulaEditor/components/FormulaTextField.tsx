@@ -123,7 +123,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
 
   if (type === "date") {
     return (
-      <Box>
+      <Box width={1}>
         <DatePicker
           readOnly={!isEditable}
           value={value ? dayjs((value as FormulaSearchOption).id) : null}
@@ -155,7 +155,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
 
   if (type === "number") {
     return (
-      <Box>
+      <Box width={1}>
         <InputBase
           type="number"
           inputProps={omit(["minDate", "maxDate"], inputProps || {})}
@@ -178,7 +178,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   }
 
   return (
-    <Box>
+    <Box width={1}>
       <Autocomplete
         {...autocompleteProps}
         value={selectedValue}
@@ -196,6 +196,9 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           if (typeof newValue !== "string") {
             handleChange(newValue);
           }
+        }}
+        slotProps={{
+          popper: { sx: { minWidth: 200 } },
         }}
         getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.name)}
         sx={{
