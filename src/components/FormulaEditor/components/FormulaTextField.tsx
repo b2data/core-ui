@@ -49,6 +49,7 @@ export type FormulaTextFieldProps = {
   multiple?: boolean;
   placeholder?: string;
   isEditable?: boolean;
+  autoFocus?: boolean;
   disableValueCreation?: boolean;
   onChange?: (
     value?:
@@ -74,6 +75,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   multiple,
   placeholder,
   isEditable,
+  autoFocus,
   disableValueCreation,
   onChange,
   onSearch,
@@ -126,6 +128,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       <Box width={1}>
         <DatePicker
           readOnly={!isEditable}
+          autoFocus={autoFocus}
           value={value ? dayjs((value as FormulaSearchOption).id) : null}
           onChange={(val) =>
             handleChange(
@@ -158,6 +161,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       <Box width={1}>
         <InputBase
           type="number"
+          autoFocus={autoFocus}
           inputProps={omit(["minDate", "maxDate"], inputProps || {})}
           readOnly={!isEditable}
           placeholder={isEditable ? placeholder : undefined}
@@ -230,6 +234,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         inputProps={{
           ...inputProps,
           ...autocompleteProps?.inputProps,
+          autoFocus,
           onChange: debounce(handleSearch, 500),
           InputProps: {
             ...autocompleteProps?.inputProps?.InputProps,

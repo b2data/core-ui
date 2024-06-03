@@ -88,9 +88,10 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
       </Typography>
       <FormulaTextField
         key="field"
-        sx={{ gridArea: "field", color: "#AF361A" }}
+        sx={{ gridArea: "field", color: field ? "#AF361A" : "text.secondary" }}
         isEditable={isEditable && !disabled && !disableFieldSelection}
         value={field}
+        autoFocus
         type="text"
         i18n={i18n}
         placeholder={i18n?.fieldPlaceholder || "Attribute"}
