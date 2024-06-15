@@ -46,7 +46,7 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
       const styles = {
         margin: "-14px 0 -14px -14px",
         padding: "10px 6px",
-        width: 34,
+        width: 30,
       };
 
       if (color) {
@@ -62,6 +62,7 @@ const alertTheme: ComponentThemeOverride["MuiAlert"] = {
       if (variant === "outlined") {
         return {
           ...styles,
+          mr: 2,
           "& .MuiSvgIcon-root": {
             fontSize: 18,
             color: theme.palette.background.default,
