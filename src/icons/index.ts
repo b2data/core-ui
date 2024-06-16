@@ -1,12 +1,12 @@
-export { default as FolderIcon } from "@mui/icons-material/Folder";
-export { default as MailIcon } from "@mui/icons-material/Mail";
-export { default as CancelIcon } from "@mui/icons-material/Cancel";
-export { default as CloseIcon } from "@mui/icons-material/Close";
-export { default as SaveIcon } from "@mui/icons-material/Save";
+export { default as FolderIcon } from "@mui/icons-material/FolderOutlined";
+export { default as MailIcon } from "@mui/icons-material/MailOutlined";
+export { default as CancelIcon } from "@mui/icons-material/CancelOutlined";
+export { default as CloseIcon } from "@mui/icons-material/CloseOutlined";
+export { default as SaveIcon } from "@mui/icons-material/SaveOutlined";
 export { default as DeleteIcon } from "@mui/icons-material/DeleteOutlined";
-export { default as SendIcon } from "@mui/icons-material/Send";
+export { default as SendIcon } from "@mui/icons-material/SendOutlined";
 
-export { default as CheckIcon } from "@mui/icons-material/Check";
+export { default as CheckIcon } from "@mui/icons-material/CheckOutlined";
 export { default as CheckCircleIcon } from "@mui/icons-material/CheckCircle";
 export { default as CheckCircleOutlineIcon } from "@mui/icons-material/CheckCircleOutline";
 
@@ -40,6 +40,8 @@ export { default as ArrowDownwardIcon } from "@mui/icons-material/ArrowDownward"
 export { default as ArrowForwardIcon } from "@mui/icons-material/ArrowForward";
 export { default as ArrowBackIcon } from "@mui/icons-material/ArrowBack";
 export { default as InfoIcon } from "@mui/icons-material/InfoOutlined";
+export { default as HistoryIcon } from "@mui/icons-material/HistoryOutlined";
+
 
 export * from "./heading";
 export * from "./TextIcon";
