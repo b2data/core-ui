@@ -3,7 +3,7 @@ export { default as MailIcon } from "@mui/icons-material/Mail";
 export { default as CancelIcon } from "@mui/icons-material/Cancel";
 export { default as CloseIcon } from "@mui/icons-material/Close";
 export { default as SaveIcon } from "@mui/icons-material/Save";
-export { default as DeleteIcon } from "@mui/icons-material/Delete";
+export { default as DeleteIcon } from "@mui/icons-material/DeleteOutlined";
 export { default as SendIcon } from "@mui/icons-material/Send";
 
 export { default as CheckIcon } from "@mui/icons-material/Check";
