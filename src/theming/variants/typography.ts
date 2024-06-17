@@ -62,7 +62,7 @@ export default {
       fontSize: 20,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   h5: {
@@ -73,7 +73,7 @@ export default {
       fontSize: 16,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   h6: {
@@ -84,7 +84,7 @@ export default {
       fontSize: 14,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   subtitle1: {
@@ -95,7 +95,7 @@ export default {
       fontSize: 14,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   subtitle2: {
@@ -106,7 +106,7 @@ export default {
       fontSize: 12,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   body1: {
@@ -117,7 +117,7 @@ export default {
       fontSize: 12,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   body2: {
@@ -128,7 +128,7 @@ export default {
       fontSize: 10,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   button: {
@@ -139,7 +139,7 @@ export default {
       fontSize: 12,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
     textTransform: "none" as const,
   },
 
@@ -151,7 +151,7 @@ export default {
       fontSize: 10,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
   },
 
   overline: {
@@ -162,7 +162,7 @@ export default {
       fontSize: 12,
     },
     letterSpacing: 0,
-    lineHeight: 1,
+    lineHeight: 1.1,
     textTransform: "uppercase" as const,
   },
 };

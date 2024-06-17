@@ -4,7 +4,7 @@ const tabTheme: ComponentThemeOverride["MuiTab"] = {
   styleOverrides: {
     root: {
       minHeight: 40,
-      lineHeight: 1,
+      lineHeight: 1.1,
       "& .MuiSvgIcon-root": {
         fontSize: 18,
       },
