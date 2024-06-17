@@ -17,11 +17,13 @@ export enum FormulaOperator {
   LessEqual = "less_equal",
   More = "more",
   MoreEqual = "more_equal",
+  Exist = "exist",
 }
 
 export type FormulaTranslation = {
   fieldPlaceholder?: string;
   valuePlaceholder?: string;
+  valueExists?: string;
   loading?: string;
   noOptions?: string;
   addFilter?: string;

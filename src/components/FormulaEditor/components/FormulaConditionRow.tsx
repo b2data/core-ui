@@ -191,10 +191,16 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
       <FormulaTextField
         key="value"
         sx={{ gridArea: "value" }}
-        isEditable={isEditable && !disabled}
-        value={value}
-        type={type}
-        multiple={type === "text"}
+        isEditable={
+          isEditable && !disabled && operator !== FormulaOperator.Exist
+        }
+        value={
+          operator === FormulaOperator.Exist
+            ? { id: operator, name: i18n?.valueExists || "Any value" }
+            : value
+        }
+        type={operator === FormulaOperator.Exist ? "text" : type}
+        multiple={type === "text" && operator !== FormulaOperator.Exist}
         i18n={i18n}
         placeholder={i18n?.valuePlaceholder || "Value"}
         disableValueCreation={field?.disableValueCreation}
