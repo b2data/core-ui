@@ -175,6 +175,10 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         onChange={(v) =>
           onChange({
             operator: v,
+            value:
+              v === FormulaOperator.Exist
+                ? { id: "*", name: i18n?.anyValue || "Any value" }
+                : undefined,
             type:
               systemUnit === "s"
                 ? "date"
@@ -196,7 +200,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         }
         value={
           operator === FormulaOperator.Exist
-            ? { id: operator, name: i18n?.valueExists || "Any value" }
+            ? { id: "*", name: i18n?.anyValue || "Any value" }
             : value
         }
         type={operator === FormulaOperator.Exist ? "text" : type}

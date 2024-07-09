@@ -59,7 +59,7 @@ export const SectionTitleAction = ({
       <Fragment>
         <Tooltip text={tooltip}>
           <IconButton
-            size="small"
+            size={props.size || "small"}
             onClick={(e) => setActionsAnchor(e.currentTarget)}
             {...props}
           >
@@ -126,7 +126,7 @@ export const SectionTitleAction = ({
   }
 
   const content = icon ? (
-    <IconButton size="small" onClick={onClick} {...props}>
+    <IconButton size={props.size || "small"} onClick={onClick} {...props}>
       {icon}
     </IconButton>
   ) : (

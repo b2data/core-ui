@@ -262,7 +262,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           { getOptionLabel, getOptionDisabled },
         ) => {
           if (typeof option === "string") {
-            return <ListItem text={option} />;
+            return <ListItem key={option} text={option} />;
           }
           const matches = match(getOptionLabel(option), inputValue, {
             insideWords: true,
@@ -271,6 +271,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           return (
             <ListItem
               {...props}
+              key={option.id}
               asButton
               text={
                 (option as any)?.inputValue ? (
@@ -336,7 +337,9 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
                     match(opt.name, inputValue, { insideWords: true }).length,
                 );
 
-          if (inputValue !== "" && !disableValueCreation) {
+          const isExisting = opts.some((opt: any) => inputValue === opt.name);
+
+          if (inputValue !== "" && !isExisting && !disableValueCreation) {
             filtered.push({
               inputValue,
               name: `${i18n?.addNewOption || "Add new"}: ${inputValue}`,

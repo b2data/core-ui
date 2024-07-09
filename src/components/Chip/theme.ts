@@ -1,7 +1,9 @@
 import { ComponentThemeOverride } from "../types";
 
 const chipTheme: ComponentThemeOverride["MuiChip"] = {
-  styleOverrides: {},
+  styleOverrides: {
+    labelSmall: { fontSize: 12 },
+  },
   defaultProps: {
     color: "default",
     variant: "filled",

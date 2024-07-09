@@ -130,11 +130,7 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
             endAdornment: (
               <React.Fragment>
                 {loading ? (
-                  <CircularProgress
-                    color="inherit"
-                    size={18}
-                    wrapSx={{ mb: 1.5 }}
-                  />
+                  <CircularProgress color="inherit" size={18} />
                 ) : null}
                 {inputProps?.InputProps?.endAdornment}
                 {params.InputProps.endAdornment}
@@ -147,7 +143,7 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
         props,
         option,
         { selected, inputValue },
-        { getOptionLabel, getOptionDisabled },
+        { getOptionLabel, getOptionKey, getOptionDisabled },
       ) => {
         if (typeof option === "string") {
           return <ListItem text={option} />;
@@ -159,6 +155,9 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
         return (
           <ListItem
             {...props}
+            key={
+              (option as any).id || getOptionKey?.(option) || (props as any).key
+            }
             asButton
             text={
               (option as any)?.inputValue ? (

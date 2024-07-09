@@ -131,6 +131,10 @@ const DropZoneComp = ({
             if (!disabled) {
               if (isValid) {
                 onSelect?.(valFiles);
+                if (inputRefInner.current && "value" in inputRefInner.current) {
+                  // @ts-ignore
+                  inputRefInner.current.value = "";
+                }
               } else {
                 onTypeError?.(valFiles);
               }

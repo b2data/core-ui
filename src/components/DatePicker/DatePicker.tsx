@@ -5,7 +5,7 @@ import {
   DatePicker as MuiDatePicker,
   DatePickerProps as MuiDatePickerProps,
 } from "@mui/x-date-pickers";
-import { TextFieldProps as MuiTextFieldProps } from "@mui/material";
+import { BoxProps, TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import React from "react";
 import { Dayjs } from "dayjs";
 
@@ -49,16 +49,20 @@ export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * @default none
    */
   margin?: Exclude<MuiTextFieldProps["margin"], "dence">;
+  /**
+   * Wrapper props
+   */
+  wrapperProps?: BoxProps;
 }
 
 export const DatePicker = React.forwardRef(function DatePicker<
   TDate extends Dayjs | null = Dayjs | null,
 >(
-  { format, helperText, ...props }: DatePickerProps<TDate>,
+  { format, helperText, wrapperProps, ...props }: DatePickerProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
-    <Box width={1}>
+    <Box {...wrapperProps}>
       <MuiDatePicker ref={ref} format={format || "DD.MM.YYYY"} {...props} />
       {helperText && (
         <FormHelperText error={props.error}>{helperText}</FormHelperText>

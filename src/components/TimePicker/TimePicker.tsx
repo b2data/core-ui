@@ -2,7 +2,7 @@ import {
   TimePicker as MuiTimePicker,
   TimePickerProps as MuiTimePickerProps,
 } from "@mui/x-date-pickers";
-import { TextFieldProps as MuiTextFieldProps } from "@mui/material";
+import { BoxProps, TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import React from "react";
 import { Dayjs } from "dayjs";
 
@@ -46,16 +46,20 @@ export interface TimePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * @default none
    */
   margin?: Exclude<MuiTextFieldProps["margin"], "dence">;
+  /**
+   * Wrapper props
+   */
+  wrapperProps?: BoxProps;
 }
 
 export const TimePicker = React.forwardRef(function TimePicker<
   TDate extends Dayjs | null = Dayjs | null,
 >(
-  { format, helperText, ...props }: TimePickerProps<TDate>,
+  { format, helperText, wrapperProps, ...props }: TimePickerProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
-    <Box width={1}>
+    <Box {...wrapperProps}>
       <MuiTimePicker
         ref={ref}
         format={format || "HH:mm"}

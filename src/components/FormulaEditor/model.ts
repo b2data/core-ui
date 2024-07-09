@@ -23,7 +23,7 @@ export enum FormulaOperator {
 export type FormulaTranslation = {
   fieldPlaceholder?: string;
   valuePlaceholder?: string;
-  valueExists?: string;
+  anyValue?: string;
   loading?: string;
   noOptions?: string;
   addFilter?: string;
