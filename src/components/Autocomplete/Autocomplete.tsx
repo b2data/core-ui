@@ -143,10 +143,10 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
         props,
         option,
         { selected, inputValue },
-        { getOptionLabel, getOptionKey, getOptionDisabled },
+        { getOptionLabel, getOptionDisabled },
       ) => {
         if (typeof option === "string") {
-          return <ListItem text={option} />;
+          return <ListItem key={option} text={option} />;
         }
         const matches = match(getOptionLabel(option), inputValue, {
           insideWords: true,
@@ -155,9 +155,7 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
         return (
           <ListItem
             {...props}
-            key={
-              (option as any).id || getOptionKey?.(option) || (props as any).key
-            }
+            key={(option as any).id || (props as any).key}
             asButton
             text={
               (option as any)?.inputValue ? (
