@@ -1,4 +1,5 @@
 import React, { isValidElement, useMemo } from "react";
+import { SxProps } from "@mui/material";
 
 import { Typography, TypographyProps } from "../Typography";
 import { Tooltip } from "../Tooltip";
@@ -7,7 +8,6 @@ import {
   SectionTitleAction,
   SectionTitleActionProps,
 } from "../SectionTitleAction";
-import { SxProps } from "@mui/material";
 
 export interface SectionTitleProps {
   /**

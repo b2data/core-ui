@@ -290,7 +290,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
             {onMove && field ? (
               <MenuItem
                 startAdornment={<ArrowDownwardIcon />}
-                onClick={() => onMove(field, index - 1)}
+                onClick={() => onMove(field, index + 1)}
                 disabled={isLastRow}
                 divider
               >
