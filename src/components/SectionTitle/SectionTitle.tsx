@@ -23,6 +23,10 @@ export interface SectionTitleProps {
    */
   subtitle?: string | React.ReactNode;
   /**
+   * Icon shows before title
+   */
+  icon?: React.ReactNode;
+  /**
    * If set, the tooltip will be shown when hover on the title box.
    */
   tooltip?: string | React.ReactNode;
@@ -51,6 +55,7 @@ export interface SectionTitleProps {
 export const SectionTitle = ({
   title,
   titleProps,
+  icon,
   subtitle,
   tooltip,
   helperText,
@@ -99,7 +104,7 @@ export const SectionTitle = ({
         sx={({ palette }) => ({
           display: "flex",
           flexDirection: "row",
-          flexWrap: "wrap",
+          flexWrap: "nowrap",
           justifyContent: "space-between",
           alignItems: "center",
           gap: 3,
@@ -111,10 +116,18 @@ export const SectionTitle = ({
         <Tooltip followCursor placement="bottom" text={tooltip}>
           <Typography
             noWrap
-            style={{ lineHeight: 1.2 }}
             variant="h2"
             {...titleProps}
+            sx={{
+              lineHeight: 1.2,
+              gap: 2,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              ...titleProps?.sx,
+            }}
           >
+            {icon}
             {title}
           </Typography>
         </Tooltip>

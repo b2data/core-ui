@@ -30,6 +30,13 @@ export const WithButton: StoryObj<SectionTitleProps> = {
   },
 };
 
+export const WithIcon: StoryObj<SectionTitleProps> = {
+  args: {
+    title: "Header",
+    icon: <SaveIcon />,
+  },
+};
+
 export const WithIconButton: StoryObj<SectionTitleProps> = {
   args: {
     title: "Header",
