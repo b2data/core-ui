@@ -166,9 +166,13 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           readOnly={!isEditable}
           placeholder={isEditable ? placeholder : undefined}
           defaultValue={(value as FormulaSearchOption)?.id || ""}
-          onBlur={(e) =>
-            handleChange({ id: e.target.value, name: e.target.value })
-          }
+          onBlur={(e) => {
+            const newVal = Number(e.target.value);
+            handleChange({
+              id: !isNaN(newVal) ? `${newVal}` : e.target.value,
+              name: !isNaN(newVal) ? `${newVal}` : e.target.value,
+            });
+          }}
           sx={{
             p: 0,
             fontSize: "12px !important",
