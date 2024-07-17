@@ -221,7 +221,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
             p: "2px 3px",
             height: "auto",
             "&::first-of-type": { pl: 0 },
-            "&:after": { content: `', '` },
+            "&:after": { content: `'; '` },
             ...(!isEditable
               ? {
                   "&:last-of-type:after": { content: "none" },
