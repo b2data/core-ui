@@ -254,7 +254,13 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         }}
         renderTags={(value, getTagProps) =>
           value.map((v, index) => (
-            <Typography {...getTagProps({ index })} variant="caption">
+            <Typography
+              key={getTagProps({ index }).key}
+              data-tag-index={getTagProps({ index })["data-tag-index"]}
+              tabIndex={getTagProps({ index }).tabIndex}
+              className={getTagProps({ index }).className}
+              variant="caption"
+            >
               {v.inputValue || v.name}
             </Typography>
           ))
