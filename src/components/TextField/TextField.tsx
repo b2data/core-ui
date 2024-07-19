@@ -73,6 +73,7 @@ export const TextField = React.forwardRef(
       {...props}
       InputProps={{
         readOnly,
+        title: props?.inputProps?.value,
         startAdornment: startAdornment ? (
           <InputAdornment position="start">{startAdornment}</InputAdornment>
         ) : undefined,
