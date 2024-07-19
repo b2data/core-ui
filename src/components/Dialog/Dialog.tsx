@@ -17,6 +17,7 @@ export interface DialogProps
     | "fullWidth"
     | "maxWidth"
     | "onClose"
+    | "onClick"
     | "children"
     | "sx"
   > {
