@@ -211,7 +211,10 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.name)}
         sx={{
           "& .MuiAutocomplete-endAdornment button": { display: "none" },
-          "& .MuiAutocomplete-input": { p: "0 !important" },
+          "& .MuiAutocomplete-input": {
+            p: "0 !important",
+            ...(!isEditable ? { minWidth: "auto !important" } : {}),
+          },
           "& .MuiInputBase-root": {
             minHeight: "auto !important",
             fontSize: "12px !important",
