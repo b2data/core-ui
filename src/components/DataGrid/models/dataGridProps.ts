@@ -112,8 +112,6 @@ export type DataGridForcedPropsKey =
   | "onCellModesModelChange"
   | "rowModesModel"
   | "onRowModesModelChange"
-  | "rowSelectionModel"
-  | "onRowSelectionModelChange"
   | "columnVisibilityModel"
   | "onColumnVisibilityModelChange"
   | "nonce"

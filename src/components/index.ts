@@ -60,6 +60,8 @@ export * from "./SkeletonGroup";
 export * from "./Slider";
 export * from "./Snackbar";
 export * from "./Stack";
+export * from "./Step";
+export * from "./Stepper";
 export * from "./SvgIcon";
 export * from "./Switch";
 export * from "./Tab";

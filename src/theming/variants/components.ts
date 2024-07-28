@@ -42,6 +42,7 @@ import PopperOverride from "../../components/Popper/theme";
 import RadioOverride from "../../components/Radio/theme";
 import SliderOverride from "../../components/Slider/theme";
 import SkeletonOverride from "../../components/Skeleton/theme";
+import { StepButtonOverride, StepConnectorOverride, StepContentOverride } from "../../components/Step/theme";
 import SvgIconOverride from "../../components/SvgIcon/theme";
 import SwitchOverride from "../../components/Switch/theme";
 import TabOverride from "../../components/Tab/theme";
@@ -97,6 +98,9 @@ export default {
   MuiRadio: RadioOverride,
   MuiSlider: SliderOverride,
   MuiSkeleton: SkeletonOverride,
+  MuiStepButton: StepButtonOverride,
+  MuiStepConnector: StepConnectorOverride,
+  MuiStepContent: StepContentOverride,
   MuiSvgIcon: SvgIconOverride,
   MuiSwitch: SwitchOverride,
   MuiTab: TabOverride,
