@@ -92,8 +92,6 @@ export type DataGridForcedPropsKey =
   | "unstable_ignoreValueFormatterDuringExport"
   | "clipboardCopyCellDelimiter"
   | "scrollbarSize"
-  | "getCellClassName"
-  | "getRowClassName"
   | "getEstimatedRowHeight"
   | "getRowSpacing"
   | "getDetailPanelContent"
