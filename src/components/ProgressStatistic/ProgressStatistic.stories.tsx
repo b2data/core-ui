@@ -13,9 +13,9 @@ export default meta;
 export const Base: StoryObj<ProgressStatisticProps> = {
   args: {
     data: [
-      { color: "primary.main", value: 200 },
+      { color: "primary.main", value: 200, label: "Label 1" },
       { color: "error.main", value: 400 },
-      { color: "success.main", value: 100 },
+      { color: "success.main", value: 100, label: "Label 3" },
     ],
   },
 };
