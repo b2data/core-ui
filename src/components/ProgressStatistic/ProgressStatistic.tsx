@@ -1,5 +1,6 @@
-import { Box, SxProps, Theme } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
+
 import { BoxProps } from "../Box";
 
 export type ProgressStatisticEntryType = {
