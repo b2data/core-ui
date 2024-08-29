@@ -19,7 +19,7 @@ export const DialogContent = ({
   <MuiDialogContent
     {...props}
     sx={{
-      padding: disablePadding ? 0 : 20,
+      padding: disablePadding ? 0 : "20px",
       ...props.sx,
     }}
   />
