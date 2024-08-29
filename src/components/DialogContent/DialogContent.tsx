@@ -18,9 +18,9 @@ export const DialogContent = ({
 }: DialogContentProps) => (
   <MuiDialogContent
     {...props}
-    style={{
+    sx={{
       padding: disablePadding ? 0 : 20,
-      overflowY: disablePadding ? "hidden" : "auto",
+      ...props.sx,
     }}
   />
 );
