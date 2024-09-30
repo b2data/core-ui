@@ -7,7 +7,6 @@ export type BlockContentProps = {
   index: number;
   block: Omit<DataBlockModel, "variants">;
   variant: DataBlockVariant;
-  showPrefix?: boolean;
   maxOffset?: number;
   editable?: boolean;
 };
@@ -16,7 +15,6 @@ export const Content: React.FC<BlockContentProps> = ({
   index,
   block,
   variant,
-  showPrefix,
   maxOffset,
   editable,
 }) => {
@@ -28,7 +26,6 @@ export const Content: React.FC<BlockContentProps> = ({
           block={block}
           variant={variant}
           editable={editable}
-          showPrefix={showPrefix}
           maxOffset={maxOffset}
         />
       );
@@ -39,7 +36,6 @@ export const Content: React.FC<BlockContentProps> = ({
           block={block}
           variant={variant}
           editable={editable}
-          showPrefix={showPrefix}
           maxOffset={maxOffset}
         />
       );

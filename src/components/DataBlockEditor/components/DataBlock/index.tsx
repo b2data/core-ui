@@ -4,6 +4,8 @@ import { useDrag } from "react-dnd";
 import { omit } from "ramda";
 
 import { Box } from "../../../Box";
+import { Typography } from "../../../Typography";
+import { CircularProgress } from "../../../CircularProgress";
 import { useToggleable, uuid } from "../../../../hooks";
 import { DataBlockModel } from "../../model";
 import { DropLine } from "../../../DropLine";
@@ -187,18 +189,30 @@ export const DataBlock: React.FC<DataBlockProps> = ({
         minHeight="inherit"
         pl={state.editable ? "60px" : undefined}
       >
+        {state.showPrefix && (
+          <Typography
+            variant="body1"
+            component="div"
+            sx={{
+              minWidth: Math.max(state.maxPrefixLength * 6, 16),
+              pt: 2,
+              mr: -6,
+            }}
+          >
+            {state.prefixes[blockData.id] || <CircularProgress size={14} />}
+          </Typography>
+        )}
         <Box
           width={1}
           display="flex"
           flexDirection="column"
           minHeight="inherit"
-          gap={1}
+          gap={2}
         >
           <Content
             index={index}
             block={blockData}
             variant={currentVariant}
-            showPrefix={state.showPrefix}
             editable={
               state.editable && currentVariant.createdBy === state.currentUserId
             }

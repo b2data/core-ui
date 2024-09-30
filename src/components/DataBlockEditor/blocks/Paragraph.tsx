@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 
 import { CircularProgress } from "../../CircularProgress";
 import { Typography } from "../../Typography";
+import { Box } from "../../Box";
 import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
 import { DataBlockParagraph, DataBlockVariant } from "../model";
 import { useBlockListener } from "../hooks";
@@ -13,7 +14,6 @@ export type ParagraphBlockProps = {
   index: number;
   block: Omit<DataBlockParagraph, "variants">;
   variant: DataBlockVariant;
-  showPrefix?: boolean;
   maxOffset?: number;
   editable?: boolean;
 };
@@ -22,7 +22,6 @@ export const ParagraphBlock: React.FC<ParagraphBlockProps> = ({
   index,
   block,
   variant,
-  showPrefix,
   maxOffset,
   editable,
 }) => {
@@ -58,28 +57,17 @@ export const ParagraphBlock: React.FC<ParagraphBlockProps> = ({
   };
 
   return (
-    <>
-      {showPrefix && (
-        <Typography
-          variant="body1"
-          component="div"
-          sx={{ width: state.maxPrefixLength * 6, pt: 2 }}
-        >
-          {state.prefixes[block.id] || <CircularProgress size={14} />}
-        </Typography>
-      )}
-      <Typography
-        ref={ref}
-        tabIndex={editable ? index : -1}
-        variant="body1"
-        align={align}
-        onBlur={onDataChange}
-        suppressContentEditableWarning={editable}
-        contentEditable={editable}
-        sx={getCommonStyles(state.i18n.emptyPlaceholder)}
-        dangerouslySetInnerHTML={{ __html: text }}
-        {...listeners}
-      />
-    </>
+    <Typography
+      ref={ref}
+      tabIndex={editable ? index : -1}
+      variant="body1"
+      align={align}
+      onBlur={onDataChange}
+      suppressContentEditableWarning={editable}
+      contentEditable={editable}
+      sx={getCommonStyles(state.i18n.emptyPlaceholder)}
+      dangerouslySetInnerHTML={{ __html: text }}
+      {...listeners}
+    />
   );
 };

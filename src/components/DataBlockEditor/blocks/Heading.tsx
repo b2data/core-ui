@@ -13,7 +13,6 @@ export type HeadingBlockProps = {
   index: number;
   block: Omit<DataBlockHeader, "variants">;
   variant: DataBlockVariant;
-  showPrefix?: boolean;
   maxOffset?: number;
   editable?: boolean;
 };
@@ -22,7 +21,6 @@ export const HeadingBlock: React.FC<HeadingBlockProps> = ({
   index,
   block,
   variant,
-  showPrefix,
   maxOffset,
   editable,
 }) => {
@@ -58,28 +56,17 @@ export const HeadingBlock: React.FC<HeadingBlockProps> = ({
   };
 
   return (
-    <>
-      {showPrefix && (
-        <Typography
-          variant="body1"
-          component="div"
-          sx={{ width: state.maxPrefixLength * 6, pt: 2 }}
-        >
-          {state.prefixes[block.id] || <CircularProgress size={14} />}
-        </Typography>
-      )}
-      <Typography
-        ref={ref}
-        tabIndex={editable ? index : -1}
-        variant={tag}
-        align={align}
-        onBlur={onDataChange}
-        suppressContentEditableWarning={editable}
-        contentEditable={editable}
-        sx={getCommonStyles(state.i18n.emptyPlaceholder)}
-        dangerouslySetInnerHTML={{ __html: text }}
-        {...listeners}
-      />
-    </>
+    <Typography
+      ref={ref}
+      tabIndex={editable ? index : -1}
+      variant={tag}
+      align={align}
+      onBlur={onDataChange}
+      suppressContentEditableWarning={editable}
+      contentEditable={editable}
+      sx={getCommonStyles(state.i18n.emptyPlaceholder)}
+      dangerouslySetInnerHTML={{ __html: text }}
+      {...listeners}
+    />
   );
 };

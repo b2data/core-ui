@@ -89,7 +89,7 @@ export const Variants: React.FC<VariantsProps> = ({
       display="flex"
       flexDirection="column"
       minHeight="inherit"
-      gap={1}
+      gap={2}
       mb="20px"
     >
       {shownVariant && (
