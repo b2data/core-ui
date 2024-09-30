@@ -1,14 +1,17 @@
 import React from "react";
-import { SxProps } from "@mui/material";
+import { Chip, SxProps } from "@mui/material";
 
 import { ReadMoreIcon } from "../../../../icons";
 import { DataBlockEditorTranslations } from "../../model";
 import { IconButton } from "../../../IconButton";
 import { Tooltip } from "../../../Tooltip";
+import { Box } from "../../../Box";
 
 export type HasVariantIndicatorProps = {
   i18n: DataBlockEditorTranslations;
   forceShown: boolean;
+  count: number;
+  isOpened?: boolean;
   onOpen: () => void;
   onClose: () => void;
   sx?: SxProps;
@@ -17,6 +20,8 @@ export type HasVariantIndicatorProps = {
 export const HasVariantIndicator: React.FC<HasVariantIndicatorProps> = ({
   i18n,
   forceShown,
+  count,
+  isOpened,
   onOpen,
   onClose,
   sx,
@@ -25,22 +30,28 @@ export const HasVariantIndicator: React.FC<HasVariantIndicatorProps> = ({
     <Tooltip
       text={forceShown ? i18n.closeVariantsTooltip : i18n.showVariantsTooltip}
     >
-      <IconButton
-        className="data-block__variant-indicator"
+      <Box
         sx={{
           position: "absolute",
           top: `calc(50% - ${forceShown ? 32 : 16}px)`,
           right: "-32px",
           cursor: "pointer",
-          opacity: 0,
           ...sx,
         }}
-        onClick={forceShown ? onClose : onOpen}
       >
-        <ReadMoreIcon
-          sx={{ transform: `rotate(${forceShown ? 180 : 0}deg)` }}
-        />
-      </IconButton>
+        {isOpened ? (
+          <IconButton onClick={onClose}>
+            <ReadMoreIcon sx={{ transform: `rotate(180deg)` }} />
+          </IconButton>
+        ) : (
+          <Chip
+            size="small"
+            variant="outlined"
+            label={`+${count}`}
+            onClick={onOpen}
+          />
+        )}
+      </Box>
     </Tooltip>
   );
 };

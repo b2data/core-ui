@@ -16,6 +16,8 @@ import { Variants } from "./Variants";
 import { HasVariantIndicator } from "./HasVariantIndicator";
 import { AddVariantIndicator } from "./AddVariantIndicator";
 import { SwapVariantIndicator } from "./SwapVariantIndicator";
+import { VariantAuthor } from "./VariantAuthor";
+import { VariantLikes } from "./VariantLikes";
 
 export type DataBlockProps = {
   index: number;
@@ -55,6 +57,14 @@ export const DataBlock: React.FC<DataBlockProps> = ({
   const currentVariant = useMemo(
     () => data.variants.find((v) => v.isCurrent) || data.variants[0],
     [data.variants],
+  );
+
+  const currentVariantVoted = useMemo(
+    () =>
+      Boolean(
+        currentVariant?.votes?.find((v) => v.createdBy === state.currentUserId),
+      ),
+    [currentVariant, state.currentUserId],
   );
 
   const otherVariants = useMemo(
@@ -124,8 +134,9 @@ export const DataBlock: React.FC<DataBlockProps> = ({
         position: "relative",
         minHeight: 30,
         my: 1,
-        "&:hover .data-block__actions": { opacity: 1 },
-        "&:hover .data-block__variant-indicator": { opacity: 1 },
+        "&:hover .data-block__actions, &:hover .data-block__variant-indicator, &:focus-within .data-block__actions, &:focus-within .data-block__variant-indicator":
+          { opacity: 1 },
+
         ...sx,
       }}
     >
@@ -172,20 +183,38 @@ export const DataBlock: React.FC<DataBlockProps> = ({
         display="flex"
         flexDirection="row"
         alignItems="flex-start"
-        gap={5}
+        gap={8}
         minHeight="inherit"
         pl={state.editable ? "60px" : undefined}
       >
-        <Content
-          index={index}
-          block={blockData}
-          variant={currentVariant}
-          showPrefix={state.showPrefix}
-          editable={
-            state.editable && currentVariant.createdBy === state.currentUserId
-          }
-          maxOffset={maxOffset}
-        />
+        <Box
+          width={1}
+          display="flex"
+          flexDirection="column"
+          minHeight="inherit"
+          gap={1}
+        >
+          <Content
+            index={index}
+            block={blockData}
+            variant={currentVariant}
+            showPrefix={state.showPrefix}
+            editable={
+              state.editable && currentVariant.createdBy === state.currentUserId
+            }
+            maxOffset={maxOffset}
+          />
+          {displayVariants && (
+            <>
+              <VariantAuthor blockId={blockData.id} variant={currentVariant} />
+              <VariantLikes
+                blockId={blockData.id}
+                isVoted={currentVariantVoted}
+                variant={currentVariant}
+              />
+            </>
+          )}
+        </Box>
 
         {displayVariants && otherVariants.length > 0 && state.editable && (
           <Variants
@@ -196,38 +225,42 @@ export const DataBlock: React.FC<DataBlockProps> = ({
             setShownIndex={setShownIndex}
             onAddVariant={handleAddVariant}
             canAddVariant={canAddVariant}
-            onClose={closeShowVariants}
           />
         )}
       </Box>
       {state.editable && (
         <>
-          {!state.showVariants && otherVariants.length > 0 && (
+          {otherVariants.length > 0 && (
             <HasVariantIndicator
               i18n={state.i18n}
               forceShown={forceShowVariants}
               onOpen={openShowVariants}
               onClose={closeShowVariants}
+              count={otherVariants.length}
+              isOpened={state.showVariants || forceShowVariants}
               sx={{
                 top: `calc(50% - ${forceShowVariants ? 32 : 16}px)`,
               }}
             />
           )}
-          {!displayVariants && canAddVariant && (
-            <AddVariantIndicator
-              i18n={state.i18n}
-              onAdd={handleAddVariant}
-              sx={{
-                right: otherVariants.length > 0 ? "-66px" : "-32px",
-              }}
-            />
-          )}
-          {state.canChangeVariants && displayVariants && (
-            <SwapVariantIndicator
-              i18n={state.i18n}
-              onSwap={handleChangeCurrentVariant}
-            />
-          )}
+          {(otherVariants.length > 0 ? !displayVariants : true) &&
+            canAddVariant && (
+              <AddVariantIndicator
+                i18n={state.i18n}
+                onAdd={handleAddVariant}
+                sx={{
+                  right: otherVariants.length > 0 ? "-66px" : "-32px",
+                }}
+              />
+            )}
+          {state.canChangeVariants &&
+            displayVariants &&
+            otherVariants.length > 0 && (
+              <SwapVariantIndicator
+                i18n={state.i18n}
+                onSwap={handleChangeCurrentVariant}
+              />
+            )}
         </>
       )}
     </Box>

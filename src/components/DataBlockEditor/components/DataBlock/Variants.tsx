@@ -1,25 +1,15 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 
-import {
-  AddIcon,
-  DeleteIcon,
-  ExpandMoreIcon,
-  ThumbUpIcon,
-} from "../../../../icons";
+import { AddIcon } from "../../../../icons";
 import { DataBlockModel } from "../../model";
 import { Box } from "../../../Box";
 import { IconButton } from "../../../IconButton";
-import { List } from "../../../List";
-import { ListItem } from "../../../ListItem";
-import { Popover } from "../../../Popover";
-import { Button } from "../../../Button";
-import { ButtonGroup } from "../../../ButtonGroup";
-import { Avatar } from "../../../Avatar";
 import { Tooltip } from "../../../Tooltip";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../../store";
-import { formatUserName } from "../../utils";
+import { DataBlockEditorContext } from "../../store";
 
 import { Content } from "./Content";
+import { VariantLikes } from "./VariantLikes";
+import { VariantAuthor } from "./VariantAuthor";
 
 export type VariantsProps = {
   index: number;
@@ -27,7 +17,6 @@ export type VariantsProps = {
   variants: DataBlockModel["variants"];
   shownIndex: number;
   setShownIndex: (index: number) => void;
-  onClose: () => void;
   onAddVariant: () => void;
   canAddVariant: boolean;
 };
@@ -38,13 +27,10 @@ export const Variants: React.FC<VariantsProps> = ({
   variants,
   shownIndex,
   setShownIndex,
-  onClose,
   onAddVariant,
   canAddVariant,
 }) => {
-  const { state, dispatch } = useContext(DataBlockEditorContext);
-
-  const [popoverEl, setPopoverEl] = useState<HTMLButtonElement | null>(null);
+  const { state } = useContext(DataBlockEditorContext);
 
   const shownVariant = useMemo(
     () => variants[shownIndex],
@@ -96,31 +82,6 @@ export const Variants: React.FC<VariantsProps> = ({
     }
   }, [shownIndex, variants]);
 
-  const handleToggleVariant = () => {
-    if (state.currentUserId) {
-      dispatch({
-        action: isVoted
-          ? DataBlockEditorAction.UnVoteVariant
-          : DataBlockEditorAction.VoteVariant,
-        id: block.id,
-        variantId: shownVariant.id,
-        createdBy: state.currentUserId,
-      });
-    }
-  };
-
-  const handleDeleteVariant = () => {
-    dispatch({
-      action: DataBlockEditorAction.DeleteVariant,
-      id: block.id,
-      variantId: shownVariant.id,
-    });
-    if (variants.length <= 1) {
-      onClose();
-    }
-    setShownIndex(0);
-  };
-
   return (
     <Box
       className="data-block__variants"
@@ -140,26 +101,11 @@ export const Variants: React.FC<VariantsProps> = ({
             variant={shownVariant}
             editable={editable}
           />
-          <ListItem
-            sx={{ p: 0, minHeight: "auto" }}
-            text={formatUserName(shownVariant.createdByData)}
-            avatar={
-              <Avatar
-                sx={{ width: 20, height: 20 }}
-                src={shownVariant.createdByData?.avatar}
-              >
-                {formatUserName(shownVariant.createdByData, { short: true })}
-              </Avatar>
-            }
-            action={
-              editable ? (
-                <Tooltip text={state.i18n.deleteVariantTooltip}>
-                  <IconButton size="small" onClick={handleDeleteVariant}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              ) : undefined
-            }
+          <VariantAuthor
+            blockId={block.id}
+            variant={shownVariant}
+            editable={editable}
+            setShownIndex={setShownIndex}
           />
         </>
       )}
@@ -170,27 +116,11 @@ export const Variants: React.FC<VariantsProps> = ({
         justifyContent="space-between"
         gap={3}
       >
-        <ButtonGroup variant={isVoted ? "contained" : "outlined"} size="small">
-          <Button
-            startIcon={<ThumbUpIcon />}
-            sx={{
-              px: 2,
-              py: 1,
-              fontSize: 12,
-              height: 20,
-            }}
-            disabled={!state.currentUserId}
-            onClick={handleToggleVariant}
-          >
-            {shownVariant?.votes?.length || 0}
-          </Button>
-          <Button
-            onClick={(e) => setPopoverEl(e.currentTarget)}
-            sx={{ minWidth: "10px !important", py: 0.5, px: 1, height: 20 }}
-          >
-            <ExpandMoreIcon sx={{ width: 16, height: 16 }} />
-          </Button>
-        </ButtonGroup>
+        <VariantLikes
+          blockId={block.id}
+          isVoted={isVoted}
+          variant={shownVariant}
+        />
         <Box display="flex" alignItems="center" gap={1}>
           {slider.map((ind, i) => (
             <IconButton
@@ -222,32 +152,6 @@ export const Variants: React.FC<VariantsProps> = ({
           )}
         </Box>
       </Box>
-
-      <Popover
-        anchorEl={popoverEl}
-        open={Boolean(popoverEl)}
-        onClose={() => setPopoverEl(null)}
-      >
-        <List sx={{ maxHeight: 300 }}>
-          {!shownVariant?.votes?.length && (
-            <ListItem text={state.i18n.noResults} />
-          )}
-          {shownVariant?.votes?.map((v) => (
-            <ListItem
-              key={v.createdBy}
-              avatar={
-                <Avatar
-                  sx={{ width: 20, height: 20 }}
-                  src={v.createdByData?.avatar}
-                >
-                  {formatUserName(v.createdByData, { short: true })}
-                </Avatar>
-              }
-              text={formatUserName(v.createdByData)}
-            />
-          ))}
-        </List>
-      </Popover>
     </Box>
   );
 };

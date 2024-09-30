@@ -15,7 +15,10 @@ export const DataBlockEditorRenderer: React.FC<{
   const blocks = state.blocks || [];
 
   return (
-    <Box sx={{ width: 1, height: 1, overflowY: "auto" }} onScroll={onScroll}>
+    <Box
+      sx={{ width: 1, height: 1, overflowY: "auto", pb: "500px" }}
+      onScroll={onScroll}
+    >
       <Box sx={sx}>
         {blocks.map((data, index) => (
           <DataBlock
