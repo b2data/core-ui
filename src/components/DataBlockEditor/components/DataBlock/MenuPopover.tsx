@@ -153,6 +153,11 @@ export const MenuPopover: React.FC<{
               color: isDeleting ? "white" : undefined,
             }}
             onClick={() => (isDeleting ? onDelete() : setIsDeleting(true))}
+            action={
+              <Box sx={{ cursor: "pointer", fontSize: 10 }}>
+                {`${Symbols.CMD} + ${Symbols.SHIFT} + ${Symbols.BACKSPACE}`}
+              </Box>
+            }
           />
         </List>
       </Popover>

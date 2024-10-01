@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Popover } from "../../../Popover";
 import { List } from "../../../List";
 import { ListItem } from "../../../ListItem";
+import { Box } from "../../../Box";
 import { TextField } from "../../../TextField";
 import { DataBlockEditorTranslations, DataBlockType } from "../../model";
 import { SearchIcon } from "../../../../icons";
@@ -86,6 +87,13 @@ export const AddTypePopover: React.FC<{
             onKeyDown={(e) => (e.code === "Enter" ? onAdd(type) : null)}
             text={typeOptions[type].label}
             icon={typeOptions[type].icon}
+            action={
+              typeOptions[type].action ? (
+                <Box sx={{ cursor: "pointer", fontSize: 10 }}>
+                  {typeOptions[type].action}
+                </Box>
+              ) : undefined
+            }
           />
         ))}
       </List>

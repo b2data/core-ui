@@ -78,7 +78,11 @@ export const VariantLikes: FC<VariantLikesProps> = ({
                 avatar={
                   <Avatar
                     sx={{ width: 20, height: 20 }}
-                    src={v.createdByData?.avatar}
+                    src={
+                      v.createdByData?.avatar
+                        ? `${state.getFilesUrl(v.createdByData?.avatar)}`
+                        : undefined
+                    }
                   >
                     {formatUserName(v.createdByData, { short: true })}
                   </Avatar>

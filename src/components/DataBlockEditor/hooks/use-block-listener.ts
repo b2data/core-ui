@@ -77,7 +77,7 @@ export const useBlockListener = (
       action: DataBlockEditorAction.AddBlock,
       block: {
         id: uuid(),
-        type: block.type,
+        type: DataBlockType.Paragraph,
         number: index + 2,
         offset: block.offset,
       },
@@ -87,6 +87,17 @@ export const useBlockListener = (
         isCurrent: true,
       },
       index: index + 1,
+    });
+  };
+
+  const onDeleteBlock = () => {
+    dispatch({
+      action: DataBlockEditorAction.DeleteBlock,
+      id: block.id,
+    });
+    dispatch({
+      action: DataBlockEditorAction.SetFocused,
+      index: Math.max(0, index - 1),
     });
   };
 
@@ -103,7 +114,12 @@ export const useBlockListener = (
       onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
         listenOffsetEvent(e, onOffsetChange);
         navigationEvent(e, onChangeNavigation);
-        addShortcutEvent(e, onAddBlock);
+        addShortcutEvent(e, onAddBlock, { metaKey: true, key: "Enter" });
+        addShortcutEvent(e, onDeleteBlock, {
+          metaKey: true,
+          shiftKey: true,
+          key: "Backspace",
+        });
       },
       onPaste: handlePaste,
     };

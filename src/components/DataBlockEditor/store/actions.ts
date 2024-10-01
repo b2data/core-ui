@@ -13,10 +13,11 @@ export enum DataBlockEditorAction {
   SetBlocks = "setBlocks",
   SetShowPrefix = "setShowPrefix",
   SetShowVariants = "setShowVariants",
-  SetPrefixis = "setPrefixis",
+  SetPrefixes = "setPrefixes",
   SetFocused = "setFocused",
   SetCanChangeVariants = "setCanChangeVariants",
   SetCurrentUserId = "setCurrentUserId",
+  SetGetFilesUrl = "setGetFilesUrl",
 
   // Actions for callback
   AddBlock = "addBlock",
@@ -76,8 +77,13 @@ type SetCurrentUserId = SetDataBlockEditorAction<
   { currentUserId: string }
 >;
 
-type SetPrefixis = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetPrefixis,
+type SetGetFilesUrl = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetGetFilesUrl,
+  { getFilesUrl: (id: string) => string }
+>;
+
+type SetPrefixes = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetPrefixes,
   { prefixes: Record<string, string> }
 >;
 
@@ -152,7 +158,8 @@ export type DataBlockEditorActions =
   | SetShowVariants
   | SetCanChangeVariants
   | SetCurrentUserId
-  | SetPrefixis
+  | SetGetFilesUrl
+  | SetPrefixes
   | SetBlocks
   | AddBlock
   | EditBlock

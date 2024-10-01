@@ -6,6 +6,8 @@ enum SymbolsMac {
   CAPS = "⇪",
   FN = "fn",
   TAB = "→",
+  ENTER = "↩",
+  BACKSPACE = "⌫",
 }
 
 enum SymbolsWindow {
@@ -13,6 +15,8 @@ enum SymbolsWindow {
   SHIFT = "⇧",
   CAPS = "⇪",
   TAB = "→",
+  ENTER = "↩",
+  BACKSPACE = "⌫",
 }
 
 export const useDevice = () => {
@@ -30,6 +34,9 @@ export const useDevice = () => {
       SHIFT: isMacOs ? SymbolsMac.SHIFT : SymbolsWindow.SHIFT,
       FN: isMacOs ? SymbolsMac.FN : "",
       CAPS: isMacOs ? SymbolsMac.CAPS : SymbolsWindow.CAPS,
-      TAB: isMacOs ? SymbolsMac.TAB : SymbolsWindow.TAB,    },
+      TAB: isMacOs ? SymbolsMac.TAB : SymbolsWindow.TAB,
+      ENTER: isMacOs ? SymbolsMac.ENTER : SymbolsWindow.ENTER,
+      BACKSPACE: isMacOs ? SymbolsMac.BACKSPACE : SymbolsWindow.BACKSPACE,
+    },
   };
 };

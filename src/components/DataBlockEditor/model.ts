@@ -112,6 +112,7 @@ export type DataBlockEditorState = {
   showVariants?: boolean;
   canChangeVariants?: boolean;
   currentUserId?: string;
+  getFilesUrl: (id: string) => string;
   types: DataBlockType[];
   i18n: DataBlockEditorTranslations;
   prefixes: Record<string, string>;
@@ -144,9 +145,13 @@ export type DataBlockEditorProps = {
    */
   canChangeVariants?: boolean;
   /**
-   * Used to determinate whitch `vote` related to user.
+   * Used to determinate which `vote` related to user.
    */
   currentUserId?: string;
+  /**
+   * URL to files
+   */
+  getFilesUrl: (id: string) => string;
   /**
    * Show only specific block type (by default - all)
    */

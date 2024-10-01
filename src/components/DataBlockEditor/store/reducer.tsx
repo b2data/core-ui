@@ -26,6 +26,7 @@ export const initialState: DataBlockEditorState = {
   focused: undefined,
   canChangeVariants: false,
   currentUserId: undefined,
+  getFilesUrl: () => "/",
   prefixes: {},
   types: Object.values(DataBlockType),
   blocks: [],
@@ -107,6 +108,10 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return { ...state, currentUserId: action.currentUserId };
     }
 
+    case DataBlockEditorAction.SetGetFilesUrl: {
+      return { ...state, getFilesUrl: action.getFilesUrl };
+    }
+
     case DataBlockEditorAction.SetFocused: {
       return { ...state, focused: action.index };
     }
@@ -118,7 +123,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       };
     }
 
-    case DataBlockEditorAction.SetPrefixis: {
+    case DataBlockEditorAction.SetPrefixes: {
       return {
         ...state,
         maxPrefixLength: calcMaxPrefix(action.prefixes),

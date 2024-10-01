@@ -36,6 +36,7 @@ const DataBlockEditorProvider = forwardRef<
     showVariants,
     canChangeVariants,
     currentUserId,
+    getFilesUrl,
     types,
     i18n,
     blocks,
@@ -103,8 +104,14 @@ const DataBlockEditorProvider = forwardRef<
   }, [blocks]);
 
   useEffect(() => {
+    if (typeof getFilesUrl !== "undefined") {
+      dispatch({ action: DataBlockEditorAction.SetGetFilesUrl, getFilesUrl });
+    }
+  }, [getFilesUrl]);
+
+  useEffect(() => {
     if (prefixes) {
-      dispatch({ action: DataBlockEditorAction.SetPrefixis, prefixes });
+      dispatch({ action: DataBlockEditorAction.SetPrefixes, prefixes });
     }
   }, [prefixes]);
 
