@@ -40,7 +40,11 @@ export const VariantAuthor: FC<VariantAuthorProps> = ({
       avatar={
         <Avatar
           sx={{ width: 20, height: 20 }}
-          src={variant.createdByData?.avatar}
+          src={
+            variant.createdByData?.avatar
+              ? `${state.getFilesUrl(variant.createdByData?.avatar)}`
+              : undefined
+          }
         >
           {formatUserName(variant.createdByData, { short: true })}
         </Avatar>
