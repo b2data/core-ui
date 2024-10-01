@@ -1,0 +1,9 @@
+import{j as r}from"./jsx-runtime-4ca860c5.js";import{M as t}from"./MenuItem-8ccd3716.js";import{M as p}from"./MenuList-d9dc8157.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./MenuItem-26379da8.js";import"./createTheme-afe70497.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-eaccc129.js";import"./index-b47fffdc.js";import"./styled-938ba038.js";import"./useThemeProps-bf98364a.js";import"./ListContext-58194ff9.js";import"./generateUtilityClasses-8f2c365e.js";import"./ButtonBase-d6010b8e.js";import"./emotion-react.browser.esm-42739ee1.js";import"./assertThisInitialized-081f9914.js";import"./inheritsLoose-5494d9cc.js";import"./TransitionGroupContext-adcba781.js";import"./useForkRef-80a5c2b4.js";import"./useIsFocusVisible-c78074a7.js";import"./useEventCallback-1165b6b6.js";import"./useEnhancedEffect-e1879ff8.js";import"./dividerClasses-fa2bd388.js";import"./listItemTextClasses-cc36566e.js";import"./Box-cf9644a4.js";import"./extendSxProp-50a8832f.js";import"./MenuList-8c082415.js";import"./react-is.production.min-a192e302.js";import"./getScrollbarSize-ac846fe6.js";import"./ownerDocument-613eb639.js";const A={title:"Components/Menu/Menu List",component:p,tags:["autodocs"]},o={args:{sx:{border:"1px solid"},children:[r.jsx(t,{children:"Profile"}),r.jsx(t,{children:"My account"}),r.jsx(t,{children:"Logout"})]}};var m,e,i;o.parameters={...o.parameters,docs:{...(m=o.parameters)==null?void 0:m.docs,source:{originalSource:`{
+  args: {
+    sx: {
+      border: "1px solid"
+    },
+    children: [<MenuItem>Profile</MenuItem>, <MenuItem>My account</MenuItem>, <MenuItem>Logout</MenuItem>]
+  }
+}`,...(i=(e=o.parameters)==null?void 0:e.docs)==null?void 0:i.source}}};const D=["Base"];export{o as Base,D as __namedExportsOrder,A as default};
+//# sourceMappingURL=MenuList.stories-bfe7b301.js.map
