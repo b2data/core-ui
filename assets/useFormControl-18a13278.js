@@ -1,0 +1,2 @@
+import{r as e}from"./index-61bf1805.js";function x({props:r,states:f,muiFormControl:t}){return f.reduce((n,o)=>(n[o]=r[o],t&&typeof r[o]>"u"&&(n[o]=t[o]),n),{})}const u=e.createContext(void 0),C=u;function d(){return e.useContext(C)}export{C as F,x as f,d as u};
+//# sourceMappingURL=useFormControl-18a13278.js.map

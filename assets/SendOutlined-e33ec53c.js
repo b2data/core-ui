@@ -1,0 +1,2 @@
+import{r,i as t}from"./ListItem-78ae8533.js";import{j as a}from"./jsx-runtime-4ca860c5.js";var e={},u=t;Object.defineProperty(e,"__esModule",{value:!0});var d=e.default=void 0,i=u(r()),o=a,l=(0,i.default)((0,o.jsx)("path",{d:"m4.01 6.03 7.51 3.22-7.52-1 .01-2.22m7.5 8.72L4 17.97v-2.22l7.51-1M2.01 3 2 10l15 2-15 2 .01 7L23 12 2.01 3z"}),"SendOutlined");d=e.default=l;export{d};
+//# sourceMappingURL=SendOutlined-e33ec53c.js.map
