@@ -3,7 +3,7 @@ import { FormulaTextField, FormulaTextFieldProps } from "./FormulaTextField";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<FormulaTextFieldProps> = {
-  title: "Components/Formula Text Field",
+  title: "Components/Formula Editor/Formula Text Field",
   component: FormulaTextField,
   tags: ["autodocs"],
 };

@@ -43,6 +43,7 @@ export * from "./ListItemButton";
 export * from "./ListItemIcon";
 export * from "./ListItemText";
 export * from "./ListSubheader";
+export * from "./MarkdownField";
 export * from "./Menu";
 export * from "./MenuItem";
 export * from "./MenuList";

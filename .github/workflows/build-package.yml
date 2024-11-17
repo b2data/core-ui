@@ -38,6 +38,8 @@ jobs:
         run: |
           npm pack
           npm publish
+      - name: Cleanup
+        run: rm -f .npmrc
 
   deploy:
     needs: publish

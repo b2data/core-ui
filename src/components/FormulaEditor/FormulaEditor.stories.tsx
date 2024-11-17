@@ -7,7 +7,7 @@ import { FormulaEditor, FormulaEditorProps } from "./FormulaEditor";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<FormulaEditorProps> = {
-  title: "Components/Formula Editor",
+  title: "Components/Formula Editor/Formula Editor",
   component: FormulaEditor,
   tags: ["autodocs"],
 };

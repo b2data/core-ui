@@ -31,7 +31,7 @@ export const getCaretPosition = () => {
 };
 
 /**
- * Set caret postion in DIV
+ * Set caret position in DIV
  */
 
 export const setCaretPosition = (div: HTMLElement, toStart = false) => {

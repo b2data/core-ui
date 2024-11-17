@@ -24,7 +24,7 @@ export const SwapVariantIndicator: React.FC<SwapVariantIndicatorProps> = ({
         sx={{
           position: "absolute",
           top: 0,
-          left: `calc(50% + 16px)`,
+          left: `calc(50% + 28px)`,
           cursor: "pointer",
           opacity: 0,
           ...sx,
