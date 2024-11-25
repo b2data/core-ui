@@ -2,8 +2,9 @@ import { Box, SxProps } from "@mui/material";
 import React, { ReactNode, useMemo } from "react";
 import { marked } from "marked";
 
+import { useMarkdownStyles } from "../MarkdownContent";
+
 import { useConfig } from "./use-config";
-import { useMarkdownStyles } from "../MarkdownContent/";
 
 export interface MarkdownFieldProps {
   /**
