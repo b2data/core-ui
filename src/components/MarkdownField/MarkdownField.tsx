@@ -3,6 +3,7 @@ import React, { ReactNode, useMemo } from "react";
 import { marked } from "marked";
 
 import { useConfig } from "./use-config";
+import { useMarkdownStyles } from "../MarkdownContent/";
 
 export interface MarkdownFieldProps {
   /**
@@ -158,7 +159,7 @@ export const MarkdownField = React.forwardRef(
           sx={(theme) => ({
             ...theme.typography.body1,
             position: "relative",
-            minHeight: 40,
+            minHeight: 36,
             width: 1,
             "&:before": {
               left: 0,
@@ -193,50 +194,7 @@ export const MarkdownField = React.forwardRef(
             "&:focus-within:after": {
               transform: "scaleX(1) translateX(0)",
             },
-            "& h1": {
-              ...theme.typography.h1,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-            },
-            "& h2": {
-              ...theme.typography.h2,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-            },
-            "& h3": {
-              ...theme.typography.h3,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-            },
-            "& h4": {
-              ...theme.typography.h4,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-            },
-            "& h5": {
-              ...theme.typography.h5,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-            },
-            "& h6": {
-              ...theme.typography.h6,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-            },
-            "& p": {
-              ...theme.typography.body1,
-              mt: 0,
-              mb: 2,
-              display: "inline-block",
-              "&:last-child": { lineHeight: "20px" },
-            },
-            "& *:last-child": { mb: 0 },
+            ...useMarkdownStyles(theme),
           })}
         >
           <Box
@@ -250,7 +208,7 @@ export const MarkdownField = React.forwardRef(
               wordBreak: "break-all",
               display: "block",
               outline: "none",
-              lineHeight: "20px",
+              lineHeight: 1.1,
               minHeight: 36,
               padding: "8px 0",
               whiteSpace: "pre-line",
