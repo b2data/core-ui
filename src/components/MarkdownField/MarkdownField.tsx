@@ -44,6 +44,16 @@ export interface MarkdownFieldProps {
    */
   value?: string;
   /**
+   * Defined margin offset
+   * @default none
+   */
+  margin?: "normal" | "none";
+  /**
+   * Defines minimum height of the field
+   * @default 1
+   */
+  minRows?: number;
+  /**
    * Callback fired when the Component is blurred. It returns Markdown.
    */
   onBlur?: (event: React.FocusEvent<HTMLElement>) => void;
@@ -73,6 +83,8 @@ export const MarkdownField = React.forwardRef(
       placeholder,
       required,
       value,
+      margin = "none",
+      minRows = 1,
       sx,
       ...restProps
     }: MarkdownFieldProps,
@@ -99,16 +111,16 @@ export const MarkdownField = React.forwardRef(
     return (
       <Box
         ref={ref}
-        sx={(theme) => ({
+        sx={{
           display: "inline-flex",
           flexDirection: "column",
           position: "relative",
           width: 1,
           padding: 0,
-          margin: 0,
+          margin: margin === "normal" ? "8px 0 16px" : 0,
           border: 0,
           verticalAlign: "top",
-        })}
+        }}
       >
         <Box
           component="label"
@@ -160,7 +172,7 @@ export const MarkdownField = React.forwardRef(
           sx={(theme) => ({
             ...theme.typography.body1,
             position: "relative",
-            minHeight: 36,
+            minHeight: 36 + (minRows - 1) * 20,
             width: 1,
             "&:before": {
               left: 0,

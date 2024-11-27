@@ -48,7 +48,7 @@ export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * If `normal` will adjust vertical spacing of this and contained components.
    * @default none
    */
-  margin?: Exclude<MuiTextFieldProps["margin"], "dence">;
+  margin?: Exclude<MuiTextFieldProps["margin"], "dense">;
   /**
    * Wrapper props
    */
