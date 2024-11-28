@@ -5,6 +5,7 @@ import { marked } from "marked";
 import { useMarkdownStyles } from "../MarkdownContent";
 
 import { useConfig } from "./use-config";
+import { FormHelperText } from "../FormHelperText";
 
 export interface MarkdownFieldProps {
   /**
@@ -85,6 +86,7 @@ export const MarkdownField = React.forwardRef(
       value,
       margin = "none",
       minRows = 1,
+      helperText,
       sx,
       ...restProps
     }: MarkdownFieldProps,
@@ -234,6 +236,9 @@ export const MarkdownField = React.forwardRef(
             dangerouslySetInnerHTML={{ __html: markdownContent ?? "" }}
           />
         </Box>
+        {helperText && (
+          <FormHelperText error={error}>{helperText}</FormHelperText>
+        )}
       </Box>
     );
   },
