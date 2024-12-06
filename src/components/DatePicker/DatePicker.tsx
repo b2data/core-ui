@@ -48,22 +48,48 @@ export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * If `normal` will adjust vertical spacing of this and contained components.
    * @default none
    */
-  margin?: Exclude<MuiTextFieldProps["margin"], "dense">;
+  margin?: MuiTextFieldProps["margin"];
   /**
    * Wrapper props
    */
   wrapperProps?: BoxProps;
+  /**
+   * If `true`, the asterics is displayed after label.
+   * @default false
+   */
+  required?: boolean;
 }
 
 export const DatePicker = React.forwardRef(function DatePicker<
   TDate extends Dayjs | null = Dayjs | null,
 >(
-  { format, helperText, wrapperProps, ...props }: DatePickerProps<TDate>,
+  {
+    format,
+    helperText,
+    wrapperProps,
+    required,
+    label,
+    ...props
+  }: DatePickerProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
     <Box {...wrapperProps}>
-      <MuiDatePicker ref={ref} format={format || "DD.MM.YYYY"} {...props} />
+      <MuiDatePicker
+        ref={ref}
+        format={format || "DD.MM.YYYY"}
+        label={
+          <>
+            {label}
+            {required && (
+              <Box component="span" sx={{ color: "error.main" }}>
+                {" *"}
+              </Box>
+            )}
+          </>
+        }
+        {...props}
+      />
       {helperText && (
         <FormHelperText error={props.error}>{helperText}</FormHelperText>
       )}

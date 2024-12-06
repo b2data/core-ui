@@ -103,11 +103,11 @@ export const MenuPopover: React.FC<{
             <ListItem
               asButton
               icon={
-                "align" in data && data.align === DataBlockAlign.Right ? (
+                "align" in data && data.align === "right" ? (
                   <AlignRightIcon />
-                ) : "align" in data && data.align === DataBlockAlign.Center ? (
+                ) : "align" in data && data.align === "center" ? (
                   <AlignCenterIcon />
-                ) : "align" in data && data.align === DataBlockAlign.Justify ? (
+                ) : "align" in data && data.align === "justify" ? (
                   <AlignJustifyIcon />
                 ) : (
                   <AlignLeftIcon />
@@ -172,25 +172,25 @@ export const MenuPopover: React.FC<{
             asButton
             text={i18n.align.left}
             icon={<AlignLeftIcon />}
-            onClick={() => handleChangeAlign(DataBlockAlign.Left)}
+            onClick={() => handleChangeAlign("left")}
           />
           <ListItem
             asButton
             text={i18n.align.center}
             icon={<AlignCenterIcon />}
-            onClick={() => handleChangeAlign(DataBlockAlign.Center)}
+            onClick={() => handleChangeAlign("center")}
           />
           <ListItem
             asButton
             text={i18n.align.right}
             icon={<AlignRightIcon />}
-            onClick={() => handleChangeAlign(DataBlockAlign.Right)}
+            onClick={() => handleChangeAlign("right")}
           />
           <ListItem
             asButton
             text={i18n.align.justify}
             icon={<AlignJustifyIcon />}
-            onClick={() => handleChangeAlign(DataBlockAlign.Justify)}
+            onClick={() => handleChangeAlign("justify")}
           />
         </List>
       </Popover>

@@ -3,9 +3,9 @@ import React, { ReactNode, useMemo } from "react";
 import { marked } from "marked";
 
 import { useMarkdownStyles } from "../MarkdownContent";
+import { FormHelperText } from "../FormHelperText";
 
 import { useConfig } from "./use-config";
-import { FormHelperText } from "../FormHelperText";
 
 export interface MarkdownFieldProps {
   /**

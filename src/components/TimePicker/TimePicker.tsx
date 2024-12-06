@@ -45,17 +45,29 @@ export interface TimePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * If `normal` will adjust vertical spacing of this and contained components.
    * @default none
    */
-  margin?: Exclude<MuiTextFieldProps["margin"], "dense">;
+  margin?: MuiTextFieldProps["margin"];
   /**
    * Wrapper props
    */
   wrapperProps?: BoxProps;
+  /**
+   * If `true`, the asterics is displayed after label.
+   * @default false
+   */
+  required?: boolean;
 }
 
 export const TimePicker = React.forwardRef(function TimePicker<
   TDate extends Dayjs | null = Dayjs | null,
 >(
-  { format, helperText, wrapperProps, ...props }: TimePickerProps<TDate>,
+  {
+    format,
+    helperText,
+    wrapperProps,
+    required,
+    label,
+    ...props
+  }: TimePickerProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
@@ -65,6 +77,16 @@ export const TimePicker = React.forwardRef(function TimePicker<
         format={format || "HH:mm"}
         ampm={false}
         ampmInClock={false}
+        label={
+          <>
+            {label}
+            {required && (
+              <Box component="span" sx={{ color: "error.main" }}>
+                {" *"}
+              </Box>
+            )}
+          </>
+        }
         {...props}
         sx={{
           ...props.sx,

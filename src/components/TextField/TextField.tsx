@@ -42,7 +42,7 @@ export interface TextFieldProps
    * If `normal` will adjust vertical spacing of this and contained components.
    * @default none
    */
-  margin?: Exclude<MuiTextFieldProps["margin"], "dense">;
+  margin?: MuiTextFieldProps["margin"];
   /**
    * If `true`, the input will take up the full width of its container.
    * @default true

@@ -8,12 +8,7 @@ export enum DataBlockType {
   Header = "header",
 }
 
-export enum DataBlockAlign {
-  Left = "left",
-  Right = "right",
-  Center = "center",
-  Justify = "justify",
-}
+export type DataBlockAlign = "left" | "right" | "center" | "justify";
 
 export type DataBlockEditorTranslations = {
   addBtnTooltip: string | ReactNode;
@@ -59,7 +54,7 @@ export type DataBlockVariant<Data = Record<string, any>> = {
   createdBy?: string;
   createdByData?: UserData;
   votes: {
-    createdBy: string;
+    createdBy?: string;
     createdByData?: UserData;
     createdAt: Date;
   }[];

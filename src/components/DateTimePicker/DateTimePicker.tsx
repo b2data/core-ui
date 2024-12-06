@@ -45,17 +45,29 @@ export interface DateTimePickerProps<TDate extends Dayjs | null = Dayjs | null>
    * If `normal` will adjust vertical spacing of this and contained components.
    * @default none
    */
-  margin?: Exclude<MuiTextFieldProps["margin"], "dense">;
+  margin?: MuiTextFieldProps["margin"];
   /**
    * Wrapper props
    */
   wrapperProps?: BoxProps;
+  /**
+   * If `true`, the asterics is displayed after label.
+   * @default false
+   */
+  required?: boolean;
 }
 
 export const DateTimePicker = React.forwardRef(function DateTimePicker<
   TDate extends Dayjs | null = Dayjs | null,
 >(
-  { format, helperText, wrapperProps, ...props }: DateTimePickerProps<TDate>,
+  {
+    format,
+    helperText,
+    wrapperProps,
+    label,
+    required,
+    ...props
+  }: DateTimePickerProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
@@ -65,6 +77,16 @@ export const DateTimePicker = React.forwardRef(function DateTimePicker<
         format={format || "DD.MM.YYYY HH:mm"}
         ampm={false}
         ampmInClock={false}
+        label={
+          <>
+            {label}
+            {required && (
+              <Box component="span" sx={{ color: "error.main" }}>
+                {" *"}
+              </Box>
+            )}
+          </>
+        }
         {...props}
         sx={{
           ...props.sx,

@@ -25,7 +25,7 @@ export const Base: StoryObj<DateTimePickerProps> = {
 };
 
 export const DefaultValue: StoryObj<DateTimePickerProps> = {
-  args: {},
+  args: { required: true, label: "Demo" },
   render: (props) => (
     <DatePickerProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker defaultValue={dayjs("2022-01-01T10:20:33")} {...props} />
