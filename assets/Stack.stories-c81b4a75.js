@@ -1,0 +1,4 @@
+import{j as a}from"./jsx-runtime-4ca860c5.js";import{S as s}from"./Stack-47af8b1c.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./styled-8f47f2e2.js";import"./index-aa4d0353.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-eaccc129.js";import"./createTheme-bf72f819.js";import"./useThemeProps-3a07dd36.js";import"./extendSxProp-1c98bbe3.js";const k={title:"Components/Stack",component:s,tags:["autodocs"]},r={render:p=>a.jsx(s,{...p})};var o,t,e;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  render: props => <Stack {...props} />
+}`,...(e=(t=r.parameters)==null?void 0:t.docs)==null?void 0:e.source}}};const l=["Base"];export{r as Base,l as __namedExportsOrder,k as default};
+//# sourceMappingURL=Stack.stories-c81b4a75.js.map

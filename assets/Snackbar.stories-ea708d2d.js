@@ -1,0 +1,13 @@
+import{j as a}from"./jsx-runtime-4ca860c5.js";import{P as d}from"./Preview-607a0968.js";import{B as m}from"./Button-978b87d0.js";import{S as e}from"./SnackbarProvider-7830be67.js";import{u as l}from"./SnackbarMessage-3ea2fda9.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./createTheme-bf72f819.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-eaccc129.js";import"./generateUtilityClasses-d818091b.js";import"./styled-8f47f2e2.js";import"./index-aa4d0353.js";import"./useThemeProps-3a07dd36.js";import"./Button-9e16b906.js";import"./ButtonBase-12b39b19.js";import"./emotion-react.browser.esm-20161b7f.js";import"./assertThisInitialized-081f9914.js";import"./inheritsLoose-5494d9cc.js";import"./TransitionGroupContext-adcba781.js";import"./useForkRef-80a5c2b4.js";import"./useIsFocusVisible-c78074a7.js";import"./useEventCallback-1165b6b6.js";import"./useEnhancedEffect-e1879ff8.js";import"./useId-65eea1c4.js";import"./CircularProgress-bc81b3ed.js";import"./index-2801d3c9.js";import"./Alert-b8fc63e4.js";import"./createSvgIcon-c16984bf.js";import"./Close-8a493683.js";import"./Paper-bb0aa125.js";import"./IconButton-523ac44e.js";import"./Typography-e48c7697.js";import"./extendSxProp-1c98bbe3.js";const M={title:"Components/Alert/Snackbar Provider",component:e,tags:["autodocs"]},c=()=>{const{enqueueSnackbar:i}=l(),p=[{variant:"default",displayVariant:"standard"},{variant:"error",displayVariant:"standard"},{variant:"warning",displayVariant:"standard"},{variant:"info",displayVariant:"standard"},{variant:"success",displayVariant:"standard"},{variant:"default",displayVariant:"outlined"},{variant:"error",displayVariant:"outlined"},{variant:"warning",displayVariant:"outlined"},{variant:"info",displayVariant:"outlined"},{variant:"success",displayVariant:"outlined"}];return a.jsx(d,{children:p.map(r=>a.jsx(m,{onClick:()=>i(`Variant: ${r.variant}. Display variant: ${r.displayVariant}`,{autoHideDuration:2e3,title:r.variant.toUpperCase(),...r}),children:`${r.variant} - ${r.displayVariant}`},r.variant+r.displayVariant))})},t={args:{},render:i=>a.jsx("div",{style:{height:500},children:a.jsx(e,{...i,children:a.jsx(c,{})})})};var n,o,s;t.parameters={...t.parameters,docs:{...(n=t.parameters)==null?void 0:n.docs,source:{originalSource:`{
+  args: {},
+  render: props => {
+    return <div style={{
+      height: 500
+    }}>
+        <SnackbarProvider {...props}>
+          <Content />
+        </SnackbarProvider>
+      </div>;
+  }
+}`,...(s=(o=t.parameters)==null?void 0:o.docs)==null?void 0:s.source}}};const N=["Base"];export{t as Base,N as __namedExportsOrder,M as default};
+//# sourceMappingURL=Snackbar.stories-ea708d2d.js.map
