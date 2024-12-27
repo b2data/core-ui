@@ -140,8 +140,8 @@ export const ListItem = React.forwardRef(
     const secondaryAction =
       action || menuActions?.length ? (
         <Fragment>
-          {action && cloneElement(action, { size: "small", edge: "end" })}
-          {menuActions?.length && (
+          {!!action && cloneElement(action, { size: "small", edge: "end" })}
+          {!!menuActions?.length && (
             <Fragment>
               <IconButton
                 size="small"

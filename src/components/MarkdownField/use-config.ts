@@ -46,6 +46,8 @@ export const useConfig = ({
   onBlur,
   onFocus,
   onPaste,
+  onKeyDown,
+  onKeyUp,
 }: MarkdownFieldProps) => {
   const ref = useRef<HTMLElement>();
   const [isFocused, setIsFocused] = useState(false);
@@ -88,5 +90,7 @@ export const useConfig = ({
       }
       onPaste?.(e);
     },
+    onKeyDown,
+    onKeyUp,
   };
 };

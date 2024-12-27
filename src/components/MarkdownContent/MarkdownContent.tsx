@@ -41,6 +41,7 @@ export const MarkdownContent = React.forwardRef(
           display: "block",
           lineHeight: 1.1,
           minHeight: 36,
+          whiteSpace: "break-spaces",
           "&:empty:before": {
             content: "attr(data-placeholder)",
             color: theme.palette.text.disabled,
