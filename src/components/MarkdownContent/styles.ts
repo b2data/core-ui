@@ -42,10 +42,11 @@ export const useMarkdownStyles = (theme: Theme) => ({
     mt: 0,
     mb: 2,
     display: "inline-block",
-    "&:last-child": { lineHeight: "20px" },
   },
   "& ul, ol": {
     m: 0,
+    mb: 2,
+    pl: 5,
   },
   "& *:last-child": { mb: 0 },
 });
