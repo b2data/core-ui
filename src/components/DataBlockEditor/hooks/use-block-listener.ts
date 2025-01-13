@@ -30,6 +30,9 @@ export const useBlockListener = (
   onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
   onPaste?: (e: ClipboardEvent<HTMLElement>) => void;
 } => {
+  let isShift = false;
+  let isCmd = false;
+
   const onMarkdownChange = (
     newType: DataBlockType | null,
     newData: Partial<DataBlockVariant["data"]>,
@@ -72,21 +75,21 @@ export const useBlockListener = (
     });
   };
 
-  const onAddBlock = () => {
+  const onAddBlock = (data: DataBlockVariant["data"] = {}, i: number = 0) => {
     dispatch({
       action: DataBlockEditorAction.AddBlock,
       block: {
         id: uuid(),
         type: DataBlockType.Paragraph,
-        number: index + 2,
+        number: index + i + 2,
         offset: block.offset,
       },
       variant: {
         id: uuid(),
-        data: {},
+        data,
         isCurrent: true,
       },
-      index: index + 1,
+      index: index + i + 1,
     });
   };
 
@@ -103,15 +106,35 @@ export const useBlockListener = (
 
   const handlePaste = (e: ClipboardEvent<HTMLElement>) => {
     e.preventDefault();
-    document.execCommand("insertHTML", false, e.clipboardData.getData("text"));
+
+    if (isShift) {
+      document.execCommand(
+        "insertHTML",
+        false,
+        e.clipboardData.getData("text"),
+      );
+    } else {
+      const insertData = e.clipboardData
+        .getData("text")
+        .split("\n")
+        .filter((t) => !!t.trim());
+      document.execCommand("insertHTML", false, insertData.shift());
+      insertData.forEach((text, index) => {
+        onAddBlock({ type: DataBlockType.Paragraph, text }, index + 1);
+      });
+    }
   };
 
   if (editable) {
     return {
       onKeyUp: (e: KeyboardEvent<HTMLElement>) => {
+        isCmd = Boolean(e.metaKey);
+        isShift = Boolean(e.shiftKey);
         listenMarkdownEvent(e, onMarkdownChange);
       },
       onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
+        isCmd = Boolean(e.metaKey);
+        isShift = Boolean(e.shiftKey);
         listenOffsetEvent(e, onOffsetChange);
         navigationEvent(e, onChangeNavigation);
         addShortcutEvent(e, onAddBlock, { metaKey: true, key: "Enter" });
