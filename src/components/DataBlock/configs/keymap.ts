@@ -1,0 +1,163 @@
+import { KeyBinding } from "@codemirror/view";
+import {
+  copyLineDown,
+  copyLineUp,
+  cursorCharLeft,
+  cursorCharRight,
+  cursorGroupLeft,
+  cursorGroupRight,
+  cursorLineBoundaryLeft,
+  cursorLineBoundaryRight,
+  cursorLineDown,
+  cursorLineUp,
+  cursorSyntaxLeft,
+  cursorSyntaxRight,
+  deleteCharBackward,
+  deleteCharForward,
+  deleteGroupBackward,
+  deleteGroupForward,
+  deleteLineBoundaryBackward,
+  deleteLineBoundaryForward,
+  insertNewlineAndIndent,
+  insertNewlineKeepIndent,
+  moveLineDown,
+  moveLineUp,
+  selectAll,
+  selectCharLeft,
+  selectCharRight,
+  selectGroupLeft,
+  selectGroupRight,
+  selectLineBoundaryLeft,
+  selectLineBoundaryRight,
+  selectLineDown,
+  selectLineUp,
+  selectSyntaxLeft,
+  selectSyntaxRight,
+  simplifySelection,
+} from "@codemirror/commands";
+
+export const basicKeymap: KeyBinding[] = [
+  {
+    key: "ArrowLeft",
+    run: cursorCharLeft,
+    shift: selectCharLeft,
+    preventDefault: true,
+  },
+  {
+    key: "Mod-ArrowLeft",
+    mac: "Alt-ArrowLeft",
+    run: cursorGroupLeft,
+    shift: selectGroupLeft,
+    preventDefault: true,
+  },
+  {
+    mac: "Cmd-ArrowLeft",
+    run: cursorLineBoundaryLeft,
+    shift: selectLineBoundaryLeft,
+    preventDefault: true,
+  },
+  {
+    key: "ArrowRight",
+    run: cursorCharRight,
+    shift: selectCharRight,
+    preventDefault: true,
+  },
+  {
+    key: "Mod-ArrowRight",
+    mac: "Alt-ArrowRight",
+    run: cursorGroupRight,
+    shift: selectGroupRight,
+    preventDefault: true,
+  },
+  {
+    mac: "Cmd-ArrowRight",
+    run: cursorLineBoundaryRight,
+    shift: selectLineBoundaryRight,
+    preventDefault: true,
+  },
+  {
+    key: "ArrowUp",
+    run: cursorLineUp,
+    shift: selectLineUp,
+    preventDefault: true,
+  },
+  {
+    key: "ArrowDown",
+    run: cursorLineDown,
+    shift: selectLineDown,
+    preventDefault: true,
+  },
+  {
+    mac: "Mod-Enter",
+    run: insertNewlineAndIndent,
+  },
+  {
+    key: "Enter",
+    run: insertNewlineKeepIndent,
+    shift: insertNewlineAndIndent,
+  },
+  {
+    key: "Mod-a",
+    run: selectAll,
+  },
+  {
+    key: "Backspace",
+    run: deleteCharBackward,
+    shift: deleteCharBackward,
+  },
+  {
+    key: "Delete",
+    run: deleteCharForward,
+  },
+  {
+    key: "Mod-Backspace",
+    mac: "Alt-Backspace",
+    run: deleteGroupBackward,
+  },
+  {
+    key: "Mod-Delete",
+    mac: "Alt-Delete",
+    run: deleteGroupForward,
+  },
+  {
+    mac: "Mod-Backspace",
+    run: deleteLineBoundaryBackward,
+  },
+  {
+    mac: "Mod-Delete",
+    run: deleteLineBoundaryForward,
+  },
+  {
+    key: "Alt-ArrowLeft",
+    mac: "Ctrl-ArrowLeft",
+    run: cursorSyntaxLeft,
+    shift: selectSyntaxLeft,
+  },
+  {
+    key: "Alt-ArrowRight",
+    mac: "Ctrl-ArrowRight",
+    run: cursorSyntaxRight,
+    shift: selectSyntaxRight,
+  },
+  {
+    key: "Alt-ArrowUp",
+    run: moveLineUp,
+  },
+  {
+    key: "Shift-Alt-ArrowUp",
+    run: copyLineUp,
+  },
+  {
+    key: "Alt-ArrowDown",
+    run: moveLineDown,
+  },
+  {
+    key: "Shift-Alt-ArrowDown",
+    run: copyLineDown,
+  },
+  {
+    key: "Escape",
+    run: simplifySelection,
+  },
+  // indentWithTab
+];

@@ -1,17 +1,17 @@
 import { useDrop } from "react-dnd";
 
-import { DataBlockModel } from "../model";
+import { DataBlockBase } from "../models";
 
 export const useBlockDrop = (
   index: number,
   onMove?: (
-    item: DataBlockModel,
+    item: DataBlockBase,
     oldIndex: number,
     targetIndex: number,
   ) => void,
 ) => {
   const [{ isOverBefore, canDropBefore }, dropBeforeRef] = useDrop<
-    DataBlockModel & { index: number },
+    DataBlockBase & { index: number },
     unknown,
     {
       isOverBefore: boolean;
@@ -41,7 +41,7 @@ export const useBlockDrop = (
   });
 
   const [{ isOverAfter, canDropAfter }, dropAfterRef] = useDrop<
-    DataBlockModel & { index: number },
+    DataBlockBase & { index: number },
     unknown,
     {
       isOverAfter: boolean;

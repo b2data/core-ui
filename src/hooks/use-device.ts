@@ -19,7 +19,22 @@ enum SymbolsWindow {
   BACKSPACE = "⌫",
 }
 
-export const useDevice = () => {
+export type SymbolsKey =
+  | "CMD"
+  | "CTRL"
+  | "OPTION"
+  | "SHIFT"
+  | "FN"
+  | "CAPS"
+  | "TAB"
+  | "ENTER"
+  | "BACKSPACE";
+
+export const useDevice = (): {
+  isMacOs: boolean;
+  isWindows: boolean;
+  Symbols: Record<SymbolsKey, string>;
+} => {
   const isMacOs =
     window.navigator.platform.toUpperCase().includes("MAC") ||
     ["iPhone", "iPod", "iPad"].includes(navigator.platform);

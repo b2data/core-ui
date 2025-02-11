@@ -1,17 +1,20 @@
-import React, {
+import {
   createContext,
   Dispatch,
   forwardRef,
+  PropsWithChildren,
   useEffect,
   useImperativeHandle,
   useReducer,
 } from "react";
 
+import { useDeepEqualMemo } from "src/hooks";
+
 import {
+  DataBlockEditorApi,
   DataBlockEditorProps,
-  DataBlockEditorRef,
   DataBlockEditorState,
-} from "../model";
+} from "../models";
 
 import { DataBlockEditorAction, DataBlockEditorActions } from "./actions";
 import {
@@ -26,21 +29,23 @@ const DataBlockEditorContext = createContext<{
 }>({ state: initialState, dispatch: () => null });
 
 const DataBlockEditorProvider = forwardRef<
-  DataBlockEditorRef,
-  React.PropsWithChildren<DataBlockEditorProps>
->((props, ref) => {
+  DataBlockEditorApi,
+  PropsWithChildren<{ props: DataBlockEditorProps }>
+>(({ children, props }, ref) => {
   const {
-    children,
     editable,
     showPrefix,
     showVariants,
+    showNavigation,
+    showIndentOffset,
     canChangeVariants,
     currentUserId,
     getFilesUrl,
-    types,
     i18n,
     blocks,
-    prefixes,
+    tools,
+    keymap,
+    mdProps,
     onChange,
   } = props;
 
@@ -51,39 +56,72 @@ const DataBlockEditorProvider = forwardRef<
 
   useEffect(() => {
     if (i18n) {
-      dispatch({ action: DataBlockEditorAction.SetTranslations, i18n });
+      dispatch({
+        action: DataBlockEditorAction.SetTranslations,
+        data: { i18n },
+      });
     }
-  }, [i18n]);
+  }, [useDeepEqualMemo(i18n)]);
 
   useEffect(() => {
-    if (Array.isArray(types)) {
-      dispatch({ action: DataBlockEditorAction.SetTypes, types });
+    if (tools && Object.keys(tools).length) {
+      dispatch({
+        action: DataBlockEditorAction.SetTools,
+        data: { tools },
+      });
     }
-  }, [types]);
+  }, [tools]);
 
   useEffect(() => {
     if (typeof editable !== "undefined") {
-      dispatch({ action: DataBlockEditorAction.SetEditable, editable });
+      dispatch({
+        action: DataBlockEditorAction.SetEditable,
+        data: { editable },
+      });
     }
   }, [editable]);
 
   useEffect(() => {
     if (typeof showPrefix !== "undefined") {
-      dispatch({ action: DataBlockEditorAction.SetShowPrefix, showPrefix });
+      dispatch({
+        action: DataBlockEditorAction.SetShowPrefix,
+        data: { showPrefix },
+      });
     }
   }, [showPrefix]);
 
   useEffect(() => {
     if (typeof showVariants !== "undefined") {
-      dispatch({ action: DataBlockEditorAction.SetShowVariants, showVariants });
+      dispatch({
+        action: DataBlockEditorAction.SetShowVariants,
+        data: { showVariants },
+      });
     }
   }, [showVariants]);
+
+  useEffect(() => {
+    if (typeof showNavigation !== "undefined") {
+      dispatch({
+        action: DataBlockEditorAction.SetShowNavigation,
+        data: { showNavigation },
+      });
+    }
+  }, [showNavigation]);
+
+  useEffect(() => {
+    if (typeof showIndentOffset !== "undefined") {
+      dispatch({
+        action: DataBlockEditorAction.SetShowIndentOffset,
+        data: { showIndentOffset },
+      });
+    }
+  }, [showIndentOffset]);
 
   useEffect(() => {
     if (typeof canChangeVariants !== "undefined") {
       dispatch({
         action: DataBlockEditorAction.SetCanChangeVariants,
-        canChangeVariants,
+        data: { canChangeVariants },
       });
     }
   }, [canChangeVariants]);
@@ -92,38 +130,65 @@ const DataBlockEditorProvider = forwardRef<
     if (currentUserId) {
       dispatch({
         action: DataBlockEditorAction.SetCurrentUserId,
-        currentUserId,
+        data: { currentUserId },
       });
     }
   }, [currentUserId]);
 
   useEffect(() => {
     if (Array.isArray(blocks)) {
-      dispatch({ action: DataBlockEditorAction.SetBlocks, blocks });
+      dispatch({
+        action: DataBlockEditorAction.SetBlocks,
+        data: { blocks },
+      });
     }
-  }, [blocks]);
+  }, [useDeepEqualMemo(blocks)]);
 
   useEffect(() => {
     if (typeof getFilesUrl !== "undefined") {
-      dispatch({ action: DataBlockEditorAction.SetGetFilesUrl, getFilesUrl });
+      dispatch({
+        action: DataBlockEditorAction.SetGetFilesUrl,
+        data: { getFilesUrl },
+      });
     }
   }, [getFilesUrl]);
 
   useEffect(() => {
-    if (prefixes) {
-      dispatch({ action: DataBlockEditorAction.SetPrefixes, prefixes });
+    if (keymap) {
+      dispatch({
+        action: DataBlockEditorAction.SetKeymap,
+        data: { keymap },
+      });
     }
-  }, [prefixes]);
+  }, [useDeepEqualMemo(keymap)]);
 
-  useEffect(() => () => dispatch({ action: DataBlockEditorAction.Clear }), []);
+  useEffect(() => {
+    if (mdProps) {
+      dispatch({
+        action: DataBlockEditorAction.SetMdProps,
+        data: { mdProps },
+      });
+    }
+  }, [useDeepEqualMemo(mdProps)]);
+
+  useEffect(
+    () => () => dispatch({ action: DataBlockEditorAction.Clear, data: {} }),
+    [],
+  );
 
   useImperativeHandle(
     ref,
     () => ({
-      setFocused(index?: number) {
+      setFocused(index, focusedEnd) {
         dispatch({
           action: DataBlockEditorAction.SetFocused,
-          index,
+          data: { index, focusedEnd },
+        });
+      },
+      updateData(data) {
+        dispatch({
+          action: DataBlockEditorAction.MergeUpdates,
+          data,
         });
       },
       getState() {

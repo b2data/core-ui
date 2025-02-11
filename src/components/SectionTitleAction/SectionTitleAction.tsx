@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, MouseEvent, ReactNode, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
@@ -17,19 +17,19 @@ export interface SectionTitleActionProps extends ButtonProps {
   /**
    * The label text of the action.
    */
-  label?: string | React.ReactNode;
+  label?: string | ReactNode;
   /**
    * Defines if the action will be shown as `IconButton` with `icon` inside.
    */
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   /**
    * `onClick` callback when user clicks on the action.
    */
-  onClick?: (e: React.MouseEvent) => void;
+  onClick?: (e: MouseEvent) => void;
   /**
    * If set, the tooltip will be shown when hover on the action.
    */
-  tooltip?: string | React.ReactNode;
+  tooltip?: string | ReactNode;
   /**
    * The array of actions for menu options. The values will be wrapped by `MenuItem` and placed into `ListItemAction` menu.
    *

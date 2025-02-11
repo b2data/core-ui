@@ -3,6 +3,8 @@ import type { Preview, Decorator } from "@storybook/react";
 import { CssBaseline } from "../src/components/CssBaseline";
 import { lightTheme, darkTheme, ThemeProvider } from "../src/theming";
 
+import "../src/styles.css";
+
 export const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },

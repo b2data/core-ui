@@ -1,37 +1,24 @@
-import { omit } from "ramda";
+import { equals, omit, pick } from "ramda";
 
-import { DataBlockEditorState, DataBlockModel, DataBlockType } from "../model";
+import { DataBlockBase, DataBlockEditorState } from "../models";
+import { getPrefixesData } from "../utils";
 
 import { DataBlockEditorAction, DataBlockEditorActions } from "./actions";
-
-const getDefaultData = (type: DataBlockType) => {
-  switch (type) {
-    case DataBlockType.Header: {
-      return { text: "", tag: "h1" };
-    }
-    default:
-      return { text: "" };
-  }
-};
-
-const calcMaxPrefix = (prefixes: Record<string, string>): number => {
-  return Math.max(1, ...Object.values(prefixes).map((v) => v.length));
-};
 
 export const initialState: DataBlockEditorState = {
   editable: false,
   showPrefix: false,
   showVariants: false,
-  maxPrefixLength: 1,
-  focused: undefined,
+  focused: 0,
+  focusedEnd: false,
   canChangeVariants: false,
   currentUserId: undefined,
   getFilesUrl: () => "/",
-  prefixes: {},
-  types: Object.values(DataBlockType),
   blocks: [],
+  tools: {},
+  prefixes: {},
+  maxPrefixLength: 1,
   onChange: undefined,
-
   i18n: {
     addBtnTooltip: "Add",
     moreBtnTooltip: (
@@ -46,12 +33,8 @@ export const initialState: DataBlockEditorState = {
     deleteVariantTooltip: "Delete variant",
     swapCurrentVariantTooltip: "Swap current variant",
     emptyPlaceholder: "Type text",
-    filterPlaceholder: "Filter",
+    addBtnFilter: "Filter",
     noResults: "No results",
-    blocks: {
-      [DataBlockType.Header]: "Header",
-      [DataBlockType.Paragraph]: "Text",
-    },
     indent: {
       increase: "Increase offset",
       decrease: "Decrease offset",
@@ -60,14 +43,9 @@ export const initialState: DataBlockEditorState = {
       default: "Delete",
       clickToDelete: "Click to delete",
     },
-    align: {
-      title: "Align",
-      left: "Left",
-      right: "Right",
-      center: "Center",
-      justify: "Justify",
-    },
   },
+  keymap: [],
+  mdProps: {},
 };
 
 export type DataBlockEditorStateReducer = (
@@ -77,153 +55,205 @@ export type DataBlockEditorStateReducer = (
 
 export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
   state = initialState,
-  action: DataBlockEditorActions,
+  { action, data }: DataBlockEditorActions,
 ): DataBlockEditorState => {
-  switch (action.action) {
+  switch (action) {
     case DataBlockEditorAction.SetEditable: {
-      return { ...state, editable: action.editable };
+      return { ...state, editable: data.editable };
     }
 
     case DataBlockEditorAction.SetShowPrefix: {
-      return { ...state, showPrefix: action.showPrefix };
+      return { ...state, showPrefix: data.showPrefix };
     }
 
     case DataBlockEditorAction.SetShowVariants: {
-      return { ...state, showVariants: action.showVariants };
+      return { ...state, showVariants: data.showVariants };
+    }
+
+    case DataBlockEditorAction.SetShowNavigation: {
+      return { ...state, showNavigation: data.showNavigation };
+    }
+
+    case DataBlockEditorAction.SetShowIndentOffset: {
+      return { ...state, showIndentOffset: data.showIndentOffset };
     }
 
     case DataBlockEditorAction.SetTranslations: {
-      return { ...state, i18n: action.i18n };
-    }
-
-    case DataBlockEditorAction.SetTypes: {
-      return { ...state, types: action.types };
+      return { ...state, i18n: data.i18n };
     }
 
     case DataBlockEditorAction.SetCanChangeVariants: {
-      return { ...state, canChangeVariants: action.canChangeVariants };
+      return { ...state, canChangeVariants: data.canChangeVariants };
     }
 
     case DataBlockEditorAction.SetCurrentUserId: {
-      return { ...state, currentUserId: action.currentUserId };
+      return { ...state, currentUserId: data.currentUserId };
     }
 
     case DataBlockEditorAction.SetGetFilesUrl: {
-      return { ...state, getFilesUrl: action.getFilesUrl };
+      return { ...state, getFilesUrl: data.getFilesUrl };
     }
 
     case DataBlockEditorAction.SetFocused: {
-      return { ...state, focused: action.index };
+      return { ...state, focused: data.index, focusedEnd: data.focusedEnd };
     }
 
     case DataBlockEditorAction.SetBlocks: {
       return {
         ...state,
-        blocks: action.blocks,
+        ...getPrefixesData(data.blocks),
+        blocks: data.blocks,
       };
     }
 
-    case DataBlockEditorAction.SetPrefixes: {
+    case DataBlockEditorAction.SetTools: {
       return {
         ...state,
-        maxPrefixLength: calcMaxPrefix(action.prefixes),
-        prefixes: action.prefixes,
+        tools: data.tools,
       };
     }
 
+    case DataBlockEditorAction.SetKeymap: {
+      return {
+        ...state,
+        keymap: data.keymap,
+      };
+    }
+
+    case DataBlockEditorAction.SetMdProps: {
+      return {
+        ...state,
+        mdProps: data.mdProps,
+      };
+    }
+
+    /*************
+     *  UPDATES  *
+     ************/
+
     case DataBlockEditorAction.AddBlock: {
-      const { block, variant, index } = action;
+      const { block, variant, index } = data;
       const blocks = [...state.blocks];
 
       blocks.splice(index, 0, {
         ...block,
         createdBy: state.currentUserId,
-        variants: [{ ...variant, createdBy: state.currentUserId }],
-      } as DataBlockModel);
+        variants: [{ ...variant, createdBy: state.currentUserId, votes: [] }],
+      } as DataBlockBase);
 
-      state.onChange?.(DataBlockEditorAction.AddBlock, {
-        block,
-        variant,
-        index,
+      state.onChange?.({
+        action: DataBlockEditorAction.AddBlock,
+        data: {
+          block: omit(["createdByData"], block),
+          variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
+          index,
+        },
       });
 
-      return { ...state, blocks, focused: index };
+      return {
+        ...state,
+        ...getPrefixesData(blocks),
+        blocks,
+        focused: index,
+        focusedEnd: true,
+      };
     }
 
     case DataBlockEditorAction.EditBlock: {
-      const { block, variant } = action;
+      const { block, variant } = data;
       const index = state.blocks.findIndex((b) => b.id === block.id);
+
       if (index > -1) {
-        const prefixes = { ...state.prefixes };
         const blocks = [...state.blocks];
         const variants = [...blocks[index].variants];
         const index2 = variants.findIndex((v) => v.id === variant.id);
 
+        block.offset =
+          !state.prefixes[block.id] && blocks[index].offset < block.offset
+            ? blocks[index].offset
+            : block.offset;
+
         if (index2 > -1) {
           variants.splice(index2, 1, {
             ...variants[index2],
+            ...variant,
             data: {
               ...variants[index2].data,
               ...variant.data,
             },
           });
         }
-        blocks.splice(index, 1, { ...block, variants });
 
-        if (block.offset !== blocks[index].offset) {
-          delete prefixes[block.id];
-        }
+        blocks.splice(index, 1, { ...blocks[index], ...block, variants });
 
-        state.onChange?.(DataBlockEditorAction.EditBlock, {
-          block,
-          variant,
+        state.onChange?.({
+          action: DataBlockEditorAction.EditBlock,
+          data: {
+            block: omit(["createdByData"], block),
+            variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
+          },
         });
 
-        return { ...state, blocks, prefixes };
+        return {
+          ...state,
+          ...getPrefixesData(blocks),
+          blocks,
+        };
       }
+
       return state;
     }
 
     case DataBlockEditorAction.MoveBlock: {
-      const { id, oldIndex, targetIndex } = action;
+      const { id, oldIndex, targetIndex } = data;
       if (state.blocks[oldIndex]?.id === id) {
         const blocks = [...state.blocks];
-        const prefixes = { ...state.prefixes };
         const data = blocks.splice(oldIndex, 1);
-        blocks.splice(targetIndex, 0, ...data);
-        for (let i = Math.min(oldIndex, targetIndex); i < blocks.length; i++) {
-          delete prefixes[blocks[i]?.id];
-        }
-        state.onChange?.(DataBlockEditorAction.MoveBlock, {
-          block: omit(["variants"], {
-            ...data[0],
-            offset: blocks[targetIndex - 1]?.offset || data[0].offset,
-          }),
-          oldIndex,
-          targetIndex,
+        const newBlock = {
+          ...data[0],
+          offset: blocks[targetIndex - 1]?.offset ?? data[0].offset,
+        };
+        blocks.splice(targetIndex, 0, newBlock);
+        state.onChange?.({
+          action: DataBlockEditorAction.MoveBlock,
+          data: {
+            blockId: id,
+            oldIndex,
+            targetIndex,
+          },
         });
-        return { ...state, blocks, prefixes };
+        return {
+          ...state,
+          ...getPrefixesData(blocks),
+          blocks,
+        };
       }
       return state;
     }
 
     case DataBlockEditorAction.DeleteBlock: {
-      const index = state.blocks.findIndex((b) => b.id === action.id);
+      const index = state.blocks.findIndex((b) => b.id === data.id);
       if (index > -1) {
         const blocks = [...state.blocks];
-        const prefixes = { ...state.prefixes };
         const deleted = blocks.splice(index, 1);
-        delete state.prefixes[deleted[0].id];
-        state.onChange?.(DataBlockEditorAction.DeleteBlock, {
-          block: deleted[0],
+        state.onChange?.({
+          action: DataBlockEditorAction.DeleteBlock,
+          data: {
+            blockId: deleted[0].id,
+          },
         });
-        return { ...state, blocks, prefixes };
+        return {
+          ...state,
+          ...getPrefixesData(blocks),
+          focused: Math.max(0, Math.min(index - 1, blocks.length - 1)),
+          blocks,
+        };
       }
       return state;
     }
 
     case DataBlockEditorAction.AddVariant: {
-      const { id, variant } = action;
+      const { id, variant } = data;
       const index = state.blocks.findIndex((b) => b.id === id);
       if (index > -1) {
         const blocks = [...state.blocks];
@@ -231,9 +261,12 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           ...blocks[index].variants,
           { ...variant, votes: [] },
         ];
-        state.onChange?.(DataBlockEditorAction.AddVariant, {
-          block: blocks[index],
-          variant,
+        state.onChange?.({
+          action: DataBlockEditorAction.AddVariant,
+          data: {
+            blockId: id,
+            variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
+          },
         });
         return { ...state, blocks };
       }
@@ -242,7 +275,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
     }
 
     case DataBlockEditorAction.EditVariant: {
-      const { id, variant } = action;
+      const { id, variant } = data;
       const index = state.blocks.findIndex((b) => b.id === id);
       if (index > -1) {
         const blocks = [...state.blocks];
@@ -267,12 +300,15 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
                     : v.isCurrent,
             })),
           });
-          state.onChange?.(DataBlockEditorAction.EditVariant, {
-            block: omit(["variants"], blocks[index]),
-            variant: omit(["votes", "createdByData"], {
-              ...variants[index2],
-              ...variant,
-            }),
+          state.onChange?.({
+            action: DataBlockEditorAction.EditVariant,
+            data: {
+              blockId: id,
+              variant: pick(["id", "data", "isCurrent", "createdBy"], {
+                ...variants[index2],
+                ...variant,
+              }),
+            },
           });
           return { ...state, blocks };
         }
@@ -282,7 +318,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
     }
 
     case DataBlockEditorAction.DeleteVariant: {
-      const { id, variantId } = action;
+      const { id, variantId } = data;
       const index = state.blocks.findIndex((b) => b.id === id);
       if (index > -1) {
         const blocks = [...state.blocks];
@@ -291,11 +327,14 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         );
         if (index2 > -1) {
           const variants = [...blocks[index].variants];
-          const deleted = variants.splice(index2, 1);
+          variants.splice(index2, 1);
           blocks.splice(index, 1, { ...blocks[index], variants });
-          state.onChange?.(DataBlockEditorAction.DeleteVariant, {
-            block: omit(["variants"], blocks[index]),
-            variant: omit(["votes", "createdByData"], deleted[0]),
+          state.onChange?.({
+            action: DataBlockEditorAction.DeleteVariant,
+            data: {
+              blockId: id,
+              variantId: variantId,
+            },
           });
           return { ...state, blocks };
         }
@@ -305,7 +344,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
     }
 
     case DataBlockEditorAction.VoteVariant: {
-      const { id, variantId, createdBy } = action;
+      const { id, variantId, createdBy } = data;
 
       const index = state.blocks.findIndex((b) => b.id === id);
       if (index > -1) {
@@ -322,9 +361,12 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
             ]),
           });
           blocks.splice(index, 1, { ...blocks[index], variants });
-          state.onChange?.(DataBlockEditorAction.VoteVariant, {
-            block: omit(["variants"], blocks[index]),
-            variant: omit(["votes", "createdByData"], variants[index2]),
+          state.onChange?.({
+            action: DataBlockEditorAction.VoteVariant,
+            data: {
+              blockId: id,
+              variantId,
+            },
           });
           return { ...state, blocks };
         }
@@ -334,7 +376,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
     }
 
     case DataBlockEditorAction.UnVoteVariant: {
-      const { id, variantId, createdBy } = action;
+      const { id, variantId, createdBy } = data;
 
       const index = state.blocks.findIndex((b) => b.id === id);
       if (index > -1) {
@@ -351,14 +393,156 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
             ),
           });
           blocks.splice(index, 1, { ...blocks[index], variants });
-          state.onChange?.(DataBlockEditorAction.UnVoteVariant, {
-            block: omit(["variants"], blocks[index]),
-            variant: omit(["votes", "createdByData"], variants[index2]),
+          state.onChange?.({
+            action: DataBlockEditorAction.UnVoteVariant,
+            data: {
+              blockId: id,
+              variantId,
+            },
           });
           return { ...state, blocks };
         }
       }
 
+      return state;
+    }
+
+    case DataBlockEditorAction.MergeUpdates: {
+      const { action: updateAction, data: changes } = data;
+      switch (updateAction) {
+        case DataBlockEditorAction.AddBlock: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.block.id,
+          );
+          if (
+            blockIndex > -1 &&
+            !equals(state.blocks[blockIndex], changes.block)
+          ) {
+            state.blocks.splice(blockIndex, 1, changes.block);
+          }
+          if (blockIndex === -1) {
+            state.blocks.splice(changes.index, 0, changes.block);
+          }
+          break;
+        }
+        case DataBlockEditorAction.EditBlock: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.block.id,
+          );
+          if (
+            blockIndex > -1 &&
+            !equals(state.blocks[blockIndex], changes.block)
+          ) {
+            state.blocks.splice(blockIndex, 1, changes.block);
+          }
+          break;
+        }
+        case DataBlockEditorAction.MoveBlock: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            const data = state.blocks.splice(blockIndex, 1);
+            state.blocks.splice(changes.targetIndex, 0, data[0]);
+          }
+          break;
+        }
+        case DataBlockEditorAction.DeleteBlock: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            state.blocks.splice(blockIndex, 1);
+          }
+          break;
+        }
+        case DataBlockEditorAction.AddVariant:
+        case DataBlockEditorAction.EditVariant: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            const variantIndex = state.blocks[blockIndex].variants.findIndex(
+              (v) => v.id === changes.variant.id,
+            );
+            if (variantIndex === -1) {
+              state.blocks[blockIndex].variants.push(changes.variant);
+            } else {
+              state.blocks[blockIndex].variants.splice(
+                variantIndex,
+                1,
+                changes.variant,
+              );
+            }
+          }
+          break;
+        }
+        case DataBlockEditorAction.DeleteVariant: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            const variantIndex = state.blocks[blockIndex].variants.findIndex(
+              (v) => v.id === changes.variantId,
+            );
+            if (variantIndex > -1) {
+              state.blocks[blockIndex].variants.splice(variantIndex, 1);
+            }
+          }
+          break;
+        }
+        case DataBlockEditorAction.VoteVariant: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            const variantIndex = state.blocks[blockIndex].variants.findIndex(
+              (v) => v.id === changes.variantId,
+            );
+            if (variantIndex > -1) {
+              const voteIndex = state.blocks[blockIndex].variants[
+                variantIndex
+              ].votes.findIndex((v) => v.createdBy === changes.vote.createdBy);
+              if (voteIndex === -1) {
+                state.blocks[blockIndex].variants[variantIndex].votes.push(
+                  changes.vote,
+                );
+              } else {
+                state.blocks[blockIndex].variants[variantIndex].votes.splice(
+                  voteIndex,
+                  1,
+                  changes.vote,
+                );
+              }
+            }
+          }
+          break;
+        }
+        case DataBlockEditorAction.UnVoteVariant: {
+          const blockIndex = state.blocks.findIndex(
+            (b) => b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            const variantIndex = state.blocks[blockIndex].variants.findIndex(
+              (v) => v.id === changes.variantId,
+            );
+            if (variantIndex > -1) {
+              const voteIndex = state.blocks[blockIndex].variants[
+                variantIndex
+              ].votes.findIndex((v) => v.createdBy === changes.createdBy);
+              if (voteIndex > -1) {
+                state.blocks[blockIndex].variants[variantIndex].votes.splice(
+                  voteIndex,
+                  1,
+                );
+              }
+            }
+          }
+          break;
+        }
+        default:
+          break;
+      }
       return state;
     }
 

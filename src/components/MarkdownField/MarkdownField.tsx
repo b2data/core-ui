@@ -1,11 +1,8 @@
 import { Box, SxProps } from "@mui/material";
-import React, { ReactNode, useMemo } from "react";
-import { marked } from "marked";
+import React, { ReactNode } from "react";
 
-import { useMarkdownStyles } from "../MarkdownContent";
 import { FormHelperText } from "../FormHelperText";
-
-import { useConfig } from "./use-config";
+import { DataBlock } from "../DataBlock";
 
 export interface MarkdownFieldProps {
   /**
@@ -57,17 +54,8 @@ export interface MarkdownFieldProps {
   /**
    * Callback fired when the Component is blurred. It returns Markdown.
    */
-  onBlur?: (event: React.FocusEvent<HTMLElement>) => void;
-  /**
-   * Callback fired when the value is changed.
-   */
-  onFocus?: (event: React.FocusEvent<HTMLElement>) => void;
-  onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => void;
-  onKeyUp?: (event: React.KeyboardEvent<HTMLElement>) => void;
-  /**
-   * Callback fired when the Component is pasted.
-   */
-  onPaste?: (event: React.ClipboardEvent<HTMLElement>) => void;
+  onBlur?: (value: string) => void;
+  onChange?: (value: string) => void;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
@@ -88,27 +76,12 @@ export const MarkdownField = React.forwardRef(
       minRows = 1,
       helperText,
       sx,
-      ...restProps
+      onBlur,
+      onChange,
     }: MarkdownFieldProps,
     ref: React.Ref<HTMLElement>,
   ) => {
-    const {
-      state,
-      isFocused,
-      ref: inputRef,
-      ...configProps
-    } = useConfig({
-      value,
-      readOnly,
-      disabled,
-      placeholder,
-      ...restProps,
-    });
-
-    const markdownContent = useMemo(
-      () => (value ? (marked.parse(value?.toString() || "") as string) : value),
-      [value],
-    );
+    const [isFocus, setIsFocus] = React.useState(false);
 
     return (
       <Box
@@ -122,6 +95,7 @@ export const MarkdownField = React.forwardRef(
           margin: margin === "normal" ? "8px 0 16px" : 0,
           border: 0,
           verticalAlign: "top",
+          ...sx,
         }}
       >
         <Box
@@ -141,12 +115,12 @@ export const MarkdownField = React.forwardRef(
             transform: "translate(0, 17px) scale(1)",
             transition:
               "color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
-            ...(isFocused || value || placeholder
+            ...(value || placeholder
               ? {
                   transform: "translate(0, -1.5px) scale(0.75)",
                 }
               : {}),
-            ...(isFocused
+            ...(isFocus
               ? {
                   color: theme.palette.primary.main,
                 }
@@ -170,12 +144,37 @@ export const MarkdownField = React.forwardRef(
             </Box>
           )}
         </Box>
-        <Box
+        <DataBlock
+          editable={!disabled}
+          readOnly={readOnly}
+          onBlur={(v) => {
+            onBlur && onBlur(v);
+            setIsFocus(false);
+          }}
+          onFocus={() => setIsFocus(true)}
+          placeholderText={placeholder}
+          onTrackChanges={onChange}
+          onChangeDebounce={300}
+          mdProps={{
+            slashCommands: [
+              "bold",
+              "italic",
+              "underline",
+              "strikethrough",
+              "highlight",
+            ],
+          }}
           sx={(theme) => ({
-            ...theme.typography.body1,
             position: "relative",
-            minHeight: 36 + (minRows - 1) * 20,
-            width: 1,
+            "& > div": {
+              fontSize: "14px",
+              padding: "5px 0",
+              outline: "none !important",
+              minHeight: 21 + (minRows - 1) * 21 + 10,
+            },
+            "& .cm-line": {
+              paddingLeft: 0,
+            },
             "&:before": {
               left: 0,
               right: 0,
@@ -209,33 +208,8 @@ export const MarkdownField = React.forwardRef(
             "&:focus-within:after": {
               transform: "scaleX(1) translateX(0)",
             },
-            ...useMarkdownStyles(theme),
           })}
-        >
-          <Box
-            component="span"
-            ref={inputRef}
-            {...configProps}
-            key={state}
-            // @ts-ignore
-            sx={(theme) => ({
-              width: "100%",
-              wordBreak: "break-all",
-              display: "block",
-              outline: "none",
-              lineHeight: 1.1,
-              minHeight: 36,
-              padding: "8px 0",
-              whiteSpace: "pre-line",
-              "&:empty:before": {
-                content: "attr(data-placeholder)",
-                color: theme.palette.text.disabled,
-              },
-              ...sx,
-            })}
-            dangerouslySetInnerHTML={{ __html: markdownContent ?? "" }}
-          />
-        </Box>
+        />
         {helperText && (
           <FormHelperText error={error}>{helperText}</FormHelperText>
         )}

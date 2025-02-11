@@ -1,23 +1,30 @@
+import { DataBlockProps } from "../../DataBlock";
 import {
+  DataBlockBase,
   DataBlockEditorTranslations,
-  DataBlockModel,
+  DataBlockTool,
   DataBlockType,
   DataBlockVariant,
-} from "../model";
+  ReceiveDataBlockEditorUpdates,
+} from "../models";
 
 export enum DataBlockEditorAction {
   Clear = "clear",
   SetEditable = "setEditable",
   SetTranslations = "setTranslations",
-  SetTypes = "setTypes",
+  SetTools = "SetTools",
   SetBlocks = "setBlocks",
   SetShowPrefix = "setShowPrefix",
   SetShowVariants = "setShowVariants",
-  SetPrefixes = "setPrefixes",
+  SetShowNavigation = "setShowNavigation",
+  SetShowIndentOffset = "setShowIndentOffset",
   SetFocused = "setFocused",
   SetCanChangeVariants = "setCanChangeVariants",
   SetCurrentUserId = "setCurrentUserId",
   SetGetFilesUrl = "setGetFilesUrl",
+  SetKeymap = "setKeymap",
+  SetMdProps = "setMdProps",
+  MergeUpdates = "mergeUpdate",
 
   // Actions for callback
   AddBlock = "addBlock",
@@ -34,7 +41,7 @@ export enum DataBlockEditorAction {
 export type SetDataBlockEditorAction<
   T extends DataBlockEditorAction,
   Data extends Record<string, unknown>,
-> = { action: T } & Data;
+> = { action: T; data: Data };
 
 type Clear = SetDataBlockEditorAction<
   DataBlockEditorAction.Clear,
@@ -52,9 +59,9 @@ type SetTranslations = SetDataBlockEditorAction<
   { i18n: DataBlockEditorTranslations }
 >;
 
-type SetTypes = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetTypes,
-  { types: DataBlockType[] }
+type SetTools = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetTools,
+  { tools: Record<DataBlockType, DataBlockTool> }
 >;
 
 type SetShowPrefix = SetDataBlockEditorAction<
@@ -65,6 +72,16 @@ type SetShowPrefix = SetDataBlockEditorAction<
 type SetShowVariants = SetDataBlockEditorAction<
   DataBlockEditorAction.SetShowVariants,
   { showVariants: boolean }
+>;
+
+type SetShowNavigation = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetShowNavigation,
+  { showNavigation: boolean }
+>;
+
+type SetShowIndentOffset = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetShowIndentOffset,
+  { showIndentOffset: boolean }
 >;
 
 type SetCanChangeVariants = SetDataBlockEditorAction<
@@ -82,25 +99,37 @@ type SetGetFilesUrl = SetDataBlockEditorAction<
   { getFilesUrl: (id: string) => string }
 >;
 
-type SetPrefixes = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetPrefixes,
-  { prefixes: Record<string, string> }
->;
-
 type SetBlocks = SetDataBlockEditorAction<
   DataBlockEditorAction.SetBlocks,
-  { blocks: DataBlockModel[] }
+  { blocks: DataBlockBase[] }
 >;
 
 type SetFocused = SetDataBlockEditorAction<
   DataBlockEditorAction.SetFocused,
-  { index?: number }
+  { index?: number; focusedEnd?: boolean }
 >;
+
+type SetKeymap = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetKeymap,
+  { keymap: DataBlockProps["customKeymap"] }
+>;
+
+type SetMdProps = SetDataBlockEditorAction<
+  DataBlockEditorAction.SetMdProps,
+  { mdProps: DataBlockProps["mdProps"] }
+>;
+
+type MergeUpdates = SetDataBlockEditorAction<
+  DataBlockEditorAction.MergeUpdates,
+  ReceiveDataBlockEditorUpdates
+>;
+
+//////////
 
 type AddBlock = SetDataBlockEditorAction<
   DataBlockEditorAction.AddBlock,
   {
-    block: Omit<DataBlockModel, "variants">;
+    block: Omit<DataBlockBase, "variants">;
     variant: Omit<DataBlockVariant, "votes">;
     index: number;
   }
@@ -109,7 +138,7 @@ type AddBlock = SetDataBlockEditorAction<
 type EditBlock = SetDataBlockEditorAction<
   DataBlockEditorAction.EditBlock,
   {
-    block: Omit<DataBlockModel, "variants">;
+    block: Omit<DataBlockBase, "variants">;
     variant: Omit<DataBlockVariant, "votes">;
   }
 >;
@@ -153,14 +182,18 @@ export type DataBlockEditorActions =
   | Clear
   | SetEditable
   | SetTranslations
-  | SetTypes
+  | SetTools
   | SetShowPrefix
   | SetShowVariants
+  | SetShowNavigation
+  | SetShowIndentOffset
   | SetCanChangeVariants
   | SetCurrentUserId
   | SetGetFilesUrl
-  | SetPrefixes
   | SetBlocks
+  | SetKeymap
+  | SetMdProps
+  | MergeUpdates
   | AddBlock
   | EditBlock
   | MoveBlock

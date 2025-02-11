@@ -1,36 +1,35 @@
 import { SxProps } from "@mui/material";
-import React, { UIEventHandler, useContext } from "react";
+import { FC, UIEventHandler, useContext } from "react";
 
 import { Box } from "../../Box";
 import { DataBlockEditorContext } from "../store";
 
-import { DataBlock } from "./DataBlock";
+import { DataBlockWrapper } from "./DataBlockWrapper";
 
-export const DataBlockEditorRenderer: React.FC<{
+export const DataBlockEditorRenderer: FC<{
   sx?: SxProps;
   onScroll?: UIEventHandler<HTMLDivElement>;
+  editable?: boolean;
 }> = ({ sx, onScroll }) => {
   const { state } = useContext(DataBlockEditorContext);
 
-  const blocks = state.blocks || [];
-
   return (
     <Box
-      sx={{ width: 1, height: 1, overflowY: "auto", pb: "500px" }}
+      sx={{
+        width: 1,
+        height: 1,
+        overflowY: "auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: "4px",
+        pb: "500px",
+        ...sx,
+      }}
       onScroll={onScroll}
     >
-      <Box sx={sx}>
-        {blocks.map((data, index) => (
-          <DataBlock
-            key={data.id}
-            index={index}
-            data={data}
-            maxOffset={
-              !blocks[index - 1] ? 0 : (blocks[index - 1]?.offset || 0) + 1
-            }
-          />
-        ))}
-      </Box>
+      {state.blocks.map((data, index) => (
+        <DataBlockWrapper key={data.id} index={index} data={data} />
+      ))}
     </Box>
   );
 };
