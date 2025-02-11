@@ -70,16 +70,16 @@ marked.use({
 
       let itemBody = "";
 
-      const textToken = tokens.findIndex((t) => t.type === "text");
-      const prefix = tokens.find((t) => t.type === "list_item_prefix")?.raw;
+      // const textToken = tokens.findIndex((t) => t.type === "text");
+      // const prefix = tokens.find((t) => t.type === "list_item_prefix")?.raw;
 
-      if (prefix && tokens[textToken]?.type === "text") {
-        tokens[textToken].text = prefix + tokens[textToken].text;
-        if (tokens[textToken].tokens?.[0]?.type === "text") {
-          tokens[textToken].tokens[0].text =
-            prefix + tokens[textToken].tokens[0].text;
-        }
-      }
+      // if (prefix && tokens[textToken]?.type === "text") {
+      //   tokens[textToken].text = prefix + tokens[textToken].text;
+      //   if (tokens[textToken].tokens?.[0]?.type === "text") {
+      //     tokens[textToken].tokens[0].text =
+      //       prefix + tokens[textToken].tokens[0].text;
+      //   }
+      // }
 
       const depth = Number(
         tokens.find((t) => t.type === "list_item_depth")?.raw || "0",
