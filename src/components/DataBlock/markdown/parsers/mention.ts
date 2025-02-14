@@ -1,8 +1,6 @@
-import { isuuid } from "../../../../hooks";
+import { isTonWallet, isuuid } from "../../../../hooks";
 
 import type { Element, MarkdownConfig } from "@lezer/markdown";
-
-const tonRegExp = /^(?:-1:|0:)[0-9a-fA-F]{64}$/i;
 
 export const parseInlineMention = (
   elt: (type: string, from: number, to: number) => Element,
@@ -46,7 +44,7 @@ export const parseInlineMention = (
   const [id, detailId] = text.slice(nameEnd + 1, idsEnd).split("#");
 
   // Check if the id is a valid UUID or TON Wallet address
-  if (!isuuid(id || "") && !tonRegExp.test(id || "")) {
+  if (!isuuid(id || "") && !isTonWallet(id || "")) {
     return null;
   }
 
@@ -113,8 +111,9 @@ export const mention: MarkdownConfig = {
 
         const result = parseInlineMention(
           cx.elt.bind(cx),
-          pos + 1,
+          1,
           cx.slice(pos, cx.end),
+          pos,
         );
 
         if (!result) {

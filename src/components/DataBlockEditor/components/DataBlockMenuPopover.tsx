@@ -4,14 +4,18 @@ import { Popover } from "../../Popover";
 import { List } from "../../List";
 import { ListItem } from "../../ListItem";
 import { Box } from "../../Box";
-import { DataBlockBase, DataBlockVariant } from "../models";
+import {
+  DataBlockBase,
+  DataBlockEditorPublicAction,
+  DataBlockVariant,
+} from "../models";
 import {
   DeleteIcon,
   IndentDecreaseIcon,
   IndentIncreaseIcon,
 } from "../../../icons";
 import { useDevice } from "../../../hooks";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
+import { DataBlockEditorContext } from "../store";
 
 export type DataBlockMenuPopoverProps = {
   currentVariant: DataBlockVariant;
@@ -38,9 +42,9 @@ export const DataBlockMenuPopover: FC<DataBlockMenuPopoverProps> = ({
 
   const handleDelete = () => {
     dispatch({
-      action: DataBlockEditorAction.DeleteBlock,
+      action: DataBlockEditorPublicAction.DeleteBlock,
       data: {
-        id: blockData.id,
+        blockId: blockData.id,
       },
     });
     onClose();
@@ -51,7 +55,7 @@ export const DataBlockMenuPopover: FC<DataBlockMenuPopoverProps> = ({
     variantChanges?: Partial<DataBlockVariant["data"]>,
   ) => {
     dispatch({
-      action: DataBlockEditorAction.EditBlock,
+      action: DataBlockEditorPublicAction.EditBlock,
       data: {
         block: { ...blockData, ...blockChanges },
         variant: {
@@ -75,7 +79,11 @@ export const DataBlockMenuPopover: FC<DataBlockMenuPopoverProps> = ({
     <>
       <Popover anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose}>
         <List>
-          {currentTool?.renderMenu?.(currentVariant, handleEdit)}
+          {currentTool?.renderMenu?.({
+            block: blockData,
+            variant: currentVariant,
+            onChange: handleEdit,
+          })}
           <ListItem
             asButton
             icon={<IndentIncreaseIcon />}

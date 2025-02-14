@@ -14,9 +14,9 @@ import { DataBlockEditor } from "./DataBlockEditor";
 import {
   DataBlockEditorApi,
   DataBlockEditorProps,
+  DataBlockEditorPublicAction,
   SendDataBlockEditorUpdates,
 } from "./models";
-import { DataBlockEditorAction } from "./store";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -34,7 +34,6 @@ const def = Array.from(new Array(10)).map((_, index) => ({
   id: uuid(),
   type: "text",
   offset: 0,
-  number: 6 + index,
   variants: [
     {
       id: uuid(),
@@ -65,7 +64,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "1",
         type: "text",
         offset: 0,
-        number: 1,
         variants: [
           {
             id: "11",
@@ -91,7 +89,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "2",
         type: "header",
         offset: 0,
-        number: 2,
         variants: [
           {
             id: "22",
@@ -107,7 +104,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "3",
         type: "text",
         offset: 0,
-        number: 2,
         variants: [
           {
             id: "22",
@@ -126,14 +122,14 @@ export const Base: StoryObj<DataBlockEditorProps> = {
       },
       {
         id: "4",
-        type: "text",
+        type: "heading",
         offset: 0,
-        number: 2,
         variants: [
           {
             id: "22",
             data: {
-              text: "Nice <u>shot</u> and the <u>shot</u> is <u>good</u>",
+              text: "## Heading 2",
+              level: 2,
             },
             isCurrent: true,
             votes: [],
@@ -146,7 +142,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "5",
         type: "text",
         offset: 0,
-        number: 2,
         variants: [
           {
             id: "22",
@@ -170,7 +165,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
     const handleChange = ({ action, data }: SendDataBlockEditorUpdates) => {
       setTimeout(() => {
         switch (action) {
-          case DataBlockEditorAction.AddBlock:
+          case DataBlockEditorPublicAction.AddBlock:
             ref.current?.updateData({
               action,
               data: {
@@ -185,7 +180,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               },
             });
             break;
-          case DataBlockEditorAction.EditBlock:
+          case DataBlockEditorPublicAction.EditBlock:
             ref.current?.updateData({
               action,
               data: {
@@ -196,10 +191,11 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                     ? [{ ...data.variant, createdByData, votes: [] }]
                     : [],
                 },
+                variant: { ...data.variant, createdByData, votes: [] },
               },
             });
             break;
-          case DataBlockEditorAction.DeleteBlock:
+          case DataBlockEditorPublicAction.DeleteBlock:
             ref.current?.updateData({
               action,
               data: {
@@ -207,17 +203,16 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               },
             });
             break;
-          case DataBlockEditorAction.MoveBlock:
+          case DataBlockEditorPublicAction.MoveBlock:
             ref.current?.updateData({
               action,
               data: {
                 blockId: data.blockId,
-                oldIndex: data.oldIndex,
                 targetIndex: data.targetIndex,
               },
             });
             break;
-          case DataBlockEditorAction.AddVariant:
+          case DataBlockEditorPublicAction.AddVariant:
             ref.current?.updateData({
               action,
               data: {
@@ -226,7 +221,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               },
             });
             break;
-          case DataBlockEditorAction.EditVariant:
+          case DataBlockEditorPublicAction.EditVariant:
             ref.current?.updateData({
               action,
               data: {
@@ -235,7 +230,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               },
             });
             break;
-          case DataBlockEditorAction.DeleteVariant:
+          case DataBlockEditorPublicAction.DeleteVariant:
             ref.current?.updateData({
               action,
               data: {
@@ -264,7 +259,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               title: "Header",
               defaultValue: "# ",
               icon: HeadingIcon,
-              renderMenu: (variant) => (
+              renderMenu: ({ variant }) => (
                 <>
                   <ListItem
                     asButton
@@ -282,7 +277,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               title: "Signature",
               icon: HeadingIcon,
               defaultValue: "> [!sign]\n> 1. ",
-              renderMenu: (variant) => <>TODO</>,
+              renderMenu: () => <>TODO</>,
             },
           }}
           mdProps={{
@@ -310,6 +305,26 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                 }, 1000);
               });
             },
+            onSearchReference: async ({ query = "" }) => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve(
+                    [
+                      {
+                        label: `Doc 1`,
+                        id: uuid(),
+                      },
+                      {
+                        label: `Doc 2`,
+                        id: uuid(),
+                      },
+                    ].filter((o) =>
+                      !query ? true : o.label.indexOf(query) > -1,
+                    ),
+                  );
+                }, 1000);
+              });
+            },
             decorations: [
               (node, append, cursorPos, view) => {
                 if (node.name === "Signature") {
@@ -328,7 +343,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                     append(
                       Decoration.line({
                         class: `cm-blockquote${isActive ? " cm-blockquote-indent" : ""}`,
-                        style: { color: "red" },
                       }).range(cursor.from),
                     );
 

@@ -5,11 +5,11 @@ import { omit } from "ramda";
 
 import { Box } from "../../Box";
 import { Typography } from "../../Typography";
-import { useToggleable, uuid } from "../../../hooks";
-import { DataBlockBase } from "../models";
+import { useDeepEqualMemo, useToggleable, uuid } from "../../../hooks";
+import { DataBlockBase, DataBlockEditorPublicAction } from "../models";
 import { DropLine } from "../../DropLine";
 import { useBlockDrop } from "../hooks/use-block-drop";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
+import { DataBlockEditorContext } from "../store";
 
 import { DataBlockActions } from "./DataBlockActions";
 import { DataBlockContent } from "./DataBlockContent";
@@ -51,22 +51,22 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
     close: closeShowVariants,
   } = useToggleable();
 
-  const displayVariants = useMemo(
-    () => showVariants || forceShowVariants,
-    [showVariants, forceShowVariants],
-  );
+  const displayVariants = showVariants || forceShowVariants;
 
   const canAddVariant = useMemo(
     () =>
       editable && !data.variants?.find((v) => v.createdBy === currentUserId),
-    [editable, currentUserId, data.variants],
+    [editable, currentUserId, useDeepEqualMemo(data.variants)],
   );
 
-  const blockData = useMemo(() => omit(["variants"], data), [data]);
+  const blockData = useMemo(
+    () => omit(["variants"], data),
+    [useDeepEqualMemo(data)],
+  );
 
   const currentVariant = useMemo(
     () => data.variants.find((v) => v.isCurrent) || data.variants[0],
-    [data.variants],
+    [useDeepEqualMemo(data.variants)],
   );
 
   const currentVariantVoted = useMemo(
@@ -74,13 +74,36 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       Boolean(
         currentVariant?.votes?.find((v) => v.createdBy === currentUserId),
       ),
-    [currentVariant, currentUserId],
+    [useDeepEqualMemo(currentVariant), currentUserId],
   );
 
   const otherVariants = useMemo(
     () => data.variants.filter((v) => !v.isCurrent),
-    [data.variants],
+    [useDeepEqualMemo(data.variants)],
   );
+
+  const prefixVariant = useMemo(() => {
+    if (blockData.type === "heading") {
+      switch (currentVariant?.data?.level) {
+        case 1:
+          return "h1";
+        case 2:
+          return "h2";
+        case 3:
+          return "h3";
+        case 4:
+          return "h4";
+        case 5:
+          return "h5";
+        case 6:
+          return "h6";
+        default:
+          return "body1";
+      }
+    }
+
+    return "body1";
+  }, [blockData.type, currentVariant?.data?.level]);
 
   const [shownIndex, setShownIndex] = useState<number>(0);
 
@@ -102,9 +125,9 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
     dropAfterRef,
   } = useBlockDrop(index, ({ id }, oldIndex, targetIndex) =>
     dispatch({
-      action: DataBlockEditorAction.MoveBlock,
+      action: DataBlockEditorPublicAction.MoveBlock,
       data: {
-        id,
+        blockId: id,
         oldIndex,
         targetIndex,
       },
@@ -113,9 +136,9 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
 
   const handleAddVariant = () => {
     dispatch({
-      action: DataBlockEditorAction.AddVariant,
+      action: DataBlockEditorPublicAction.AddVariant,
       data: {
-        id: blockData.id,
+        blockId: blockData.id,
         variant: {
           id: uuid(),
           data: {},
@@ -131,9 +154,9 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
   const handleChangeCurrentVariant = () => {
     if (otherVariants[shownIndex]) {
       dispatch({
-        action: DataBlockEditorAction.EditVariant,
+        action: DataBlockEditorPublicAction.EditVariant,
         data: {
-          id: blockData.id,
+          blockId: blockData.id,
           variant: {
             ...otherVariants[shownIndex],
             isCurrent: true,
@@ -205,24 +228,19 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       >
         {showPrefix && (
           <Typography
-            variant="body1"
+            variant={prefixVariant}
             component="div"
             sx={{
               minWidth: Math.max(maxPrefixLength * 6, 16),
-              pt: 2,
               mr: -6,
+              lineHeight: "1.5",
               userSelect: "none",
             }}
           >
             {prefixes[blockData.id]}
           </Typography>
         )}
-        <Box
-          width={1}
-          display="flex"
-          flexDirection="column"
-          gap={2}
-        >
+        <Box width={1} display="flex" flexDirection="column" gap={2}>
           <DataBlockContent
             index={index}
             isFocused={index === focused}

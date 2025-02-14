@@ -10,11 +10,12 @@ export type DataBlockTool = {
   icon?: FC<SvgIconProps>;
   defaultValue?: string;
   shortcut?: SymbolsKey[];
-  renderMenu?: (
-    currentVariant: DataBlockVariant,
-    onUpdate: (
+  renderMenu?: (data: {
+    block: Omit<DataBlockBase, "variants">;
+    variant: Omit<DataBlockVariant, "votes">;
+    onChange: (
       blockChanges?: Partial<DataBlockBase>,
       variantChanges?: Partial<DataBlockVariant["data"]>,
-    ) => void,
-  ) => ReactNode;
+    ) => void;
+  }) => ReactNode;
 };

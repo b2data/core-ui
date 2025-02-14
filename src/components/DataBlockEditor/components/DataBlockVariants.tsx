@@ -6,6 +6,7 @@ import { Box } from "../../Box";
 import { IconButton } from "../../IconButton";
 import { Tooltip } from "../../Tooltip";
 import { DataBlockEditorContext } from "../store";
+import { useDeepEqualMemo } from "../../../hooks";
 
 import { DataBlockContent } from "./DataBlockContent";
 import { DataBlockVariantLikes } from "./DataBlockVariantLikes";
@@ -34,17 +35,14 @@ export const DataBlockVariants: FC<DataBlockVariantsProps> = ({
     state: { editable, i18n, currentUserId },
   } = useContext(DataBlockEditorContext);
 
-  const shownVariant = useMemo(
-    () => variants[shownIndex],
-    [shownIndex, variants],
-  );
+  const shownVariant = variants[shownIndex];
 
   const isEditable = editable && shownVariant?.createdBy === currentUserId;
 
   const isVoted = useMemo(
     () =>
       Boolean(shownVariant?.votes?.find((v) => v.createdBy === currentUserId)),
-    [shownVariant, currentUserId],
+    [useDeepEqualMemo(shownVariant), currentUserId],
   );
 
   useEffect(() => () => setShownIndex(0), []);
@@ -79,7 +77,7 @@ export const DataBlockVariants: FC<DataBlockVariantsProps> = ({
     } else {
       return variants.map((_, ind) => ind);
     }
-  }, [shownIndex, variants]);
+  }, [shownIndex, useDeepEqualMemo(variants)]);
 
   return (
     <Box

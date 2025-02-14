@@ -7,9 +7,9 @@ import { List } from "../../List";
 import { ListItem } from "../../ListItem";
 import { Avatar } from "../../Avatar";
 import { ExpandMoreIcon, ThumbUpIcon } from "../../../icons";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
+import { DataBlockEditorContext } from "../store";
 import { formatUserName } from "../utils";
-import { DataBlockVariant } from "../models";
+import { DataBlockEditorPublicAction, DataBlockVariant } from "../models";
 
 export type DataBlockVariantLikesProps = {
   blockId: string;
@@ -33,10 +33,10 @@ export const DataBlockVariantLikes: FC<DataBlockVariantLikesProps> = ({
     if (currentUserId) {
       dispatch({
         action: isVoted
-          ? DataBlockEditorAction.UnVoteVariant
-          : DataBlockEditorAction.VoteVariant,
+          ? DataBlockEditorPublicAction.UnVoteVariant
+          : DataBlockEditorPublicAction.VoteVariant,
         data: {
-          id: blockId,
+          blockId,
           variantId: variantId,
           createdBy: currentUserId,
         },

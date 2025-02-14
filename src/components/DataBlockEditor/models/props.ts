@@ -4,7 +4,7 @@ import { SxProps } from "@mui/material";
 import { DataBlockProps } from "../../DataBlock";
 
 import { DataBlockBase, DataBlockType } from "./blocks";
-import { DataBlockEditorState, onChangeCallback } from "./state";
+import { DataBlockEditorOnChangeCallback, DataBlockEditorState } from "./state";
 import { DataBlockEditorTranslations } from "./i18n";
 import { DataBlockTool } from "./tools";
 import { ReceiveDataBlockEditorUpdates } from "./updates";
@@ -62,10 +62,10 @@ export type DataBlockEditorProps<T extends DataBlockBase = DataBlockBase> = {
   tools?: Record<DataBlockType, DataBlockTool>;
   /**
    * Callback `onChange` action
-   * - action: DataBlockEditorAction;
+   * - action: DataBlockEditorPublicAction;
    * - data: { block?: DataBlockBase; variant?: DataBlockVariant; index?: number; oldIndex?: number; targetIndex?: number; };
    */
-  onChange?: onChangeCallback;
+  onChange?: DataBlockEditorOnChangeCallback;
   /**
    * Scroll event handler
    */

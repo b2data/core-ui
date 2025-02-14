@@ -115,7 +115,7 @@ export const MarkdownField = React.forwardRef(
             transform: "translate(0, 17px) scale(1)",
             transition:
               "color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
-            ...(value || placeholder
+            ...(value || placeholder || isFocus
               ? {
                   transform: "translate(0, -1.5px) scale(0.75)",
                 }
@@ -153,8 +153,8 @@ export const MarkdownField = React.forwardRef(
           }}
           onFocus={() => setIsFocus(true)}
           placeholderText={placeholder}
-          onTrackChanges={onChange}
-          onChangeDebounce={300}
+          onChange={onChange}
+          onChangeDebounce={100}
           mdProps={{
             slashCommands: [
               "bold",

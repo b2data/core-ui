@@ -69,7 +69,7 @@ export const getSlashCommand =
         type: "command",
         apply: (view: EditorView, _, from: number, to: number) => {
           view.dispatch({
-            changes: { from, to, insert: "*" },
+            changes: { from, to, insert: "**" },
             selection: { anchor: from + 1, head: from + 1 },
           });
         },

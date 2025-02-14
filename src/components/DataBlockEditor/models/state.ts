@@ -5,7 +5,9 @@ import { DataBlockBase, DataBlockType } from "./blocks";
 import { DataBlockTool } from "./tools";
 import { SendDataBlockEditorUpdates } from "./updates";
 
-export type onChangeCallback = (data: SendDataBlockEditorUpdates) => void;
+export type DataBlockEditorOnChangeCallback = (
+  data: SendDataBlockEditorUpdates,
+) => void;
 
 export type DataBlockEditorState = {
   editable: boolean;
@@ -23,7 +25,19 @@ export type DataBlockEditorState = {
   maxPrefixLength: number;
   focused?: number;
   focusedEnd?: boolean;
-  onChange?: onChangeCallback;
+  onChange?: DataBlockEditorOnChangeCallback;
   keymap: DataBlockProps["customKeymap"];
   mdProps: DataBlockProps["mdProps"];
 };
+
+export enum DataBlockEditorPublicAction {
+  AddBlock = "addBlock",
+  MoveBlock = "moveBlock",
+  EditBlock = "editBlock",
+  DeleteBlock = "deleteBlock",
+  AddVariant = "addVariant",
+  EditVariant = "editVariant",
+  DeleteVariant = "deleteVariant",
+  VoteVariant = "voteVariant",
+  UnVoteVariant = "unVoteVariant",
+}

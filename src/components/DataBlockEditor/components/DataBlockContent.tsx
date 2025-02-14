@@ -3,8 +3,12 @@ import { EditorView } from "@codemirror/view";
 import { insertBlankLine, insertNewlineKeepIndent } from "@codemirror/commands";
 import { syntaxTree } from "@codemirror/language";
 
-import { DataBlockBase, DataBlockVariant } from "../models";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
+import {
+  DataBlockBase,
+  DataBlockEditorPublicAction,
+  DataBlockVariant,
+} from "../models";
+import { DataBlockEditorContext, DataBlockEditorPrivateAction } from "../store";
 import { DataBlock } from "../../DataBlock";
 import { useDeepEqualMemo, uuid } from "../../../hooks";
 
@@ -13,20 +17,6 @@ export type DataBlockContentProps = {
   isFocused?: boolean;
   block: Omit<DataBlockBase, "variants">;
   variant: DataBlockVariant;
-};
-
-const getBlockType = (text: string) => {
-  if (
-    text.startsWith("# ") ||
-    text.startsWith("## ") ||
-    text.startsWith("### ") ||
-    text.startsWith("#### ") ||
-    text.startsWith("##### ") ||
-    text.startsWith("###### ")
-  )
-    return "heading";
-
-  return "text";
 };
 
 export const DataBlockContent: FC<DataBlockContentProps> = ({
@@ -50,16 +40,15 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
 
   const view = useRef<EditorView>();
 
-  const content = variant.data.text;
+  const content = variant.data.text || "";
 
   const handleAddBlock = useCallback(() => {
     dispatch({
-      action: DataBlockEditorAction.AddBlock,
+      action: DataBlockEditorPublicAction.AddBlock,
       data: {
         block: {
           id: uuid(),
           type: "text",
-          number: index,
           offset: block.offset,
           createdBy: currentUserId,
         },
@@ -76,48 +65,68 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
 
   const moveToNextBlock = useCallback(() => {
     dispatch({
-      action: DataBlockEditorAction.SetFocused,
+      action: DataBlockEditorPrivateAction.SetFocused,
       data: { index: index + 1, focusedEnd: true },
     });
   }, [index]);
 
   const moveToPrevBlock = useCallback(() => {
     dispatch({
-      action: DataBlockEditorAction.SetFocused,
+      action: DataBlockEditorPrivateAction.SetFocused,
       data: { index: Math.max(0, index - 1), focusedEnd: false },
     });
   }, [index]);
 
-  const handleUpdate = useCallback(
-    ({ offsetChanges, text }: { offsetChanges?: number; text?: string }) => {
-      const newText = text || content;
+  const handleChangeOffset = useCallback(
+    (offsetChanges: number) => {
       dispatch({
-        action: DataBlockEditorAction.EditBlock,
+        action: DataBlockEditorPublicAction.EditBlock,
         data: {
           block: {
             ...block,
             offset: Math.max(0, block.offset + (offsetChanges || 0)),
-            type: getBlockType(newText),
           },
+          variant,
+        },
+      });
+    },
+    [block, variant],
+  );
+
+  const handleUpdateText = useCallback(
+    (text: string) => {
+      dispatch({
+        action: DataBlockEditorPublicAction.EditVariant,
+        data: {
+          blockId: block.id,
           variant: {
             ...variant,
             data: {
               ...variant.data,
-              text: newText,
+              text,
             },
           },
         },
       });
     },
-    [block, variant, content],
+    [block.id, variant, content],
   );
 
   const deleteBlock = useCallback(() => {
     dispatch({
-      action: DataBlockEditorAction.DeleteBlock,
-      data: { id: block.id },
+      action: DataBlockEditorPublicAction.DeleteBlock,
+      data: { blockId: block.id },
     });
   }, [block.id]);
+
+  const handleSetFocuses = useCallback(() => {
+    if (!isFocused) {
+      dispatch({
+        action: DataBlockEditorPrivateAction.SetFocused,
+        data: { index },
+      });
+    }
+  }, [index, isFocused]);
 
   const customKeymap = useMemo(
     () => [
@@ -192,11 +201,11 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
       {
         key: "Tab",
         run: () => {
-          handleUpdate({ offsetChanges: 1 });
+          handleChangeOffset(1);
           return true;
         },
         shift: () => {
-          handleUpdate({ offsetChanges: -1 });
+          handleChangeOffset(-1);
           return true;
         },
       },
@@ -225,7 +234,7 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
       moveToNextBlock,
       moveToPrevBlock,
       deleteBlock,
-      handleUpdate,
+      handleChangeOffset,
       useDeepEqualMemo(keymap),
     ],
   );
@@ -234,12 +243,14 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
     setTimeout(() => {
       if (view.current?.contentDOM && isFocused) {
         view.current!.contentDOM.focus();
-        view.current!.dispatch({
-          selection: {
-            anchor: focusedEnd ? content.length : 0,
-            head: focusedEnd ? content.length : 0,
-          },
-        });
+        if (typeof focusedEnd === "boolean") {
+          view.current!.dispatch({
+            selection: {
+              anchor: focusedEnd ? content.length : 0,
+              head: focusedEnd ? content.length : 0,
+            },
+          });
+        }
       }
     }, 0);
   }, [isFocused, view.current?.contentDOM, focusedEnd, content.length]);
@@ -251,7 +262,8 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
       readOnly={variant.createdBy !== currentUserId}
       content={content}
       placeholderText={emptyPlaceholder}
-      onTrackChanges={(text) => handleUpdate({ text })}
+      onTrackChanges={(text) => handleUpdateText(text)}
+      onFocus={() => handleSetFocuses()}
       customKeymap={customKeymap}
       mdProps={mdProps}
       sx={{

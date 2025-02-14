@@ -1,6 +1,5 @@
 import {
   FC,
-  ReactElement,
   useCallback,
   useContext,
   useEffect,
@@ -18,7 +17,8 @@ import { Box } from "../../Box";
 import { TextField } from "../../TextField";
 import { SearchIcon } from "../../../icons";
 import { useDeepEqualMemo, useDevice, uuid } from "../../../hooks";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
+import { DataBlockEditorContext } from "../store";
+import { DataBlockEditorPublicAction } from "../models";
 
 export type DataBlockAddTypePopoverProps = {
   offset: number;
@@ -89,12 +89,11 @@ export const DataBlockAddTypePopover: FC<DataBlockAddTypePopoverProps> = ({
 
   const handleAdd = (option: { id: string; defaultValue?: string }) => {
     dispatch({
-      action: DataBlockEditorAction.AddBlock,
+      action: DataBlockEditorPublicAction.AddBlock,
       data: {
         block: {
           id: uuid(),
           type: option.id,
-          number: index + 2,
           offset,
           createdBy: currentUserId,
         },

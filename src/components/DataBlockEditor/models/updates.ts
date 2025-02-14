@@ -1,10 +1,11 @@
-import { DataBlockEditorAction, SetDataBlockEditorAction } from "../store";
+import { SetDataBlockEditorAction } from "../store";
 
 import { DataBlockBase, DataBlockUserData, DataBlockVariant } from "./blocks";
+import { DataBlockEditorPublicAction } from "./state";
 
 export type SendDataBlockEditorUpdates =
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.AddBlock,
+      DataBlockEditorPublicAction.AddBlock,
       {
         block: Omit<DataBlockBase, "variants" | "createdByData">;
         variant: Pick<
@@ -15,7 +16,7 @@ export type SendDataBlockEditorUpdates =
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.EditBlock,
+      DataBlockEditorPublicAction.EditBlock,
       {
         block: Omit<DataBlockBase, "variants" | "createdByData">;
         variant: Pick<
@@ -25,7 +26,7 @@ export type SendDataBlockEditorUpdates =
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.MoveBlock,
+      DataBlockEditorPublicAction.MoveBlock,
       {
         blockId: string;
         oldIndex: number;
@@ -33,13 +34,13 @@ export type SendDataBlockEditorUpdates =
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.DeleteBlock,
+      DataBlockEditorPublicAction.DeleteBlock,
       {
         blockId: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.AddVariant,
+      DataBlockEditorPublicAction.AddVariant,
       {
         blockId: string;
         variant: Pick<
@@ -49,28 +50,28 @@ export type SendDataBlockEditorUpdates =
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.EditVariant,
+      DataBlockEditorPublicAction.EditVariant,
       {
         blockId: string;
         variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.DeleteVariant,
+      DataBlockEditorPublicAction.DeleteVariant,
       {
         blockId: string;
         variantId: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.VoteVariant,
+      DataBlockEditorPublicAction.VoteVariant,
       {
         blockId: string;
         variantId: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.UnVoteVariant,
+      DataBlockEditorPublicAction.UnVoteVariant,
       {
         blockId: string;
         variantId: string;
@@ -79,58 +80,69 @@ export type SendDataBlockEditorUpdates =
 
 export type ReceiveDataBlockEditorUpdates =
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.AddBlock,
+      DataBlockEditorPublicAction.AddBlock,
       {
         block: DataBlockBase;
         index: number;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.EditBlock,
+      DataBlockEditorPublicAction.EditBlock,
       {
         block: DataBlockBase;
+        variant: DataBlockVariant;
+        oldBlockId?: string;
+        oldVariantId?: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.MoveBlock,
+      DataBlockEditorPublicAction.MoveBlock,
       {
         blockId: string;
-        oldIndex: number;
         targetIndex: number;
+        oldBlockId?: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.DeleteBlock,
+      DataBlockEditorPublicAction.DeleteBlock,
       {
         blockId: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.AddVariant,
-      {
-        blockId: string;
-        variant: DataBlockVariant;
-      }
-    >
-  | SetDataBlockEditorAction<
-      DataBlockEditorAction.EditVariant,
+      DataBlockEditorPublicAction.AddVariant,
       {
         blockId: string;
         variant: DataBlockVariant;
+        oldBlockId?: string;
+        oldVariantId?: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.DeleteVariant,
+      DataBlockEditorPublicAction.EditVariant,
       {
         blockId: string;
-        variantId: string;
+        variant: DataBlockVariant;
+        oldBlockId?: string;
+        oldVariantId?: string;
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.VoteVariant,
+      DataBlockEditorPublicAction.DeleteVariant,
       {
         blockId: string;
         variantId: string;
+        oldBlockId?: string;
+        oldVariantId?: string;
+      }
+    >
+  | SetDataBlockEditorAction<
+      DataBlockEditorPublicAction.VoteVariant,
+      {
+        blockId: string;
+        variantId: string;
+        oldBlockId?: string;
+        oldVariantId?: string;
         vote: {
           createdBy: string;
           createdByData: DataBlockUserData;
@@ -139,10 +151,12 @@ export type ReceiveDataBlockEditorUpdates =
       }
     >
   | SetDataBlockEditorAction<
-      DataBlockEditorAction.UnVoteVariant,
+      DataBlockEditorPublicAction.UnVoteVariant,
       {
         blockId: string;
         variantId: string;
+        oldBlockId?: string;
+        oldVariantId?: string;
         createdBy: string;
       }
     >;

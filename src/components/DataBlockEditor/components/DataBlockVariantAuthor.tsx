@@ -6,8 +6,8 @@ import { IconButton } from "../../IconButton";
 import { DeleteIcon } from "../../../icons";
 import { Tooltip } from "../../Tooltip";
 import { formatUserName } from "../utils";
-import { DataBlockVariant } from "../models";
-import { DataBlockEditorAction, DataBlockEditorContext } from "../store";
+import { DataBlockEditorPublicAction, DataBlockVariant } from "../models";
+import { DataBlockEditorContext } from "../store";
 
 export type DataBlockVariantAuthorProps = {
   blockId: string;
@@ -29,9 +29,9 @@ export const DataBlockVariantAuthor: FC<DataBlockVariantAuthorProps> = ({
 
   const handleDeleteVariant = () => {
     dispatch({
-      action: DataBlockEditorAction.DeleteVariant,
+      action: DataBlockEditorPublicAction.DeleteVariant,
       data: {
-        id: blockId,
+        blockId,
         variantId: variantId,
       },
     });

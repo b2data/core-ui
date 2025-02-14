@@ -25,7 +25,6 @@ export type DataBlockBase<T = DataBlockType, Data = Record<string, any>> = {
   id: string;
   type: T;
   offset: number;
-  number: number;
   hidePrefix?: boolean;
   createdBy?: string;
   createdByData?: DataBlockUserData;

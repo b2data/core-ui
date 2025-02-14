@@ -101,6 +101,10 @@ export const getAutocompleteTheme = (i18n?: MarkdownPluginI18n) =>
         flexDirection: "row",
         justifyContent: "space-between",
         gap: "4px",
+        padding: "6px 20px 6px 10px",
+      },
+      "& > ul > completion-section": {
+        padding: "6px 20px 6px 10px",
       },
     },
 

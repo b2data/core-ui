@@ -1,6 +1,7 @@
 import { DataBlockProps } from "../../DataBlock";
 import {
   DataBlockBase,
+  DataBlockEditorPublicAction,
   DataBlockEditorTranslations,
   DataBlockTool,
   DataBlockType,
@@ -8,11 +9,11 @@ import {
   ReceiveDataBlockEditorUpdates,
 } from "../models";
 
-export enum DataBlockEditorAction {
+export enum DataBlockEditorPrivateAction {
   Clear = "clear",
   SetEditable = "setEditable",
   SetTranslations = "setTranslations",
-  SetTools = "SetTools",
+  SetTools = "setTools",
   SetBlocks = "setBlocks",
   SetShowPrefix = "setShowPrefix",
   SetShowVariants = "setShowVariants",
@@ -21,113 +22,96 @@ export enum DataBlockEditorAction {
   SetFocused = "setFocused",
   SetCanChangeVariants = "setCanChangeVariants",
   SetCurrentUserId = "setCurrentUserId",
-  SetGetFilesUrl = "setGetFilesUrl",
   SetKeymap = "setKeymap",
   SetMdProps = "setMdProps",
   MergeUpdates = "mergeUpdate",
-
-  // Actions for callback
-  AddBlock = "addBlock",
-  MoveBlock = "moveBlock",
-  EditBlock = "editBlock",
-  DeleteBlock = "deleteBlock",
-  AddVariant = "addVariant",
-  EditVariant = "editVariant",
-  DeleteVariant = "deleteVariant",
-  VoteVariant = "voteVariant",
-  UnVoteVariant = "unVoteVariant",
 }
 
 export type SetDataBlockEditorAction<
-  T extends DataBlockEditorAction,
+  T extends DataBlockEditorPrivateAction | DataBlockEditorPublicAction,
   Data extends Record<string, unknown>,
 > = { action: T; data: Data };
 
 type Clear = SetDataBlockEditorAction<
-  DataBlockEditorAction.Clear,
+  DataBlockEditorPrivateAction.Clear,
   // eslint-disable-next-line @typescript-eslint/ban-types
   {}
 >;
 
 type SetEditable = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetEditable,
+  DataBlockEditorPrivateAction.SetEditable,
   { editable: boolean }
 >;
 
 type SetTranslations = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetTranslations,
+  DataBlockEditorPrivateAction.SetTranslations,
   { i18n: DataBlockEditorTranslations }
 >;
 
 type SetTools = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetTools,
+  DataBlockEditorPrivateAction.SetTools,
   { tools: Record<DataBlockType, DataBlockTool> }
 >;
 
 type SetShowPrefix = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetShowPrefix,
+  DataBlockEditorPrivateAction.SetShowPrefix,
   { showPrefix: boolean }
 >;
 
 type SetShowVariants = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetShowVariants,
+  DataBlockEditorPrivateAction.SetShowVariants,
   { showVariants: boolean }
 >;
 
 type SetShowNavigation = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetShowNavigation,
+  DataBlockEditorPrivateAction.SetShowNavigation,
   { showNavigation: boolean }
 >;
 
 type SetShowIndentOffset = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetShowIndentOffset,
+  DataBlockEditorPrivateAction.SetShowIndentOffset,
   { showIndentOffset: boolean }
 >;
 
 type SetCanChangeVariants = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetCanChangeVariants,
+  DataBlockEditorPrivateAction.SetCanChangeVariants,
   { canChangeVariants: boolean }
 >;
 
 type SetCurrentUserId = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetCurrentUserId,
+  DataBlockEditorPrivateAction.SetCurrentUserId,
   { currentUserId: string }
 >;
 
-type SetGetFilesUrl = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetGetFilesUrl,
-  { getFilesUrl: (id: string) => string }
->;
-
 type SetBlocks = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetBlocks,
+  DataBlockEditorPrivateAction.SetBlocks,
   { blocks: DataBlockBase[] }
 >;
 
 type SetFocused = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetFocused,
+  DataBlockEditorPrivateAction.SetFocused,
   { index?: number; focusedEnd?: boolean }
 >;
 
 type SetKeymap = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetKeymap,
+  DataBlockEditorPrivateAction.SetKeymap,
   { keymap: DataBlockProps["customKeymap"] }
 >;
 
 type SetMdProps = SetDataBlockEditorAction<
-  DataBlockEditorAction.SetMdProps,
+  DataBlockEditorPrivateAction.SetMdProps,
   { mdProps: DataBlockProps["mdProps"] }
 >;
 
 type MergeUpdates = SetDataBlockEditorAction<
-  DataBlockEditorAction.MergeUpdates,
+  DataBlockEditorPrivateAction.MergeUpdates,
   ReceiveDataBlockEditorUpdates
 >;
 
 //////////
 
 type AddBlock = SetDataBlockEditorAction<
-  DataBlockEditorAction.AddBlock,
+  DataBlockEditorPublicAction.AddBlock,
   {
     block: Omit<DataBlockBase, "variants">;
     variant: Omit<DataBlockVariant, "votes">;
@@ -136,7 +120,7 @@ type AddBlock = SetDataBlockEditorAction<
 >;
 
 type EditBlock = SetDataBlockEditorAction<
-  DataBlockEditorAction.EditBlock,
+  DataBlockEditorPublicAction.EditBlock,
   {
     block: Omit<DataBlockBase, "variants">;
     variant: Omit<DataBlockVariant, "votes">;
@@ -144,38 +128,38 @@ type EditBlock = SetDataBlockEditorAction<
 >;
 
 type MoveBlock = SetDataBlockEditorAction<
-  DataBlockEditorAction.MoveBlock,
-  { id: string; oldIndex: number; targetIndex: number }
+  DataBlockEditorPublicAction.MoveBlock,
+  { blockId: string; oldIndex: number; targetIndex: number }
 >;
 
 type DeleteBlock = SetDataBlockEditorAction<
-  DataBlockEditorAction.DeleteBlock,
-  { id: string }
+  DataBlockEditorPublicAction.DeleteBlock,
+  { blockId: string }
 >;
 
 type AddVariant = SetDataBlockEditorAction<
-  DataBlockEditorAction.AddVariant,
-  { id: string; variant: Omit<DataBlockVariant, "votes"> }
+  DataBlockEditorPublicAction.AddVariant,
+  { blockId: string; variant: Omit<DataBlockVariant, "votes"> }
 >;
 
 type EditVariant = SetDataBlockEditorAction<
-  DataBlockEditorAction.EditVariant,
-  { id: string; variant: Omit<DataBlockVariant, "votes"> }
+  DataBlockEditorPublicAction.EditVariant,
+  { blockId: string; variant: Omit<DataBlockVariant, "votes"> }
 >;
 
 type DeleteVariant = SetDataBlockEditorAction<
-  DataBlockEditorAction.DeleteVariant,
-  { id: string; variantId: string }
+  DataBlockEditorPublicAction.DeleteVariant,
+  { blockId: string; variantId: string }
 >;
 
 type VoteVariant = SetDataBlockEditorAction<
-  DataBlockEditorAction.VoteVariant,
-  { id: string; variantId: string; createdBy: string }
+  DataBlockEditorPublicAction.VoteVariant,
+  { blockId: string; variantId: string; createdBy: string }
 >;
 
 type UnVoteVariant = SetDataBlockEditorAction<
-  DataBlockEditorAction.UnVoteVariant,
-  { id: string; variantId: string; createdBy: string }
+  DataBlockEditorPublicAction.UnVoteVariant,
+  { blockId: string; variantId: string; createdBy: string }
 >;
 
 export type DataBlockEditorActions =
@@ -189,7 +173,6 @@ export type DataBlockEditorActions =
   | SetShowIndentOffset
   | SetCanChangeVariants
   | SetCurrentUserId
-  | SetGetFilesUrl
   | SetBlocks
   | SetKeymap
   | SetMdProps

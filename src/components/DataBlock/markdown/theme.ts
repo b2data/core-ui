@@ -220,14 +220,14 @@ export const markdownTheme = EditorView.theme(
       paddingLeft: "12px",
       borderLeft: "2px solid #2684FF",
       margin: "0 2px",
+    },
 
-      "&.cm-blockquote-indent": {
-        textIndent: "-12px",
-      },
+    ".cm-blockquote-indent": {
+      textIndent: "-12px",
+    },
 
-      "& .cm-blockquote-mark": {
-        color: "#9e9e9e",
-      },
+    "& .cm-blockquote-mark": {
+      color: "#9e9e9e",
     },
 
     ".cm-reference-invalid": {

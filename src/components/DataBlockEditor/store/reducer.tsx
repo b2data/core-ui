@@ -1,9 +1,16 @@
 import { equals, omit, pick } from "ramda";
 
-import { DataBlockBase, DataBlockEditorState } from "../models";
+import {
+  DataBlockBase,
+  DataBlockEditorPublicAction,
+  DataBlockEditorState,
+} from "../models";
 import { getPrefixesData } from "../utils";
 
-import { DataBlockEditorAction, DataBlockEditorActions } from "./actions";
+import {
+  DataBlockEditorActions,
+  DataBlockEditorPrivateAction,
+} from "./actions";
 
 export const initialState: DataBlockEditorState = {
   editable: false,
@@ -55,50 +62,46 @@ export type DataBlockEditorStateReducer = (
 
 export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
   state = initialState,
-  { action, data }: DataBlockEditorActions,
+  { action, data },
 ): DataBlockEditorState => {
   switch (action) {
-    case DataBlockEditorAction.SetEditable: {
+    case DataBlockEditorPrivateAction.SetEditable: {
       return { ...state, editable: data.editable };
     }
 
-    case DataBlockEditorAction.SetShowPrefix: {
+    case DataBlockEditorPrivateAction.SetShowPrefix: {
       return { ...state, showPrefix: data.showPrefix };
     }
 
-    case DataBlockEditorAction.SetShowVariants: {
+    case DataBlockEditorPrivateAction.SetShowVariants: {
       return { ...state, showVariants: data.showVariants };
     }
 
-    case DataBlockEditorAction.SetShowNavigation: {
+    case DataBlockEditorPrivateAction.SetShowNavigation: {
       return { ...state, showNavigation: data.showNavigation };
     }
 
-    case DataBlockEditorAction.SetShowIndentOffset: {
+    case DataBlockEditorPrivateAction.SetShowIndentOffset: {
       return { ...state, showIndentOffset: data.showIndentOffset };
     }
 
-    case DataBlockEditorAction.SetTranslations: {
+    case DataBlockEditorPrivateAction.SetTranslations: {
       return { ...state, i18n: data.i18n };
     }
 
-    case DataBlockEditorAction.SetCanChangeVariants: {
+    case DataBlockEditorPrivateAction.SetCanChangeVariants: {
       return { ...state, canChangeVariants: data.canChangeVariants };
     }
 
-    case DataBlockEditorAction.SetCurrentUserId: {
+    case DataBlockEditorPrivateAction.SetCurrentUserId: {
       return { ...state, currentUserId: data.currentUserId };
     }
 
-    case DataBlockEditorAction.SetGetFilesUrl: {
-      return { ...state, getFilesUrl: data.getFilesUrl };
-    }
-
-    case DataBlockEditorAction.SetFocused: {
+    case DataBlockEditorPrivateAction.SetFocused: {
       return { ...state, focused: data.index, focusedEnd: data.focusedEnd };
     }
 
-    case DataBlockEditorAction.SetBlocks: {
+    case DataBlockEditorPrivateAction.SetBlocks: {
       return {
         ...state,
         ...getPrefixesData(data.blocks),
@@ -106,21 +109,21 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       };
     }
 
-    case DataBlockEditorAction.SetTools: {
+    case DataBlockEditorPrivateAction.SetTools: {
       return {
         ...state,
         tools: data.tools,
       };
     }
 
-    case DataBlockEditorAction.SetKeymap: {
+    case DataBlockEditorPrivateAction.SetKeymap: {
       return {
         ...state,
         keymap: data.keymap,
       };
     }
 
-    case DataBlockEditorAction.SetMdProps: {
+    case DataBlockEditorPrivateAction.SetMdProps: {
       return {
         ...state,
         mdProps: data.mdProps,
@@ -131,7 +134,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
      *  UPDATES  *
      ************/
 
-    case DataBlockEditorAction.AddBlock: {
+    case DataBlockEditorPublicAction.AddBlock: {
       const { block, variant, index } = data;
       const blocks = [...state.blocks];
 
@@ -142,7 +145,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       } as DataBlockBase);
 
       state.onChange?.({
-        action: DataBlockEditorAction.AddBlock,
+        action: DataBlockEditorPublicAction.AddBlock,
         data: {
           block: omit(["createdByData"], block),
           variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
@@ -159,7 +162,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       };
     }
 
-    case DataBlockEditorAction.EditBlock: {
+    case DataBlockEditorPublicAction.EditBlock: {
       const { block, variant } = data;
       const index = state.blocks.findIndex((b) => b.id === block.id);
 
@@ -187,7 +190,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         blocks.splice(index, 1, { ...blocks[index], ...block, variants });
 
         state.onChange?.({
-          action: DataBlockEditorAction.EditBlock,
+          action: DataBlockEditorPublicAction.EditBlock,
           data: {
             block: omit(["createdByData"], block),
             variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
@@ -204,9 +207,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.MoveBlock: {
-      const { id, oldIndex, targetIndex } = data;
-      if (state.blocks[oldIndex]?.id === id) {
+    case DataBlockEditorPublicAction.MoveBlock: {
+      const { blockId, oldIndex, targetIndex } = data;
+      if (state.blocks[oldIndex]?.id === blockId) {
         const blocks = [...state.blocks];
         const data = blocks.splice(oldIndex, 1);
         const newBlock = {
@@ -215,9 +218,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         };
         blocks.splice(targetIndex, 0, newBlock);
         state.onChange?.({
-          action: DataBlockEditorAction.MoveBlock,
+          action: DataBlockEditorPublicAction.MoveBlock,
           data: {
-            blockId: id,
+            blockId,
             oldIndex,
             targetIndex,
           },
@@ -231,13 +234,13 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.DeleteBlock: {
-      const index = state.blocks.findIndex((b) => b.id === data.id);
+    case DataBlockEditorPublicAction.DeleteBlock: {
+      const index = state.blocks.findIndex((b) => b.id === data.blockId);
       if (index > -1) {
         const blocks = [...state.blocks];
         const deleted = blocks.splice(index, 1);
         state.onChange?.({
-          action: DataBlockEditorAction.DeleteBlock,
+          action: DataBlockEditorPublicAction.DeleteBlock,
           data: {
             blockId: deleted[0].id,
           },
@@ -252,9 +255,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.AddVariant: {
-      const { id, variant } = data;
-      const index = state.blocks.findIndex((b) => b.id === id);
+    case DataBlockEditorPublicAction.AddVariant: {
+      const { blockId, variant } = data;
+      const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
         const blocks = [...state.blocks];
         blocks[index].variants = [
@@ -262,9 +265,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           { ...variant, votes: [] },
         ];
         state.onChange?.({
-          action: DataBlockEditorAction.AddVariant,
+          action: DataBlockEditorPublicAction.AddVariant,
           data: {
-            blockId: id,
+            blockId,
             variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
           },
         });
@@ -274,9 +277,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.EditVariant: {
-      const { id, variant } = data;
-      const index = state.blocks.findIndex((b) => b.id === id);
+    case DataBlockEditorPublicAction.EditVariant: {
+      const { blockId, variant } = data;
+      const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
         const blocks = [...state.blocks];
         const index2 = blocks[index].variants.findIndex(
@@ -301,9 +304,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
             })),
           });
           state.onChange?.({
-            action: DataBlockEditorAction.EditVariant,
+            action: DataBlockEditorPublicAction.EditVariant,
             data: {
-              blockId: id,
+              blockId,
               variant: pick(["id", "data", "isCurrent", "createdBy"], {
                 ...variants[index2],
                 ...variant,
@@ -317,9 +320,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.DeleteVariant: {
-      const { id, variantId } = data;
-      const index = state.blocks.findIndex((b) => b.id === id);
+    case DataBlockEditorPublicAction.DeleteVariant: {
+      const { blockId, variantId } = data;
+      const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
         const blocks = [...state.blocks];
         const index2 = blocks[index].variants.findIndex(
@@ -330,9 +333,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           variants.splice(index2, 1);
           blocks.splice(index, 1, { ...blocks[index], variants });
           state.onChange?.({
-            action: DataBlockEditorAction.DeleteVariant,
+            action: DataBlockEditorPublicAction.DeleteVariant,
             data: {
-              blockId: id,
+              blockId,
               variantId: variantId,
             },
           });
@@ -343,10 +346,10 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.VoteVariant: {
-      const { id, variantId, createdBy } = data;
+    case DataBlockEditorPublicAction.VoteVariant: {
+      const { blockId, variantId, createdBy } = data;
 
-      const index = state.blocks.findIndex((b) => b.id === id);
+      const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
         const blocks = [...state.blocks];
         const index2 = blocks[index].variants.findIndex(
@@ -362,9 +365,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           });
           blocks.splice(index, 1, { ...blocks[index], variants });
           state.onChange?.({
-            action: DataBlockEditorAction.VoteVariant,
+            action: DataBlockEditorPublicAction.VoteVariant,
             data: {
-              blockId: id,
+              blockId,
               variantId,
             },
           });
@@ -375,10 +378,10 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.UnVoteVariant: {
-      const { id, variantId, createdBy } = data;
+    case DataBlockEditorPublicAction.UnVoteVariant: {
+      const { blockId, variantId, createdBy } = data;
 
-      const index = state.blocks.findIndex((b) => b.id === id);
+      const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
         const blocks = [...state.blocks];
         const index2 = blocks[index].variants.findIndex(
@@ -394,9 +397,9 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           });
           blocks.splice(index, 1, { ...blocks[index], variants });
           state.onChange?.({
-            action: DataBlockEditorAction.UnVoteVariant,
+            action: DataBlockEditorPublicAction.UnVoteVariant,
             data: {
-              blockId: id,
+              blockId,
               variantId,
             },
           });
@@ -407,68 +410,116 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return state;
     }
 
-    case DataBlockEditorAction.MergeUpdates: {
+    case DataBlockEditorPrivateAction.MergeUpdates: {
       const { action: updateAction, data: changes } = data;
+      const updatedState = { ...state };
       switch (updateAction) {
-        case DataBlockEditorAction.AddBlock: {
-          const blockIndex = state.blocks.findIndex(
+        case DataBlockEditorPublicAction.AddBlock: {
+          const blockIndex = updatedState.blocks.findIndex(
             (b) => b.id === changes.block.id,
           );
           if (
             blockIndex > -1 &&
-            !equals(state.blocks[blockIndex], changes.block)
+            !equals(updatedState.blocks[blockIndex], changes.block)
           ) {
-            state.blocks.splice(blockIndex, 1, changes.block);
+            updatedState.blocks.splice(blockIndex, 1, changes.block);
           }
           if (blockIndex === -1) {
-            state.blocks.splice(changes.index, 0, changes.block);
+            updatedState.blocks.splice(changes.index, 0, changes.block);
           }
-          break;
-        }
-        case DataBlockEditorAction.EditBlock: {
-          const blockIndex = state.blocks.findIndex(
-            (b) => b.id === changes.block.id,
+          const { prefixes, maxPrefixLength } = getPrefixesData(
+            updatedState.blocks,
           );
-          if (
-            blockIndex > -1 &&
-            !equals(state.blocks[blockIndex], changes.block)
-          ) {
-            state.blocks.splice(blockIndex, 1, changes.block);
+          updatedState.prefixes = prefixes;
+          updatedState.maxPrefixLength = maxPrefixLength;
+          break;
+        }
+        case DataBlockEditorPublicAction.EditBlock: {
+          const blockIndex = updatedState.blocks.findIndex(
+            (b) => b.id === changes.oldBlockId || b.id === changes.block.id,
+          );
+          if (blockIndex > -1) {
+            if (!equals(updatedState.blocks[blockIndex], changes.block)) {
+              updatedState.blocks.splice(blockIndex, 1, {
+                ...changes.block,
+                id: changes.oldBlockId || changes.block.id,
+              });
+            }
+            const variantIndex = updatedState.blocks[
+              blockIndex
+            ].variants.findIndex(
+              (v) =>
+                v.id === changes.oldVariantId || v.id === changes.variant.id,
+            );
+            if (
+              variantIndex > -1 &&
+              !equals(
+                updatedState.blocks[blockIndex].variants[variantIndex],
+                changes.variant,
+              )
+            ) {
+              updatedState.blocks[blockIndex].variants.splice(
+                variantIndex,
+                1,
+                changes.variant,
+              );
+            }
+            const { prefixes, maxPrefixLength } = getPrefixesData(
+              updatedState.blocks,
+            );
+            updatedState.prefixes = prefixes;
+            updatedState.maxPrefixLength = maxPrefixLength;
           }
           break;
         }
-        case DataBlockEditorAction.MoveBlock: {
-          const blockIndex = state.blocks.findIndex(
+        case DataBlockEditorPublicAction.MoveBlock: {
+          const blockIndex = updatedState.blocks.findIndex(
+            (b) => b.id === changes.oldBlockId || b.id === changes.blockId,
+          );
+          if (blockIndex > -1) {
+            const data = updatedState.blocks.splice(blockIndex, 1);
+            updatedState.blocks.splice(changes.targetIndex, 0, {
+              ...data[0],
+              id: changes.oldBlockId || changes.blockId,
+            });
+
+            const { prefixes, maxPrefixLength } = getPrefixesData(
+              updatedState.blocks,
+            );
+            updatedState.prefixes = prefixes;
+            updatedState.maxPrefixLength = maxPrefixLength;
+          }
+          break;
+        }
+        case DataBlockEditorPublicAction.DeleteBlock: {
+          const blockIndex = updatedState.blocks.findIndex(
             (b) => b.id === changes.blockId,
           );
           if (blockIndex > -1) {
-            const data = state.blocks.splice(blockIndex, 1);
-            state.blocks.splice(changes.targetIndex, 0, data[0]);
+            updatedState.blocks.splice(blockIndex, 1);
           }
           break;
         }
-        case DataBlockEditorAction.DeleteBlock: {
-          const blockIndex = state.blocks.findIndex(
-            (b) => b.id === changes.blockId,
+        case DataBlockEditorPublicAction.AddVariant:
+        case DataBlockEditorPublicAction.EditVariant: {
+          const blockIndex = updatedState.blocks.findIndex(
+            (b) => b.id === changes.oldBlockId || b.id === changes.blockId,
           );
           if (blockIndex > -1) {
-            state.blocks.splice(blockIndex, 1);
-          }
-          break;
-        }
-        case DataBlockEditorAction.AddVariant:
-        case DataBlockEditorAction.EditVariant: {
-          const blockIndex = state.blocks.findIndex(
-            (b) => b.id === changes.blockId,
-          );
-          if (blockIndex > -1) {
-            const variantIndex = state.blocks[blockIndex].variants.findIndex(
-              (v) => v.id === changes.variant.id,
+            if (updatedState.blocks[blockIndex].id !== changes.blockId) {
+              updatedState.blocks[blockIndex].id = changes.blockId;
+              alert("t");
+            }
+            const variantIndex = updatedState.blocks[
+              blockIndex
+            ].variants.findIndex(
+              (v) =>
+                v.id === changes.oldVariantId || v.id === changes.variant.id,
             );
             if (variantIndex === -1) {
-              state.blocks[blockIndex].variants.push(changes.variant);
+              updatedState.blocks[blockIndex].variants.push(changes.variant);
             } else {
-              state.blocks[blockIndex].variants.splice(
+              updatedState.blocks[blockIndex].variants.splice(
                 variantIndex,
                 1,
                 changes.variant,
@@ -477,64 +528,93 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           }
           break;
         }
-        case DataBlockEditorAction.DeleteVariant: {
-          const blockIndex = state.blocks.findIndex(
-            (b) => b.id === changes.blockId,
+        case DataBlockEditorPublicAction.DeleteVariant: {
+          const blockIndex = updatedState.blocks.findIndex(
+            (b) => b.id === changes.oldBlockId || b.id === changes.blockId,
           );
           if (blockIndex > -1) {
-            const variantIndex = state.blocks[blockIndex].variants.findIndex(
-              (v) => v.id === changes.variantId,
+            if (updatedState.blocks[blockIndex].id !== changes.blockId) {
+              updatedState.blocks[blockIndex].id = changes.blockId;
+            }
+            const variantIndex = updatedState.blocks[
+              blockIndex
+            ].variants.findIndex(
+              (v) =>
+                v.id === changes.oldVariantId || v.id === changes.variantId,
             );
             if (variantIndex > -1) {
-              state.blocks[blockIndex].variants.splice(variantIndex, 1);
+              updatedState.blocks[blockIndex].variants.splice(variantIndex, 1);
             }
           }
           break;
         }
-        case DataBlockEditorAction.VoteVariant: {
-          const blockIndex = state.blocks.findIndex(
-            (b) => b.id === changes.blockId,
+        case DataBlockEditorPublicAction.VoteVariant: {
+          const blockIndex = updatedState.blocks.findIndex(
+            (b) => b.id === changes.oldBlockId || b.id === changes.blockId,
           );
           if (blockIndex > -1) {
-            const variantIndex = state.blocks[blockIndex].variants.findIndex(
-              (v) => v.id === changes.variantId,
+            if (updatedState.blocks[blockIndex].id !== changes.blockId) {
+              updatedState.blocks[blockIndex].id = changes.blockId;
+            }
+            const variantIndex = updatedState.blocks[
+              blockIndex
+            ].variants.findIndex(
+              (v) =>
+                v.id === changes.oldVariantId || v.id === changes.variantId,
             );
             if (variantIndex > -1) {
-              const voteIndex = state.blocks[blockIndex].variants[
+              if (
+                updatedState.blocks[blockIndex].variants[variantIndex].id !==
+                changes.variantId
+              ) {
+                updatedState.blocks[blockIndex].variants[variantIndex].id =
+                  changes.variantId;
+              }
+              const voteIndex = updatedState.blocks[blockIndex].variants[
                 variantIndex
               ].votes.findIndex((v) => v.createdBy === changes.vote.createdBy);
               if (voteIndex === -1) {
-                state.blocks[blockIndex].variants[variantIndex].votes.push(
-                  changes.vote,
-                );
+                updatedState.blocks[blockIndex].variants[
+                  variantIndex
+                ].votes.push(changes.vote);
               } else {
-                state.blocks[blockIndex].variants[variantIndex].votes.splice(
-                  voteIndex,
-                  1,
-                  changes.vote,
-                );
+                updatedState.blocks[blockIndex].variants[
+                  variantIndex
+                ].votes.splice(voteIndex, 1, changes.vote);
               }
             }
           }
           break;
         }
-        case DataBlockEditorAction.UnVoteVariant: {
-          const blockIndex = state.blocks.findIndex(
-            (b) => b.id === changes.blockId,
+        case DataBlockEditorPublicAction.UnVoteVariant: {
+          const blockIndex = updatedState.blocks.findIndex(
+            (b) => b.id === changes.oldBlockId || b.id === changes.blockId,
           );
           if (blockIndex > -1) {
-            const variantIndex = state.blocks[blockIndex].variants.findIndex(
-              (v) => v.id === changes.variantId,
+            if (updatedState.blocks[blockIndex].id !== changes.blockId) {
+              updatedState.blocks[blockIndex].id = changes.blockId;
+            }
+            const variantIndex = updatedState.blocks[
+              blockIndex
+            ].variants.findIndex(
+              (v) =>
+                v.id === changes.oldVariantId || v.id === changes.variantId,
             );
             if (variantIndex > -1) {
-              const voteIndex = state.blocks[blockIndex].variants[
+              if (
+                updatedState.blocks[blockIndex].variants[variantIndex].id !==
+                changes.variantId
+              ) {
+                updatedState.blocks[blockIndex].variants[variantIndex].id =
+                  changes.variantId;
+              }
+              const voteIndex = updatedState.blocks[blockIndex].variants[
                 variantIndex
               ].votes.findIndex((v) => v.createdBy === changes.createdBy);
               if (voteIndex > -1) {
-                state.blocks[blockIndex].variants[variantIndex].votes.splice(
-                  voteIndex,
-                  1,
-                );
+                updatedState.blocks[blockIndex].variants[
+                  variantIndex
+                ].votes.splice(voteIndex, 1);
               }
             }
           }
@@ -543,10 +623,10 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         default:
           break;
       }
-      return state;
+      return updatedState;
     }
 
-    case DataBlockEditorAction.Clear: {
+    case DataBlockEditorPrivateAction.Clear: {
       return { ...initialState };
     }
 

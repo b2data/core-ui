@@ -14,3 +14,6 @@ export const isuuid = (uid: string) =>
   /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i.test(
     uid,
   );
+
+export const isTonWallet = (w: string) =>
+  /^(?:-1:|0:)[0-9a-fA-F]{64}$/i.test(w);

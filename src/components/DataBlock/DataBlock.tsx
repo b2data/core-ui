@@ -7,7 +7,8 @@ import {
 } from "react";
 import { SxProps, Theme } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { EditorView ,
+import {
+  EditorView,
   highlightActiveLine,
   KeyBinding,
   keymap,
@@ -195,7 +196,16 @@ export const DataBlock = forwardRef(
       };
     }, [content, view, editable, readOnly]);
 
-    useImperativeHandle(_ref, () => ({ ...view }), [view]);
+    useImperativeHandle(
+      _ref,
+      () => ({
+        ...view,
+        view: view?.contentDOM,
+        hasFocus: view?.hasFocus,
+        state: view?.state,
+      }),
+      [view],
+    );
 
     return (
       <Box

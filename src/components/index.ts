@@ -15,6 +15,7 @@ export * from "./ClickAwayListener";
 export * from "./Collapse";
 export * from "./ConfirmationDialog";
 export * from "./CssBaseline";
+export * from "./DataBlock";
 export * from "./DataBlockEditor";
 export * from "./DataGrid";
 export * from "./DatePicker";

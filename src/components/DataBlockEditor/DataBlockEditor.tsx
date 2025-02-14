@@ -1,6 +1,6 @@
 import { forwardRef, memo, Ref } from "react";
-// import { HTML5Backend } from "react-dnd-html5-backend";
-// import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 import { DataBlockEditorRenderer } from "./components";
 import {
@@ -15,15 +15,15 @@ const EditorRaw = forwardRef(function DataBlockEditor<R extends DataBlockBase>(
   ref: Ref<DataBlockEditorApi>,
 ) {
   return (
-    // <DndProvider backend={HTML5Backend}>
-    <DataBlockEditorProvider ref={ref} props={props}>
-      <DataBlockEditorRenderer
-        sx={props.sx}
-        onScroll={props.onScroll}
-        editable={props.editable}
-      />
-    </DataBlockEditorProvider>
-    // </DndProvider>
+    <DndProvider backend={HTML5Backend}>
+      <DataBlockEditorProvider ref={ref} props={props}>
+        <DataBlockEditorRenderer
+          sx={props.sx}
+          onScroll={props.onScroll}
+          editable={props.editable}
+        />
+      </DataBlockEditorProvider>
+    </DndProvider>
   );
 });
 
