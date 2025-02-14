@@ -508,7 +508,6 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           if (blockIndex > -1) {
             if (updatedState.blocks[blockIndex].id !== changes.blockId) {
               updatedState.blocks[blockIndex].id = changes.blockId;
-              alert("t");
             }
             const variantIndex = updatedState.blocks[
               blockIndex
