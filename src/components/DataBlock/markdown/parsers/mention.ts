@@ -2,6 +2,12 @@ import { isTonWallet, isuuid } from "../../../../hooks";
 
 import type { Element, MarkdownConfig } from "@lezer/markdown";
 
+/**
+ * Expected formats:
+ * - @name|id
+ * - @name|id#detailsId
+ * - @name#detailsLabel|id#detailsId
+ */
 export const parseInlineMention = (
   elt: (type: string, from: number, to: number) => Element,
   start: number,
@@ -102,9 +108,6 @@ export const mention: MarkdownConfig = {
     {
       name: "MentionData",
       parse: (cx, _, pos) => {
-        // Expected formats:
-        // - @name|id
-        // - @name#detailsLabel|id#detailsId
         if (cx.slice(pos, pos + 1) !== "@") {
           return -1;
         }

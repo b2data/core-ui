@@ -101,6 +101,10 @@ export const basicKeymap: KeyBinding[] = [
     run: selectAll,
   },
   {
+    key: "Mod-A",
+    run: selectAll,
+  },
+  {
     key: "Backspace",
     run: deleteCharBackward,
     shift: deleteCharBackward,

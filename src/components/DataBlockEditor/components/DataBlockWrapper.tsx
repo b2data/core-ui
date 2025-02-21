@@ -82,29 +82,6 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
     [useDeepEqualMemo(data.variants)],
   );
 
-  const prefixVariant = useMemo(() => {
-    if (blockData.type === "heading") {
-      switch (currentVariant?.data?.level) {
-        case 1:
-          return "h1";
-        case 2:
-          return "h2";
-        case 3:
-          return "h3";
-        case 4:
-          return "h4";
-        case 5:
-          return "h5";
-        case 6:
-          return "h6";
-        default:
-          return "body1";
-      }
-    }
-
-    return "body1";
-  }, [blockData.type, currentVariant?.data?.level]);
-
   const [shownIndex, setShownIndex] = useState<number>(0);
 
   const [{ isDragging }, dragRef, previewRef] = useDrag({
@@ -228,10 +205,10 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       >
         {showPrefix && (
           <Typography
-            variant={prefixVariant}
+            variant="body1"
             component="div"
             sx={{
-              minWidth: Math.max(maxPrefixLength * 6, 16),
+              minWidth: Math.max((maxPrefixLength + 1) * 9, 16),
               mr: -6,
               lineHeight: "1.5",
               userSelect: "none",

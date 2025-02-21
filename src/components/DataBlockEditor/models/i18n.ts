@@ -10,6 +10,8 @@ export type DataBlockEditorTranslations = {
   swapCurrentVariantTooltip: string | ReactNode;
   emptyPlaceholder: string;
   addBtnFilter: string;
+  hidePrefix: string;
+  showPrefix: string;
   noResults: string;
   indent: {
     increase: string;

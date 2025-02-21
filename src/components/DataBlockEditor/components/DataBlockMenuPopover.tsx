@@ -13,6 +13,7 @@ import {
   DeleteIcon,
   IndentDecreaseIcon,
   IndentIncreaseIcon,
+  ListNumberedIcon,
 } from "../../../icons";
 import { useDevice } from "../../../hooks";
 import { DataBlockEditorContext } from "../store";
@@ -73,6 +74,12 @@ export const DataBlockMenuPopover: FC<DataBlockMenuPopoverProps> = ({
     });
   };
 
+  const handleHidePrefix = () => {
+    handleEdit({
+      hidePrefix: !blockData.hidePrefix,
+    });
+  };
+
   useEffect(() => () => setIsDeleting(false), [anchorEl]);
 
   return (
@@ -106,6 +113,17 @@ export const DataBlockMenuPopover: FC<DataBlockMenuPopoverProps> = ({
           />
           <ListItem
             asButton
+            icon={<ListNumberedIcon />}
+            text={blockData.hidePrefix ? i18n.showPrefix : i18n.hidePrefix}
+            onClick={handleHidePrefix}
+            action={
+              <Box sx={{ cursor: "pointer", fontSize: 10 }}>
+                {`${Symbols.CMD} + H`}
+              </Box>
+            }
+          />
+          <ListItem
+            asButton
             icon={
               <DeleteIcon sx={{ color: isDeleting ? "white" : undefined }} />
             }
@@ -117,6 +135,7 @@ export const DataBlockMenuPopover: FC<DataBlockMenuPopoverProps> = ({
             sx={{
               bgcolor: isDeleting ? "error.main" : undefined,
               color: isDeleting ? "white" : undefined,
+              "& .MuiListItemButton-root": { paddingRight: "70px" },
             }}
             onClick={() => (isDeleting ? handleDelete() : setIsDeleting(true))}
             action={

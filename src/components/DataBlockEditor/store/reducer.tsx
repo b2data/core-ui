@@ -41,6 +41,8 @@ export const initialState: DataBlockEditorState = {
     swapCurrentVariantTooltip: "Swap current variant",
     emptyPlaceholder: "Type text",
     addBtnFilter: "Filter",
+    hidePrefix: "Hide block number",
+    showPrefix: "Show block number",
     noResults: "No results",
     indent: {
       increase: "Increase offset",

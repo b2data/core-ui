@@ -509,10 +509,15 @@ const onBackspace = (view: EditorView) => {
 
 export const markdownKeymap: KeyBinding[] = [
   { key: "Mod-b", run: toggleBold },
+  { key: "Mod-B", run: toggleBold },
   { key: "Mod-i", run: toggleItalics },
+  { key: "Mod-I", run: toggleItalics },
   { key: "Mod-u", run: toggleUnderline },
+  { key: "Mod-U", run: toggleUnderline },
   { key: "Mod-Shift-x", run: toggleStrikethrough },
+  { key: "Mod-Shift-X", run: toggleStrikethrough },
   { key: "Mod-m", run: toggleHighlight },
+  { key: "Mod-M", run: toggleHighlight },
   { key: "Tab", run: addIndentForList, shift: removeIndentForList },
   { key: "ArrowLeft", run: moveArrowLeft, shift: selectArrowLeft },
   { key: "ArrowRight", run: moveArrowRight, shift: selectArrowRight },

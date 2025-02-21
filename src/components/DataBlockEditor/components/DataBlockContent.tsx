@@ -93,6 +93,19 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
     [block, variant],
   );
 
+  const handleHidePrefix = useCallback(() => {
+    dispatch({
+      action: DataBlockEditorPublicAction.EditBlock,
+      data: {
+        block: {
+          ...block,
+          hidePrefix: !block.hidePrefix,
+        },
+        variant,
+      },
+    });
+  }, [block, variant]);
+
   const handleUpdateText = useCallback(
     (text: string) => {
       dispatch({
@@ -225,6 +238,20 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
             return true;
           }
           return false;
+        },
+      },
+      {
+        key: "Mod-h",
+        run: () => {
+          handleHidePrefix();
+          return true;
+        },
+      },
+      {
+        key: "Mod-H",
+        run: () => {
+          handleHidePrefix();
+          return true;
         },
       },
       ...(keymap || []),
