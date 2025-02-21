@@ -84,6 +84,17 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
 
   const [shownIndex, setShownIndex] = useState<number>(0);
 
+  const prefixVariant = useMemo(() => {
+    if (currentVariant?.data?.text?.startsWith("# ")) return "h1";
+    if (currentVariant?.data?.text?.startsWith("## ")) return "h2";
+    if (currentVariant?.data?.text?.startsWith("### ")) return "h3";
+    if (currentVariant?.data?.text?.startsWith("#### ")) return "h4";
+    if (currentVariant?.data?.text?.startsWith("##### ")) return "h5";
+    if (currentVariant?.data?.text?.startsWith("###### ")) return "h6";
+
+    return "body1";
+  }, [currentVariant?.data?.text]);
+
   const [{ isDragging }, dragRef, previewRef] = useDrag({
     type: "DATA_BLOCK",
     item: { ...data, index },
@@ -149,11 +160,14 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       sx={{
         position: "relative",
         my: 1,
-        "&:hover .data-block__actions, &:focus-within .data-block__actions": {
-          opacity: 1,
-        },
-        "&:hover .data-block__variant-indicator, &:focus-within .data-block__variant-indicator":
-          { opacity: 1 },
+        ...(index === focused
+          ? {
+              "& .data-block__actions": { opacity: 1 },
+              "& .data-block__variant-indicator": { opacity: 1 },
+            }
+          : {}),
+        "&:hover .data-block__actions": { opacity: 1 },
+        "&:hover .data-block__variant-indicator": { opacity: 1 },
         ...sx,
       }}
     >
@@ -169,7 +183,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
               zIndex: 1,
             }}
           />
-          <DropLine shown={isOverBefore && canDropBefore} />
+          <DropLine sx={{ top: -5 }} shown={isOverBefore && canDropBefore} />
           <Box
             ref={dropAfterRef}
             sx={{
@@ -181,7 +195,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
             }}
           />
           <DropLine
-            sx={{ bottom: -2, top: "auto" }}
+            sx={{ bottom: -5, top: "auto" }}
             shown={isOverAfter && canDropAfter}
           />
           <DataBlockActions
@@ -205,12 +219,11 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       >
         {showPrefix && (
           <Typography
-            variant="body1"
+            variant={prefixVariant}
             component="div"
             sx={{
               minWidth: Math.max((maxPrefixLength + 1) * 9, 16),
               mr: -6,
-              lineHeight: "1.5",
               userSelect: "none",
             }}
           >

@@ -42,7 +42,11 @@ import PopperOverride from "../../components/Popper/theme";
 import RadioOverride from "../../components/Radio/theme";
 import SliderOverride from "../../components/Slider/theme";
 import SkeletonOverride from "../../components/Skeleton/theme";
-import { StepButtonOverride, StepConnectorOverride, StepContentOverride } from "../../components/Step/theme";
+import {
+  StepButtonOverride,
+  StepConnectorOverride,
+  StepContentOverride,
+} from "../../components/Step/theme";
 import SvgIconOverride from "../../components/SvgIcon/theme";
 import SwitchOverride from "../../components/Switch/theme";
 import TabOverride from "../../components/Tab/theme";
@@ -50,6 +54,7 @@ import TabsOverride from "../../components/Tabs/theme";
 import TextFieldOverride from "../../components/TextField/theme";
 import TooltipOverride from "../../components/Tooltip/theme";
 import TypographyOverride from "../../components/Typography/theme";
+import CssBaselineOverride from "../../components/CssBaseline/theme";
 
 export default {
   MuiAlert: AlertOverride,
@@ -108,4 +113,5 @@ export default {
   MuiTextField: TextFieldOverride,
   MuiTooltip: TooltipOverride,
   MuiTypography: TypographyOverride,
+  MuiCssBaseline: CssBaselineOverride,
 };

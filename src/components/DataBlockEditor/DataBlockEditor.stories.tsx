@@ -244,256 +244,271 @@ export const Base: StoryObj<DataBlockEditorProps> = {
     };
 
     return (
-      <DndProvider backend={HTML5Backend}>
-        <DataBlockEditor
-          {...props}
-          ref={ref}
-          onChange={handleChange}
-          tools={{
-            text: {
-              title: "Text",
-              icon: TextIcon,
-              shortcut: ["CMD"],
-            },
-            heading: {
-              title: "Header",
-              defaultValue: "# ",
-              icon: HeadingIcon,
-              renderMenu: ({ variant }) => (
-                <>
-                  <ListItem
-                    asButton
-                    icon={<HeadingIcon />}
-                    onClick={(e) => setHeadEl(e.currentTarget)}
-                    text={<>Header {variant.data.text.split(" ")[0].length}</>}
-                  />
-                  <Popper open={Boolean(headEl)} anchorEl={headEl}>
-                    TODO SELECT HEADER LEVEL
-                  </Popper>
-                </>
-              ),
-            },
-            sign: {
-              title: "Signature",
-              icon: HeadingIcon,
-              defaultValue: "> [!sign]\n> 1. ",
-              renderMenu: () => <>TODO</>,
-            },
-          }}
-          mdProps={{
-            onSearchMentions: async ({ query = "" }) => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(
-                    [
-                      {
-                        name: `User 1`,
-                        detailId: uuid(),
-                        detailLabel: "Space 1",
-                        id: "0:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-                      },
-                      {
-                        name: `User 2`,
-                        detailId: uuid(),
-                        detailLabel: "Space 1",
-                        id: "-1:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-                      },
-                    ].filter((o) =>
-                      !query ? true : o.name.indexOf(query) > -1,
-                    ),
-                  );
-                }, 1000);
-              });
-            },
-            onSearchReference: async ({ query = "" }) => {
-              return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(
-                    [
-                      {
-                        label: `Doc 1`,
-                        id: uuid(),
-                      },
-                      {
-                        label: `Doc 2`,
-                        id: uuid(),
-                      },
-                    ].filter((o) =>
-                      !query ? true : o.label.indexOf(query) > -1,
-                    ),
-                  );
-                }, 1000);
-              });
-            },
-            decorations: [
-              (node, append, cursorPos, view) => {
-                if (node.name === "Signature") {
-                  const { state, hasFocus } = view;
-
-                  const isActive =
-                    node &&
-                    cursorPos.from >= node.from &&
-                    cursorPos.to <= node.to &&
-                    !state.readOnly &&
-                    hasFocus;
-
-                  const cursor = node.node.cursor();
-
-                  if (cursor.firstChild()) {
-                    append(
-                      Decoration.line({
-                        class: `cm-blockquote${isActive ? " cm-blockquote-indent" : ""}`,
-                      }).range(cursor.from),
+      <div
+        style={{
+          background: "#f9f9f9",
+          margin: "-40px -30px",
+          padding: "40px 30px",
+          height: 500,
+          overflowY: "auto",
+        }}
+      >
+        <DndProvider backend={HTML5Backend}>
+          <DataBlockEditor
+            {...props}
+            ref={ref}
+            onChange={handleChange}
+            tools={{
+              text: {
+                title: "Text",
+                icon: TextIcon,
+                shortcut: ["CMD"],
+              },
+              heading: {
+                title: "Header",
+                defaultValue: "# ",
+                icon: HeadingIcon,
+                renderMenu: ({ variant }) => (
+                  <>
+                    <ListItem
+                      asButton
+                      icon={<HeadingIcon />}
+                      onClick={(e) => setHeadEl(e.currentTarget)}
+                      text={
+                        <>Header {variant.data.text.split(" ")[0].length}</>
+                      }
+                    />
+                    <Popper open={Boolean(headEl)} anchorEl={headEl}>
+                      TODO SELECT HEADER LEVEL
+                    </Popper>
+                  </>
+                ),
+              },
+              sign: {
+                title: "Signature",
+                icon: HeadingIcon,
+                defaultValue: "> [!sign]\n> 1. ",
+                renderMenu: () => <>TODO</>,
+              },
+            }}
+            mdProps={{
+              onSearchMentions: async ({ query = "" }) => {
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve(
+                      [
+                        {
+                          name: `User 1`,
+                          detailId: uuid(),
+                          detailLabel: "Space 1",
+                          id: "0:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                        },
+                        {
+                          name: `User 2`,
+                          detailId: uuid(),
+                          detailLabel: "Space 1",
+                          id: "-1:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                        },
+                      ].filter((o) =>
+                        !query ? true : o.name.indexOf(query) > -1,
+                      ),
                     );
+                  }, 1000);
+                });
+              },
+              onSearchReference: async ({ query = "" }) => {
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve(
+                      [
+                        {
+                          label: `Doc 1`,
+                          id: uuid(),
+                        },
+                        {
+                          label: `Doc 2`,
+                          id: uuid(),
+                        },
+                      ].filter((o) =>
+                        !query ? true : o.label.indexOf(query) > -1,
+                      ),
+                    );
+                  }, 1000);
+                });
+              },
+              decorations: [
+                (node, append, cursorPos, view) => {
+                  if (node.name === "Signature") {
+                    const { state, hasFocus } = view;
 
-                    if (!isActive) {
+                    const isActive =
+                      node &&
+                      cursorPos.from >= node.from &&
+                      cursorPos.to <= node.to &&
+                      !state.readOnly &&
+                      hasFocus;
+
+                    const cursor = node.node.cursor();
+
+                    if (cursor.firstChild()) {
                       append(
-                        Decoration.replace({
-                          widget: new (class extends WidgetType {
-                            toDOM() {
-                              const span = document.createElement("span");
-                              span.textContent = "🖊 Подписанты";
-                              span.style.fontSize = "1.2rem";
-                              return span;
-                            }
-                          })(),
-                        }).range(cursor.from, cursor.to),
+                        Decoration.line({
+                          class: `cm-blockquote${isActive ? " cm-blockquote-indent" : ""}`,
+                        }).range(cursor.from),
                       );
-                    } else {
-                      append(
-                        Decoration.mark({
-                          class: `cm-blockquote-mark${!isActive ? " cm-formatting" : ""}`,
-                        }).range(cursor.from, cursor.from + 2),
-                      );
-                    }
 
-                    cursor.nextSibling();
-
-                    do {
-                      if (cursor.name === "SignatureLine") {
+                      if (!isActive) {
                         append(
-                          Decoration.line({
-                            class: `cm-blockquote${isActive ? " cm-blockquote-indent" : ""}`,
-                          }).range(cursor.from),
+                          Decoration.replace({
+                            widget: new (class extends WidgetType {
+                              toDOM() {
+                                const span = document.createElement("span");
+                                span.textContent = "🖊 Подписанты";
+                                span.style.fontSize = "1.2rem";
+                                return span;
+                              }
+                            })(),
+                          }).range(cursor.from, cursor.to),
                         );
-
+                      } else {
                         append(
                           Decoration.mark({
                             class: `cm-blockquote-mark${!isActive ? " cm-formatting" : ""}`,
                           }).range(cursor.from, cursor.from + 2),
                         );
+                      }
 
-                        const mention = cursor.node.cursor();
+                      cursor.nextSibling();
 
-                        if (mention.firstChild()) {
-                          processMentionDecoration(
-                            mention.node,
-                            append,
-                            cursorPos,
-                            view,
+                      do {
+                        if (cursor.name === "SignatureLine") {
+                          append(
+                            Decoration.line({
+                              class: `cm-blockquote${isActive ? " cm-blockquote-indent" : ""}`,
+                            }).range(cursor.from),
                           );
-                        }
-                      }
 
-                      // process each immediate child of the CodeBlock node
-                    } while (cursor.nextSibling());
+                          append(
+                            Decoration.mark({
+                              class: `cm-blockquote-mark${!isActive ? " cm-formatting" : ""}`,
+                            }).range(cursor.from, cursor.from + 2),
+                          );
+
+                          const mention = cursor.node.cursor();
+
+                          if (mention.firstChild()) {
+                            processMentionDecoration(
+                              mention.node,
+                              append,
+                              cursorPos,
+                              view,
+                            );
+                          }
+                        }
+
+                        // process each immediate child of the CodeBlock node
+                      } while (cursor.nextSibling());
+                    }
+
+                    return false;
                   }
-
-                  return false;
-                }
-              },
-            ],
-            parsers: [
-              {
-                defineNodes: [
-                  {
-                    name: "Signature",
-                  },
-                  {
-                    name: "SignatureLine",
-                  },
-                ],
-                parseBlock: [
-                  {
-                    name: "Signature",
-                    endLeaf(_, line) {
-                      return line.text.slice(line.pos).trim().startsWith("> ");
+                },
+              ],
+              parsers: [
+                {
+                  defineNodes: [
+                    {
+                      name: "Signature",
                     },
-                    parse: (cx, line) => {
-                      if (!line.text.startsWith("> [!sign]")) {
-                        return false;
-                      }
-
-                      const children: MdElement[] = [];
-
-                      children.push(
-                        cx.elt(
-                          "SignatureLine",
-                          cx.lineStart,
-                          cx.lineStart + line.text.length,
-                        ),
-                      );
-
-                      let nextLine = cx.peekLine();
-
-                      while (cx.nextLine()) {
-                        if (!nextLine.startsWith("> ")) {
-                          cx.nextLine();
-                          break;
+                    {
+                      name: "SignatureLine",
+                    },
+                  ],
+                  parseBlock: [
+                    {
+                      name: "Signature",
+                      endLeaf(_, line) {
+                        return line.text
+                          .slice(line.pos)
+                          .trim()
+                          .startsWith("> ");
+                      },
+                      parse: (cx, line) => {
+                        if (!line.text.startsWith("> [!sign]")) {
+                          return false;
                         }
 
-                        const userData =
-                          nextLine.indexOf("@") > -1
-                            ? parseInlineMention(
-                                cx.elt.bind(cx),
-                                nextLine.indexOf("@") + 1,
-                                nextLine,
-                                cx.lineStart,
-                              )
-                            : null;
-
-                        const child = userData
-                          ? [
-                              cx.elt(
-                                "MentionData",
-                                userData[0].from,
-                                userData[userData.length - 1].to,
-                                userData,
-                              ),
-                            ]
-                          : undefined;
+                        const children: MdElement[] = [];
 
                         children.push(
                           cx.elt(
                             "SignatureLine",
                             cx.lineStart,
-                            cx.lineStart + nextLine.length,
-                            child,
+                            cx.lineStart + line.text.length,
                           ),
                         );
 
-                        nextLine = cx.peekLine();
-                      }
+                        let nextLine = cx.peekLine();
 
-                      cx.addElement(
-                        cx.elt(
-                          "Signature",
-                          children[0]?.from,
-                          children[children.length - 1].to,
-                          children,
-                        ),
-                      );
+                        while (cx.nextLine()) {
+                          if (!nextLine.startsWith("> ")) {
+                            cx.nextLine();
+                            break;
+                          }
 
-                      return false;
+                          const userData =
+                            nextLine.indexOf("@") > -1
+                              ? parseInlineMention(
+                                  cx.elt.bind(cx),
+                                  nextLine.indexOf("@") + 1,
+                                  nextLine,
+                                  cx.lineStart,
+                                )
+                              : null;
+
+                          const child = userData
+                            ? [
+                                cx.elt(
+                                  "MentionData",
+                                  userData[0].from,
+                                  userData[userData.length - 1].to,
+                                  userData,
+                                ),
+                              ]
+                            : undefined;
+
+                          children.push(
+                            cx.elt(
+                              "SignatureLine",
+                              cx.lineStart,
+                              cx.lineStart + nextLine.length,
+                              child,
+                            ),
+                          );
+
+                          nextLine = cx.peekLine();
+                        }
+
+                        cx.addElement(
+                          cx.elt(
+                            "Signature",
+                            children[0]?.from,
+                            children[children.length - 1].to,
+                            children,
+                          ),
+                        );
+
+                        return false;
+                      },
+                      before: "Blockquote",
                     },
-                    before: "Blockquote",
-                  },
-                ],
-              },
-            ],
-          }}
-        />
-      </DndProvider>
+                  ],
+                },
+              ],
+            }}
+          />
+        </DndProvider>
+      </div>
     );
   },
 };

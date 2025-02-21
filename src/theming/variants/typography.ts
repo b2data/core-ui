@@ -1,5 +1,3 @@
-import { tablet } from "./breakpoints";
-
 const baseFontFamily = '"Roboto", "Helvetica", "Arial", sans-serif';
 
 const fontWeightLight = 300;
@@ -9,12 +7,9 @@ const fontWeightBold = 700;
 
 export default {
   htmlFontSize: 14,
+  pxToRem: (px: number) => `${px / 14}rem`,
   fontFamily: baseFontFamily,
   fontSize: 14,
-
-  [`@media (max-width:${tablet}px)`]: {
-    fontSize: 12,
-  },
 
   fontWeightLight,
   fontWeightRegular,
@@ -23,16 +18,16 @@ export default {
 
   h1: {
     fontFamily: baseFontFamily,
-    fontWeight: fontWeightLight,
-    fontSize: "1.802em",
+    fontWeight: fontWeightRegular,
+    fontSize: "1.5rem",
     letterSpacing: "-0.015em",
     lineHeight: 1.2,
   },
 
   h2: {
     fontFamily: baseFontFamily,
-    fontWeight: fontWeightLight,
-    fontSize: "1.602em",
+    fontWeight: fontWeightRegular,
+    fontSize: "1.4em",
     letterSpacing: "-0.015em",
     lineHeight: 1.2,
   },
@@ -40,7 +35,7 @@ export default {
   h3: {
     fontFamily: baseFontFamily,
     fontWeight: fontWeightRegular,
-    fontSize: "1.424em",
+    fontSize: "1.3em",
     letterSpacing: "-0.015em",
     lineHeight: 1.3,
   },
@@ -48,15 +43,15 @@ export default {
   h4: {
     fontFamily: baseFontFamily,
     fontWeight: fontWeightRegular,
-    fontSize: "1.266em",
+    fontSize: "1.2em",
     letterSpacing: "-0.015em",
     lineHeight: 1.4,
   },
 
   h5: {
     fontFamily: baseFontFamily,
-    fontWeight: fontWeightRegular,
-    fontSize: "1.125em",
+    fontWeight: fontWeightMedium,
+    fontSize: "1.1em",
     letterSpacing: "-0.015em",
     lineHeight: 1.5,
   },

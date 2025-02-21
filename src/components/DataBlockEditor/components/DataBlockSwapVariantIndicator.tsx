@@ -25,7 +25,7 @@ export const DataBlockSwapVariantIndicator: FC<
         sx={{
           position: "absolute",
           top: 0,
-          left: `calc(50% + 16px)`,
+          left: `calc(50% - 4px)`,
           cursor: "pointer",
           opacity: 0,
           ...sx,

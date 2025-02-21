@@ -37,36 +37,41 @@ export const markdownTheme = EditorView.theme(
 
     ".cm-heading-1": {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontWeight: 300,
-      fontSize: "1.802rem",
+      fontWeight: 400,
+      fontSize: "1.5rem",
+      lineHeight: 1.2,
       margin: 0,
     },
 
     ".cm-heading-2": {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontWeight: 300,
-      fontSize: "1.602rem",
+      fontWeight: 400,
+      fontSize: "1.4rem",
+      lineHeight: 1.2,
       margin: 0,
     },
 
     ".cm-heading-3": {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 400,
-      fontSize: "1.424rem",
+      fontSize: "1.3rem",
+      lineHeight: 1.3,
       margin: 0,
     },
 
     ".cm-heading-4": {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 400,
-      fontSize: "1.266rem",
+      fontSize: "1.2rem",
+      lineHeight: 1.4,
       margin: 0,
     },
 
     ".cm-heading-5": {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontWeight: 400,
-      fontSize: "1.125rem",
+      fontWeight: 500,
+      fontSize: "1.1rem",
+      lineHeight: 1.5,
       margin: 0,
     },
 
@@ -74,6 +79,7 @@ export const markdownTheme = EditorView.theme(
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 500,
       fontSize: "1rem",
+      lineHeight: 1.5,
       margin: 0,
     },
 

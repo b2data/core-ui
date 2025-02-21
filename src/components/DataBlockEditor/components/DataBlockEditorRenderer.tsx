@@ -17,11 +17,12 @@ export const DataBlockEditorRenderer: FC<{
     <Box
       sx={{
         width: 1,
-        height: 1,
-        overflowY: "auto",
         display: "flex",
         flexDirection: "column",
-        gap: "4px",
+        bgcolor: "background.paper",
+        pt: "20mm",
+        pl: "calc(30mm - 60px)",
+        pr: "calc(10mm - 40px)",
         pb: "500px",
         ...sx,
       }}
