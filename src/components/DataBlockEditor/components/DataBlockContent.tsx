@@ -39,6 +39,8 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
     dispatch,
   } = useContext(DataBlockEditorContext);
 
+  const readOnly = variant.createdBy !== currentUser.id;
+
   const view = useRef<EditorView>();
   const { onOpen: openConfirmDialog, portal } = useConfirmationDialog();
 
@@ -152,7 +154,8 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
       let text = event.clipboardData?.getData("text/plain");
       if (!md && text) {
         const newBlocks = text.split("\n").filter((t) => !!t.trim());
-        const cursor = view.state.selection.main.head;
+        const cursorFrom = view.state.selection.main.from;
+        const cursorTo = view.state.selection.main.to;
 
         if (newBlocks.length > 1) {
           event.preventDefault();
@@ -174,7 +177,7 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
           }
 
           view.dispatch({
-            changes: { from: cursor, insert: text },
+            changes: { from: cursorFrom, to: cursorTo, insert: text },
           });
         }
       }
@@ -328,12 +331,12 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
       <DataBlock
         ref={view}
         editable={editable}
-        readOnly={variant.createdBy !== currentUser.id}
+        readOnly={readOnly}
         content={content}
         placeholderText={emptyPlaceholder}
         onTrackChanges={(text) => handleUpdateText(text)}
         onFocus={() => handleSetFocuses()}
-        onPaste={handlePaste}
+        onPaste={editable && !readOnly ? handlePaste : undefined}
         customKeymap={customKeymap}
         mdProps={mdProps}
         sx={{

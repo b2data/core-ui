@@ -170,13 +170,15 @@ export const DataBlock = forwardRef(
                 if (event.clipboardData && selection) {
                   event.clipboardData.setData("text/markdown", selection);
                   event.clipboardData.setData("text/plain", selection);
-                  view.dispatch({
-                    changes: {
-                      from: view.state.selection.main.from,
-                      to: view.state.selection.main.to,
-                      insert: "",
-                    },
-                  });
+                  if (editable && !readOnly) {
+                    view.dispatch({
+                      changes: {
+                        from: view.state.selection.main.from,
+                        to: view.state.selection.main.to,
+                        insert: "",
+                      },
+                    });
+                  }
                   event.preventDefault();
                 }
               },
