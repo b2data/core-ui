@@ -2,9 +2,10 @@ import { ComponentThemeOverride } from "../types";
 
 const dialogTitleTheme: ComponentThemeOverride["MuiDialogTitle"] = {
   styleOverrides: {
-    root: {
+    root: ({ theme: { typography } }) => ({
       padding: 20,
-    },
+      ...typography.h4,
+    }),
   },
   defaultProps: {},
 };

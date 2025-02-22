@@ -34,7 +34,6 @@ export const DataBlockHasVariantIndicator: FC<
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
-          height: 32,
           width: 32,
           ...sx,
         }}

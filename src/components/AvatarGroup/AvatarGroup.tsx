@@ -3,7 +3,6 @@ import {
   AvatarGroupProps as MuiAvatarGroupProps,
   styled,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 import { AVATAR_SIZES } from "../Avatar/theme";

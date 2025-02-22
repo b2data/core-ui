@@ -1,17 +1,10 @@
 import * as React from "react";
-import {
-  alpha,
-  getOverlayAlpha,
-  styled,
-  Theme,
-  useTheme,
-} from "@mui/material/styles";
+import { alpha, getOverlayAlpha, styled, Theme } from "@mui/material/styles";
 import { unstable_composeClasses as composeClasses } from "@mui/utils";
 import {
   getDataGridUtilityClass,
   gridClasses,
   GridOverlays,
-  GridRowId,
   gridVisibleColumnFieldsSelector,
   useGridApiEventHandler,
   useGridSelector,
@@ -110,7 +103,7 @@ const darkModeBackgroundImage = `linear-gradient(${alpha(
 const VirtualScrollerPinnedColumns = styled("div", {
   name: "MuiDataGrid",
   slot: "PinnedColumns",
-  overridesResolver: (props, styles) => [
+  overridesResolver: (_, styles) => [
     {
       [`&.${gridClasses["pinnedColumns--left"]}`]:
         styles["pinnedColumns--left"],
@@ -160,7 +153,7 @@ enum PinnedRowsPosition {
 const VirtualScrollerPinnedRows = styled("div", {
   name: "MuiDataGrid",
   slot: "PinnedRows",
-  overridesResolver: (props, styles) => [
+  overridesResolver: (_, styles) => [
     { [`&.${gridClasses["pinnedRows--top"]}`]: styles["pinnedRows--top"] },
     {
       [`&.${gridClasses["pinnedRows--bottom"]}`]: styles["pinnedRows--bottom"],

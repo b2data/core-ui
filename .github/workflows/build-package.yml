@@ -33,7 +33,7 @@ jobs:
           echo //npm.pkg.github.com/:_authToken=${{ secrets.REPO_SECRET }} >> .npmrc
           npm install
       - name: Build packages
-        run: npm run babel
+        run: npm run compile
       - name: Publish NPM Package
         run: |
           npm pack

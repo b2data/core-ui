@@ -3,7 +3,7 @@ import { SxProps } from "@mui/material";
 
 import { DataBlockProps } from "../../DataBlock";
 
-import { DataBlockBase, DataBlockType } from "./blocks";
+import { DataBlockBase, DataBlockType, DataBlockUserData } from "./blocks";
 import { DataBlockEditorOnChangeCallback, DataBlockEditorState } from "./state";
 import { DataBlockEditorTranslations } from "./i18n";
 import { DataBlockTool } from "./tools";
@@ -41,9 +41,9 @@ export type DataBlockEditorProps<T extends DataBlockBase = DataBlockBase> = {
    */
   canChangeVariants?: boolean;
   /**
-   * Used to determinate which `vote` related to user.
+   * Current user data
    */
-  currentUserId?: string;
+  currentUser: DataBlockUserData;
   /**
    * URL to files
    */

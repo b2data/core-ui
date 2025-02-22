@@ -30,7 +30,7 @@ export const Variants: StoryObj<TabsProps> = {
   args: { children: content },
   render: (props) => {
     const [value, setValue] = useState(0);
-    const handleChange = (e: React.SyntheticEvent, v: number) => setValue(v);
+    const handleChange = (_: any, v: number) => setValue(v);
     return (
       <div>
         <Tabs

@@ -1,4 +1,4 @@
-import { inlineCodeTag, Punctuation } from "../tags";
+import { inlineCodeTag } from "../tags";
 
 import type { DelimiterType, MarkdownConfig } from "@lezer/markdown";
 

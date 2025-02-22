@@ -23,25 +23,23 @@ export const DataBlockVariantLikes: FC<DataBlockVariantLikesProps> = ({
   variant: { id: variantId, votes = [] },
 }) => {
   const {
-    state: { i18n, currentUserId, getFilesUrl },
+    state: { i18n, currentUser, getFilesUrl },
     dispatch,
   } = useContext(DataBlockEditorContext);
 
   const [popoverEl, setPopoverEl] = useState<HTMLButtonElement | null>(null);
 
   const handleToggleVariant = () => {
-    if (currentUserId) {
-      dispatch({
-        action: isVoted
-          ? DataBlockEditorPublicAction.UnVoteVariant
-          : DataBlockEditorPublicAction.VoteVariant,
-        data: {
-          blockId,
-          variantId: variantId,
-          createdBy: currentUserId,
-        },
-      });
-    }
+    dispatch({
+      action: isVoted
+        ? DataBlockEditorPublicAction.UnVoteVariant
+        : DataBlockEditorPublicAction.VoteVariant,
+      data: {
+        blockId,
+        variantId: variantId,
+        createdByData: currentUser,
+      },
+    });
   };
 
   return (
@@ -55,7 +53,6 @@ export const DataBlockVariantLikes: FC<DataBlockVariantLikesProps> = ({
             fontSize: 12,
             height: 20,
           }}
-          disabled={!currentUserId}
           onClick={handleToggleVariant}
         >
           {votes?.length || 0}

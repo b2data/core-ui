@@ -2,7 +2,6 @@ import {
   DialogActions as MuiDialogActions,
   DialogActionsProps as MuiDialogActionsProps,
 } from "@mui/material";
-import React from "react";
 
 import { Button, ButtonProps } from "../Button";
 

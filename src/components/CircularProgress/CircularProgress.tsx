@@ -3,12 +3,12 @@ import {
   CircularProgress as MuiCircularProgress,
   CircularProgressProps as MuiCircularProgressProps,
   SxProps,
-  Theme,
   Typography,
 } from "@mui/material";
 import React, { isValidElement } from "react";
 
 import { OverrideMuiProps } from "../types";
+import { Theme } from "../../theming";
 
 export interface CircularProgressProps
   extends OverrideMuiProps<

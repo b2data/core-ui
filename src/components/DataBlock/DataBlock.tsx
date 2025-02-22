@@ -5,8 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { SxProps, Theme } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { SxProps } from "@mui/material";
 import {
   EditorView,
   highlightActiveLine,
@@ -20,6 +19,7 @@ import { closeBrackets } from "@codemirror/autocomplete";
 import { history, historyKeymap } from "@codemirror/commands";
 import { markdownLanguage } from "@codemirror/lang-markdown";
 
+import { Theme, useTheme } from "../../theming";
 import { Box } from "../Box";
 import { useDeepEqualMemo } from "../../hooks";
 
@@ -52,6 +52,11 @@ export type DataBlockProps = {
    */
   onChangeDebounce?: number;
   /**
+   * Callback when a paste event occurs
+   * @returns string
+   */
+  onPaste?: (event: ClipboardEvent, view: EditorView) => void;
+  /**
    * Callback when the editor loses focus
    * @returns string
    */
@@ -59,7 +64,7 @@ export type DataBlockProps = {
   /**
    * Callback when the editor gains focus
    */
-  onFocus?: () => void;
+  onFocus?: (e: FocusEvent, view: EditorView) => void;
   /**
    * Callback when the editor loses focus and content has changed
    * @returns string
@@ -88,6 +93,7 @@ export const DataBlock = forwardRef(
       content = "",
       onChange,
       onChangeDebounce = 1000,
+      onPaste,
       onBlur,
       onFocus,
       onTrackChanges,
@@ -138,6 +144,43 @@ export const DataBlock = forwardRef(
                 }, onChangeDebounce);
               }
             }),
+            EditorView.domEventHandlers({
+              focus: (event, view) => {
+                onFocus?.(event, view);
+              },
+              paste: (event, view) => {
+                onPaste?.(event, view);
+              },
+              copy: (event, view) => {
+                const selection = view.state.doc.sliceString(
+                  view.state.selection.main.from,
+                  view.state.selection.main.to,
+                );
+                if (event.clipboardData && selection) {
+                  event.clipboardData.setData("text/markdown", selection);
+                  event.clipboardData.setData("text/plain", selection);
+                  event.preventDefault();
+                }
+              },
+              cut: (event, view) => {
+                const selection = view.state.doc.sliceString(
+                  view.state.selection.main.from,
+                  view.state.selection.main.to,
+                );
+                if (event.clipboardData && selection) {
+                  event.clipboardData.setData("text/markdown", selection);
+                  event.clipboardData.setData("text/plain", selection);
+                  view.dispatch({
+                    changes: {
+                      from: view.state.selection.main.from,
+                      to: view.state.selection.main.to,
+                      insert: "",
+                    },
+                  });
+                  event.preventDefault();
+                }
+              },
+            }),
           ],
         });
 
@@ -148,15 +191,8 @@ export const DataBlock = forwardRef(
 
         setView(editorView);
 
-        const handleFocus = () => {
-          onFocus?.();
-        };
-
-        editorView.contentDOM.addEventListener("focus", handleFocus);
-
         // Cleanup on unmount
         return () => {
-          editorView.contentDOM.removeEventListener("focus", handleFocus);
           editorView.destroy();
         };
       }

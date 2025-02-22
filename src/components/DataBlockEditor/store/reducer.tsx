@@ -1,4 +1,4 @@
-import { equals, omit, pick } from "ramda";
+import { equals, pick } from "ramda";
 
 import {
   DataBlockBase,
@@ -19,7 +19,7 @@ export const initialState: DataBlockEditorState = {
   focused: 0,
   focusedEnd: false,
   canChangeVariants: false,
-  currentUserId: undefined,
+  currentUser: { id: "", firstName: "" },
   getFilesUrl: () => "/",
   blocks: [],
   tools: {},
@@ -44,6 +44,12 @@ export const initialState: DataBlockEditorState = {
     hidePrefix: "Hide block number",
     showPrefix: "Show block number",
     noResults: "No results",
+    pasteNewBlocks: {
+      title: "Create new blocks",
+      content: "Do you want to create {count} blocks or paste as text in one?",
+      okText: "Create blocks",
+      cancelText: "Paste as text",
+    },
     indent: {
       increase: "Increase offset",
       decrease: "Decrease offset",
@@ -95,8 +101,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       return { ...state, canChangeVariants: data.canChangeVariants };
     }
 
-    case DataBlockEditorPrivateAction.SetCurrentUserId: {
-      return { ...state, currentUserId: data.currentUserId };
+    case DataBlockEditorPrivateAction.SetCurrentUser: {
+      return { ...state, currentUser: data.currentUser };
     }
 
     case DataBlockEditorPrivateAction.SetFocused: {
@@ -142,15 +148,15 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
 
       blocks.splice(index, 0, {
         ...block,
-        createdBy: state.currentUserId,
-        variants: [{ ...variant, createdBy: state.currentUserId, votes: [] }],
+        createdBy: state.currentUser.id,
+        variants: [{ ...variant, createdBy: state.currentUser.id, votes: [] }],
       } as DataBlockBase);
 
       state.onChange?.({
         action: DataBlockEditorPublicAction.AddBlock,
         data: {
-          block: omit(["createdByData"], block),
-          variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
+          block: pick(["id", "type", "offset", "hidePrefix"], block),
+          variant: pick(["id", "data", "isCurrent"], variant),
           index,
         },
       });
@@ -194,8 +200,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         state.onChange?.({
           action: DataBlockEditorPublicAction.EditBlock,
           data: {
-            block: omit(["createdByData"], block),
-            variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
+            block: pick(["id", "type", "offset", "hidePrefix"], block),
+            variant: pick(["id", "data", "isCurrent"], variant),
           },
         });
 
@@ -270,7 +276,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           action: DataBlockEditorPublicAction.AddVariant,
           data: {
             blockId,
-            variant: pick(["id", "data", "isCurrent", "createdBy"], variant),
+            variant: pick(["id", "data", "isCurrent"], variant),
           },
         });
         return { ...state, blocks };
@@ -309,7 +315,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
             action: DataBlockEditorPublicAction.EditVariant,
             data: {
               blockId,
-              variant: pick(["id", "data", "isCurrent", "createdBy"], {
+              variant: pick(["id", "data", "isCurrent"], {
                 ...variants[index2],
                 ...variant,
               }),
@@ -349,7 +355,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
     }
 
     case DataBlockEditorPublicAction.VoteVariant: {
-      const { blockId, variantId, createdBy } = data;
+      const { blockId, variantId, createdByData } = data;
 
       const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
@@ -359,21 +365,31 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         );
         if (index2 > -1) {
           const variants = [...blocks[index].variants];
-          variants.splice(index2, 1, {
-            ...variants[index2],
-            votes: (variants[index2].votes || []).concat([
-              { createdBy, createdAt: new Date() },
-            ]),
-          });
-          blocks.splice(index, 1, { ...blocks[index], variants });
-          state.onChange?.({
-            action: DataBlockEditorPublicAction.VoteVariant,
-            data: {
-              blockId,
-              variantId,
-            },
-          });
-          return { ...state, blocks };
+          if (
+            !variants[index2].votes?.find(
+              (v) => v.createdBy === createdByData.id,
+            )
+          ) {
+            variants.splice(index2, 1, {
+              ...variants[index2],
+              votes: (variants[index2].votes || []).concat([
+                {
+                  createdBy: createdByData.id,
+                  createdByData,
+                  createdAt: new Date(),
+                },
+              ]),
+            });
+            blocks.splice(index, 1, { ...blocks[index], variants });
+            state.onChange?.({
+              action: DataBlockEditorPublicAction.VoteVariant,
+              data: {
+                blockId,
+                variantId,
+              },
+            });
+            return { ...state, blocks };
+          }
         }
       }
 
@@ -381,7 +397,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
     }
 
     case DataBlockEditorPublicAction.UnVoteVariant: {
-      const { blockId, variantId, createdBy } = data;
+      const { blockId, variantId, createdByData } = data;
 
       const index = state.blocks.findIndex((b) => b.id === blockId);
       if (index > -1) {
@@ -394,7 +410,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           variants.splice(index2, 1, {
             ...variants[index2],
             votes: (variants[index2].votes || []).filter(
-              (vt) => vt.createdBy !== createdBy,
+              (vt) => vt.createdBy !== createdByData.id,
             ),
           });
           blocks.splice(index, 1, { ...blocks[index], variants });

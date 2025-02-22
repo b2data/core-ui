@@ -22,10 +22,6 @@ export interface MarkdownFieldProps {
    */
   placeholder?: string;
   /**
-   * If `true`, the component will ignore HTML styles `onPaste`
-   */
-  plain?: boolean;
-  /**
    * If `true`, the Component element is required.
    */
   required?: boolean;

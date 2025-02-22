@@ -14,3 +14,5 @@ export * from "./utils";
 export type Direction = "ltr" | "rtl";
 
 export { ThemeProvider, withStyles, useTheme, lightTheme, darkTheme };
+
+export type Theme = typeof lightTheme;

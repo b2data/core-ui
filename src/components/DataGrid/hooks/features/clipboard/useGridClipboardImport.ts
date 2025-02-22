@@ -261,7 +261,7 @@ function defaultPasteResolver({
     const pastedRowsDataCount = pastedData.length;
 
     // There's no guarantee that the selected rows are in the same order as the pasted rows
-    selectedRows.forEach((row, rowId) => {
+    selectedRows.forEach((_, rowId) => {
       let rowData: string[] | undefined;
       if (pastedRowsDataCount === 1) {
         // If only one row is pasted - paste it to all selected rows
@@ -348,7 +348,7 @@ export const useGridClipboardImport = (
   const splitClipboardPastedText = props.unstable_splitClipboardPastedText;
 
   const handlePaste = React.useCallback<GridEventListener<"cellKeyDown">>(
-    async (params, event) => {
+    async (_, event) => {
       if (!enableClipboardPaste) {
         return;
       }

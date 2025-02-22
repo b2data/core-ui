@@ -1,15 +1,16 @@
 {
   "name": "@b2data/core-ui",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "",
   "files": [
     "lib"
   ],
-  "main": "lib/index.ts",
+  "main": "lib/index.js",
   "scripts": {
     "start": "vite",
     "clean": "vite clean",
     "babel": "babel --copy-files src/ -d lib/ --ignore 'src/assets/','src/main.ts','src/*d.ts','src/**/**/*.stories.@(tsx|ts)'",
+    "compile": "tsc --project tsconfig.build.json && cpx \"src/**/*.css\" lib",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.ts,.tsx src",
@@ -81,6 +82,7 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "babel-plugin-transform-imports": "^2.0.0",
+    "cpx2": "^8.0.0",
     "eslint-plugin-storybook": "^0.6.13",
     "gh-pages": "^5.0.0",
     "husky": "^8.0.0",

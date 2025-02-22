@@ -116,7 +116,7 @@ export const SectionTitle = ({
         <Tooltip followCursor placement="bottom" text={tooltip}>
           <Typography
             noWrap
-            variant="h2"
+            variant="h1"
             {...titleProps}
             sx={{
               lineHeight: 1.2,

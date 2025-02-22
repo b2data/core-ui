@@ -2,7 +2,6 @@ import {
   FormControlLabel as MuiFormControlLabel,
   FormControlLabelProps as MuiFormControlLabelProps,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 

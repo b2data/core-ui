@@ -16,7 +16,6 @@ export const Base: StoryObj<MarkdownFieldProps> = {
   args: {
     label: "Base",
     placeholder: "Placeholder",
-    plain: true,
     required: true,
     // error: true,
     // disabled: true,

@@ -5,6 +5,7 @@ import {
   DataBlockEditorTranslations,
   DataBlockTool,
   DataBlockType,
+  DataBlockUserData,
   DataBlockVariant,
   ReceiveDataBlockEditorUpdates,
 } from "../models";
@@ -21,7 +22,7 @@ export enum DataBlockEditorPrivateAction {
   SetShowIndentOffset = "setShowIndentOffset",
   SetFocused = "setFocused",
   SetCanChangeVariants = "setCanChangeVariants",
-  SetCurrentUserId = "setCurrentUserId",
+  SetCurrentUser = "setCurrentUser",
   SetKeymap = "setKeymap",
   SetMdProps = "setMdProps",
   MergeUpdates = "mergeUpdate",
@@ -78,9 +79,9 @@ type SetCanChangeVariants = SetDataBlockEditorAction<
   { canChangeVariants: boolean }
 >;
 
-type SetCurrentUserId = SetDataBlockEditorAction<
-  DataBlockEditorPrivateAction.SetCurrentUserId,
-  { currentUserId: string }
+type SetCurrentUser = SetDataBlockEditorAction<
+  DataBlockEditorPrivateAction.SetCurrentUser,
+  { currentUser: DataBlockUserData }
 >;
 
 type SetBlocks = SetDataBlockEditorAction<
@@ -154,12 +155,12 @@ type DeleteVariant = SetDataBlockEditorAction<
 
 type VoteVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.VoteVariant,
-  { blockId: string; variantId: string; createdBy: string }
+  { blockId: string; variantId: string; createdByData: DataBlockUserData }
 >;
 
 type UnVoteVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.UnVoteVariant,
-  { blockId: string; variantId: string; createdBy: string }
+  { blockId: string; variantId: string; createdByData: DataBlockUserData }
 >;
 
 export type DataBlockEditorActions =
@@ -172,7 +173,7 @@ export type DataBlockEditorActions =
   | SetShowNavigation
   | SetShowIndentOffset
   | SetCanChangeVariants
-  | SetCurrentUserId
+  | SetCurrentUser
   | SetBlocks
   | SetKeymap
   | SetMdProps

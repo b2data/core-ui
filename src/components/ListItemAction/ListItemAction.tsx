@@ -2,7 +2,6 @@ import {
   ListItemSecondaryAction as MuiListItemSecondaryAction,
   ListItemSecondaryActionProps as MuiListItemSecondaryActionProps,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 

@@ -30,7 +30,7 @@ export default meta;
 
 const createdByData = { id: "user1", firstName: "Demo ", lastName: "user" };
 
-const def = Array.from(new Array(10)).map((_, index) => ({
+const def = Array.from(new Array(10)).map(() => ({
   id: uuid(),
   type: "text",
   offset: 0,
@@ -57,7 +57,7 @@ const def = Array.from(new Array(10)).map((_, index) => ({
 export const Base: StoryObj<DataBlockEditorProps> = {
   args: {
     editable: true,
-    currentUserId: "user1",
+    currentUser: { id: "user2", firstName: "Maria" },
     tools: {},
     blocks: [
       {

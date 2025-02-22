@@ -41,7 +41,7 @@ const DataBlockEditorProvider = forwardRef<
     showNavigation,
     showIndentOffset,
     canChangeVariants,
-    currentUserId,
+    currentUser,
     getFilesUrl,
     i18n,
     blocks,
@@ -129,13 +129,13 @@ const DataBlockEditorProvider = forwardRef<
   }, [canChangeVariants]);
 
   useEffect(() => {
-    if (currentUserId) {
+    if (currentUser) {
       dispatch({
-        action: DataBlockEditorPrivateAction.SetCurrentUserId,
-        data: { currentUserId },
+        action: DataBlockEditorPrivateAction.SetCurrentUser,
+        data: { currentUser },
       });
     }
-  }, [currentUserId]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (Array.isArray(blocks)) {

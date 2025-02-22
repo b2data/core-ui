@@ -2,7 +2,6 @@ import {
   Collapse as MuiCollapse,
   CollapseProps as MuiCollapseProps,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 

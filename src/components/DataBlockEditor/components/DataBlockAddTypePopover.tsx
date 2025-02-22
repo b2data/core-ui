@@ -34,7 +34,7 @@ export const DataBlockAddTypePopover: FC<DataBlockAddTypePopoverProps> = ({
   onClose,
 }) => {
   const {
-    state: { i18n, tools, currentUserId },
+    state: { i18n, tools, currentUser },
     dispatch,
   } = useContext(DataBlockEditorContext);
   const { Symbols } = useDevice();
@@ -95,13 +95,13 @@ export const DataBlockAddTypePopover: FC<DataBlockAddTypePopoverProps> = ({
           id: uuid(),
           type: option.id,
           offset,
-          createdBy: currentUserId,
+          createdBy: currentUser.id,
         },
         variant: {
           id: uuid(),
           data: { text: option.defaultValue || "" },
           isCurrent: true,
-          createdBy: currentUserId,
+          createdBy: currentUser.id,
         },
         index: index + 1,
       },

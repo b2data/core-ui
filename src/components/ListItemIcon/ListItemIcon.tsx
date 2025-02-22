@@ -2,7 +2,6 @@ import {
   ListItemIcon as MuiListItemIcon,
   ListItemIconProps as MuiListItemIconProps,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 

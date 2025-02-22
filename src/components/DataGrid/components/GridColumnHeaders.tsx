@@ -60,7 +60,7 @@ interface GridColumnHeadersPinnedColumnHeadersProps {
 const GridColumnHeadersPinnedColumnHeaders = styled("div", {
   name: "MuiDataGrid",
   slot: "PinnedColumnHeaders",
-  overridesResolver: (props, styles) => [
+  overridesResolver: (_, styles) => [
     {
       [`&.${gridClasses["pinnedColumnHeaders--left"]}`]:
         styles["pinnedColumnHeaders--left"],

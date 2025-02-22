@@ -9,6 +9,12 @@ export type DataBlockEditorTranslations = {
   deleteVariantTooltip: string | ReactNode;
   swapCurrentVariantTooltip: string | ReactNode;
   emptyPlaceholder: string;
+  pasteNewBlocks: {
+    title: string;
+    content: string;
+    okText: string;
+    cancelText: string;
+  };
   addBtnFilter: string;
   hidePrefix: string;
   showPrefix: string;

@@ -16,7 +16,6 @@ import { DataBlockContent } from "./DataBlockContent";
 import { DataBlockVariants } from "./DataBlockVariants";
 import { DataBlockHasVariantIndicator } from "./DataBlockHasVariantIndicator";
 import { DataBlockAddVariantIndicator } from "./DataBlockAddVariantIndicator";
-import { DataBlockSwapVariantIndicator } from "./DataBlockSwapVariantIndicator";
 import { DataBlockVariantAuthor } from "./DataBlockVariantAuthor";
 import { DataBlockVariantLikes } from "./DataBlockVariantLikes";
 
@@ -37,7 +36,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       focused,
       canChangeVariants,
       showVariants,
-      currentUserId,
+      currentUser,
       showPrefix,
       maxPrefixLength,
       prefixes,
@@ -55,8 +54,8 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
 
   const canAddVariant = useMemo(
     () =>
-      editable && !data.variants?.find((v) => v.createdBy === currentUserId),
-    [editable, currentUserId, useDeepEqualMemo(data.variants)],
+      editable && !data.variants?.find((v) => v.createdBy === currentUser.id),
+    [editable, currentUser.id, useDeepEqualMemo(data.variants)],
   );
 
   const blockData = useMemo(
@@ -72,9 +71,9 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
   const currentVariantVoted = useMemo(
     () =>
       Boolean(
-        currentVariant?.votes?.find((v) => v.createdBy === currentUserId),
+        currentVariant?.votes?.find((v) => v.createdBy === currentUser.id),
       ),
-    [useDeepEqualMemo(currentVariant), currentUserId],
+    [useDeepEqualMemo(currentVariant), currentUser.id],
   );
 
   const otherVariants = useMemo(
@@ -82,7 +81,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
     [useDeepEqualMemo(data.variants)],
   );
 
-  const [shownIndex, setShownIndex] = useState<number>(0);
+  const [shownId, setShownId] = useState<string>();
 
   const prefixVariant = useMemo(() => {
     if (currentVariant?.data?.text?.startsWith("# ")) return "h1";
@@ -123,30 +122,33 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
   );
 
   const handleAddVariant = () => {
+    const varId = uuid();
     dispatch({
       action: DataBlockEditorPublicAction.AddVariant,
       data: {
         blockId: blockData.id,
         variant: {
-          id: uuid(),
-          data: {},
+          id: varId,
+          data: { text: "" },
           isCurrent: false,
-          createdBy: currentUserId,
+          createdByData: currentUser,
+          createdBy: currentUser.id,
         },
       },
     });
     openShowVariants();
-    setShownIndex(otherVariants.length);
+    setShownId(varId);
   };
 
   const handleChangeCurrentVariant = () => {
-    if (otherVariants[shownIndex]) {
+    const toVar = otherVariants.find((v) => v.id === shownId);
+    if (toVar) {
       dispatch({
         action: DataBlockEditorPublicAction.EditVariant,
         data: {
           blockId: blockData.id,
           variant: {
-            ...otherVariants[shownIndex],
+            ...toVar,
             isCurrent: true,
           },
         },
@@ -224,6 +226,11 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
             sx={{
               minWidth: Math.max((maxPrefixLength + 1) * 9, 16),
               mr: -6,
+              ...(prefixVariant.includes("h")
+                ? {}
+                : {
+                    lineHeight: 1.5,
+                  }),
               userSelect: "none",
             }}
           >
@@ -257,10 +264,14 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
             index={index}
             block={blockData}
             variants={otherVariants}
-            shownIndex={shownIndex}
-            setShownIndex={setShownIndex}
+            shownId={shownId}
+            setShownId={setShownId}
             onAddVariant={handleAddVariant}
             canAddVariant={canAddVariant}
+            canSwapVariants={
+              canChangeVariants && displayVariants && otherVariants.length > 0
+            }
+            onSwap={handleChangeCurrentVariant}
           />
         )}
       </Box>
@@ -276,11 +287,6 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
           )}
           {otherVariants.length === 0 && canAddVariant && (
             <DataBlockAddVariantIndicator onAddVariant={handleAddVariant} />
-          )}
-          {canChangeVariants && displayVariants && otherVariants.length > 0 && (
-            <DataBlockSwapVariantIndicator
-              onSwap={handleChangeCurrentVariant}
-            />
           )}
         </>
       )}

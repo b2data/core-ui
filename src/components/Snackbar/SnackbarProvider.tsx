@@ -1,4 +1,3 @@
-import React from "react";
 import {
   SnackbarProvider as CoreSnackbarProvider,
   SnackbarProviderProps as CoreSnackbarProviderProps,

@@ -2,7 +2,6 @@ import {
   DialogContent as MuiDialogContent,
   DialogContentProps as MuiDialogContentProps,
 } from "@mui/material";
-import React from "react";
 
 export interface DialogContentProps
   extends Pick<MuiDialogContentProps, "children" | "dividers" | "sx"> {

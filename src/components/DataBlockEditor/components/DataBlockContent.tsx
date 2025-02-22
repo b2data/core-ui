@@ -3,6 +3,7 @@ import { EditorView } from "@codemirror/view";
 import { insertBlankLine, insertNewlineKeepIndent } from "@codemirror/commands";
 import { syntaxTree } from "@codemirror/language";
 
+import { useConfirmationDialog } from "../../ConfirmationDialog";
 import {
   DataBlockBase,
   DataBlockEditorPublicAction,
@@ -29,39 +30,43 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
     state: {
       editable,
       focusedEnd,
-      currentUserId,
+      currentUser,
       keymap,
       mdProps,
       showIndentOffset,
-      i18n: { emptyPlaceholder },
+      i18n: { emptyPlaceholder, pasteNewBlocks },
     },
     dispatch,
   } = useContext(DataBlockEditorContext);
 
   const view = useRef<EditorView>();
+  const { onOpen: openConfirmDialog, portal } = useConfirmationDialog();
 
   const content = variant.data.text || "";
 
-  const handleAddBlock = useCallback(() => {
-    dispatch({
-      action: DataBlockEditorPublicAction.AddBlock,
-      data: {
-        block: {
-          id: uuid(),
-          type: "text",
-          offset: block.offset,
-          createdBy: currentUserId,
+  const handleAddBlock = useCallback(
+    (i = 0, text = "") => {
+      dispatch({
+        action: DataBlockEditorPublicAction.AddBlock,
+        data: {
+          block: {
+            id: uuid(),
+            type: "text",
+            offset: block.offset,
+            createdBy: currentUser.id,
+          },
+          variant: {
+            id: uuid(),
+            data: { text },
+            isCurrent: true,
+            createdBy: currentUser.id,
+          },
+          index: index + 1 + i,
         },
-        variant: {
-          id: uuid(),
-          data: { text: "" },
-          isCurrent: true,
-          createdBy: currentUserId,
-        },
-        index: index + 1,
-      },
-    });
-  }, [index, block.offset, currentUserId]);
+      });
+    },
+    [index, block.offset, currentUser.id],
+  );
 
   const moveToNextBlock = useCallback(() => {
     dispatch({
@@ -140,6 +145,42 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
       });
     }
   }, [index, isFocused]);
+
+  const handlePaste = useCallback(
+    async (event: ClipboardEvent, view: EditorView) => {
+      const md = event.clipboardData?.getData("text/markdown");
+      let text = event.clipboardData?.getData("text/plain");
+      if (!md && text) {
+        const newBlocks = text.split("\n").filter((t) => !!t.trim());
+        const cursor = view.state.selection.main.head;
+
+        if (newBlocks.length > 1) {
+          event.preventDefault();
+          const deleteConfirmed = await openConfirmDialog({
+            ...pasteNewBlocks,
+            content: pasteNewBlocks.content.replace(
+              "{count}",
+              newBlocks.length.toString(),
+            ),
+          });
+
+          if (deleteConfirmed) {
+            const firstBlock = newBlocks.shift();
+            text = firstBlock || "";
+
+            newBlocks.forEach((t, ind) => {
+              handleAddBlock(ind, t);
+            });
+          }
+
+          view.dispatch({
+            changes: { from: cursor, insert: text },
+          });
+        }
+      }
+    },
+    [],
+  );
 
   const customKeymap = useMemo(
     () => [
@@ -283,19 +324,23 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
   }, [isFocused, view.current?.contentDOM, focusedEnd, content.length]);
 
   return (
-    <DataBlock
-      ref={view}
-      editable={editable}
-      readOnly={variant.createdBy !== currentUserId}
-      content={content}
-      placeholderText={emptyPlaceholder}
-      onTrackChanges={(text) => handleUpdateText(text)}
-      onFocus={() => handleSetFocuses()}
-      customKeymap={customKeymap}
-      mdProps={mdProps}
-      sx={{
-        ...(showIndentOffset ? { pl: `${block.offset * 2}rem` } : {}),
-      }}
-    />
+    <>
+      <DataBlock
+        ref={view}
+        editable={editable}
+        readOnly={variant.createdBy !== currentUser.id}
+        content={content}
+        placeholderText={emptyPlaceholder}
+        onTrackChanges={(text) => handleUpdateText(text)}
+        onFocus={() => handleSetFocuses()}
+        onPaste={handlePaste}
+        customKeymap={customKeymap}
+        mdProps={mdProps}
+        sx={{
+          ...(showIndentOffset ? { pl: `${block.offset * 2}rem` } : {}),
+        }}
+      />
+      {portal}
+    </>
   );
 };

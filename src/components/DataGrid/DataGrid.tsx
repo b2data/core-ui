@@ -10,7 +10,8 @@ import {
   ruRU,
   useGridSelector,
 } from "@mui/x-data-grid";
-import { useTheme } from "@mui/material";
+
+import { useTheme } from "../../theming";
 
 import { DataGridProps } from "./models";
 import { DataGridVirtualScroller } from "./components";

@@ -1,7 +1,7 @@
 import { DataBlockProps } from "../../DataBlock";
 
 import { DataBlockEditorTranslations } from "./i18n";
-import { DataBlockBase, DataBlockType } from "./blocks";
+import { DataBlockBase, DataBlockType, DataBlockUserData } from "./blocks";
 import { DataBlockTool } from "./tools";
 import { SendDataBlockEditorUpdates } from "./updates";
 
@@ -16,7 +16,7 @@ export type DataBlockEditorState = {
   showNavigation?: boolean;
   showIndentOffset?: boolean;
   canChangeVariants?: boolean;
-  currentUserId?: string;
+  currentUser: DataBlockUserData;
   getFilesUrl: (id: string) => string;
   i18n: DataBlockEditorTranslations;
   blocks: DataBlockBase[];

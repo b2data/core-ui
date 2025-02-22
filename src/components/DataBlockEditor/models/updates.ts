@@ -7,22 +7,16 @@ export type SendDataBlockEditorUpdates =
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.AddBlock,
       {
-        block: Omit<DataBlockBase, "variants" | "createdByData">;
-        variant: Pick<
-          DataBlockVariant,
-          "id" | "data" | "isCurrent" | "createdBy"
-        >;
+        block: Pick<DataBlockBase, "id" | "type" | "offset" | "hidePrefix">;
+        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
         index: number;
       }
     >
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.EditBlock,
       {
-        block: Omit<DataBlockBase, "variants" | "createdByData">;
-        variant: Pick<
-          DataBlockVariant,
-          "id" | "data" | "isCurrent" | "createdBy"
-        >;
+        block: Pick<DataBlockBase, "id" | "type" | "offset" | "hidePrefix">;
+        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
       }
     >
   | SetDataBlockEditorAction<
@@ -43,10 +37,7 @@ export type SendDataBlockEditorUpdates =
       DataBlockEditorPublicAction.AddVariant,
       {
         blockId: string;
-        variant: Pick<
-          DataBlockVariant,
-          "id" | "data" | "isCurrent" | "createdBy"
-        >;
+        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
       }
     >
   | SetDataBlockEditorAction<

@@ -7,7 +7,7 @@ import {
   StepLabel,
   StepLabelProps,
 } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 export type StepProps = Omit<
   MuiStepProps,

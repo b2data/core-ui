@@ -199,7 +199,7 @@ export const useGridColumnReorder = (
 
   const handleDragEnter = React.useCallback<
     GridEventListener<"cellDragEnter" | "columnHeaderDragEnter">
-  >((params, event) => {
+  >((_, event) => {
     event.preventDefault();
     event.stopPropagation();
   }, []);
@@ -330,7 +330,7 @@ export const useGridColumnReorder = (
   const handleDragEnd = React.useCallback<
     GridEventListener<"columnHeaderDragEnd">
   >(
-    (params, event): void => {
+    (_, event): void => {
       const dragColField = gridColumnReorderDragColSelector(apiRef);
       if (props.disableColumnReorder || !dragColField) {
         return;

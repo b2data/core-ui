@@ -3,12 +3,12 @@ import {
   LinearProgress as MuiLinearProgress,
   LinearProgressProps as MuiLinearProgressProps,
   SxProps,
-  Theme,
   Typography,
 } from "@mui/material";
 import React, { isValidElement } from "react";
 
 import { OverrideMuiProps } from "../types";
+import { Theme } from "../../theming";
 
 export interface LinearProgressProps
   extends OverrideMuiProps<

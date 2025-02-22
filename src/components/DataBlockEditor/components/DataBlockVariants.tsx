@@ -11,41 +11,55 @@ import { useDeepEqualMemo } from "../../../hooks";
 import { DataBlockContent } from "./DataBlockContent";
 import { DataBlockVariantLikes } from "./DataBlockVariantLikes";
 import { DataBlockVariantAuthor } from "./DataBlockVariantAuthor";
+import { DataBlockSwapVariantIndicator } from "./DataBlockSwapVariantIndicator";
 
 export type DataBlockVariantsProps = {
   index: number;
   block: Omit<DataBlockBase, "variants">;
   variants: DataBlockBase["variants"];
-  shownIndex: number;
-  setShownIndex: (index: number) => void;
+  shownId?: string;
+  setShownId: (id?: string) => void;
   onAddVariant: () => void;
   canAddVariant: boolean;
+  canSwapVariants?: boolean;
+  onSwap: () => void;
 };
 
 export const DataBlockVariants: FC<DataBlockVariantsProps> = ({
   index,
   block,
   variants,
-  shownIndex,
-  setShownIndex,
+  shownId,
+  setShownId,
   onAddVariant,
   canAddVariant,
+  canSwapVariants,
+  onSwap,
 }) => {
   const {
-    state: { editable, i18n, currentUserId },
+    state: { editable, i18n, currentUser },
   } = useContext(DataBlockEditorContext);
+
+  const shownIndex = useMemo(() => {
+    const index = variants.findIndex((v) => v.id === shownId);
+    return index === -1 ? 0 : index;
+  }, [useDeepEqualMemo(variants), shownId]);
 
   const shownVariant = variants[shownIndex];
 
-  const isEditable = editable && shownVariant?.createdBy === currentUserId;
+  const isEditable = editable && shownVariant?.createdBy === currentUser.id;
 
   const isVoted = useMemo(
     () =>
-      Boolean(shownVariant?.votes?.find((v) => v.createdBy === currentUserId)),
-    [useDeepEqualMemo(shownVariant), currentUserId],
+      Boolean(shownVariant?.votes?.find((v) => v.createdBy === currentUser.id)),
+    [useDeepEqualMemo(shownVariant), currentUser.id],
   );
 
-  useEffect(() => () => setShownIndex(0), []);
+  useEffect(() => {
+    if (!shownId && variants.length) {
+      setShownId(variants[0].id);
+    }
+  }, [useDeepEqualMemo(variants), shownId]);
 
   const slider = useMemo(() => {
     if (variants.length > 7) {
@@ -86,9 +100,11 @@ export const DataBlockVariants: FC<DataBlockVariantsProps> = ({
       display="flex"
       flexDirection="column"
       minHeight="inherit"
+      position="relative"
       gap={2}
       mb="20px"
     >
+      {canSwapVariants && <DataBlockSwapVariantIndicator onSwap={onSwap} />}
       {shownVariant && (
         <>
           <DataBlockContent
@@ -101,11 +117,10 @@ export const DataBlockVariants: FC<DataBlockVariantsProps> = ({
             blockId={block.id}
             variant={shownVariant}
             editable={isEditable}
-            setShownIndex={setShownIndex}
+            setShownId={setShownId}
           />
         </>
       )}
-
       <Box
         display="flex"
         alignItems="center"
@@ -123,7 +138,7 @@ export const DataBlockVariants: FC<DataBlockVariantsProps> = ({
               key={`${ind}-${i}`}
               size="small"
               onClick={() =>
-                typeof ind === "number" ? setShownIndex(ind) : {}
+                typeof ind === "number" ? setShownId(variants[ind]?.id) : {}
               }
               sx={{
                 fontSize: 12,

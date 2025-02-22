@@ -3,7 +3,6 @@ import {
   AvatarProps as MuiAvatarProps,
   styled,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 

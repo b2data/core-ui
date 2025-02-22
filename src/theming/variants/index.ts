@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import { CSSProperties } from "@mui/material/styles/createMixins";
 
 import components from "./components";
 import breakpoints from "./breakpoints";
@@ -32,3 +33,20 @@ export const darkTheme = createTheme({
   mixins,
   typography,
 });
+
+declare module "@mui/material" {
+  interface BreakpointOverrides {
+    xs: false;
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true;
+    tablet: true;
+    desktop: true;
+  }
+  
+  interface Mixins {
+    scrollbars?: CSSProperties;
+  }
+}

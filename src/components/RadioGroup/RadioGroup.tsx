@@ -2,7 +2,6 @@ import {
   RadioGroup as MuiRadioGroup,
   RadioGroupProps as MuiRadioGroupProps,
 } from "@mui/material";
-import React from "react";
 
 import { OverrideMuiProps } from "../types";
 

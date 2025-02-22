@@ -26,7 +26,6 @@ export const DataBlockAddVariantIndicator: FC<
           position: "absolute",
           top: 0,
           right: 0,
-          height: 32,
           width: 32,
           cursor: "pointer",
           opacity: 0,

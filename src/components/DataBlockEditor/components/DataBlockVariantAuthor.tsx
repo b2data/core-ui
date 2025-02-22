@@ -13,14 +13,14 @@ export type DataBlockVariantAuthorProps = {
   blockId: string;
   variant: DataBlockVariant;
   editable?: boolean;
-  setShownIndex?: (index: number) => void;
+  setShownId?: (id?: string) => void;
 };
 
 export const DataBlockVariantAuthor: FC<DataBlockVariantAuthorProps> = ({
   blockId,
   variant: { id: variantId, createdByData },
   editable,
-  setShownIndex,
+  setShownId,
 }) => {
   const {
     state: { i18n, getFilesUrl },
@@ -35,7 +35,7 @@ export const DataBlockVariantAuthor: FC<DataBlockVariantAuthorProps> = ({
         variantId: variantId,
       },
     });
-    setShownIndex?.(0);
+    setShownId?.(undefined);
   };
 
   return (

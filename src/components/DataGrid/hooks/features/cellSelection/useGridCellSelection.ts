@@ -554,7 +554,7 @@ export const useGridCellSelection = (
   const checkIfCellIsSelected = React.useCallback<
     GridPipeProcessor<"isCellSelected">
   >(
-    (isSelected, { id, field }) => {
+    (_, { id, field }) => {
       return apiRef.current.unstable_isCellSelected(id, field);
     },
     [apiRef],

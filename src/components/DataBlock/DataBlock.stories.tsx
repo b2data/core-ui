@@ -108,6 +108,7 @@ const b = 20;
         });
       },
     },
+    onPaste: console.log,
   },
   render: (props) => {
     const [val, setVal] = useState(props.content);

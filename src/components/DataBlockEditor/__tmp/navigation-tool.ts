@@ -1,6 +1,6 @@
 import { KeyboardEvent } from "react";
 
-import { getCaretPosition, saveCaretPosition } from "./caret";
+import { getCaretPosition } from "./caret";
 
 export const navigationEvent = (
   e: KeyboardEvent<HTMLElement>,
