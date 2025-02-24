@@ -155,6 +155,7 @@ export const markdownTheme = EditorView.theme(
       fontSize: "12px",
       color: "#616161",
       cursor: "default",
+      lineHeight: 1,
 
       "&:hover": {
         backgroundColor: "rgba(0, 0, 0, 0.075)",

@@ -143,6 +143,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
   const handleChangeCurrentVariant = () => {
     const toVar = otherVariants.find((v) => v.id === shownId);
     if (toVar) {
+      setShownId(currentVariant?.id);
       dispatch({
         action: DataBlockEditorPublicAction.EditVariant,
         data: {
@@ -164,8 +165,8 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
         my: 1,
         ...(index === focused
           ? {
-              "& .data-block__actions": { opacity: 1 },
-              "& .data-block__variant-indicator": { opacity: 1 },
+              "&:focus-within .data-block__actions": { opacity: 1 },
+              "&:focus-within .data-block__variant-indicator": { opacity: 1 },
             }
           : {}),
         "&:hover .data-block__actions": { opacity: 1 },
@@ -224,7 +225,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
             variant={prefixVariant}
             component="div"
             sx={{
-              minWidth: Math.max((maxPrefixLength + 1) * 9, 16),
+              minWidth: Math.max(maxPrefixLength * 9, 16),
               mr: -6,
               ...(prefixVariant.includes("h")
                 ? {}

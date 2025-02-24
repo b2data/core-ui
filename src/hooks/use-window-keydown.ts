@@ -1,17 +1,31 @@
 import { useEffect } from "react";
 
+import { useDevice } from "./use-device";
+
+const { Symbols } = useDevice();
+
 export const useWindowKeydown = (
   keys: string[],
   callback: (e: KeyboardEvent) => void,
 ) => {
   const handleKeydown = (e: KeyboardEvent) => {
-    const prefix = `${e.metaKey ? "⌘" : ""}${e.ctrlKey ? "⌃" : ""}${e.shiftKey ? "→" : ""}`;
+    const prefix = `${e.metaKey ? Symbols.CMD : ""}${e.ctrlKey ? Symbols.CTRL : ""}${e.shiftKey ? Symbols.SHIFT : ""}`;
     const key = `${prefix ? `${prefix}+` : ""}${e.key}`;
+
+    if (
+      keys.includes(" ") &&
+      keys.length === 1 &&
+      (e.target as HTMLElement).tagName === "INPUT"
+    ) {
+      // ignore callback on inputs if only space is a key
+      return;
+    }
 
     if (keys.includes(key)) {
       callback(e);
     }
   };
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeydown);
 

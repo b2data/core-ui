@@ -29,6 +29,7 @@ export const DataBlockAddVariantIndicator: FC<
           width: 32,
           cursor: "pointer",
           opacity: 0,
+          zIndex: 1,
           ...sx,
         }}
         onClick={onAddVariant}

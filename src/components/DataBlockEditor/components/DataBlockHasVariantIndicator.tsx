@@ -1,8 +1,9 @@
 import { FC, useContext } from "react";
-import { Chip, SxProps } from "@mui/material";
+import { SxProps } from "@mui/material";
 
 import { ReadMoreIcon } from "../../../icons";
 import { IconButton } from "../../IconButton";
+import { Chip } from "../../Chip";
 import { Tooltip } from "../../Tooltip";
 import { Box } from "../../Box";
 import { DataBlockEditorContext } from "../store";
@@ -35,6 +36,7 @@ export const DataBlockHasVariantIndicator: FC<
           display: "flex",
           alignItems: "center",
           width: 32,
+          zIndex: 1,
           ...sx,
         }}
       >
