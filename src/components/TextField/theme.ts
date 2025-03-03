@@ -24,6 +24,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-root": {
           height: multiline ? undefined : 40,
+          minHeight: 40,
           alignItems: "flex-end",
           fontSize: 14,
           "&.Mui-disabled": {
@@ -31,8 +32,6 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
           },
         },
         "& .MuiInputBase-input": {
-          height: "unset",
-          padding: "10px 12px",
           "&.Mui-disabled": {
             WebkitTextFillColor: "unset",
           },
@@ -59,12 +58,21 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
       if (variant === "outlined") {
         return {
           ...commonStyles,
+          "& .MuiFormLabel-root": {
+            ...commonStyles["& .MuiFormLabel-root"],
+            transform: "translate(14px, 12px) scale(1)",
+            "&.Mui-focused, &.MuiFormLabel-filled": {
+              transform: "translate(14px, -2px) scale(0.75)",
+            },
+          },
           "& .MuiInputBase-input": {
             ...commonStyles["& .MuiInputBase-input"],
-            padding: "10px 12px",
+            padding: "7.5px 12px",
           },
           "& .MuiOutlinedInput-root": {
             backgroundColor: "#fafbfc",
+            marginTop: "5px",
+            minHeight: 35,
             padding: 0,
             "& .MuiOutlinedInput-notchedOutline": {
               borderColor: "#DFE1E6",
@@ -100,12 +108,11 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         ...commonStyles,
         "& .MuiFormLabel-root": {
           ...commonStyles["& .MuiFormLabel-root"],
-          marginTop: -8,
         },
         "& .MuiInputBase-root": {
           ...commonStyles["& .MuiInputBase-root"],
           margin: 0,
-          padding: 0,
+          padding: "12px 0 0",
           "&:before": {
             borderBottomColor: "#DFE1E6",
           },
@@ -123,7 +130,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
         },
         "& .MuiInputBase-input": {
           ...commonStyles["& .MuiInputBase-input"],
-          padding: "8px 0",
+          padding: "4px 0px",
         },
       };
     },

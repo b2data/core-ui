@@ -71,7 +71,7 @@ export const TimePicker = React.forwardRef(function TimePicker<
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
-    <Box {...wrapperProps}>
+    <Box width={1} {...wrapperProps}>
       <MuiTimePicker
         ref={ref}
         format={format || "HH:mm"}
@@ -87,6 +87,9 @@ export const TimePicker = React.forwardRef(function TimePicker<
             )}
           </>
         }
+        slotProps={{
+          openPickerButton: { size: "small" },
+        }}
         {...props}
         sx={{
           ...props.sx,

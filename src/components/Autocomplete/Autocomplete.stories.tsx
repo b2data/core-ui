@@ -37,7 +37,7 @@ export const Outlined: StoryObj<AutocompleteProps<AutocompleteOption>> = {
   args: {
     label: "Single",
     options,
-    inputProps: { variant: "outlined" },
+    inputProps: { variant: "outlined", InputProps: { startAdornment: "D" } },
   },
 };
 

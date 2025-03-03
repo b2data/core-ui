@@ -13,12 +13,12 @@ export const useConfirmationDialog = () => {
   const handleOpenDialog = ({
     title,
     content,
-    okText,
+    acceptBtn,
     cancelText,
   }: {
     title: string;
     content: string;
-    okText: string;
+    acceptBtn: Omit<ConfirmationDialogProps["acceptBtn"], "onClick">;
     cancelText: string;
   }) => {
     return new Promise((resolve) => {
@@ -34,7 +34,7 @@ export const useConfirmationDialog = () => {
       setDialogProps({
         title,
         content,
-        acceptBtn: { label: okText, onClick: onConfirm, color: "primary" },
+        acceptBtn: { color: "primary", ...acceptBtn, onClick: onConfirm },
         declineBtn: { label: cancelText, onClick: onCancel },
         onClose: onCancel,
         open: true,

@@ -4,18 +4,37 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
   styleOverrides: {
     root: {
       "& .MuiInput-input": {
-        padding: "5px 4px 5px 0 !important",
+        padding: "4px 4px 4px 0px !important",
       },
       "& .MuiOutlinedInput-input": {
-        padding: "5px 4px 5px 8px !important",
+        padding: "4px 4px 4px 8px !important",
       },
-      "& .MuiOutlinedInput-root .MuiAutocomplete-endAdornment": {
-        // bottom: 8,
+      "& .MuiInput-root": {
+        paddingTop: "10px !important",
+        paddingBottom: "2px !important",
+      },
+      "& .MuiOutlinedInput-root": {
+        paddingTop: "3.5px !important",
+        paddingLeft: "6px !important",
+        paddingBottom: "3.5px !important",
+        "& .MuiInputAdornment-root": {
+          paddingLeft: "0 !important",
+        },
+      },
+      "& .MuiInput-root .MuiAutocomplete-endAdornment": {
+        top: `calc(50% + 2.5px)`,
+      },
+      "&:not(.MuiAutocomplete-hasClearIcon) .MuiFormLabel-root:not(.MuiFormLabel-filled):not(.Mui-focused) + div > fieldset > legend > span":
+        {
+          display: "none",
+        },
+      "&.MuiAutocomplete-hasClearIcon .MuiInputLabel-outlined": {
+        transform: "translate(14px, -2px) scale(0.75)",
       },
       "& .MuiInputBase-root": {
-        minHeight: 40,
+        paddingTop: "8px",
         height: "auto !important",
-        alignItems: "center !important",
+        alignItems: "flex-end !important",
       },
     },
     clearIndicator: {
@@ -23,9 +42,6 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
       "& .MuiSvgIcon-root": {
         fontSize: "20px !important",
       },
-    },
-    endAdornment: {
-      // top: "calc(50% - 12px) !important",
     },
     listbox: {
       padding: "4px 0",
@@ -54,8 +70,9 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
       ...typography.body2,
     }),
     tag: {
-      margin: "5px 2px",
+      margin: "4px 2px",
       height: 20,
+      maxWidth: "100%",
       "&:first-of-type": {
         marginLeft: 0,
       },

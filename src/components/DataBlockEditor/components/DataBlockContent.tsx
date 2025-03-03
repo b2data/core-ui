@@ -160,7 +160,12 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
         if (newBlocks.length > 1) {
           event.preventDefault();
           const deleteConfirmed = await openConfirmDialog({
-            ...pasteNewBlocks,
+            title: pasteNewBlocks.title,
+            cancelText: pasteNewBlocks.cancelText,
+            acceptBtn: {
+              label: pasteNewBlocks.okText,
+              color: "primary",
+            },
             content: pasteNewBlocks.content.replace(
               "{count}",
               newBlocks.length.toString(),

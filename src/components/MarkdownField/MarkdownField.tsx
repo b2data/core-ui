@@ -108,7 +108,7 @@ export const MarkdownField = React.forwardRef(
             left: 0,
             top: 0,
             mt: -2,
-            transform: "translate(0, 17px) scale(1)",
+            transform: "translate(0, 16px) scale(1)",
             transition:
               "color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
             ...(value || placeholder || isFocus
@@ -141,6 +141,7 @@ export const MarkdownField = React.forwardRef(
           )}
         </Box>
         <DataBlock
+          content={value}
           editable={!disabled}
           readOnly={readOnly}
           onBlur={(v) => {

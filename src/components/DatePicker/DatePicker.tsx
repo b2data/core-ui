@@ -74,7 +74,7 @@ export const DatePicker = React.forwardRef(function DatePicker<
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
-    <Box {...wrapperProps}>
+    <Box width={1} {...wrapperProps}>
       <MuiDatePicker
         ref={ref}
         format={format || "DD.MM.YYYY"}
@@ -88,6 +88,9 @@ export const DatePicker = React.forwardRef(function DatePicker<
             )}
           </>
         }
+        slotProps={{
+          openPickerButton: { size: "small" },
+        }}
         {...props}
       />
       {helperText && (

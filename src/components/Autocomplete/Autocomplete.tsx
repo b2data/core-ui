@@ -1,4 +1,5 @@
 import {
+  InputAdornment,
   Autocomplete as MuiAutocomplete,
   AutocompleteProps as MuiAutocompleteProps,
 } from "@mui/material";
@@ -122,19 +123,27 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
             ...inputProps?.InputProps,
             ...params.InputProps,
             startAdornment: (
-              <React.Fragment>
-                {inputProps?.InputProps?.startAdornment}
+              <>
+                {inputProps?.InputProps?.startAdornment ? (
+                  <InputAdornment position="start">
+                    {inputProps?.InputProps?.startAdornment}
+                  </InputAdornment>
+                ) : undefined}
                 {params.InputProps.startAdornment}
-              </React.Fragment>
+              </>
             ),
             endAdornment: (
-              <React.Fragment>
-                {loading ? (
-                  <CircularProgress color="inherit" size={18} />
-                ) : null}
-                {inputProps?.InputProps?.endAdornment}
+              <>
+                {loading || inputProps?.InputProps?.endAdornment ? (
+                  <InputAdornment position="end">
+                    {loading ? (
+                      <CircularProgress color="inherit" size={18} />
+                    ) : null}
+                    {inputProps?.InputProps?.endAdornment}
+                  </InputAdornment>
+                ) : undefined}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </>
             ),
           }}
         />

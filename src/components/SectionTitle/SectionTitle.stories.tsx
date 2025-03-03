@@ -52,6 +52,17 @@ export const WithMenu: StoryObj<SectionTitleProps> = {
     ],
   },
 };
+export const WithMenuAndCustomIcon: StoryObj<SectionTitleProps> = {
+  args: {
+    title: "Header",
+    actions: [
+      {
+        icon: <SaveIcon />,
+        menuActions: [{ children: "Save", startAdornment: <SaveIcon /> }],
+      },
+    ],
+  },
+};
 
 export const WithBorder: StoryObj<SectionTitleProps> = {
   args: {

@@ -63,7 +63,7 @@ export const SectionTitleAction = ({
             onClick={(e) => setActionsAnchor(e.currentTarget)}
             {...props}
           >
-            <MoreVertIcon />
+            {icon || <MoreVertIcon />}
           </IconButton>
         </Tooltip>
         <Menu
