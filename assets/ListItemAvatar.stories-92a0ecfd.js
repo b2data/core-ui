@@ -1,0 +1,6 @@
+import{j as t}from"./jsx-runtime-4ca860c5.js";import{A as p}from"./1-1a998f11.js";import{A as i}from"./Avatar-57b91271.js";import{L as m}from"./ListItemAvatar-98767a5f.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./theme-a9c8f6a3.js";import"./styled-9b74321f.js";import"./index-05c64dab.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-eaccc129.js";import"./createTheme-316778f4.js";import"./defaultTheme-fea1ec9a.js";import"./useThemeProps-8ddb2dd0.js";import"./createSvgIcon-a3973d83.js";import"./generateUtilityClasses-5ea778c4.js";import"./ListContext-58194ff9.js";const y={title:"Components/List/List Item Avatar",component:m,tags:["autodocs"]},r={render:e=>t.jsx(m,{...e,children:t.jsx(i,{size:"small",alt:"Remy Sharp",src:p})})};var a,o,s;r.parameters={...r.parameters,docs:{...(a=r.parameters)==null?void 0:a.docs,source:{originalSource:`{
+  render: props => <ListItemAvatar {...props}>
+      <Avatar size="small" alt="Remy Sharp" src={Avatar1} />
+    </ListItemAvatar>
+}`,...(s=(o=r.parameters)==null?void 0:o.docs)==null?void 0:s.source}}};const z=["Base"];export{r as Base,z as __namedExportsOrder,y as default};
+//# sourceMappingURL=ListItemAvatar.stories-92a0ecfd.js.map

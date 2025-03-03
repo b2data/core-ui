@@ -1,0 +1,2 @@
+import{r,i as t}from"./ListItem-3d9218c0.js";import{j as a}from"./jsx-runtime-4ca860c5.js";var e={},u=t;Object.defineProperty(e,"__esModule",{value:!0});var i=e.default=void 0,o=u(r()),v=a,d=(0,o.default)((0,v.jsx)("path",{d:"M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z"}),"SaveOutlined");i=e.default=d;export{i as d};
+//# sourceMappingURL=SaveOutlined-25e39641.js.map

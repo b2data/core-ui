@@ -1,0 +1,9 @@
+import{j as r}from"./jsx-runtime-4ca860c5.js";import{M as t}from"./MenuItem-08c72fa1.js";import{M as p}from"./MenuList-63ea7f4a.js";import"./index-61bf1805.js";import"./_commonjsHelpers-de833af9.js";import"./MenuItem-5ac73feb.js";import"./createTheme-316778f4.js";import"./emotion-use-insertion-effect-with-fallbacks.browser.esm-eaccc129.js";import"./index-05c64dab.js";import"./styled-9b74321f.js";import"./defaultTheme-fea1ec9a.js";import"./useThemeProps-8ddb2dd0.js";import"./ListContext-58194ff9.js";import"./generateUtilityClasses-5ea778c4.js";import"./ButtonBase-12de1a8d.js";import"./emotion-react.browser.esm-a2267d4c.js";import"./assertThisInitialized-081f9914.js";import"./inheritsLoose-5494d9cc.js";import"./TransitionGroupContext-adcba781.js";import"./useForkRef-80a5c2b4.js";import"./useIsFocusVisible-c78074a7.js";import"./useEventCallback-1165b6b6.js";import"./useEnhancedEffect-e1879ff8.js";import"./dividerClasses-6ea87943.js";import"./listItemTextClasses-c4a05c48.js";import"./Box-58f77dc6.js";import"./extendSxProp-4079792f.js";import"./MenuList-1c32f46a.js";import"./react-is.production.min-a192e302.js";import"./getScrollbarSize-ac846fe6.js";import"./ownerDocument-613eb639.js";const D={title:"Components/Menu/Menu List",component:p,tags:["autodocs"]},o={args:{sx:{border:"1px solid"},children:[r.jsx(t,{children:"Profile"}),r.jsx(t,{children:"My account"}),r.jsx(t,{children:"Logout"})]}};var m,e,i;o.parameters={...o.parameters,docs:{...(m=o.parameters)==null?void 0:m.docs,source:{originalSource:`{
+  args: {
+    sx: {
+      border: "1px solid"
+    },
+    children: [<MenuItem>Profile</MenuItem>, <MenuItem>My account</MenuItem>, <MenuItem>Logout</MenuItem>]
+  }
+}`,...(i=(e=o.parameters)==null?void 0:e.docs)==null?void 0:i.source}}};const F=["Base"];export{o as Base,F as __namedExportsOrder,D as default};
+//# sourceMappingURL=MenuList.stories-ec969545.js.map
