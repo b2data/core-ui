@@ -35,10 +35,7 @@ export const Base: StoryObj<BreadcrumbsProps> = {
 };
 
 export const Separator: StoryObj<BreadcrumbsProps> = {
-  args: {
-    items,
-    separator: "›",
-  },
+  args: { items, separator: "›" },
   render: (props) => (
     <BrowserRouter>
       <Breadcrumbs {...props} />
@@ -47,10 +44,7 @@ export const Separator: StoryObj<BreadcrumbsProps> = {
 };
 
 export const Collapsed: StoryObj<BreadcrumbsProps> = {
-  args: {
-    items,
-    maxItems: 2,
-  },
+  args: { items, maxItems: 2 },
   render: (props) => (
     <BrowserRouter>
       <Breadcrumbs {...props} />
@@ -61,13 +55,15 @@ export const Collapsed: StoryObj<BreadcrumbsProps> = {
 export const WithChildren: StoryObj<BreadcrumbsProps> = {
   args: {
     children: [
-      <Link href="/" underline="none" color="inherit">
+      <Link href="/" underline="none" color="inherit" key={1}>
         Root
       </Link>,
-      <Link href="/" underline="none" color="inherit">
+      <Link href="/" underline="none" color="inherit" key={2}>
         Level 1
       </Link>,
-      <Typography color="text.disabled">Breadcrumbs</Typography>,
+      <Typography color="text.disabled" key={3}>
+        Breadcrumbs
+      </Typography>,
     ],
   },
 };

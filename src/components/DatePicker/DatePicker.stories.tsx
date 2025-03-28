@@ -30,7 +30,7 @@ export const Base: StoryObj<DatePickerProps> = {
 export const WithError: StoryObj<DatePickerProps> = {
   args: {
     error: true,
-    helperText: 'Invalid date'
+    helperText: "Invalid date",
   },
   render: (props) => (
     <DatePickerProvider dateAdapter={AdapterDayjs}>

@@ -197,6 +197,7 @@ const DataGridVirtualScroller = React.forwardRef<
   HTMLDivElement,
   DataGridVirtualScrollerProps
 >(function DataGridVirtualScroller(props, ref) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { className, disableVirtualization, ...other } = props;
   const apiRef = useGridPrivateApiContext();
   const rootProps = useGridRootProps();

@@ -22,8 +22,8 @@ const StepContentOverride: ComponentThemeOverride["MuiStepContent"] = {
 
 const StepConnectorOverride: ComponentThemeOverride["MuiStepConnector"] = {
   styleOverrides: {
-    root: ({ownerState})=> ({
-      marginLeft: ownerState.orientation=== "vertical"? "10px":undefined,
+    root: ({ ownerState }) => ({
+      marginLeft: ownerState.orientation === "vertical" ? "10px" : undefined,
     }),
   },
   defaultProps: {},

@@ -14,14 +14,14 @@ export const H1Icon: React.FC<SvgIconProps> = (props) => {
       >
         <path
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
           d="M6 7L6 12M6 17L6 12M6 12L12 12M12 7V12M12 17L12 12"
         />
         <path
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
           d="M19 17V10.2135C19 10.1287 18.9011 10.0824 18.836 10.1367L16 12.5"
         />
       </svg>

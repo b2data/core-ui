@@ -25,8 +25,8 @@ const columns: GridColDef[] = [
     type: "actions",
     width: 24,
     getActions: () => [
-      <GridActionsCellItem showInMenu label="Edit" />,
-      <GridActionsCellItem showInMenu label="Delete" />,
+      <GridActionsCellItem showInMenu label="Edit" key="edit" />,
+      <GridActionsCellItem showInMenu label="Delete" key="delete" />,
     ],
   },
 ];

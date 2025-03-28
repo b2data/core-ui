@@ -13,9 +13,9 @@ const meta: Meta<ListProps> = {
 export default meta;
 
 const content = [
-  <ListItem asButton text="List item 1" />,
-  <ListItem asButton text="List item 2" />,
-  <ListItem asButton text="List item 3" />,
+  <ListItem asButton text="List item 1" key={1} />,
+  <ListItem asButton text="List item 2" key={2} />,
+  <ListItem asButton text="List item 3" key={3} />,
 ];
 
 export const Base: StoryObj<ListProps> = {
@@ -27,7 +27,9 @@ export const StickySubheader: StoryObj<ListProps> = {
     <div style={{ height: 200, overflowY: "auto" }}>
       <List {...props}>
         {[0, 1, 2, 3, 4, 5].map((ind) => (
-          <List subheader={`Sticky header ${ind}`}>{content}</List>
+          <List key={ind} subheader={`Sticky header ${ind}`}>
+            {content}
+          </List>
         ))}
       </List>
     </div>

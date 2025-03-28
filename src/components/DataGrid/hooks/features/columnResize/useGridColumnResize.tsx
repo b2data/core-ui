@@ -342,7 +342,6 @@ export const useGridColumnResize = (
   };
 
   const finishResize = (nativeEvent: MouseEvent) => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopListening();
 
     if (colDefRef.current) {

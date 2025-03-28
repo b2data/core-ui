@@ -23,7 +23,12 @@ export const Base: StoryObj<StepperProps> = {
     return (
       <Stepper activeStep={step} nonLinear>
         {steps.map((label, index) => (
-          <Step key={label} asButton onClick={() => setStep(index)} label={label} />
+          <Step
+            key={label}
+            asButton
+            onClick={() => setStep(index)}
+            label={label}
+          />
         ))}
       </Stepper>
     );
@@ -39,7 +44,9 @@ export const Vertical: StoryObj<StepperProps> = {
     return (
       <Stepper activeStep={step} nonLinear orientation="vertical">
         {steps.map((label, index) => (
-          <Step key={label} onClick={() => setStep(index)} label={label}>{label}</Step>
+          <Step key={label} onClick={() => setStep(index)} label={label}>
+            {label}
+          </Step>
         ))}
       </Stepper>
     );

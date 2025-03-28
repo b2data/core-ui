@@ -4,11 +4,7 @@ import { DataBlockBase } from "../models";
 
 export const useBlockDrop = (
   index: number,
-  onMove?: (
-    item: DataBlockBase,
-    oldIndex: number,
-    targetIndex: number,
-  ) => void,
+  onMove?: (item: DataBlockBase, oldIndex: number, targetIndex: number) => void,
 ) => {
   const [{ isOverBefore, canDropBefore }, dropBeforeRef] = useDrop<
     DataBlockBase & { index: number },

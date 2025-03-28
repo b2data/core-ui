@@ -69,6 +69,8 @@ export const Dialog = React.forwardRef(
         {actions && <DialogActions items={actions} />}
       </MuiDialog>
     ) : (
-      <MuiDialog ref={ref} {...props} children={children} />
+      <MuiDialog ref={ref} {...props}>
+        {children}
+      </MuiDialog>
     ),
 );

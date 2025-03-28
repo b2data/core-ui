@@ -14,8 +14,8 @@ export const HeadingIcon: React.FC<SvgIconProps> = (props) => {
       >
         <path
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
           d="M9 7L9 12M9 17V12M9 12L15 12M15 7V12M15 17L15 12"
         />
       </svg>

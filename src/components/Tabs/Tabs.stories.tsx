@@ -17,9 +17,9 @@ const meta: Meta<TabsProps> = {
 export default meta;
 
 const content = [
-  <Tab label="Item One" />,
-  <Tab label="Item Two" />,
-  <Tab label="Item Three" disabled />,
+  <Tab label="Item One" key={1} />,
+  <Tab label="Item Two" key={2} />,
+  <Tab label="Item Three" key={3} disabled />,
 ];
 
 export const Base: StoryObj<TabsProps> = {
@@ -57,8 +57,9 @@ export const Variants: StoryObj<TabsProps> = {
           onChange={handleChange}
           variant="scrollable"
           {...props}
-          children={content.concat(content).concat(content).concat(content)}
-        />
+        >
+          {content.concat(content).concat(content).concat(content)}
+        </Tabs>
       </div>
     );
   },

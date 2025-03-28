@@ -16,9 +16,9 @@ const meta: Meta<ButtonGroupProps> = {
 export default meta;
 
 const buttons = [
-  <Button>One</Button>,
-  <Button>Two</Button>,
-  <Button>Three</Button>,
+  <Button key={1}>One</Button>,
+  <Button key={2}>Two</Button>,
+  <Button key={3}>Three</Button>,
 ];
 
 export const Base: StoryObj<ButtonGroupProps> = {
@@ -42,9 +42,7 @@ export const Variants: StoryObj<ButtonGroupProps> = {
 };
 
 export const Colors: StoryObj<ButtonGroupProps> = {
-  args: {
-    variant: "contained",
-  },
+  args: { variant: "contained" },
   render: (props) => (
     <Preview style={{ flexDirection: "column", alignItems: "start" }}>
       <ButtonGroup {...props} color="primary">
@@ -105,11 +103,7 @@ export const Orientation: StoryObj<ButtonGroupProps> = {
 };
 
 export const FullWidth: StoryObj<ButtonGroupProps> = {
-  args: {
-    fullWidth: true,
-    children: buttons,
-    size: "large",
-  },
+  args: { fullWidth: true, children: buttons, size: "large" },
 };
 
 export const SplitButton: StoryObj<ButtonGroupProps> = {

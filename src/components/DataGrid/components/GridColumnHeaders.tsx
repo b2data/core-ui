@@ -109,6 +109,7 @@ const GridColumnHeaders = React.forwardRef<
   DataGridColumnHeadersProps
 >(function GridColumnHeaders(props, ref) {
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     style,
     className,
     innerRef,
@@ -217,9 +218,7 @@ const GridColumnHeaders = React.forwardRef<
 
   const innerProps = getInnerProps();
 
-  const pinnedColumnHeadersProps = {
-    role: innerProps.role,
-  };
+  const pinnedColumnHeadersProps = { role: innerProps.role };
 
   return (
     <GridBaseColumnHeaders

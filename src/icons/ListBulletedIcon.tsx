@@ -18,8 +18,8 @@ export const ListBulletedIcon: React.FC<SvgIconProps> = (props) => {
           y1="7"
           y2="7"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
         />
         <line
           x1="9"
@@ -27,8 +27,8 @@ export const ListBulletedIcon: React.FC<SvgIconProps> = (props) => {
           y1="12"
           y2="12"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
         />
         <line
           x1="9"
@@ -36,25 +36,25 @@ export const ListBulletedIcon: React.FC<SvgIconProps> = (props) => {
           y1="17"
           y2="17"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
         />
         <path
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
           d="M5.00001 17H4.99002"
         />
         <path
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
           d="M5.00001 12H4.99002"
         />
         <path
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeWidth="2"
           d="M5.00001 7H4.99002"
         />
       </svg>

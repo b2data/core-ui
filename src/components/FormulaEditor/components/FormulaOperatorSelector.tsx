@@ -17,7 +17,9 @@ export type FormulaOperatorSelectorProps = {
   sx?: SxProps;
 };
 
-export const FormulaOperatorSelector: React.FC<FormulaOperatorSelectorProps> = ({
+export const FormulaOperatorSelector: React.FC<
+  FormulaOperatorSelectorProps
+> = ({
   operators = Object.values(FormulaOperator),
   isEditable,
   value = FormulaOperator.Equal,

@@ -16,9 +16,9 @@ export const Base: StoryObj<MenuListProps> = {
   args: {
     sx: { border: "1px solid" },
     children: [
-      <MenuItem>Profile</MenuItem>,
-      <MenuItem>My account</MenuItem>,
-      <MenuItem>Logout</MenuItem>,
+      <MenuItem key={1}>Profile</MenuItem>,
+      <MenuItem key={2}>My account</MenuItem>,
+      <MenuItem key={3}>Logout</MenuItem>,
     ],
   },
 };

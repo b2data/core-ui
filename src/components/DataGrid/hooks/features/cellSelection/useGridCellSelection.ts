@@ -234,7 +234,6 @@ export const useGridCellSelection = (
       gridClasses["root--disableUserSelection"],
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopAutoScroll();
   });
 

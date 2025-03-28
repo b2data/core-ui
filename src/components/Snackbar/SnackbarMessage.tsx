@@ -52,7 +52,6 @@ export const SnackbarMessage = React.forwardRef(
           variant={displayVariant}
           severity={variant === "default" ? undefined : variant}
           title={title}
-          children={message}
           closeText={closeText}
           actions={
             actions
@@ -61,7 +60,9 @@ export const SnackbarMessage = React.forwardRef(
           }
           onClose={actions ? undefined : handleDismiss}
           sx={{ width: 400 }}
-        />
+        >
+          {message}
+        </Alert>
       </SnackbarContent>
     );
   },

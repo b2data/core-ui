@@ -45,7 +45,7 @@ declare module "@mui/material" {
     tablet: true;
     desktop: true;
   }
-  
+
   interface Mixins {
     scrollbars?: CSSProperties;
   }

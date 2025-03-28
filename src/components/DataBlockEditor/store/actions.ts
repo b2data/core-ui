@@ -33,11 +33,7 @@ export type SetDataBlockEditorAction<
   Data extends Record<string, unknown>,
 > = { action: T; data: Data };
 
-type Clear = SetDataBlockEditorAction<
-  DataBlockEditorPrivateAction.Clear,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  {}
->;
+type Clear = SetDataBlockEditorAction<DataBlockEditorPrivateAction.Clear, {}>;
 
 type SetEditable = SetDataBlockEditorAction<
   DataBlockEditorPrivateAction.SetEditable,

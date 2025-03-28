@@ -36,7 +36,7 @@ function GridRowReorderCell(params: GridRenderCellParams) {
   const sortModel = useGridSelector(apiRef, gridSortModelSelector);
   const treeDepth = useGridSelector(apiRef, gridRowMaximumTreeDepthSelector);
   const editRowsState = useGridSelector(apiRef, gridEditRowsStateSelector);
-  // eslint-disable-next-line no-underscore-dangle
+
   const cellValue = params.row.__reorder__ || params.id;
 
   const isDraggable = React.useMemo(
