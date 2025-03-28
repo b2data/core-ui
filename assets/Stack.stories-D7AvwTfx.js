@@ -1,0 +1,3 @@
+import{j as a}from"./jsx-runtime-DZlKWc7q.js";import{S as s}from"./Stack-BMBLIk7m.js";import"./index-3dRrDZpt.js";import"./styled-Mw1EHJJT.js";import"./identifier-DOope7UP.js";import"./generateUtilityClass-CXPxvQOg.js";import"./defaultTheme-DgpnsjHP.js";import"./useThemeProps-CaCgmJK7.js";import"./DefaultPropsProvider-BUlghEOV.js";import"./useTheme-C1aVjhx_.js";const k={title:"Components/Stack",component:s,tags:["autodocs"]},r={render:p=>a.jsx(s,{...p})};var o,t,e;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  render: props => <Stack {...props} />
+}`,...(e=(t=r.parameters)==null?void 0:t.docs)==null?void 0:e.source}}};const l=["Base"];export{r as Base,l as __namedExportsOrder,k as default};

@@ -1,0 +1,1 @@
+import{g as e}from"./generateUtilityClasses-CkJG6r2x.js";import{g as s}from"./generateUtilityClass-CXPxvQOg.js";function a(t){return s("MuiListItemText",t)}const l=e("MuiListItemText",["root","multiline","dense","inset","primary","secondary"]);export{a as g,l};

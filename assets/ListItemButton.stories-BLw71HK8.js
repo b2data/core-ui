@@ -1,0 +1,5 @@
+import{L as e}from"./ListItemButton-DRQabMkQ.js";import"./jsx-runtime-DZlKWc7q.js";import"./index-3dRrDZpt.js";import"./identifier-DOope7UP.js";import"./generateUtilityClass-CXPxvQOg.js";import"./styled-Mw1EHJJT.js";import"./defaultTheme-DgpnsjHP.js";import"./ListContext-CJ4YrkIs.js";import"./listItemButtonClasses-CtYtAQd6.js";import"./generateUtilityClasses-CkJG6r2x.js";import"./DefaultPropsProvider-BUlghEOV.js";import"./useEnhancedEffect-BJLNeg-6.js";import"./useForkRef-Dg5HCZjH.js";import"./ButtonBase-DG2qOmNJ.js";import"./useTimeout-Caar1w0_.js";import"./TransitionGroupContext-CTqiJmAL.js";import"./useIsFocusVisible-kKmNRUXV.js";import"./useEventCallback-rxG9GCI1.js";const C={title:"Components/List/List Item Button",component:e,tags:["autodocs"]},t={args:{children:"Text"}};var o,r,m;t.parameters={...t.parameters,docs:{...(o=t.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    children: "Text"
+  }
+}`,...(m=(r=t.parameters)==null?void 0:r.docs)==null?void 0:m.source}}};const E=["Base"];export{t as Base,E as __namedExportsOrder,C as default};

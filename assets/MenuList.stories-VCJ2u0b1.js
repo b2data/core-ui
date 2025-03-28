@@ -1,0 +1,8 @@
+import{j as r}from"./jsx-runtime-DZlKWc7q.js";import{M as t}from"./MenuItem-Dz47LlzX.js";import{M as p}from"./MenuList-rVj7AQL-.js";import"./index-3dRrDZpt.js";import"./MenuItem-B9hap1ET.js";import"./identifier-DOope7UP.js";import"./generateUtilityClass-CXPxvQOg.js";import"./styled-Mw1EHJJT.js";import"./defaultTheme-DgpnsjHP.js";import"./ListContext-CJ4YrkIs.js";import"./generateUtilityClasses-CkJG6r2x.js";import"./DefaultPropsProvider-BUlghEOV.js";import"./useEnhancedEffect-BJLNeg-6.js";import"./useForkRef-Dg5HCZjH.js";import"./ButtonBase-DG2qOmNJ.js";import"./useTimeout-Caar1w0_.js";import"./TransitionGroupContext-CTqiJmAL.js";import"./useIsFocusVisible-kKmNRUXV.js";import"./useEventCallback-rxG9GCI1.js";import"./listItemTextClasses-CQaHVKTz.js";import"./dividerClasses-BVnYb8lf.js";import"./Box-B4yDLkDm.js";import"./useTheme-C1aVjhx_.js";import"./MenuList-D-LNiX5l.js";import"./getScrollbarSize-Bqq2hMjQ.js";import"./ownerDocument-DW-IO8s5.js";const q={title:"Components/Menu/Menu List",component:p,tags:["autodocs"]},o={args:{sx:{border:"1px solid"},children:[r.jsx(t,{children:"Profile"},1),r.jsx(t,{children:"My account"},2),r.jsx(t,{children:"Logout"},3)]}};var e,m,i;o.parameters={...o.parameters,docs:{...(e=o.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  args: {
+    sx: {
+      border: "1px solid"
+    },
+    children: [<MenuItem key={1}>Profile</MenuItem>, <MenuItem key={2}>My account</MenuItem>, <MenuItem key={3}>Logout</MenuItem>]
+  }
+}`,...(i=(m=o.parameters)==null?void 0:m.docs)==null?void 0:i.source}}};const v=["Base"];export{o as Base,v as __namedExportsOrder,q as default};
