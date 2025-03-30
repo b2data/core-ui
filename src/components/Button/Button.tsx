@@ -3,6 +3,7 @@ import {
   LoadingButtonProps as MuiLoadingButtonProps,
 } from "@mui/lab";
 import React from "react";
+import { LinkProps } from "react-router-dom";
 
 import { OverrideMuiProps } from "../types";
 
@@ -53,6 +54,10 @@ export interface ButtonProps
    * @default center
    */
   loadingPosition?: MuiLoadingButtonProps["loadingPosition"];
+  /**
+   * LinkComponentProps
+   */
+  to?: LinkProps["to"];
 }
 
 export const Button = React.forwardRef(

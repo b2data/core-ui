@@ -1,9 +1,8 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 
 import { SaveIcon } from "src/icons";
 
 import { Typography } from "../Typography";
-import { Link } from "../Link";
 
 import { Breadcrumb, Breadcrumbs, BreadcrumbsProps } from "./Breadcrumbs";
 
@@ -55,10 +54,10 @@ export const Collapsed: StoryObj<BreadcrumbsProps> = {
 export const WithChildren: StoryObj<BreadcrumbsProps> = {
   args: {
     children: [
-      <Link href="/" underline="none" color="inherit" key={1}>
+      <Link to="/" color="inherit" key={1}>
         Root
       </Link>,
-      <Link href="/" underline="none" color="inherit" key={2}>
+      <Link to="/" color="inherit" key={2}>
         Level 1
       </Link>,
       <Typography color="text.disabled" key={3}>
