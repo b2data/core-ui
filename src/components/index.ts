@@ -35,6 +35,7 @@ export * from "./FormulaEditor";
 export * from "./IconButton";
 export * from "./InputBase";
 export * from "./LinearProgress";
+export * from "./Link";
 export * from "./List";
 export * from "./ListItem";
 export * from "./ListItemAction";
