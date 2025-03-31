@@ -72,6 +72,7 @@ const textFieldTheme: ComponentThemeOverride["MuiTextField"] = {
           "& .MuiOutlinedInput-root": {
             backgroundColor: "#fafbfc",
             marginTop: "5px",
+            height: 35,
             minHeight: 35,
             padding: 0,
             "& .MuiOutlinedInput-notchedOutline": {
