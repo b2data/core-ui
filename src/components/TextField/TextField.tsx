@@ -16,8 +16,6 @@ export interface TextFieldProps
     | "fullWidth"
     | "helperText"
     | "id"
-    | "inputProps"
-    | "InputProps"
     | "inputRef"
     | "label"
     | "margin"
@@ -32,6 +30,7 @@ export interface TextFieldProps
     | "sx"
     | "type"
     | "value"
+    | "slotProps"
   > {
   /**
    * The variant to use.
@@ -71,16 +70,18 @@ export const TextField = React.forwardRef(
     <MuiTextField
       ref={ref}
       {...props}
-      InputProps={{
-        readOnly,
-        title: props?.inputProps?.value,
-        startAdornment: startAdornment ? (
-          <InputAdornment position="start">{startAdornment}</InputAdornment>
-        ) : undefined,
-        endAdornment: endAdornment ? (
-          <InputAdornment position="end">{endAdornment}</InputAdornment>
-        ) : undefined,
-        ...props.InputProps,
+      slotProps={{
+        input: {
+          readOnly,
+          startAdornment: startAdornment ? (
+            <InputAdornment position="start">{startAdornment}</InputAdornment>
+          ) : undefined,
+          endAdornment: endAdornment ? (
+            <InputAdornment position="end">{endAdornment}</InputAdornment>
+          ) : undefined,
+          ...props.slotProps,
+        },
+        ...props.slotProps,
       }}
     />
   ),

@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -24,9 +28,46 @@
     // "sourceMap": true,
     "preserveSymlinks": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@mui/x-data-grid": [
+        "src/mui-x/grid"
+      ],
+      "@mui/x-data-grid/*": [
+        "src/mui-x/grid/*"
+      ],
+      "@mui/x-data-grid-pro": [
+        "src/mui-x/pro"
+      ],
+      "@mui/x-data-grid-pro/*": [
+        "src/mui-x/pro/*"
+      ],
+      "@mui/x-data-grid-premium": [
+        "src/mui-x/premium"
+      ],
+      "@mui/x-data-grid-premium/*": [
+        "src/mui-x/premium/*"
+      ],
+      "@mui/x-internals": [
+        "./src/mui-x/internals"
+      ],
+      "@mui/x-internals/*": [
+        "./src/mui-x/internals/*"
+      ],
+      "@mui/x-date-pickers": [
+        "src/mui-x/pickers"
+      ],
+      "@mui/x-date-pickers/*": [
+        "src/mui-x/pickers/*"
+      ],
     }
   },
-  "include": ["src", ".storybook"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    ".storybook",
+  ],
+  "exclude": [
+    "node_modules",
+  ]
 }

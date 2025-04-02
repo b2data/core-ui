@@ -19,11 +19,7 @@ import {
   DataBlockEditorActions,
   DataBlockEditorPrivateAction,
 } from "./actions";
-import {
-  DataBlockEditorStateReducer,
-  dataBlockEditorStateReducer,
-  initialState,
-} from "./reducer";
+import { dataBlockEditorStateReducer, initialState } from "./reducer";
 
 const DataBlockEditorContext = createContext<{
   state: DataBlockEditorState;
@@ -51,10 +47,11 @@ const DataBlockEditorProvider = forwardRef<
     onChange,
   } = props;
 
-  const [state, dispatch] = useReducer<DataBlockEditorStateReducer>(
-    dataBlockEditorStateReducer,
-    { ...initialState, onChange, getFilesUrl },
-  );
+  const [state, dispatch] = useReducer(dataBlockEditorStateReducer, {
+    ...initialState,
+    onChange,
+    getFilesUrl,
+  });
 
   useEffect(() => {
     if (i18n) {

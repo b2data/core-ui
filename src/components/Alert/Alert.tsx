@@ -53,7 +53,7 @@ export interface AlertProps
   /**
    * Draw actions that shows in the button-right of the alert
    */
-  actions?: ReactElement;
+  actions?: ReactElement<any>;
 }
 
 export const Alert = React.forwardRef(
@@ -77,7 +77,7 @@ export const Alert = React.forwardRef(
             flexDirection: "row",
             justifyContent: "end",
             gap: "8px",
-            marginTop: 8,
+            marginTop: "8px",
           },
         })}
     </MuiAlert>

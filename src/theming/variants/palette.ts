@@ -5,12 +5,12 @@ export default {
     dark: "#0065FF",
     contrastText: "#fff",
   },
-  default: {
-    light: "#F2F2F2",
-    main: "#EBECF0",
-    dark: "#d5d5d5",
-    contrastText: "#000",
-  },
+  // default: {
+  //   light: "#F2F2F2",
+  //   // main: "#EBECF0",
+  //   dark: "#d5d5d5",
+  //   contrastText: "#000",
+  // },
   secondary: {
     light: "#8777D9",
     main: "#6554C0",

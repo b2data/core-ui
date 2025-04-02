@@ -243,17 +243,14 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           ...autocompleteProps?.inputProps,
           autoFocus,
           onChange: debounce(handleSearch, 500),
-          InputProps: {
-            ...autocompleteProps?.inputProps?.InputProps,
-            endAdornment: (
-              <>
-                {isLoading ? (
-                  <CircularProgress color="inherit" size={12} sx={{ mr: 1 }} />
-                ) : undefined}
-                {autocompleteProps?.inputProps?.InputProps?.endAdornment}
-              </>
-            ),
-          },
+          endAdornment: (
+            <>
+              {isLoading ? (
+                <CircularProgress color="inherit" size={12} sx={{ mr: 1 }} />
+              ) : undefined}
+              {autocompleteProps?.inputProps?.endAdornment}
+            </>
+          ),
         }}
         renderTags={(value, getTagProps) =>
           value.map((v, index) => (

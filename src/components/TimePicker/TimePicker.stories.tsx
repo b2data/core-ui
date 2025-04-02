@@ -29,7 +29,11 @@ export const DefaultValue: StoryObj<TimePickerProps> = {
   render: (props) => (
     <DatePickerProvider dateAdapter={AdapterDayjs}>
       <TimePicker defaultValue={dayjs("2022-01-01T10:20:33")} {...props} />
-      <TimePicker defaultValue={null} {...props} />
+      <TimePicker
+        defaultValue={null}
+        {...props}
+        slotProps={{ textField: { variant: "outlined" } }}
+      />
     </DatePickerProvider>
   ),
 };

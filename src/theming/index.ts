@@ -3,9 +3,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { default as ThemeProvider } from "@mui/material/styles/ThemeProvider";
-import { default as withStyles } from "@mui/material/styles/withStyles";
-import { default as useTheme } from "@mui/material/styles/useTheme";
+import { ThemeProvider, useTheme as MuiUseTheme } from "@mui/system";
 
 import { darkTheme, lightTheme } from "./variants";
 
@@ -13,6 +11,8 @@ export * from "./utils";
 
 export type Direction = "ltr" | "rtl";
 
-export { ThemeProvider, withStyles, useTheme, lightTheme, darkTheme };
+export { ThemeProvider, lightTheme, darkTheme };
 
 export type Theme = typeof lightTheme;
+
+export const useTheme = MuiUseTheme<Theme>;

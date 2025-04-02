@@ -41,7 +41,7 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
 
   const readOnly = variant.createdBy !== currentUser.id;
 
-  const view = useRef<EditorView>();
+  const view = useRef<EditorView | undefined>(undefined);
   const { onOpen: openConfirmDialog, portal } = useConfirmationDialog();
 
   const content = variant.data.text || "";

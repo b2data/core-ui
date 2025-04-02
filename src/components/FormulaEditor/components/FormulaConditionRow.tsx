@@ -161,7 +161,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
           unit
             ? {
                 inputProps: {
-                  InputProps: { endAdornment: `[${unit}]` },
+                  endAdornment: `[${unit}]`,
                 },
               }
             : undefined

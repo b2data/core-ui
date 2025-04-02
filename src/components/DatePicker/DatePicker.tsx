@@ -7,18 +7,23 @@ import {
 } from "@mui/x-date-pickers";
 import { BoxProps, TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import React from "react";
-import { Dayjs } from "dayjs";
 
 import { Box } from "../Box";
 import { FormHelperText } from "../FormHelperText";
+import { Dayjs } from "dayjs";
 
-export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
+declare module "@mui/x-date-pickers/models" {
+  interface PickerValidDateLookup {
+    dayjs: Dayjs;
+  }
+}
+
+export interface DatePickerProps
   extends Omit<
-    MuiDatePickerProps<TDate>,
+    MuiDatePickerProps,
     | "components"
     | "componentsProps"
     | "slots"
-    | "slotProps"
     | "desktopModeMediaQuery"
     | "viewRenderers"
     | "timezone"
@@ -34,7 +39,7 @@ export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
   /**
    * @default DD.MM.YYYY
    */
-  format?: MuiDatePickerProps<TDate>["format"];
+  format?: MuiDatePickerProps["format"];
   /**
    * If `true`, the label is displayed in an error state.
    * @default false
@@ -60,9 +65,7 @@ export interface DatePickerProps<TDate extends Dayjs | null = Dayjs | null>
   required?: boolean;
 }
 
-export const DatePicker = React.forwardRef(function DatePicker<
-  TDate extends Dayjs | null = Dayjs | null,
->(
+export const DatePicker = React.forwardRef(function DatePicker(
   {
     format,
     helperText,
@@ -70,7 +73,7 @@ export const DatePicker = React.forwardRef(function DatePicker<
     required,
     label,
     ...props
-  }: DatePickerProps<TDate>,
+  }: DatePickerProps,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
@@ -78,20 +81,24 @@ export const DatePicker = React.forwardRef(function DatePicker<
       <MuiDatePicker
         ref={ref}
         format={format || "DD.MM.YYYY"}
+        enableAccessibleFieldDOMStructure={false}
         label={
-          <>
-            {label}
-            {required && (
-              <Box component="span" sx={{ color: "error.main" }}>
-                {" *"}
-              </Box>
-            )}
-          </>
+          label ? (
+            <>
+              {label}
+              {required && (
+                <Box component="span" sx={{ color: "error.main" }}>
+                  {" *"}
+                </Box>
+              )}
+            </>
+          ) : undefined
         }
+        {...props}
         slotProps={{
           openPickerButton: { size: "small" },
+          ...props.slotProps,
         }}
-        {...props}
       />
       {helperText && (
         <FormHelperText error={props.error}>{helperText}</FormHelperText>

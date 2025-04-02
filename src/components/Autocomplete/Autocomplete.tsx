@@ -115,36 +115,35 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
           {...inputProps}
           label={label}
           placeholder={placeholder}
-          inputProps={{
-            ...params.inputProps,
-            ...inputProps?.inputProps,
-          }}
-          InputProps={{
-            ...inputProps?.InputProps,
-            ...params.InputProps,
-            startAdornment: (
-              <>
-                {inputProps?.InputProps?.startAdornment ? (
-                  <InputAdornment position="start">
-                    {inputProps?.InputProps?.startAdornment}
-                  </InputAdornment>
-                ) : undefined}
-                {params.InputProps.startAdornment}
-              </>
-            ),
-            endAdornment: (
-              <>
-                {loading || inputProps?.InputProps?.endAdornment ? (
-                  <InputAdornment position="end">
-                    {loading ? (
-                      <CircularProgress color="inherit" size={18} />
-                    ) : null}
-                    {inputProps?.InputProps?.endAdornment}
-                  </InputAdornment>
-                ) : undefined}
-                {params.InputProps.endAdornment}
-              </>
-            ),
+          slotProps={{
+            input: {
+              ...inputProps?.slotProps?.input,
+              ...params.InputProps,
+              startAdornment: (
+                <>
+                  {inputProps?.startAdornment ? (
+                    <InputAdornment position="start">
+                      {inputProps?.startAdornment}
+                    </InputAdornment>
+                  ) : undefined}
+                  {params.InputProps.startAdornment}
+                </>
+              ),
+              endAdornment: (
+                <>
+                  {loading || inputProps?.endAdornment ? (
+                    <InputAdornment position="end">
+                      {loading ? (
+                        <CircularProgress color="inherit" size={18} />
+                      ) : null}
+                      {inputProps?.endAdornment}
+                    </InputAdornment>
+                  ) : undefined}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+            },
+            ...inputProps?.slotProps,
           }}
         />
       )}

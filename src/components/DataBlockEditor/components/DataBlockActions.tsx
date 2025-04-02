@@ -73,7 +73,11 @@ export const DataBlockActions: FC<DataBlockActionsProps> = ({
         text={isDragging ? undefined : i18n.moreBtnTooltip}
       >
         <IconButton
-          ref={dragRef}
+          ref={(node) => {
+            if (node) {
+              dragRef(node);
+            }
+          }}
           size="small"
           tabIndex={-1}
           sx={{ cursor: isDragging ? "grabbing" : "grab" }}

@@ -10,26 +10,20 @@ import React, {
   useState,
 } from "react";
 import { default as MoreVertIcon } from "@mui/icons-material/MoreVert";
-
 import { OverrideMuiProps } from "../types";
-import { IconButton } from "../IconButton";
+import { IconButton, IconButtonProps } from "../IconButton";
 import { ListItemAvatar } from "../ListItemAvatar";
 import { ListItemText, ListItemTextProps } from "../ListItemText";
 import { ListItemButton } from "../ListItemButton";
 import { ListItemIcon } from "../ListItemIcon";
 import { Menu } from "../Menu";
 import { MenuItem, MenuItemProps } from "../MenuItem";
+import { AvatarProps } from "../Avatar";
 
 export interface ListItemProps
   extends OverrideMuiProps<
     MuiListItemProps,
-    | "disabled"
-    | "disableGutters"
-    | "disablePadding"
-    | "selected"
-    | "divider"
-    | "sx"
-    | "component",
+    "disableGutters" | "disablePadding" | "divider" | "sx" | "component",
     HTMLLIElement
   > {
   /**
@@ -44,7 +38,7 @@ export interface ListItemProps
   /**
    * The avatar component, normally `Avatar`. The avatar will be wrapped by `ListItemAvatar`
    */
-  avatar?: ReactElement;
+  avatar?: ReactElement<AvatarProps>;
   /**
    * The text component, normally `string`. The text will be wrapped by `ListItemText` using `primary` prop
    */
@@ -60,7 +54,7 @@ export interface ListItemProps
   /**
    * The action component, normally `IconButton`.
    */
-  action?: ReactElement;
+  action?: ReactElement<IconButtonProps>;
   /**
    * The array of actions for menu options. The values will be wrapped by `MenuItem`.
    *
@@ -70,6 +64,10 @@ export interface ListItemProps
    * Disables `ripple` for ListItemButton
    */
   disableRipple?: boolean;
+  /**
+   * Pass to `ListItemButton`
+   */
+  selected?: boolean;
 }
 
 export const ListItem = React.forwardRef(
@@ -85,12 +83,14 @@ export const ListItem = React.forwardRef(
       menuActions,
       children,
       disableRipple,
+      selected,
       ...props
     }: ListItemProps,
     ref: React.Ref<HTMLLIElement>,
   ) => {
     const [actionsAnchor, setActionsAnchor] =
       useState<HTMLButtonElement | null>(null);
+
     const [contextMenu, setContextMenu] = React.useState<{
       mouseX: number;
       mouseY: number;
@@ -196,7 +196,13 @@ export const ListItem = React.forwardRef(
         secondaryAction={secondaryAction}
         onContextMenu={handleRightClick}
       >
-        <ListItemButton disableRipple={disableRipple}>{content}</ListItemButton>
+        <ListItemButton
+          selected={selected}
+          disableRipple={disableRipple}
+          disableGutters={props.disableGutters}
+        >
+          {content}
+        </ListItemButton>
       </MuiListItem>
     ) : (
       <MuiListItem

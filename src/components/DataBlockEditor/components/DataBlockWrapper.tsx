@@ -177,7 +177,11 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       {editable && (
         <>
           <Box
-            ref={dropBeforeRef}
+            ref={(node) => {
+              if (node) {
+                dropBeforeRef(node as HTMLElement);
+              }
+            }}
             sx={{
               height: 6,
               top: 0,
@@ -188,7 +192,11 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
           />
           <DropLine sx={{ top: -5 }} shown={isOverBefore && canDropBefore} />
           <Box
-            ref={dropAfterRef}
+            ref={(node) => {
+              if (node) {
+                dropAfterRef(node as HTMLElement);
+              }
+            }}
             sx={{
               height: 6,
               bottom: 0,
@@ -211,7 +219,11 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
         </>
       )}
       <Box
-        ref={previewRef}
+        ref={(node) => {
+          if (node) {
+            previewRef(node as HTMLElement);
+          }
+        }}
         className="data-block__content"
         display="flex"
         flexDirection="row"

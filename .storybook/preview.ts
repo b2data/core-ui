@@ -1,5 +1,5 @@
 import { withThemeFromJSXProvider } from "@storybook/addon-styling";
-import type { Preview, Decorator } from "@storybook/react";
+import type { Preview } from "@storybook/react";
 import { CssBaseline } from "../src/components/CssBaseline";
 import { lightTheme, darkTheme, ThemeProvider } from "../src/theming";
 
@@ -18,7 +18,7 @@ export const preview: Preview = {
   },
 };
 
-export const decorators: Decorator[] = [
+export const decorators = [
   withThemeFromJSXProvider({
     themes: {
       light: lightTheme,

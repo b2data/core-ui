@@ -92,7 +92,13 @@ const DropZoneComp = ({
   );
 
   return (
-    <div ref={drop}>
+    <div
+      ref={(node) => {
+        if (node) {
+          drop(node);
+        }
+      }}
+    >
       <Box
         onClick={() => inputRefInner.current?.click()}
         bgcolor="#fafbfc"
@@ -132,7 +138,6 @@ const DropZoneComp = ({
               if (isValid) {
                 onSelect?.(valFiles);
                 if (inputRefInner.current && "value" in inputRefInner.current) {
-                  // @ts-ignore
                   inputRefInner.current.value = "";
                 }
               } else {

@@ -14,12 +14,18 @@ export const lightTheme = createTheme({
       default: "#f9f9f9",
     },
     ...palette,
+    DataGrid: {
+      bg: "#fff",
+      // headerBg: "#f0f0f0",
+      pinnedBg: "#f9f9f9",
+    },
   },
   components,
   breakpoints,
   spacing: 4,
   mixins,
   typography,
+  cssVariables: true,
 });
 
 export const darkTheme = createTheme({
@@ -32,6 +38,7 @@ export const darkTheme = createTheme({
   spacing: 4,
   mixins,
   typography,
+  cssVariables: true,
 });
 
 declare module "@mui/material" {

@@ -4,18 +4,16 @@ import {
 } from "@mui/x-date-pickers";
 import { BoxProps, TextFieldProps as MuiTextFieldProps } from "@mui/material";
 import React from "react";
-import { Dayjs } from "dayjs";
 
 import { Box } from "../Box";
 import { FormHelperText } from "../FormHelperText";
 
-export interface TimePickerProps<TDate extends Dayjs | null = Dayjs | null>
+export interface TimePickerProps
   extends Omit<
-    MuiTimePickerProps<TDate>,
+    MuiTimePickerProps,
     | "components"
     | "componentsProps"
     | "slots"
-    | "slotProps"
     | "desktopModeMediaQuery"
     | "viewRenderers"
     | "timezone"
@@ -31,7 +29,7 @@ export interface TimePickerProps<TDate extends Dayjs | null = Dayjs | null>
   /**
    * @default HH:mm
    */
-  format?: MuiTimePickerProps<TDate>["format"];
+  format?: MuiTimePickerProps["format"];
   /**
    * If `true`, the label is displayed in an error state.
    * @default false
@@ -57,9 +55,7 @@ export interface TimePickerProps<TDate extends Dayjs | null = Dayjs | null>
   required?: boolean;
 }
 
-export const TimePicker = React.forwardRef(function TimePicker<
-  TDate extends Dayjs | null = Dayjs | null,
->(
+export const TimePicker = React.forwardRef(function TimePicker(
   {
     format,
     helperText,
@@ -67,7 +63,7 @@ export const TimePicker = React.forwardRef(function TimePicker<
     required,
     label,
     ...props
-  }: TimePickerProps<TDate>,
+  }: TimePickerProps,
   ref: React.Ref<HTMLDivElement>,
 ) {
   return (
@@ -77,20 +73,25 @@ export const TimePicker = React.forwardRef(function TimePicker<
         format={format || "HH:mm"}
         ampm={false}
         ampmInClock={false}
+        enableAccessibleFieldDOMStructure={false}
         label={
-          <>
-            {label}
-            {required && (
-              <Box component="span" sx={{ color: "error.main" }}>
-                {" *"}
-              </Box>
-            )}
-          </>
+          label ? (
+            <>
+              {label}
+              {required && (
+                <Box component="span" sx={{ color: "error.main" }}>
+                  {" *"}
+                </Box>
+              )}
+            </>
+          ) : undefined
         }
+        {...props}
         slotProps={{
           openPickerButton: { size: "small" },
+          actionBar: { actions: [] },
+          ...props.slotProps,
         }}
-        {...props}
         sx={{
           ...props.sx,
           ".MuiButtonBase-root": {
