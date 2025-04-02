@@ -12,7 +12,7 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
     "@storybook/addon-essentials",
-    "@storybook/addon-styling",
+    "@storybook/addon-themes",
   ],
   framework: {
     name: "@storybook/react-vite",
@@ -25,10 +25,6 @@ const config: StorybookConfig = {
     check: false,
     reactDocgen: "react-docgen-typescript",
     reactDocgenTypescriptOptions: {
-      // speeds up storybook build time
-      allowSyntheticDefaultImports: false,
-      // speeds up storybook build time
-      esModuleInterop: false,
       // makes union prop types like variant and size appear as select controls
       shouldExtractLiteralValuesFromEnum: true,
       // makes string and boolean types that can be undefined appear as inputs and switches

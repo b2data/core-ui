@@ -1,4 +1,4 @@
-import { withThemeFromJSXProvider } from "@storybook/addon-styling";
+import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
 import { CssBaseline } from "../src/components/CssBaseline";
 import { lightTheme, darkTheme, ThemeProvider } from "../src/theming";
