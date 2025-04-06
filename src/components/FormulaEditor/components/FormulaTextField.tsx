@@ -238,6 +238,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           ...sx,
         }}
         placeholder={isEditable ? placeholder : undefined}
+        // @ts-ignore
         inputProps={{
           ...inputProps,
           ...autocompleteProps?.inputProps,
@@ -335,6 +336,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
                 ) : undefined
               }
               selected={selected}
+              disabled={getOptionDisabled?.(option)}
             />
           );
         }}

@@ -120,6 +120,7 @@ export const SectionTitle = ({
             {...titleProps}
             sx={{
               lineHeight: 1.2,
+              minHeight: "36px",
               gap: 2,
               display: "flex",
               flexDirection: "row",

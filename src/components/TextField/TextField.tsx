@@ -24,6 +24,10 @@ export interface TextFieldProps
     | "multiline"
     | "name"
     | "onChange"
+    | "onBlur"
+    | "onKeyDown"
+    | "onKeyUp"
+    | "onInput"
     | "placeholder"
     | "required"
     | "rows"
@@ -79,7 +83,7 @@ export const TextField = React.forwardRef(
           endAdornment: endAdornment ? (
             <InputAdornment position="end">{endAdornment}</InputAdornment>
           ) : undefined,
-          ...props.slotProps,
+          ...props.slotProps?.input,
         },
         ...props.slotProps,
       }}

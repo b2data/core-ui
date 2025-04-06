@@ -74,7 +74,6 @@ const DataGridRaw = forwardRef(function DataGrid<R extends GridValidRowModel>(
       disableColumnResize: true,
       disableColumnSelector: true,
       disableDensitySelector: true,
-      disableMultipleColumnsFiltering: true,
       disableChildrenFiltering: true,
       disableChildrenSorting: true,
       hideFooterSelectedRowCount: true,
@@ -121,7 +120,16 @@ const DataGridRaw = forwardRef(function DataGrid<R extends GridValidRowModel>(
         },
         "& .MuiDataGrid-sortIcon": { fontSize: 18 },
         "& .MuiDataGrid-filterIcon": { fontSize: 18 },
-        "& .MuiDataGrid-cellContent": { lineHeight: 1.1 },
+        "& .MuiDataGrid-cell--editing": { padding: "0 !important" },
+        "& .MuiDataGrid-cell--editing .MuiFormControl-root": { height: 1 },
+        "& .MuiDataGrid-cell--editing .MuiFormControl-root .MuiInputBase-root":
+          { height: 1 },
+        "& .MuiAutocomplete-root .MuiInput-root": {
+          padding: "12px 30px 12px 10px !important",
+          alignItems: "center !important",
+          "& .MuiAutocomplete-endAdornment": { top: "50%" },
+        },
+
         ...inProps.sx,
       }}
     />

@@ -17,6 +17,7 @@ export const Base: StoryObj<MarkdownFieldProps> = {
     label: "Base",
     placeholder: "Placeholder",
     required: true,
+    minRows: 10,
     // error: true,
     // disabled: true,
     // readOnly: true,

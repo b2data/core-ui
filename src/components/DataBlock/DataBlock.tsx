@@ -241,6 +241,7 @@ export const DataBlock = forwardRef(
         view: view?.contentDOM,
         hasFocus: view?.hasFocus,
         state: view?.state,
+        focus: view?.focus,
       }),
       [view],
     );

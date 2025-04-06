@@ -17,6 +17,10 @@ type OwnerState = { classes: DataGridProcessedProps["classes"] };
 
 const StyledInputBase = styled(NotRendered<GridSlotProps["baseInput"]>)({
   fontSize: "inherit",
+  "& input": {
+    padding: "0 10px",
+    height: "100%",
+  },
 });
 
 const useUtilityClasses = (ownerState: OwnerState) => {

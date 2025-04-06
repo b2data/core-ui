@@ -115,33 +115,39 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
           {...inputProps}
           label={label}
           placeholder={placeholder}
+          startAdornment={
+            inputProps?.startAdornment || params.InputProps.startAdornment ? (
+              <>
+                {inputProps?.startAdornment ? (
+                  <InputAdornment position="start">
+                    {inputProps?.startAdornment}
+                  </InputAdornment>
+                ) : undefined}
+                {params.InputProps.startAdornment}
+              </>
+            ) : undefined
+          }
+          endAdornment={
+            loading ||
+            inputProps?.endAdornment ||
+            params.InputProps.endAdornment ? (
+              <>
+                {loading || inputProps?.endAdornment ? (
+                  <InputAdornment position="end">
+                    {loading ? (
+                      <CircularProgress color="inherit" size={18} />
+                    ) : null}
+                    {inputProps?.endAdornment}
+                  </InputAdornment>
+                ) : undefined}
+                {params.InputProps.endAdornment}
+              </>
+            ) : undefined
+          }
           slotProps={{
             input: {
               ...inputProps?.slotProps?.input,
               ...params.InputProps,
-              startAdornment: (
-                <>
-                  {inputProps?.startAdornment ? (
-                    <InputAdornment position="start">
-                      {inputProps?.startAdornment}
-                    </InputAdornment>
-                  ) : undefined}
-                  {params.InputProps.startAdornment}
-                </>
-              ),
-              endAdornment: (
-                <>
-                  {loading || inputProps?.endAdornment ? (
-                    <InputAdornment position="end">
-                      {loading ? (
-                        <CircularProgress color="inherit" size={18} />
-                      ) : null}
-                      {inputProps?.endAdornment}
-                    </InputAdornment>
-                  ) : undefined}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
             },
             ...inputProps?.slotProps,
           }}
@@ -181,19 +187,20 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
               )
             }
             selected={selected}
+            disabled={getOptionDisabled?.(option)}
           />
         );
       }}
-      ListboxComponent={List}
-      PaperComponent={Paper}
+      slots={{
+        listbox: List,
+        paper: Paper,
+      }}
       popupIcon={<ExpandMoreIcon />}
       clearIcon={<ClearIcon />}
       slotProps={{
         clearIndicator: { size: "small" },
+        chip: { size: "small" },
         ...slotProps,
-      }}
-      ChipProps={{
-        size: "small",
       }}
       {...props}
     />

@@ -68,6 +68,10 @@ export interface ListItemProps
    * Pass to `ListItemButton`
    */
   selected?: boolean;
+  /**
+   * Applies `disabled` styles for ListItemButton
+   */
+  disabled?: boolean;
 }
 
 export const ListItem = React.forwardRef(
@@ -84,6 +88,7 @@ export const ListItem = React.forwardRef(
       children,
       disableRipple,
       selected,
+      disabled,
       ...props
     }: ListItemProps,
     ref: React.Ref<HTMLLIElement>,
@@ -197,6 +202,7 @@ export const ListItem = React.forwardRef(
         onContextMenu={handleRightClick}
       >
         <ListItemButton
+          disabled={disabled}
           selected={selected}
           disableRipple={disableRipple}
           disableGutters={props.disableGutters}

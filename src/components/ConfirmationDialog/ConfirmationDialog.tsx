@@ -129,14 +129,10 @@ export const ConfirmationDialog = React.forwardRef(
               placeholder={confirmProps.placeholder}
               helperText={confirmProps.helperText}
               onChange={(e) => setName(e.target.value)}
-              slotProps={{
-                input: {
-                  onKeyDown: (e) => {
-                    if (e.code === "Enter") {
-                      acceptBtn?.onClick?.(null as any);
-                    }
-                  },
-                },
+              onKeyDown={(e) => {
+                if (e.code === "Enter") {
+                  acceptBtn?.onClick?.(null as any);
+                }
               }}
               value={name}
               autoComplete="off"

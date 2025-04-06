@@ -1,3 +1,4 @@
+import { Autocomplete } from "../Autocomplete";
 import {
   DataGrid,
   DataGridProps,
@@ -12,8 +13,43 @@ import type { Meta, StoryObj } from "@storybook/react";
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", flex: 1, editable: true },
   { field: "website", headerName: "Website", flex: 1, sortable: false },
-  { field: "rating", headerName: "Rating", flex: 0.5, sortable: false },
+  {
+    field: "rating",
+    headerName: "Rating",
+    flex: 0.5,
+    editable: true,
+    type: "singleSelect",
+    renderEditCell: (params) => (
+      <Autocomplete
+        options={[
+          { value: 1, label: "1" },
+          { value: 2, label: "2" },
+          { value: 3, label: "3" },
+        ]}
+        disableClearable
+        value={params.value}
+        onChange={(v) => {
+          params.api.setEditCellValue({
+            id: params.id,
+            field: "status",
+            value: v,
+          });
+          params.api.stopCellEditMode({
+            field: "status",
+            id: params.id,
+          });
+        }}
+      />
+    ),
+  },
   { field: "email", headerName: "Email", flex: 1, sortable: false },
+  {
+    field: "date",
+    headerName: "Date",
+    flex: 1,
+    editable: true,
+    type: "dateTime",
+  },
   {
     field: "actions",
     type: "actions",
@@ -36,6 +72,7 @@ export default meta;
 export const Base: StoryObj<DataGridProps> = {
   args: {
     disableColumnResize: true,
+    rowHeight: 40,
   },
   render: (props) => (
     <div style={{ height: 300 }}>

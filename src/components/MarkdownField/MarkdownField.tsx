@@ -1,5 +1,6 @@
 import { Box, SxProps } from "@mui/material";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useRef } from "react";
+import { EditorView } from "@codemirror/view";
 
 import { FormHelperText } from "../FormHelperText";
 import { DataBlock } from "../DataBlock";
@@ -79,9 +80,12 @@ export const MarkdownField = React.forwardRef(
   ) => {
     const [isFocus, setIsFocus] = React.useState(false);
 
+    const editor = useRef<EditorView>(null);
+
     return (
       <Box
         ref={ref}
+        onClick={() => editor?.current?.focus?.()}
         sx={{
           display: "inline-flex",
           flexDirection: "column",
@@ -141,6 +145,7 @@ export const MarkdownField = React.forwardRef(
           )}
         </Box>
         <DataBlock
+          ref={editor}
           content={value}
           editable={!disabled}
           readOnly={readOnly}
