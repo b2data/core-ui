@@ -1,0 +1,1 @@
+import{j as p}from"./jsx-runtime-D_zvdyIk.js";const r=({children:e,style:i})=>p.jsx("div",{style:{display:"flex",flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:"16px",...i},children:e});try{r.displayName="Preview",r.__docgenInfo={description:"",displayName:"Preview",props:{}}}catch{}export{r as P};
