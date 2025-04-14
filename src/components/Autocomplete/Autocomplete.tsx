@@ -115,39 +115,38 @@ export const AutocompleteRaw = React.forwardRef(function Autocomplete<
           {...inputProps}
           label={label}
           placeholder={placeholder}
-          startAdornment={
-            inputProps?.startAdornment || params.InputProps.startAdornment ? (
-              <>
-                {inputProps?.startAdornment ? (
-                  <InputAdornment position="start">
-                    {inputProps?.startAdornment}
-                  </InputAdornment>
-                ) : undefined}
-                {params.InputProps.startAdornment}
-              </>
-            ) : undefined
-          }
-          endAdornment={
-            loading ||
-            inputProps?.endAdornment ||
-            params.InputProps.endAdornment ? (
-              <>
-                {loading || inputProps?.endAdornment ? (
-                  <InputAdornment position="end">
-                    {loading ? (
-                      <CircularProgress color="inherit" size={18} />
-                    ) : null}
-                    {inputProps?.endAdornment}
-                  </InputAdornment>
-                ) : undefined}
-                {params.InputProps.endAdornment}
-              </>
-            ) : undefined
-          }
           slotProps={{
             input: {
               ...inputProps?.slotProps?.input,
               ...params.InputProps,
+              startAdornment:
+                inputProps?.startAdornment ||
+                params.InputProps.startAdornment ? (
+                  <>
+                    {inputProps?.startAdornment ? (
+                      <InputAdornment position="start">
+                        {inputProps?.startAdornment}
+                      </InputAdornment>
+                    ) : undefined}
+                    {params.InputProps.startAdornment}
+                  </>
+                ) : undefined,
+              endAdornment:
+                loading ||
+                inputProps?.endAdornment ||
+                params.InputProps.endAdornment ? (
+                  <>
+                    {loading || inputProps?.endAdornment ? (
+                      <InputAdornment position="end">
+                        {loading ? (
+                          <CircularProgress color="inherit" size={18} />
+                        ) : null}
+                        {inputProps?.endAdornment}
+                      </InputAdornment>
+                    ) : undefined}
+                    {params.InputProps.endAdornment}
+                  </>
+                ) : undefined,
             },
             ...inputProps?.slotProps,
           }}

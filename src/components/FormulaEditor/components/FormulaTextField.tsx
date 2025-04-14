@@ -60,8 +60,13 @@ export type FormulaTextFieldProps = {
   sx?: SxProps;
   i18n?: FormulaTranslation;
   autocompleteProps?: Partial<
-    Omit<AutocompleteProps<any, false, false, false>, "options" | "value">
+    Omit<
+      AutocompleteProps<any, false, false, false>,
+      "options" | "value" | "startAdornment" | "endAdornment" | "inputProps"
+    >
   >;
+  startAdornment?: InputBaseProps["startAdornment"];
+  endAdornment?: InputBaseProps["endAdornment"];
   inputProps?: InputBaseProps["inputProps"] & {
     maxDate?: dayjs.Dayjs;
     minDate?: dayjs.Dayjs;
@@ -82,6 +87,8 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   sx,
   i18n,
   autocompleteProps,
+  startAdornment,
+  endAdornment,
   inputProps,
   helperText,
 }) => {
@@ -137,6 +144,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
                 : undefined,
             )
           }
+          slotProps={{ textField: { startAdornment, endAdornment } }}
           maxDate={inputProps?.maxDate}
           minDate={inputProps?.minDate}
           sx={{
@@ -161,8 +169,10 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
       <Box width={1}>
         <InputBase
           type="number"
+          {...omit(["minDate", "maxDate"], inputProps || {})}
+          startAdornment={startAdornment}
+          endAdornment={endAdornment}
           autoFocus={autoFocus}
-          inputProps={omit(["minDate", "maxDate"], inputProps || {})}
           readOnly={!isEditable}
           placeholder={isEditable ? placeholder : undefined}
           defaultValue={(value as FormulaSearchOption)?.id || ""}
@@ -241,15 +251,15 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         // @ts-ignore
         inputProps={{
           ...inputProps,
-          ...autocompleteProps?.inputProps,
           autoFocus,
           onChange: debounce(handleSearch, 500),
+          startAdornment,
           endAdornment: (
             <>
               {isLoading ? (
                 <CircularProgress color="inherit" size={12} sx={{ mr: 1 }} />
               ) : undefined}
-              {autocompleteProps?.inputProps?.endAdornment}
+              {endAdornment}
             </>
           ),
         }}

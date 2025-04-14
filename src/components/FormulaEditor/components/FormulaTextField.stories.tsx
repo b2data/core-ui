@@ -17,5 +17,6 @@ export const Base: StoryObj<FormulaTextFieldProps> = {
     placeholder: "Number value",
     value: { id: "0.4", name: "0.4" },
     helperText: "Helper text",
+    inputProps: { endAdornment: "2" },
   },
 };

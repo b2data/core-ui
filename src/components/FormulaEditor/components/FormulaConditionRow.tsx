@@ -157,15 +157,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                 })
             : undefined
         }
-        autocompleteProps={
-          unit
-            ? {
-                inputProps: {
-                  endAdornment: `[${unit}]`,
-                },
-              }
-            : undefined
-        }
+        endAdornment={unit ? `[${unit}]` : undefined}
       />
       <FormulaOperatorSelector
         sx={{ gridArea: "operation" }}
