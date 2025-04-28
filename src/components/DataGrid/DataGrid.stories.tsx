@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Autocomplete } from "../Autocomplete";
 import {
   DataGrid,
@@ -74,13 +75,34 @@ export const Base: StoryObj<DataGridProps> = {
     disableColumnResize: true,
     rowHeight: 40,
   },
-  render: (props) => (
-    <div style={{ height: 300 }}>
-      <DataGrid
-        {...props}
-        columns={columns}
-        rows={[...mock.returnedRows].splice(0, 10)}
-      />
-    </div>
-  ),
+  render: (props) => {
+    const [state, setState] = useState(0);
+
+    const dataSource = useMemo(
+      () => ({
+        getRows: async () => {
+          const newRows = [...mock.returnedRows].splice(
+            Math.round(Math.random() * 10),
+            Math.round(Math.random() * 100),
+          );
+          if (state === 3) {
+            return { rows: [], rowCount: 0 };
+          }
+
+          return {
+            rows: newRows,
+            rowCount: newRows.length,
+          };
+        },
+      }),
+      [state],
+    );
+
+    return (
+      <div style={{ height: 300 }}>
+        <button onClick={() => setState((s) => s + 1)}>Reset</button>
+        <DataGrid {...props} columns={columns} dataSource={dataSource} />
+      </div>
+    );
+  },
 };
