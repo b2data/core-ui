@@ -1,4 +1,5 @@
 import { DataBlockProps } from "../../DataBlock";
+import { OpenConfirmationDialogProps } from "../../ConfirmationDialog";
 
 import { DataBlockEditorTranslations } from "./i18n";
 import { DataBlockBase, DataBlockType, DataBlockUserData } from "./blocks";
@@ -28,6 +29,7 @@ export type DataBlockEditorState = {
   onChange?: DataBlockEditorOnChangeCallback;
   keymap: DataBlockProps["customKeymap"];
   mdProps: DataBlockProps["mdProps"];
+  openConfirmDialog?: (props: OpenConfirmationDialogProps) => Promise<unknown>;
 };
 
 export enum DataBlockEditorPublicAction {

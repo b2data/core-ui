@@ -150,7 +150,6 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           sx={{
             "& .MuiInputBase-root": {
               height: "auto",
-              fontSize: "12px !important",
               "&:before": { content: "none" },
               "&:after": { content: "none" },
             },
@@ -185,7 +184,6 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           }}
           sx={{
             p: 0,
-            fontSize: "12px !important",
             ...sx,
             "&>input": { p: 0 },
           }}
@@ -227,7 +225,6 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           },
           "& .MuiInputBase-root": {
             minHeight: "auto !important",
-            fontSize: "12px !important",
             p: "0 !important",
             color: "inherit",
             "&:before": { content: "none" },
@@ -270,7 +267,6 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
               data-tag-index={getTagProps({ index })["data-tag-index"]}
               tabIndex={getTagProps({ index }).tabIndex}
               className={getTagProps({ index }).className}
-              variant="caption"
             >
               {v.inputValue || v.name}
             </Typography>

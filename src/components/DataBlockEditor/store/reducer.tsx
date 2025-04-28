@@ -143,28 +143,40 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
      ************/
 
     case DataBlockEditorPublicAction.AddBlock: {
-      const { block, variant, index } = data;
-      const blocks = [...state.blocks];
+      const { blocks, index } = data;
+      const newBlocks = [...state.blocks];
 
-      blocks.splice(index, 0, {
-        ...block,
-        createdBy: state.currentUser.id,
-        variants: [{ ...variant, createdBy: state.currentUser.id, votes: [] }],
-      } as DataBlockBase);
+      newBlocks.splice(
+        index,
+        0,
+        ...blocks.map(
+          (b) =>
+            ({
+              ...b,
+              createdBy: state.currentUser.id,
+              variants: b.variants.map((v) => ({
+                ...v,
+                createdBy: state.currentUser.id,
+                votes: [],
+              })),
+            }) as DataBlockBase,
+        ),
+      );
 
       state.onChange?.({
         action: DataBlockEditorPublicAction.AddBlock,
         data: {
-          block: pick(["id", "type", "offset", "hidePrefix"], block),
-          variant: pick(["id", "data", "isCurrent"], variant),
+          blocks: blocks.map((b) => ({
+            ...pick(["id", "type", "offset", "hidePrefix", "variants"], b),
+          })),
           index,
         },
       });
 
       return {
         ...state,
-        ...getPrefixesData(blocks),
-        blocks,
+        ...getPrefixesData(newBlocks),
+        blocks: newBlocks,
         focused: index,
         focusedEnd: true,
       };
@@ -433,18 +445,20 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       const updatedState = { ...state };
       switch (updateAction) {
         case DataBlockEditorPublicAction.AddBlock: {
-          const blockIndex = updatedState.blocks.findIndex(
-            (b) => b.id === changes.block.id,
-          );
-          if (
-            blockIndex > -1 &&
-            !equals(updatedState.blocks[blockIndex], changes.block)
-          ) {
-            updatedState.blocks.splice(blockIndex, 1, changes.block);
-          }
-          if (blockIndex === -1) {
-            updatedState.blocks.splice(changes.index, 0, changes.block);
-          }
+          changes.blocks.forEach((block) => {
+            const blockIndex = updatedState.blocks.findIndex(
+              (b) => b.id === block.id,
+            );
+            if (
+              blockIndex > -1 &&
+              !equals(updatedState.blocks[blockIndex], block)
+            ) {
+              updatedState.blocks.splice(blockIndex, 1, block);
+            }
+            if (blockIndex === -1) {
+              updatedState.blocks.splice(changes.index, 0, block);
+            }
+          });
           const { prefixes, maxPrefixLength } = getPrefixesData(
             updatedState.blocks,
           );

@@ -91,18 +91,22 @@ export const DataBlockAddTypePopover: FC<DataBlockAddTypePopoverProps> = ({
     dispatch({
       action: DataBlockEditorPublicAction.AddBlock,
       data: {
-        block: {
-          id: uuid(),
-          type: option.id,
-          offset,
-          createdBy: currentUser.id,
-        },
-        variant: {
-          id: uuid(),
-          data: { text: option.defaultValue || "" },
-          isCurrent: true,
-          createdBy: currentUser.id,
-        },
+        blocks: [
+          {
+            id: uuid(),
+            type: option.id,
+            offset,
+            createdBy: currentUser.id,
+            variants: [
+              {
+                id: uuid(),
+                data: { text: option.defaultValue || "" },
+                isCurrent: true,
+                createdBy: currentUser.id,
+              },
+            ],
+          },
+        ],
         index: index + 1,
       },
     });

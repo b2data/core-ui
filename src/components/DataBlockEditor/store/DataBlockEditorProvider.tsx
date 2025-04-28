@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import { useDeepEqualMemo } from "../../../hooks";
+import { useConfirmationDialog } from "../../ConfirmationDialog";
 import {
   DataBlockEditorApi,
   DataBlockEditorProps,
@@ -30,6 +31,8 @@ const DataBlockEditorProvider = forwardRef<
   DataBlockEditorApi,
   PropsWithChildren<{ props: DataBlockEditorProps }>
 >(({ children, props }, ref) => {
+  const { onOpen: openConfirmDialog, portal } = useConfirmationDialog();
+
   const {
     editable,
     showPrefix,
@@ -51,6 +54,7 @@ const DataBlockEditorProvider = forwardRef<
     ...initialState,
     onChange,
     getFilesUrl,
+    openConfirmDialog,
   });
 
   useEffect(() => {
@@ -196,6 +200,7 @@ const DataBlockEditorProvider = forwardRef<
   return (
     <DataBlockEditorContext.Provider value={{ state, dispatch }}>
       {children}
+      {portal}
     </DataBlockEditorContext.Provider>
   );
 });

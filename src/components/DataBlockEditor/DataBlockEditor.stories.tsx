@@ -57,9 +57,26 @@ const def = Array.from(new Array(10)).map(() => ({
 export const Base: StoryObj<DataBlockEditorProps> = {
   args: {
     editable: true,
-    currentUser: { id: "user2", firstName: "Maria" },
+    currentUser: createdByData,
     tools: {},
     blocks: [
+      {
+        id: "0",
+        type: "text",
+        offset: 0,
+        variants: [
+          {
+            id: "11",
+            data: {
+              text: "Some text is here and link to image ![[ChatGPT Image.png#1|56f2fb22-2ed7-4d77-b4fa-8fab55c90d93#6cac5fb7-5416-4749-9ada-0c4920aa01df|700]] And video ![[test video.mov#1|486503f6-35e9-4865-970f-a211ec242527#0fd10b4d-cebe-4bbd-81da-64d8c1b222a5]] And PDF: ![[app.pdf#1|486503f6-35e9-4865-970f-a211ec242527#0fd10b4d-cebe-4bbd-81da-64d8c1b222a5]]",
+            },
+            isCurrent: true,
+            votes: [],
+            createdBy: "user1",
+            createdByData: { id: "user1", firstName: "John 1" },
+          },
+        ],
+      },
       {
         id: "1",
         type: "text",
@@ -170,13 +187,15 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               action,
               data: {
                 index: data.index,
-                block: {
-                  ...data.block,
+                blocks: data.blocks.map((b) => ({
+                  ...b,
                   createdByData,
-                  variants: data.variant
-                    ? [{ ...data.variant, createdByData, votes: [] }]
-                    : [],
-                },
+                  variants: b.variants.map((v) => ({
+                    ...v,
+                    createdByData,
+                    votes: [],
+                  })),
+                })),
               },
             });
             break;
@@ -316,11 +335,27 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                   }, 1000);
                 });
               },
-              onSearchReference: async ({ query = "" }) => {
+              resolveReferenceUrl: ({ versionId }) =>
+                versionId
+                  ? `https://localhost:8080/documents/files/${versionId}`
+                  : "",
+              onSearchReference: async ({ query = "", docId }) => {
                 return new Promise((resolve) => {
+                  if (docId === "56f2fb22-2ed7-4d77-b4fa-8fab55c90d93") {
+                    return resolve([
+                      {
+                        label: "1",
+                        id: "6cac5fb7-5416-4749-9ada-0c4920aa01df",
+                      },
+                    ]);
+                  }
                   setTimeout(() => {
                     resolve(
                       [
+                        {
+                          label: "ChatGPT Image.png",
+                          id: "56f2fb22-2ed7-4d77-b4fa-8fab55c90d93",
+                        },
                         {
                           label: `Doc 1`,
                           id: uuid(),
@@ -337,14 +372,14 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                 });
               },
               decorations: [
-                (node, append, cursorPos, view) => {
+                ({ node, append, selection, view }) => {
                   if (node.name === "Signature") {
                     const { state, hasFocus } = view;
 
                     const isActive =
                       node &&
-                      cursorPos.from >= node.from &&
-                      cursorPos.to <= node.to &&
+                      selection.from >= node.from &&
+                      selection.to <= node.to &&
                       !state.readOnly &&
                       hasFocus;
 
@@ -397,12 +432,12 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                           const mention = cursor.node.cursor();
 
                           if (mention.firstChild()) {
-                            processMentionDecoration(
-                              mention.node,
+                            processMentionDecoration({
+                              node: mention.node,
                               append,
-                              cursorPos,
+                              selection,
                               view,
-                            );
+                            });
                           }
                         }
 

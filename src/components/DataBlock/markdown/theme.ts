@@ -237,6 +237,13 @@ export const markdownTheme = EditorView.theme(
       color: "#9e9e9e",
     },
 
+    ".cm-reference-preview": {
+      display: "block",
+      maxHeight: "300px",
+      maxWidth: "100%",
+      margin: "auto",
+    },
+
     ".cm-reference-invalid": {
       color: "#DE350B",
     },

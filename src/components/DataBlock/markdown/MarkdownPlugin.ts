@@ -36,10 +36,11 @@ export const markdownPlugin = ({
   i18n = {},
   onSearchReference,
   onSearchMentions,
+  resolveReferenceUrl,
   slashCommands,
 }: MarkdownPluginProps) => {
   return ViewPlugin.define(
-    (view) => new MarkdownPluginValue(view, decorations),
+    (view) => new MarkdownPluginValue(view, decorations, resolveReferenceUrl),
     {
       decorations: (v) => v.decorations,
       provide: () => [

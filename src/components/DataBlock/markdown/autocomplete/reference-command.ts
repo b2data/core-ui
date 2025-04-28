@@ -13,23 +13,33 @@ import {
 export const getReferenceCommand =
   (onSearch: MarkdownPluginProps["onSearchReference"]) =>
   async (context: CompletionContext): Promise<CompletionResult | null> => {
-    // Match text inside [[ ]]
-    const word = context.matchBefore(/\[\[([^\]]*)$/);
+    // Match text inside `[[ ]]` or `![[ ]]`
+    const word =
+      context.matchBefore(/!\[\[([^\]]*)$/) ||
+      context.matchBefore(/\[\[([^\]]*)$/);
+
     if (!word || (word.from === word.to && !context.explicit) || !onSearch) {
       return null;
     }
 
-    const query = word.text.slice(2).split("#");
+    const size = word.text.includes("![[") ? 3 : 2;
+    const query = word.text.slice(size).split("#");
     const [docName, versionName, blockName] = query;
     let docId = "";
     let versionId = "";
 
     const node = syntaxTree(context.state).resolve(context.pos);
-    const root = node.name === "ReferenceData" ? node : node.parent;
+    const root = ["ReferenceData", "ReferenceDataPreview"].includes(node.name)
+      ? node
+      : node.parent;
 
-    if (root?.name === "ReferenceData") {
+    if (
+      root &&
+      ["ReferenceData", "ReferenceDataPreview"].includes(root?.name || "")
+    ) {
       const ids = (
-        context.state.sliceDoc(root.from + 2, root.to - 2).split("|")[1] || ""
+        context.state.sliceDoc(root.from + size, root.to - 2).split("|")[1] ||
+        ""
       ).split("#");
 
       docId = ids[0];
@@ -37,11 +47,11 @@ export const getReferenceCommand =
     }
 
     const fromWord =
-      query.length > 2
-        ? word.from + 2 + docName.length + 1 + versionName.length + 1
+      query.length > size
+        ? word.from + size + docName.length + 1 + versionName.length + 1
         : query.length > 1
-          ? word.from + 2 + docName.length + 1
-          : word.from + 2;
+          ? word.from + size + docName.length + 1
+          : word.from + size;
 
     const loadingTooltip = getLoadingTooltip(fromWord);
 
@@ -52,7 +62,7 @@ export const getReferenceCommand =
 
     try {
       const suggestions =
-        (query.length > 2 && !versionId) || (query.length > 1 && !docId)
+        (query.length > size && !versionId) || (query.length > 1 && !docId)
           ? []
           : await onSearch({
               query: versionId ? blockName : docId ? versionName : docName,
@@ -85,7 +95,9 @@ export const getReferenceCommand =
             }
 
             const from =
-              query.length > 1 ? (root?.from || word.from) + 2 : word.from + 2;
+              query.length > 1
+                ? (root?.from || word.from) + size
+                : word.from + size;
 
             const to =
               query.length > 1 ? (root?.to ? root?.to - 2 : word.to) : word.to;

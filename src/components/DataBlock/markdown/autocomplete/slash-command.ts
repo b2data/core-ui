@@ -47,6 +47,18 @@ export const getSlashCommand =
         },
       },
       {
+        id: "referencePreview",
+        label: `/${i18n?.referencePreview || "Preview Reference"}`,
+        detail: `![[ ? ]]`,
+        type: "command",
+        apply: (view: EditorView, _, from: number, to: number) => {
+          view.dispatch({
+            changes: { from, to, insert: "![[]]" },
+            selection: { anchor: from + 3, head: from + 3 },
+          });
+        },
+      },
+      {
         id: "bold",
         label: `/${i18n?.bold || "Bold"}`,
         detail: `${Symbols.CMD}+B`,

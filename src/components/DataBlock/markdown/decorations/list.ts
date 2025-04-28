@@ -2,18 +2,18 @@ import { Decoration, WidgetType } from "@codemirror/view";
 
 import { ProcessDecorationFn } from "../model";
 
-export const processListDecoration: ProcessDecorationFn = (
+export const processListDecoration: ProcessDecorationFn = ({
   node,
   append,
-  cursorPos,
-  { state, dispatch },
-) => {
+  selection,
+  view: { state, dispatch },
+}) => {
   if (
     node.name === "ListMark" &&
     node.node.matchContext(["BulletList", "ListItem"])
   ) {
     if (
-      (cursorPos.from != node.from && cursorPos.from != node.from + 1) ||
+      (selection.from != node.from && selection.from != node.from + 1) ||
       state.readOnly
     ) {
       append(
@@ -24,8 +24,8 @@ export const processListDecoration: ProcessDecorationFn = (
 
   if (node.name === "TaskMarker" && node.matchContext(["Task"])) {
     if (
-      (cursorPos.from != node.from &&
-        cursorPos.from != node.from + 1 &&
+      (selection.from != node.from &&
+        selection.from != node.from + 1 &&
         node.to - node.from === 3) ||
       state.readOnly
     ) {

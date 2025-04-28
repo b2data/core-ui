@@ -16,7 +16,7 @@ import {
   processMentionDecoration,
   processReferenceDecoration,
 } from "./decorations";
-import { ProcessDecorationFn } from "./model";
+import { MarkdownPluginProps, ProcessDecorationFn } from "./model";
 
 import type { Range } from "@codemirror/state";
 
@@ -37,8 +37,14 @@ const inlineTokens = [
 export class MarkdownPluginValue implements PluginValue {
   decorations: DecorationSet;
   customDecorations: ProcessDecorationFn[] = [];
+  resolveReferenceUrl: MarkdownPluginProps["resolveReferenceUrl"];
 
-  constructor(view: EditorView, customDecorations: ProcessDecorationFn[]) {
+  constructor(
+    view: EditorView,
+    customDecorations: ProcessDecorationFn[],
+    resolveReferenceUrl: MarkdownPluginProps["resolveReferenceUrl"],
+  ) {
+    this.resolveReferenceUrl = resolveReferenceUrl;
     this.customDecorations = customDecorations;
     this.decorations = this.process(view);
   }
@@ -56,7 +62,7 @@ export class MarkdownPluginValue implements PluginValue {
 
   process(view: EditorView): DecorationSet {
     const widgets: Range<Decoration>[] = [];
-    const [cursor] = view.state.selection.ranges;
+    const [selection] = view.state.selection.ranges;
 
     const append = (d: Range<Decoration>) => widgets.push(d);
 
@@ -70,6 +76,8 @@ export class MarkdownPluginValue implements PluginValue {
       processReferenceDecoration,
     ].concat(this.customDecorations);
 
+    const { resolveReferenceUrl } = this;
+
     for (const { from, to } of view.visibleRanges) {
       syntaxTree(view.state).iterate({
         from,
@@ -78,7 +86,15 @@ export class MarkdownPluginValue implements PluginValue {
           if (node.type.isSkipped) return;
 
           for (const fn of fns) {
-            if (fn(node, append, cursor, view) === false) {
+            if (
+              fn({
+                node,
+                append,
+                selection,
+                view,
+                resolveReferenceUrl,
+              }) === false
+            ) {
               return false;
             }
           }
@@ -86,8 +102,8 @@ export class MarkdownPluginValue implements PluginValue {
           if (
             (node.name.startsWith("ATXHeading") ||
               inlineTokens.includes(node.name)) &&
-            cursor.from >= node.from &&
-            cursor.to <= node.to &&
+            selection.from >= node.from &&
+            selection.to <= node.to &&
             !view.state.readOnly &&
             view.hasFocus
           ) {

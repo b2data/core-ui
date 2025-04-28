@@ -10,6 +10,7 @@ export type MarkdownPluginI18n = {
   };
   mention?: string;
   reference?: string;
+  referencePreview?: string;
   referenceHint?: string;
 
   bold?: string;
@@ -26,16 +27,18 @@ export type MarkdownPluginI18n = {
   quote?: string;
 };
 
-export type ProcessDecorationFn = (
-  node: SyntaxNodeRef,
-  append: (d: Range<Decoration>) => void,
-  cursorPos: SelectionRange,
-  view: EditorView,
-) => boolean | void;
+export type ProcessDecorationFn = (props: {
+  node: SyntaxNodeRef;
+  append: (d: Range<Decoration>) => void;
+  selection: SelectionRange;
+  view: EditorView;
+  resolveReferenceUrl?: MarkdownPluginProps["resolveReferenceUrl"];
+}) => boolean | void;
 
 export type MarkdownSlashCommand =
   | "mention"
   | "reference"
+  | "referencePreview"
   | "bold"
   | "italic"
   | "underline"
@@ -52,6 +55,7 @@ export type MarkdownPluginProps = {
   parsers?: MarkdownExtension[];
   decorations?: ProcessDecorationFn[];
   i18n?: MarkdownPluginI18n;
+  resolveReferenceUrl?: (ref: { docId: string; versionId: string }) => string;
   onSearchReference?: (request: {
     query?: string;
     docId?: string;

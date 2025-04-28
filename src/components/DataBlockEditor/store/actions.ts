@@ -110,8 +110,9 @@ type MergeUpdates = SetDataBlockEditorAction<
 type AddBlock = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.AddBlock,
   {
-    block: Omit<DataBlockBase, "variants">;
-    variant: Omit<DataBlockVariant, "votes">;
+    blocks: (Omit<DataBlockBase, "variants"> & {
+      variants: Omit<DataBlockVariant, "votes">[];
+    })[];
     index: number;
   }
 >;

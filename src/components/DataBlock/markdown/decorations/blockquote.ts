@@ -2,17 +2,17 @@ import { Decoration } from "@codemirror/view";
 
 import { ProcessDecorationFn } from "../model";
 
-export const processBlockquoteDecoration: ProcessDecorationFn = (
+export const processBlockquoteDecoration: ProcessDecorationFn = ({
   node,
   append,
-  cursorPos,
-  { state, hasFocus },
-) => {
+  selection,
+  view: { state, hasFocus },
+}) => {
   if (node.name === "Blockquote") {
     const isActive =
       node &&
-      cursorPos.from >= node.from &&
-      cursorPos.to <= node.to &&
+      selection.from >= node.from &&
+      selection.to <= node.to &&
       !state.readOnly &&
       hasFocus;
 

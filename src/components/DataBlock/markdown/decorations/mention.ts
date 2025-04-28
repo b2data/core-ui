@@ -25,17 +25,17 @@ class MentionWidget extends WidgetType {
   }
 }
 
-export const processMentionDecoration: ProcessDecorationFn = (
+export const processMentionDecoration: ProcessDecorationFn = ({
   node,
   append,
-  cursorPos,
-  { state, hasFocus },
-) => {
+  selection,
+  view: { state, hasFocus },
+}) => {
   if (node.name === "MentionData") {
     const isActive =
       node &&
-      cursorPos.from >= node.from &&
-      cursorPos.to <= node.to &&
+      selection.from >= node.from &&
+      selection.to <= node.to &&
       !state.readOnly &&
       hasFocus;
 

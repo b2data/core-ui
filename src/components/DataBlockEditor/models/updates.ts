@@ -7,8 +7,12 @@ export type SendDataBlockEditorUpdates =
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.AddBlock,
       {
-        block: Pick<DataBlockBase, "id" | "type" | "offset" | "hidePrefix">;
-        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
+        blocks: (Pick<
+          DataBlockBase,
+          "id" | "type" | "offset" | "hidePrefix"
+        > & {
+          variants: Pick<DataBlockVariant, "id" | "data" | "isCurrent">[];
+        })[];
         index: number;
       }
     >
@@ -73,7 +77,7 @@ export type ReceiveDataBlockEditorUpdates =
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.AddBlock,
       {
-        block: DataBlockBase;
+        blocks: DataBlockBase[];
         index: number;
       }
     >

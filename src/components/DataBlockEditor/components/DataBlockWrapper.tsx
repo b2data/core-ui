@@ -165,7 +165,7 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
         my: 1,
         ...(index === focused
           ? {
-              "&:focus-within .data-block__actions": { opacity: 1 },
+              // "&:focus-within .data-block__actions": { opacity: 1 },
               "&:focus-within .data-block__variant-indicator": { opacity: 1 },
             }
           : {}),

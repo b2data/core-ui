@@ -6,6 +6,13 @@ import {
   ConfirmationDialogProps,
 } from "./ConfirmationDialog";
 
+export type OpenConfirmationDialogProps = {
+  title: string;
+  content: string;
+  acceptBtn: Omit<ConfirmationDialogProps["acceptBtn"], "onClick">;
+  cancelText: string;
+};
+
 export const useConfirmationDialog = () => {
   const [dialogProps, setDialogProps] =
     useState<ConfirmationDialogProps | null>(null);
@@ -15,12 +22,7 @@ export const useConfirmationDialog = () => {
     content,
     acceptBtn,
     cancelText,
-  }: {
-    title: string;
-    content: string;
-    acceptBtn: Omit<ConfirmationDialogProps["acceptBtn"], "onClick">;
-    cancelText: string;
-  }) => {
+  }: OpenConfirmationDialogProps) => {
     return new Promise((resolve) => {
       const onCancel = () => {
         setDialogProps(null);

@@ -4,17 +4,17 @@ import { ProcessDecorationFn } from "../model";
 
 import { formattingDecoration } from "./formatting";
 
-export const processCodeblockDecoration: ProcessDecorationFn = (
+export const processCodeblockDecoration: ProcessDecorationFn = ({
   node,
   append,
-  cursorPos,
-  { state, hasFocus },
-) => {
+  selection,
+  view: { state, hasFocus },
+}) => {
   if (node.name === "CodeBlock") {
     const isActive =
       node &&
-      cursorPos.from >= node.from &&
-      cursorPos.to <= node.to &&
+      selection.from >= node.from &&
+      selection.to <= node.to &&
       !state.readOnly &&
       hasFocus;
 
