@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { EditorView } from "@codemirror/view";
 
 import { FormHelperText } from "../FormHelperText";
@@ -35,6 +35,10 @@ export interface MarkdownFieldProps {
    */
   helperText?: ReactNode;
   /**
+   * The default value of the field
+   */
+  defaultValue?: string;
+  /**
    * The Markdown value to be shown
    */
   value?: string;
@@ -68,6 +72,7 @@ export const MarkdownField = React.forwardRef(
       error,
       placeholder,
       required,
+      defaultValue,
       value,
       margin = "none",
       minRows = 1,
@@ -78,9 +83,22 @@ export const MarkdownField = React.forwardRef(
     }: MarkdownFieldProps,
     ref: React.Ref<HTMLElement>,
   ) => {
-    const [isFocus, setIsFocus] = React.useState(false);
+    const [isFocus, setIsFocus] = useState(false);
+    const [val, setVal] = useState(defaultValue);
 
     const editor = useRef<EditorView>(null);
+
+    useEffect(() => {
+      if (value !== undefined) {
+        setVal(value);
+      }
+    }, [value]);
+
+    useEffect(() => {
+      if (defaultValue !== undefined) {
+        setVal(defaultValue);
+      }
+    }, [defaultValue]);
 
     return (
       <Box
@@ -115,7 +133,7 @@ export const MarkdownField = React.forwardRef(
             transform: "translate(0, 16px) scale(1)",
             transition:
               "color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
-            ...(value || placeholder || isFocus
+            ...(val || placeholder || isFocus
               ? {
                   transform: "translate(0, -1.5px) scale(0.75)",
                 }
@@ -146,7 +164,7 @@ export const MarkdownField = React.forwardRef(
         </Box>
         <DataBlock
           ref={editor}
-          content={value}
+          content={val}
           editable={!disabled}
           readOnly={readOnly}
           onBlur={(v) => {

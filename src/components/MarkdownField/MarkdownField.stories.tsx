@@ -23,7 +23,7 @@ export const Base: StoryObj<MarkdownFieldProps> = {
     // readOnly: true,
   },
   render: (props) => {
-    const [val, setVal] = useState("");
-    return <MarkdownField value={val} onBlur={setVal} {...props} />;
+    const [val, setVal] = useState("Demo");
+    return <MarkdownField defaultValue={val} onChange={setVal} {...props} />;
   },
 };
