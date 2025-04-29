@@ -89,6 +89,7 @@ export const ListItem = React.forwardRef(
       disableRipple,
       selected,
       disabled,
+      onClick,
       ...props
     }: ListItemProps,
     ref: React.Ref<HTMLLIElement>,
@@ -198,6 +199,7 @@ export const ListItem = React.forwardRef(
         ref={ref}
         {...props}
         disablePadding
+        onClick={disabled ? undefined : onClick}
         secondaryAction={secondaryAction}
         onContextMenu={handleRightClick}
       >
@@ -214,6 +216,7 @@ export const ListItem = React.forwardRef(
       <MuiListItem
         ref={ref}
         {...props}
+        onClick={disabled ? undefined : onClick}
         secondaryAction={secondaryAction}
         onContextMenu={handleRightClick}
       >

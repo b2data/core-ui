@@ -96,6 +96,9 @@ const autocompleteTheme: ComponentThemeOverride["MuiAutocomplete"] = {
   defaultProps: {
     size: "small",
     fullWidth: true,
+    slotProps: {
+      paper: { sx: { maxHeight: 500 } },
+    },
   },
 };
 
