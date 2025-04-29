@@ -60,7 +60,15 @@ export type MarkdownPluginProps = {
     query?: string;
     docId?: string;
     versionId?: string;
-  }) => Promise<{ id: string; label: string; displayLabel?: string }[]>;
+  }) => Promise<
+    {
+      id: string;
+      label: string;
+      displayLabel?: string;
+      preselectId?: string;
+      preselectLabel?: string;
+    }[]
+  >;
   onSearchMentions?: (request: { query?: string }) => Promise<
     {
       id: string;

@@ -37,10 +37,14 @@ export const getReferenceCommand =
       root &&
       ["ReferenceData", "ReferenceDataPreview"].includes(root?.name || "")
     ) {
-      const ids = (
-        context.state.sliceDoc(root.from + size, root.to - 2).split("|")[1] ||
-        ""
-      ).split("#");
+      const fullText = context.state.sliceDoc(root.from + size, root.to - 2);
+
+      if (fullText.split("|").length > 1) {
+        // Skip if `|` more than 1
+        return null;
+      }
+
+      const ids = (fullText.split("|")[1] || "").split("#");
 
       docId = ids[0];
       versionId = ids[1];
@@ -81,36 +85,47 @@ export const getReferenceCommand =
 
       return {
         from: fromWord,
-        options: suggestions.map(({ label, displayLabel, id }) => ({
-          label,
-          displayLabel,
-          apply: (view: EditorView) => {
-            let insert = "";
-            if (versionId) {
-              insert = `${docName}#${versionName}#${label}|${docId}#${versionId}#${id}`;
-            } else if (docId) {
-              insert = `${docName}#${label}|${docId}#${id}`;
-            } else {
-              insert = `${label}|${id}`;
-            }
+        options: suggestions.map(
+          ({ label, displayLabel, id, preselectLabel, preselectId }) => ({
+            label,
+            displayLabel,
+            apply: (view: EditorView) => {
+              let insert = "";
+              if (versionId) {
+                insert = `${docName}#${versionName}#${label}|${docId}#${versionId}#${id}`;
+              } else if (docId) {
+                insert = `${docName}#${label}${preselectLabel ? `#${preselectLabel}` : ""}|${docId}#${id}${preselectId ? `#${preselectId}` : ""}`;
+              } else {
+                insert = `${label}${preselectLabel ? `#${preselectLabel}` : ""}|${id}${preselectId ? `#${preselectId}` : ""}`;
+              }
 
-            const from =
-              query.length > 1
-                ? (root?.from || word.from) + size
-                : word.from + size;
+              const from =
+                query.length > 1
+                  ? (root?.from || word.from) + size
+                  : word.from + size;
 
-            const to =
-              query.length > 1 ? (root?.to ? root?.to - 2 : word.to) : word.to;
+              const to =
+                query.length > 1
+                  ? root?.to
+                    ? root?.to - 2
+                    : word.to
+                  : word.to;
 
-            view.dispatch({
-              changes: { from, to, insert },
-              selection: {
-                anchor: fromWord + label.length,
-                head: fromWord + label.length,
-              },
-            });
-          },
-        })),
+              const moveCursor =
+                fromWord +
+                label.length +
+                (preselectLabel ? preselectLabel.length + 1 : 0);
+
+              view.dispatch({
+                changes: { from, to, insert },
+                selection: {
+                  anchor: moveCursor,
+                  head: moveCursor,
+                },
+              });
+            },
+          }),
+        ),
       };
     } catch (error) {
       // Handle errors gracefully

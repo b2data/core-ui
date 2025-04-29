@@ -256,7 +256,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
 
     case DataBlockEditorPublicAction.DeleteBlock: {
       const index = state.blocks.findIndex((b) => b.id === data.blockId);
-      if (index > -1) {
+      if (index > -1 && state.blocks.length > 1) {
         const blocks = [...state.blocks];
         const deleted = blocks.splice(index, 1);
         state.onChange?.({

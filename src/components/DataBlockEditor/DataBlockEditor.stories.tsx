@@ -339,22 +339,16 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                 versionId
                   ? `https://localhost:8080/documents/files/${versionId}`
                   : "",
-              onSearchReference: async ({ query = "", docId }) => {
+              onSearchReference: async ({ query = "" }) => {
                 return new Promise((resolve) => {
-                  if (docId === "56f2fb22-2ed7-4d77-b4fa-8fab55c90d93") {
-                    return resolve([
-                      {
-                        label: "1",
-                        id: "6cac5fb7-5416-4749-9ada-0c4920aa01df",
-                      },
-                    ]);
-                  }
                   setTimeout(() => {
                     resolve(
                       [
                         {
                           label: "ChatGPT Image.png",
                           id: "56f2fb22-2ed7-4d77-b4fa-8fab55c90d93",
+                          preselectLabel: "1",
+                          preselectId: "6cac5fb7-5416-4749-9ada-0c4920aa01df",
                         },
                         {
                           label: `Doc 1`,
