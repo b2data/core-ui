@@ -96,13 +96,15 @@ export const DataBlockAddTypePopover: FC<DataBlockAddTypePopoverProps> = ({
             id: uuid(),
             type: option.id,
             offset,
-            createdBy: currentUser.id,
+            hidePrefix: false,
             variants: [
               {
                 id: uuid(),
                 data: { text: option.defaultValue || "" },
                 isCurrent: true,
                 createdBy: currentUser.id,
+                createdByData: currentUser,
+                votes: [],
               },
             ],
           },

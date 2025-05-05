@@ -1,10 +1,5 @@
-import { equals, pick } from "ramda";
-
-import {
-  DataBlockBase,
-  DataBlockEditorPublicAction,
-  DataBlockEditorState,
-} from "../models";
+import { equals } from "ramda";
+import { DataBlockEditorPublicAction, DataBlockEditorState } from "../models";
 import { getPrefixesData } from "../utils";
 
 import {
@@ -16,10 +11,16 @@ export const initialState: DataBlockEditorState = {
   editable: false,
   showPrefix: false,
   showVariants: false,
-  focused: 0,
+  focused: undefined,
   focusedEnd: false,
   canChangeVariants: false,
-  currentUser: { id: "", firstName: "" },
+  currentUser: {
+    id: "",
+    avatar: "",
+    firstName: "",
+    lastName: "",
+    middleName: "",
+  },
   getFilesUrl: () => "/",
   blocks: [],
   tools: {},
@@ -146,29 +147,12 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
       const { blocks, index } = data;
       const newBlocks = [...state.blocks];
 
-      newBlocks.splice(
-        index,
-        0,
-        ...blocks.map(
-          (b) =>
-            ({
-              ...b,
-              createdBy: state.currentUser.id,
-              variants: b.variants.map((v) => ({
-                ...v,
-                createdBy: state.currentUser.id,
-                votes: [],
-              })),
-            }) as DataBlockBase,
-        ),
-      );
+      newBlocks.splice(index, 0, ...blocks);
 
       state.onChange?.({
         action: DataBlockEditorPublicAction.AddBlock,
         data: {
-          blocks: blocks.map((b) => ({
-            ...pick(["id", "type", "offset", "hidePrefix", "variants"], b),
-          })),
+          blocks,
           index,
         },
       });
@@ -212,8 +196,8 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         state.onChange?.({
           action: DataBlockEditorPublicAction.EditBlock,
           data: {
-            block: pick(["id", "type", "offset", "hidePrefix"], block),
-            variant: pick(["id", "data", "isCurrent"], variant),
+            block,
+            variant,
           },
         });
 
@@ -288,7 +272,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
           action: DataBlockEditorPublicAction.AddVariant,
           data: {
             blockId,
-            variant: pick(["id", "data", "isCurrent"], variant),
+            variant,
           },
         });
         return { ...state, blocks };
@@ -308,7 +292,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
         if (index2 > -1) {
           const variants = [...blocks[index].variants];
           variants.splice(index2, 1, {
-            ...blocks[index].variants[index2],
+            ...variants[index2],
             ...variant,
           });
           blocks.splice(index, 1, {
@@ -327,10 +311,7 @@ export const dataBlockEditorStateReducer: DataBlockEditorStateReducer = (
             action: DataBlockEditorPublicAction.EditVariant,
             data: {
               blockId,
-              variant: pick(["id", "data", "isCurrent"], {
-                ...variants[index2],
-                ...variant,
-              }),
+              variant,
             },
           });
           return { ...state, blocks };

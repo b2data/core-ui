@@ -15,6 +15,7 @@ import {
   DataBlockEditorApi,
   DataBlockEditorProps,
   DataBlockEditorPublicAction,
+  DataBlockUserData,
   SendDataBlockEditorUpdates,
 } from "./models";
 
@@ -28,12 +29,19 @@ const meta: Meta<DataBlockEditorProps> = {
 
 export default meta;
 
-const createdByData = { id: "user1", firstName: "Demo ", lastName: "user" };
+const createdByData: DataBlockUserData = {
+  id: "user1",
+  avatar: "",
+  firstName: "Demo ",
+  lastName: "user",
+  middleName: "",
+};
 
 const def = Array.from(new Array(10)).map(() => ({
   id: uuid(),
   type: "text",
   offset: 0,
+  hidePrefix: false,
   variants: [
     {
       id: uuid(),
@@ -41,7 +49,7 @@ const def = Array.from(new Array(10)).map(() => ({
       isCurrent: true,
       votes: [],
       createdBy: "user1",
-      createdByData: { id: "user1", firstName: "John" },
+      createdByData,
     },
     {
       id: uuid(),
@@ -49,7 +57,13 @@ const def = Array.from(new Array(10)).map(() => ({
       isCurrent: false,
       votes: [],
       createdBy: "user2",
-      createdByData: { id: "user2", firstName: "Maria" },
+      createdByData: {
+        id: "user2",
+        avatar: "",
+        firstName: "Maria",
+        lastName: "",
+        middleName: "",
+      },
     },
   ],
 }));
@@ -64,6 +78,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "0",
         type: "text",
         offset: 0,
+        hidePrefix: false,
         variants: [
           {
             id: "11",
@@ -73,7 +88,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: true,
             votes: [],
             createdBy: "user1",
-            createdByData: { id: "user1", firstName: "John 1" },
+            createdByData: {
+              id: "user1",
+              avatar: "",
+              firstName: "John 1",
+              lastName: "",
+              middleName: "",
+            },
           },
         ],
       },
@@ -81,6 +102,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "1",
         type: "text",
         offset: 0,
+        hidePrefix: false,
         variants: [
           {
             id: "11",
@@ -90,7 +112,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: true,
             votes: [],
             createdBy: "user1",
-            createdByData: { id: "user1", firstName: "John 1" },
+            createdByData: {
+              id: "user1",
+              avatar: "",
+              firstName: "John 1",
+              lastName: "",
+              middleName: "",
+            },
           },
           {
             id: "12",
@@ -98,7 +126,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: false,
             votes: [],
             createdBy: "user2",
-            createdByData: { id: "user2", firstName: "Maria" },
+            createdByData: {
+              id: "user2",
+              avatar: "",
+              firstName: "Maria",
+              lastName: "",
+              middleName: "",
+            },
           },
         ],
       },
@@ -106,6 +140,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "2",
         type: "header",
         offset: 0,
+        hidePrefix: false,
         variants: [
           {
             id: "22",
@@ -113,7 +148,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: true,
             votes: [],
             createdBy: "user1",
-            createdByData: { id: "user1", firstName: "John" },
+            createdByData: {
+              id: "user1",
+              avatar: "",
+              firstName: "John 1",
+              lastName: "",
+              middleName: "",
+            },
           },
         ],
       },
@@ -121,6 +162,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "3",
         type: "text",
         offset: 0,
+        hidePrefix: false,
         variants: [
           {
             id: "22",
@@ -133,7 +175,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: true,
             votes: [],
             createdBy: "user1",
-            createdByData: { id: "user3", firstName: "John" },
+            createdByData: {
+              id: "user1",
+              avatar: "",
+              firstName: "John 1",
+              lastName: "",
+              middleName: "",
+            },
           },
         ],
       },
@@ -141,6 +189,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "4",
         type: "heading",
         offset: 0,
+        hidePrefix: false,
         variants: [
           {
             id: "22",
@@ -151,7 +200,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: true,
             votes: [],
             createdBy: "user3",
-            createdByData: { id: "user3", firstName: "John" },
+            createdByData: {
+              id: "user3",
+              avatar: "",
+              firstName: "John",
+              lastName: "",
+              middleName: "",
+            },
           },
         ],
       },
@@ -159,6 +214,7 @@ export const Base: StoryObj<DataBlockEditorProps> = {
         id: "5",
         type: "text",
         offset: 0,
+        hidePrefix: false,
         variants: [
           {
             id: "22",
@@ -168,7 +224,13 @@ export const Base: StoryObj<DataBlockEditorProps> = {
             isCurrent: true,
             votes: [],
             createdBy: "user1",
-            createdByData: { id: "user3", firstName: "John" },
+            createdByData: {
+              id: "user3",
+              avatar: "",
+              firstName: "John",
+              lastName: "",
+              middleName: "",
+            },
           },
         ],
       },
@@ -189,7 +251,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
                 index: data.index,
                 blocks: data.blocks.map((b) => ({
                   ...b,
-                  createdByData,
                   variants: b.variants.map((v) => ({
                     ...v,
                     createdByData,
@@ -205,7 +266,6 @@ export const Base: StoryObj<DataBlockEditorProps> = {
               data: {
                 block: {
                   ...data.block,
-                  createdByData,
                   variants: data.variant
                     ? [{ ...data.variant, createdByData, votes: [] }]
                     : [],

@@ -54,13 +54,15 @@ export const DataBlockContent: FC<DataBlockContentProps> = ({
             id: uuid(),
             type: "text",
             offset: block.offset,
-            createdBy: currentUser.id,
+            hidePrefix: false,
             variants: [
               {
                 id: uuid(),
                 data: { text },
                 isCurrent: true,
                 createdBy: currentUser.id,
+                createdByData: currentUser,
+                votes: [],
               },
             ],
           })),

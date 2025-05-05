@@ -110,9 +110,7 @@ type MergeUpdates = SetDataBlockEditorAction<
 type AddBlock = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.AddBlock,
   {
-    blocks: (Omit<DataBlockBase, "variants"> & {
-      variants: Omit<DataBlockVariant, "votes">[];
-    })[];
+    blocks: DataBlockBase[];
     index: number;
   }
 >;
@@ -127,7 +125,11 @@ type EditBlock = SetDataBlockEditorAction<
 
 type MoveBlock = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.MoveBlock,
-  { blockId: string; oldIndex: number; targetIndex: number }
+  {
+    blockId: string;
+    oldIndex: number;
+    targetIndex: number;
+  }
 >;
 
 type DeleteBlock = SetDataBlockEditorAction<
@@ -137,27 +139,44 @@ type DeleteBlock = SetDataBlockEditorAction<
 
 type AddVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.AddVariant,
-  { blockId: string; variant: Omit<DataBlockVariant, "votes"> }
+  {
+    blockId: string;
+    variant: Omit<DataBlockVariant, "votes">;
+  }
 >;
 
 type EditVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.EditVariant,
-  { blockId: string; variant: Omit<DataBlockVariant, "votes"> }
+  {
+    blockId: string;
+    variant: Omit<DataBlockVariant, "votes">;
+  }
 >;
 
 type DeleteVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.DeleteVariant,
-  { blockId: string; variantId: string }
+  {
+    blockId: string;
+    variantId: string;
+  }
 >;
 
 type VoteVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.VoteVariant,
-  { blockId: string; variantId: string; createdByData: DataBlockUserData }
+  {
+    blockId: string;
+    variantId: string;
+    createdByData: DataBlockUserData;
+  }
 >;
 
 type UnVoteVariant = SetDataBlockEditorAction<
   DataBlockEditorPublicAction.UnVoteVariant,
-  { blockId: string; variantId: string; createdByData: DataBlockUserData }
+  {
+    blockId: string;
+    variantId: string;
+    createdByData: DataBlockUserData;
+  }
 >;
 
 export type DataBlockEditorActions =

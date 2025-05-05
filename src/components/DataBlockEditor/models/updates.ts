@@ -1,26 +1,24 @@
 import { SetDataBlockEditorAction } from "../store";
-
-import { DataBlockBase, DataBlockUserData, DataBlockVariant } from "./blocks";
+import {
+  DataBlockBase,
+  DataBlockVariant,
+  DataBlockVariantVote,
+} from "./blocks";
 import { DataBlockEditorPublicAction } from "./state";
 
 export type SendDataBlockEditorUpdates =
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.AddBlock,
       {
-        blocks: (Pick<
-          DataBlockBase,
-          "id" | "type" | "offset" | "hidePrefix"
-        > & {
-          variants: Pick<DataBlockVariant, "id" | "data" | "isCurrent">[];
-        })[];
+        blocks: DataBlockBase[];
         index: number;
       }
     >
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.EditBlock,
       {
-        block: Pick<DataBlockBase, "id" | "type" | "offset" | "hidePrefix">;
-        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
+        block: Omit<DataBlockBase, "variants">;
+        variant: Omit<DataBlockVariant, "votes">;
       }
     >
   | SetDataBlockEditorAction<
@@ -41,14 +39,14 @@ export type SendDataBlockEditorUpdates =
       DataBlockEditorPublicAction.AddVariant,
       {
         blockId: string;
-        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
+        variant: Omit<DataBlockVariant, "votes">;
       }
     >
   | SetDataBlockEditorAction<
       DataBlockEditorPublicAction.EditVariant,
       {
         blockId: string;
-        variant: Pick<DataBlockVariant, "id" | "data" | "isCurrent">;
+        variant: Omit<DataBlockVariant, "votes">;
       }
     >
   | SetDataBlockEditorAction<
@@ -138,11 +136,7 @@ export type ReceiveDataBlockEditorUpdates =
         variantId: string;
         oldBlockId?: string;
         oldVariantId?: string;
-        vote: {
-          createdBy: string;
-          createdByData: DataBlockUserData;
-          createdAt: Date;
-        };
+        vote: DataBlockVariantVote;
       }
     >
   | SetDataBlockEditorAction<
