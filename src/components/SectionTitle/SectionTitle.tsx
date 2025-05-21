@@ -13,7 +13,7 @@ export interface SectionTitleProps {
   /**
    * Main component text.
    */
-  title: string;
+  title: React.ReactNode;
   /**
    * The title TypographyProps
    */
@@ -21,7 +21,7 @@ export interface SectionTitleProps {
   /**
    * Secondary component text.
    */
-  subtitle?: string | React.ReactNode;
+  subtitle?: React.ReactNode;
   /**
    * Icon shows before title
    */
