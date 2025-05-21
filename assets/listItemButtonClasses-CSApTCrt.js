@@ -1,0 +1,1 @@
+import{g as e}from"./generateUtilityClasses-KoSbOHxf.js";import{g as s}from"./index-PKGOc6w3.js";function o(t){return s("MuiListItemButton",t)}const a=e("MuiListItemButton",["root","focusVisible","dense","alignItemsFlexStart","disabled","divider","gutters","selected"]);export{o as g,a as l};
