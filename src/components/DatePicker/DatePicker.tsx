@@ -97,6 +97,11 @@ export const DatePicker = React.forwardRef(function DatePicker(
         {...props}
         slotProps={{
           openPickerButton: { size: "small" },
+          textField: {
+            error: props.error,
+            disabled: props.disabled,
+            ...props.slotProps?.textField,
+          },
           ...props.slotProps,
         }}
       />

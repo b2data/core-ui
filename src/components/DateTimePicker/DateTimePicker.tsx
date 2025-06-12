@@ -89,13 +89,12 @@ export const DateTimePicker = React.forwardRef(function DateTimePicker(
         {...props}
         slotProps={{
           openPickerButton: { size: "small" },
-          ...props.slotProps,
-        }}
-        sx={{
-          ...props.sx,
-          ".MuiButtonBase-root": {
-            minWidth: "auto",
+          textField: {
+            error: props.error,
+            disabled: props.disabled,
+            ...props.slotProps?.textField,
           },
+          ...props.slotProps,
         }}
       />
       {helperText && (
