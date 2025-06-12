@@ -1,0 +1,5 @@
+import{T as m}from"./Tab-N2ajhOIk.js";import"./jsx-runtime-D_zvdyIk.js";import"./index-DQLiH3RP.js";import"./Tab-BKMEeBZ6.js";import"./index-PKGOc6w3.js";import"./identifier-DtIXL9n7.js";import"./memoTheme-BuPib-dq.js";import"./styled-BJ0TTCEB.js";import"./DefaultPropsProvider-CbX9bpU7.js";import"./generateUtilityClasses-KoSbOHxf.js";import"./ButtonBase-BOqIy2IP.js";import"./useTimeout-fSo4lzeS.js";import"./TransitionGroupContext-BSJTrji_.js";import"./emotion-react.browser.esm-cvNfxSC7.js";import"./useForkRef-8i08ZgmQ.js";import"./useEventCallback-Drq2SckL.js";import"./useEnhancedEffect-BJoEgHYV.js";import"./isFocusVisible-B8k4qzLc.js";const O={title:"Components/Tabs/Tab",component:m,tags:["autodocs"]},o={args:{label:"Tab one"}};var r,t,a;o.parameters={...o.parameters,docs:{...(r=o.parameters)==null?void 0:r.docs,source:{originalSource:`{
+  args: {
+    label: "Tab one"
+  }
+}`,...(a=(t=o.parameters)==null?void 0:t.docs)==null?void 0:a.source}}};const S=["Base"];export{o as Base,S as __namedExportsOrder,O as default};
