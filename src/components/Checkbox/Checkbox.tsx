@@ -14,6 +14,7 @@ export interface CheckboxProps
     | "checkedIcon"
     | "defaultChecked"
     | "disabled"
+    | "disableRipple"
     | "icon"
     | "id"
     | "indeterminate"
