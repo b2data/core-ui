@@ -162,7 +162,6 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
       className="data-block"
       sx={{
         position: "relative",
-        my: 1,
         ...(index === focused
           ? {
               // "&:focus-within .data-block__actions": { opacity: 1 },
@@ -171,6 +170,8 @@ export const DataBlockWrapper: FC<DataBlockWrapperProps> = ({
           : {}),
         "&:hover .data-block__actions": { opacity: 1 },
         "&:hover .data-block__variant-indicator": { opacity: 1 },
+        mb: 1,
+        mt: prefixVariant.includes("h") ? "1.5rem" : 1,
         ...sx,
       }}
     >
