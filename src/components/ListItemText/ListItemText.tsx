@@ -25,7 +25,7 @@ export interface ListItemTextProps
   /**
    * Tooltip properties `TooltipProps`
    */
-  tooltipProps?: TooltipProps;
+  tooltipProps?: Partial<TooltipProps>;
 }
 
 export const ListItemText = ({

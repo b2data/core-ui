@@ -163,6 +163,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
         sx={{ gridArea: "operation" }}
         value={operator}
         operators={operators}
+        type={type}
         isEditable={isEditable && !disabled}
         onChange={(v) =>
           onChange({

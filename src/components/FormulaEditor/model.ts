@@ -1,6 +1,6 @@
 export type FormulaRow = {
   index: number;
-  type: "text" | "number" | "date";
+  type: "text" | "number" | "date" | "boolean";
   field?: FormulaSearchOption & { disableValueCreation?: boolean };
   operator?: FormulaOperator;
   value?: FormulaSearchOption | FormulaSearchOption[];
@@ -31,6 +31,7 @@ export type FormulaTranslation = {
   moveFilterUp?: string;
   moveFilterDown?: string;
   addNewOption?: string;
+  operators?: Record<FormulaOperator, string>;
 };
 
 export type FormulaSearchOption = {
