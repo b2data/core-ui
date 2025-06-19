@@ -150,6 +150,8 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           sx={{
             "& .MuiInputBase-root": {
               height: "auto",
+              minHeight: "auto",
+              p: 0,
               "&:before": { content: "none" },
               "&:after": { content: "none" },
             },
