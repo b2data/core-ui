@@ -1,7 +1,10 @@
 export type FormulaRow = {
   index: number;
   type: "text" | "number" | "date" | "boolean";
-  field?: FormulaSearchOption & { disableValueCreation?: boolean };
+  field?: FormulaSearchOption & {
+    disableValueCreation?: boolean;
+    type?: "text" | "number" | "date" | "boolean";
+  };
   operator?: FormulaOperator;
   value?: FormulaSearchOption | FormulaSearchOption[];
   unit?: string;

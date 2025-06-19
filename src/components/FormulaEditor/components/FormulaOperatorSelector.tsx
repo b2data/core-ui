@@ -105,7 +105,7 @@ export const FormulaOperatorSelector: React.FC<
                 key={opt.id}
                 text={opt.label}
                 textProps={{
-                  withTooltip: true,
+                  withTooltip: opt.tooltip !== opt.label,
                   tooltipProps: { text: opt.tooltip },
                 }}
                 asButton

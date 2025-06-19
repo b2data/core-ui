@@ -38,7 +38,7 @@ export type FormulaConditionRowProps = FormulaRow & {
   }) => Promise<FormulaSearchOption[]>;
   onFieldCreation?: (data: {
     inputValue: string;
-    onCreate: (data: FormulaSearchOption) => void;
+    onCreate: (data: FormulaRow["field"]) => void;
   }) => void;
   onValueCreation?: (data: {
     inputValue: string;
@@ -100,6 +100,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
             onFieldCreation({
               inputValue: v.inputValue,
               onCreate: (changes) =>
+                changes &&
                 onChange({
                   field: changes,
                   unit: changes.unit,
@@ -107,7 +108,8 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                   coeff: changes.coeff,
                   value: undefined,
                   type:
-                    changes?.systemUnit === "s"
+                    changes.type ||
+                    (changes?.systemUnit === "s"
                       ? "date"
                       : ![
                             FormulaOperator.Equal,
@@ -116,7 +118,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                         ? "number"
                         : changes?.systemUnit
                           ? "number"
-                          : "text",
+                          : "text"),
                 }),
             });
           } else if (!Array.isArray(v)) {
