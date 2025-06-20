@@ -1,0 +1,5 @@
+import{L as e}from"./ListItemButton-neOgDc_X.js";import"./jsx-runtime-D_zvdyIk.js";import"./index-DQLiH3RP.js";import"./generateUtilityClass-Crd22lsZ.js";import"./createTheme-CpmnfvGf.js";import"./memoTheme-6CX_wYOL.js";import"./styled-DnAalvCx.js";import"./DefaultPropsProvider-D7SvoM6x.js";import"./ListContext-RlEJDmc_.js";import"./listItemButtonClasses-UXmFVBkX.js";import"./generateUtilityClasses-C4v8O9Po.js";import"./useEnhancedEffect-BJoEgHYV.js";import"./useForkRef-8i08ZgmQ.js";import"./ButtonBase-5iSMQWv2.js";import"./useTimeout-fSo4lzeS.js";import"./TransitionGroupContext-BSJTrji_.js";import"./emotion-react.browser.esm-_xrAgkY8.js";import"./useEventCallback-Drq2SckL.js";import"./isFocusVisible-B8k4qzLc.js";const E={title:"Components/List/List Item Button",component:e,tags:["autodocs"]},t={args:{children:"Text"}};var o,r,m;t.parameters={...t.parameters,docs:{...(o=t.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    children: "Text"
+  }
+}`,...(m=(r=t.parameters)==null?void 0:r.docs)==null?void 0:m.source}}};const O=["Base"];export{t as Base,O as __namedExportsOrder,E as default};
