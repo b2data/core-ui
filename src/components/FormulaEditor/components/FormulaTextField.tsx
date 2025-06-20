@@ -45,7 +45,7 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export type FormulaTextFieldProps = {
   type: FormulaRow["type"];
-  value?: FormulaSearchOption | FormulaSearchOption[];
+  value?: null | FormulaSearchOption | FormulaSearchOption[];
   multiple?: boolean;
   placeholder?: string;
   isEditable?: boolean;
@@ -53,6 +53,7 @@ export type FormulaTextFieldProps = {
   disableValueCreation?: boolean;
   onChange?: (
     value?:
+      | null
       | (FormulaSearchOption & { inputValue?: string })
       | (FormulaSearchOption & { inputValue?: string })[],
   ) => void;
@@ -106,6 +107,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
 
   const handleChange = (
     val?:
+      | null
       | (FormulaSearchOption & { inputValue?: string })
       | FormulaSearchOption[],
   ) => {
@@ -139,9 +141,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           value={value ? dayjs((value as FormulaSearchOption).id) : null}
           onChange={(val) =>
             handleChange(
-              val
-                ? { id: val?.toISOString(), name: val?.toISOString() }
-                : undefined,
+              val ? { id: val?.toISOString(), name: val?.toISOString() } : null,
             )
           }
           slotProps={{ textField: { startAdornment, endAdornment } }}
@@ -179,10 +179,9 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           defaultValue={(value as FormulaSearchOption)?.id || ""}
           onBlur={(e) => {
             const newVal = Number(e.target.value);
-            handleChange({
-              id: !isNaN(newVal) ? `${newVal}` : e.target.value,
-              name: !isNaN(newVal) ? `${newVal}` : e.target.value,
-            });
+            handleChange(
+              !isNaN(newVal) ? { id: `${newVal}`, name: `${newVal}` } : null,
+            );
           }}
           sx={{
             p: 0,
@@ -205,6 +204,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         clearOnBlur
         disableCloseOnSelect={multiple}
         multiple={multiple}
+        disableClearable={multiple}
         readOnly={!isEditable}
         onOpen={isEditable ? () => loadData("") : undefined}
         loadingText={i18n?.loading}

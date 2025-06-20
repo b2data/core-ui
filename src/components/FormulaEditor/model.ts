@@ -6,7 +6,7 @@ export type FormulaRow = {
     type?: "text" | "number" | "date" | "boolean";
   };
   operator?: FormulaOperator;
-  value?: FormulaSearchOption | FormulaSearchOption[];
+  value?: null | FormulaSearchOption | FormulaSearchOption[];
   unit?: string;
   systemUnit?: string;
   coeff?: number;

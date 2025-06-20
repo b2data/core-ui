@@ -1,14 +1,10 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
-import {
-  AdapterDayjs,
-  DatePicker,
-  DatePickerProps,
-  DatePickerProvider,
-} from "./DatePicker";
+import { DatePicker, DatePickerProps } from "./DatePicker";
 
 import type { Meta, StoryObj } from "@storybook/react";
+import { Preview } from ".storybook/components";
 
 const meta: Meta<typeof DatePicker> = {
   title: "Components/Inputs/Date Picker",
@@ -21,9 +17,9 @@ export default meta;
 export const Base: StoryObj<DatePickerProps> = {
   args: {},
   render: (props) => (
-    <DatePickerProvider dateAdapter={AdapterDayjs}>
+    <Preview>
       <DatePicker {...props} />
-    </DatePickerProvider>
+    </Preview>
   ),
 };
 
@@ -33,27 +29,18 @@ export const WithError: StoryObj<DatePickerProps> = {
     helperText: "Invalid date",
   },
   render: (props) => (
-    <DatePickerProvider dateAdapter={AdapterDayjs}>
+    <Preview>
       <DatePicker {...props} />
-    </DatePickerProvider>
+    </Preview>
   ),
 };
 
 export const DefaultValue: StoryObj<DatePickerProps> = {
   args: {},
   render: (props) => (
-    <DatePickerProvider dateAdapter={AdapterDayjs}>
+    <Preview>
       <DatePicker defaultValue={dayjs("2022-01-01T10:20:33")} {...props} />
       <DatePicker defaultValue={null} {...props} />
-    </DatePickerProvider>
-  ),
-};
-
-export const LocaleRU: StoryObj<DatePickerProps> = {
-  args: {},
-  render: (props) => (
-    <DatePickerProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-      <DatePicker defaultValue={dayjs("2022-01-01T10:20:33")} {...props} />
-    </DatePickerProvider>
+    </Preview>
   ),
 };

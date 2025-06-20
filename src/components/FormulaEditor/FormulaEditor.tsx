@@ -104,8 +104,10 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
 
   const commitChanges = (result: FormulaRow[]) => {
     const isValidRows =
-      result.filter((opt) => !(opt.field && opt.value && opt.operator))
-        .length === 0;
+      result.filter(
+        (opt) =>
+          !(opt.field && (opt.value || opt.value == null) && opt.operator),
+      ).length === 0;
     if (isValidRows && onChange) {
       onChange(result);
     }

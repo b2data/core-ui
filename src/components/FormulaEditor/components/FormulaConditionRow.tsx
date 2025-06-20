@@ -121,7 +121,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                           : "text"),
                 }),
             });
-          } else if (!Array.isArray(v)) {
+          } else if (!Array.isArray(v) && v) {
             onChange({
               field: v,
               unit: v?.unit,
@@ -175,7 +175,8 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                 ? { id: "*", name: i18n?.anyValue || "Any value" }
                 : undefined,
             type:
-              systemUnit === "s"
+              field?.type ||
+              (systemUnit === "s"
                 ? "date"
                 : ![FormulaOperator.Equal, FormulaOperator.NotEqual].includes(
                       v as FormulaOperator,
@@ -183,7 +184,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
                   ? "number"
                   : systemUnit
                     ? "number"
-                    : "text",
+                    : "text"),
           })
         }
       />
@@ -198,7 +199,7 @@ export const FormulaConditionRow: React.FC<FormulaConditionRowProps> = ({
             ? { id: "*", name: i18n?.anyValue || "Any value" }
             : value
         }
-        type={operator === FormulaOperator.Exist ? "text" : type}
+        type={type}
         multiple={type === "text" && operator !== FormulaOperator.Exist}
         i18n={i18n}
         placeholder={i18n?.valuePlaceholder || "Value"}

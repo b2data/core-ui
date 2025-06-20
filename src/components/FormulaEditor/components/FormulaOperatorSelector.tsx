@@ -48,7 +48,6 @@ export const FormulaOperatorSelector: React.FC<
         FormulaOperator.LessEqual,
         FormulaOperator.More,
         FormulaOperator.MoreEqual,
-        FormulaOperator.Exist,
       ],
       date: [
         FormulaOperator.Equal,
@@ -57,7 +56,6 @@ export const FormulaOperatorSelector: React.FC<
         FormulaOperator.LessEqual,
         FormulaOperator.More,
         FormulaOperator.MoreEqual,
-        FormulaOperator.Exist,
       ],
     };
     return map[type];

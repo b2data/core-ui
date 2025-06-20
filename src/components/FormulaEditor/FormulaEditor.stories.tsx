@@ -1,10 +1,9 @@
 import "dayjs/locale/ru";
 
-import { AdapterDayjs, DatePickerProvider } from "../DatePicker";
-
 import { FormulaEditor, FormulaEditorProps } from "./FormulaEditor";
 
 import type { Meta, StoryObj } from "@storybook/react";
+import { Preview } from ".storybook/components";
 
 const meta: Meta<FormulaEditorProps> = {
   title: "Components/Formula Editor/Formula Editor",
@@ -15,7 +14,16 @@ const meta: Meta<FormulaEditorProps> = {
 export default meta;
 
 export const Base: StoryObj<FormulaEditorProps> = {
-  args: { rows: [], isEditable: true },
+  args: {
+    rows: [],
+    onChange: console.log,
+    isEditable: true,
+  },
+  render: (props) => (
+    <Preview>
+      <FormulaEditor {...props} />
+    </Preview>
+  ),
 };
 
 export const WithUnit: StoryObj<FormulaEditorProps> = {
@@ -50,8 +58,8 @@ export const WithUnit: StoryObj<FormulaEditorProps> = {
       ]),
   },
   render: (props) => (
-    <DatePickerProvider dateAdapter={AdapterDayjs}>
+    <Preview>
       <FormulaEditor {...props} />
-    </DatePickerProvider>
+    </Preview>
   ),
 };

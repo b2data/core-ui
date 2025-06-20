@@ -15,6 +15,7 @@ export interface ListItemTextProps
     | "secondary"
     | "secondaryTypographyProps"
     | "disableTypography"
+    | "slotProps"
     | "sx"
     | "children"
   > {
