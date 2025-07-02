@@ -1,8 +1,9 @@
+"use client";
 import * as React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { styled } from "@mui/material/styles";
-import { unstable_generateUtilityClasses as generateUtilityClasses } from "@mui/utils";
+import generateUtilityClasses from "@mui/utils/generateUtilityClasses";
 import useEventCallback from "@mui/utils/useEventCallback";
 import { forwardRef } from "@mui/x-internals/forwardRef";
 import { vars } from "../../constants/cssVariables";
@@ -27,13 +28,14 @@ export interface GridPanelProps
     GridSlotProps["basePopper"],
     "id" | "className" | "target" | "flip"
   > {
-  ref?: React.Ref<HTMLElement>;
+  ref?: React.Ref<HTMLDivElement>;
   children?: React.ReactNode;
   /**
    * Override or extend the styles applied to the component.
    */
   classes?: Partial<GridPanelClasses>;
   open: boolean;
+  onClose?: () => void;
 }
 
 export const gridPanelClasses = generateUtilityClasses<keyof GridPanelClasses>(
@@ -55,15 +57,19 @@ const GridPanelContent = styled("div", {
   backgroundColor: vars.colors.background.overlay,
   borderRadius: vars.radius.base,
   boxShadow: vars.shadows.overlay,
-  minWidth: 300,
-  maxHeight: 450,
   display: "flex",
-  maxWidth: `calc(100vw - ${vars.spacing(0.5)})`,
+  maxWidth: `calc(100vw - ${vars.spacing(2)})`,
   overflow: "auto",
 });
 
-const GridPanel = forwardRef<HTMLElement, GridPanelProps>((props, ref) => {
-  const { children, className, classes: classesProp, ...other } = props;
+const GridPanel = forwardRef<HTMLDivElement, GridPanelProps>((props, ref) => {
+  const {
+    children,
+    className,
+    classes: classesProp,
+    onClose,
+    ...other
+  } = props;
   const apiRef = useGridApiContext();
   const rootProps = useGridRootProps();
   const classes = gridPanelClasses;
@@ -74,12 +80,12 @@ const GridPanel = forwardRef<HTMLElement, GridPanelProps>((props, ref) => {
   const onDidHide = useEventCallback(() => setIsPlaced(false));
 
   const handleClickAway = useEventCallback(() => {
-    apiRef.current.hidePreferences();
+    onClose?.();
   });
 
   const handleKeyDown = useEventCallback((event: React.KeyboardEvent) => {
     if (event.key === "Escape") {
-      apiRef.current.hidePreferences();
+      onClose?.();
     }
   });
 
@@ -143,6 +149,7 @@ GridPanel.propTypes = {
   className: PropTypes.string,
   flip: PropTypes.bool,
   id: PropTypes.string,
+  onClose: PropTypes.func,
   open: PropTypes.bool.isRequired,
   target: PropTypes /* @typescript-to-proptypes-ignore */.any,
 } as any;

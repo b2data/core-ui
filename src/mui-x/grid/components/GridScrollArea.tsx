@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import clsx from "clsx";
 import useEventCallback from "@mui/utils/useEventCallback";
 import composeClasses from "@mui/utils/composeClasses";
 import { styled } from "@mui/system";
@@ -188,7 +187,7 @@ function GridScrollAreaContent(props: ScrollAreaProps) {
   return (
     <GridScrollAreaRawRoot
       ref={rootRef}
-      className={clsx(classes.root)}
+      className={classes.root}
       ownerState={ownerState}
       onDragOver={handleDragOver}
       style={style}

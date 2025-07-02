@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent, ReactNode, useState } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
@@ -55,16 +55,20 @@ export const SectionTitleAction = ({
   );
 
   if (menuActions) {
+    const content = (
+      <IconButton
+        size={props.size || "small"}
+        onClick={(e) => setActionsAnchor(e.currentTarget)}
+        {...props}
+      >
+        {icon || <MoreVertIcon />}
+      </IconButton>
+    );
+
     return (
-      <Fragment>
+      <>
         <Tooltip text={tooltip}>
-          <IconButton
-            size={props.size || "small"}
-            onClick={(e) => setActionsAnchor(e.currentTarget)}
-            {...props}
-          >
-            {icon || <MoreVertIcon />}
-          </IconButton>
+          {props.disabled ? <span>{content}</span> : content}
         </Tooltip>
         <Menu
           open={Boolean(actionsAnchor)}
@@ -84,12 +88,13 @@ export const SectionTitleAction = ({
             <MenuItem key={index} {...menuAction} />
           ))}
         </Menu>
-      </Fragment>
+      </>
     );
   }
+
   if (actions) {
     return (
-      <Fragment>
+      <>
         <ButtonGroup
           color={props.color === "default" ? undefined : props.color}
           size={props.size || "small"}
@@ -121,7 +126,7 @@ export const SectionTitleAction = ({
             <MenuItem key={index} {...action} />
           ))}
         </Menu>
-      </Fragment>
+      </>
     );
   }
 

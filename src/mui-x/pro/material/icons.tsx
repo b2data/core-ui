@@ -1,4 +1,4 @@
-import { createSvgIcon } from "@mui/material/utils";
+import { createSvgIcon } from "@mui/x-data-grid/internals";
 
 export const GridPushPinRightIcon = createSvgIcon(
   <g transform="rotate(-30 15 10)">

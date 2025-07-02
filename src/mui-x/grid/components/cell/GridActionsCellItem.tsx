@@ -1,23 +1,25 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { forwardRef } from "@mui/x-internals/forwardRef";
-import { GridSlotProps } from "../../models/gridSlotsComponentsProps";
+import {
+  GridSlotProps,
+  GridBaseIconProps,
+} from "../../models/gridSlotsComponentsProps";
 import { useGridRootProps } from "../../hooks/utils/useGridRootProps";
 
 interface GridActionsCellItemCommonProps {
-  label: string;
-  icon?: React.ReactElement<any>;
+  icon?: React.JSXElementConstructor<GridBaseIconProps> | React.ReactNode;
   /** from https://mui.com/material-ui/api/button-base/#ButtonBase-prop-component */
   component?: React.ElementType;
 }
 
-// FIXME(v8:romgrk): Make parametric
 export type GridActionsCellItemProps = GridActionsCellItemCommonProps &
   (
-    | ({ showInMenu?: false; icon: React.ReactElement<any> } & Omit<
-        GridSlotProps["baseIconButton"],
-        "component"
-      >)
+    | ({
+        showInMenu?: false;
+        icon: React.ReactElement<any>;
+        label: string;
+      } & Omit<GridSlotProps["baseIconButton"], "component">)
     | ({
         showInMenu: true;
         /**
@@ -26,6 +28,7 @@ export type GridActionsCellItemProps = GridActionsCellItemCommonProps &
          */
         closeMenuOnClick?: boolean;
         closeMenu?: () => void;
+        label: React.ReactNode;
       } & Omit<GridSlotProps["baseMenuItem"], "component">)
   );
 
@@ -90,13 +93,23 @@ GridActionsCellItem.propTypes = {
   // | These PropTypes are generated from the TypeScript type definitions |
   // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
+  className: PropTypes.string,
   /**
    * from https://mui.com/material-ui/api/button-base/#ButtonBase-prop-component
    */
   component: PropTypes.elementType,
-  icon: PropTypes.element,
-  label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  icon: PropTypes /* @typescript-to-proptypes-ignore */.oneOfType([
+    PropTypes.element,
+    PropTypes.func,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
+  label: PropTypes.node,
   showInMenu: PropTypes.bool,
+  style: PropTypes.object,
 } as any;
 
 export { GridActionsCellItem };

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import {
@@ -143,13 +144,12 @@ export const useGridAggregation = (
         );
 
     // Re-apply the row hydration to add / remove the aggregation footers
-    if (!areAggregationRulesEqual(rulesOnLastRowHydration, aggregationRules)) {
-      if (props.dataSource) {
-        apiRef.current.dataSource.fetchRows();
-      } else {
-        apiRef.current.requestPipeProcessorsApplication("hydrateRows");
-        applyAggregation();
-      }
+    if (
+      !props.dataSource &&
+      !areAggregationRulesEqual(rulesOnLastRowHydration, aggregationRules)
+    ) {
+      apiRef.current.requestPipeProcessorsApplication("hydrateRows");
+      applyAggregation();
     }
 
     // Re-apply the column hydration to wrap / unwrap the aggregated columns

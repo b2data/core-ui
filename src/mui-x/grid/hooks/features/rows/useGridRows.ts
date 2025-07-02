@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import useLazyRef from "@mui/utils/useLazyRef";
@@ -52,6 +53,7 @@ import {
 } from "./gridRowsUtils";
 import { useGridRegisterPipeApplier } from "../../core/pipeProcessing";
 import { GridStrategyGroup } from "../../core/strategyProcessing";
+import { gridPivotActiveSelector } from "../pivoting";
 
 export const rowsStateInitializer: GridStateInitializer<
   Pick<
@@ -183,6 +185,10 @@ export const useGridRows = (
   const setRows = React.useCallback<GridRowApi["setRows"]>(
     (rows) => {
       logger.debug(`Updating all rows, new length ${rows.length}`);
+      if (gridPivotActiveSelector(apiRef)) {
+        apiRef.current.updateNonPivotRows(rows, false);
+        return;
+      }
       const cache = createRowsInternalCache({
         rows,
         getRowId: props.getRowId,
@@ -215,6 +221,11 @@ export const useGridRows = (
         );
       }
 
+      if (gridPivotActiveSelector(apiRef)) {
+        apiRef.current.updateNonPivotRows(updates);
+        return;
+      }
+
       const nonPinnedRowsUpdates = computeRowsUpdates(
         apiRef,
         updates,
@@ -232,8 +243,8 @@ export const useGridRows = (
     [props.signature, props.getRowId, throttledRowsChange, apiRef],
   );
 
-  const updateServerRows = React.useCallback<
-    GridRowProPrivateApi["updateServerRows"]
+  const updateNestedRows = React.useCallback<
+    GridRowProPrivateApi["updateNestedRows"]
   >(
     (updates, groupKeys) => {
       const nonPinnedRowsUpdates = computeRowsUpdates(
@@ -256,9 +267,6 @@ export const useGridRows = (
 
   const setLoading = React.useCallback<GridRowApi["setLoading"]>(
     (loading) => {
-      if (loading === props.loading) {
-        return;
-      }
       logger.debug(`Setting loading to ${loading}`);
       apiRef.current.setState((state) => ({
         ...state,
@@ -266,7 +274,7 @@ export const useGridRows = (
       }));
       apiRef.current.caches.rows.loadingPropBeforePartialUpdates = loading;
     },
-    [props.loading, apiRef, logger],
+    [apiRef, logger],
   );
 
   const getRowModels = React.useCallback<GridRowApi["getRowModels"]>(() => {
@@ -548,7 +556,7 @@ export const useGridRows = (
   };
 
   const rowProPrivateApi: GridRowProPrivateApi = {
-    updateServerRows,
+    updateNestedRows,
   };
 
   /**

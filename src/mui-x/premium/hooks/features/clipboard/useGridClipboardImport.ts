@@ -30,7 +30,7 @@ import {
   GRID_DETAIL_PANEL_TOGGLE_FIELD,
   GRID_REORDER_COL_DEF,
 } from "@mui/x-data-grid-pro";
-import { unstable_debounce as debounce } from "@mui/utils";
+import debounce from "@mui/utils/debounce";
 import {
   GridApiPremium,
   GridPrivateApiPremium,
@@ -355,6 +355,7 @@ export const useGridClipboardImport = (
     | "splitClipboardPastedText"
     | "disableClipboardPaste"
     | "onBeforeClipboardPasteStart"
+    | "clipboardCopyCellDelimiter"
   >,
 ): void => {
   const processRowUpdate = props.processRowUpdate;
@@ -363,9 +364,13 @@ export const useGridClipboardImport = (
   const enableClipboardPaste = !props.disableClipboardPaste;
   const logger = useGridLogger(apiRef, "useGridClipboardImport");
 
-  const splitClipboardPastedText = props.splitClipboardPastedText;
-
-  const { pagination, paginationMode, onBeforeClipboardPasteStart } = props;
+  const {
+    clipboardCopyCellDelimiter,
+    splitClipboardPastedText,
+    pagination,
+    paginationMode,
+    onBeforeClipboardPasteStart,
+  } = props;
 
   const handlePaste = React.useCallback<GridEventListener<"cellKeyDown">>(
     async (_params, event) => {
@@ -398,7 +403,10 @@ export const useGridClipboardImport = (
         return;
       }
 
-      const pastedData = splitClipboardPastedText(text);
+      const pastedData = splitClipboardPastedText(
+        text,
+        clipboardCopyCellDelimiter,
+      );
       if (!pastedData) {
         return;
       }
@@ -442,6 +450,7 @@ export const useGridClipboardImport = (
       getRowId,
       enableClipboardPaste,
       splitClipboardPastedText,
+      clipboardCopyCellDelimiter,
       pagination,
       paginationMode,
       onBeforeClipboardPasteStart,

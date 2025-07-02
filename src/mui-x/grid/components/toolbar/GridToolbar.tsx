@@ -29,6 +29,9 @@ export interface GridToolbarProps
   quickFilterProps?: GridToolbarQuickFilterProps;
 }
 
+/**
+ * @deprecated Use the `showToolbar` prop to show the default toolbar instead. This component will be removed in a future major release.
+ */
 const GridToolbar = forwardRef<HTMLDivElement, GridToolbarProps>(
   function GridToolbar(props, ref) {
     // TODO v7: think about where export option should be passed.

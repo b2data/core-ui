@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import { useGridApiMethod } from "@mui/x-data-grid";
@@ -43,10 +44,7 @@ function createPinnedRowsInternalCache(
 }
 
 export const rowPinningStateInitializer: GridStateInitializer<
-  Pick<
-    DataGridProProcessedProps,
-    "pinnedRows" | "getRowId" | "experimentalFeatures"
-  >
+  Pick<DataGridProProcessedProps, "pinnedRows" | "getRowId">
 > = (state, props, apiRef) => {
   apiRef.current.caches.pinnedRows = createPinnedRowsInternalCache(
     props.pinnedRows,

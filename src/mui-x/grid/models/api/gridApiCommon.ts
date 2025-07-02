@@ -50,6 +50,7 @@ import type {
 } from "./gridHeaderFilteringApi";
 import type { DataGridProcessedProps } from "../props/DataGridProps";
 import type { GridColumnResizeApi } from "../../hooks/features/columnResize";
+import type { GridPivotingPrivateApiCommunity } from "../../hooks/features/pivoting/gridPivotingInterfaces";
 
 export interface GridApiCommon<
   GridState extends GridStateCommunity = any,
@@ -99,7 +100,8 @@ export interface GridPrivateOnlyApiCommon<
     GridHeaderFilteringPrivateApi,
     GridVirtualizationPrivateApi,
     GridRowProPrivateApi,
-    GridParamsPrivateApi {}
+    GridParamsPrivateApi,
+    GridPivotingPrivateApiCommunity {}
 
 export interface GridPrivateApiCommon
   extends GridApiCommon,

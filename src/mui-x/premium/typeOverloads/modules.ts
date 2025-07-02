@@ -14,10 +14,12 @@ import type {
   GridAggregationCellMeta,
   GridAggregationHeaderMeta,
   GridCellSelectionModel,
+  Conversation,
 } from "../hooks";
 import { GridRowGroupingInternalCache } from "../hooks/features/rowGrouping/gridRowGroupingInterfaces";
 import { GridAggregationInternalCache } from "../hooks/features/aggregation/gridAggregationInterfaces";
 import type { GridExcelExportOptions } from "../hooks/features/export/gridExcelExportInterface";
+import type { GridPivotModel } from "../hooks/features/pivoting/gridPivotingInterfaces";
 
 export interface GridControlledStateEventLookupPremium {
   /**
@@ -36,6 +38,20 @@ export interface GridControlledStateEventLookupPremium {
    * Fired when the state of the Excel export task changes
    */
   excelExportStateChange: { params: "pending" | "finished" };
+  /**
+   * Fired when the pivot model changes.
+   */
+  pivotModelChange: { params: GridPivotModel };
+  pivotModeChange: { params: boolean };
+  pivotPanelOpenChange: { params: boolean };
+  /**
+   * Fired when the AI Assistant conversation state changes.
+   */
+  aiAssistantConversationsChange: { params: Conversation[] };
+  /**
+   * Fired when the AI Assistant active conversation index changes.
+   */
+  aiAssistantActiveConversationIndexChange: { params: number };
 }
 
 interface GridEventLookupPremium extends GridEventLookupPro {
@@ -66,6 +82,7 @@ export interface GridColDefPremium<
   availableAggregationFunctions?: string[];
   /**
    * Function that transforms a complex cell value into a key that be used for grouping the rows.
+   * Not supported with the server-side row grouping. Use `dataSource.getGroupKey()` instead.
    * @returns {GridKeyValue | null | undefined} The cell key.
    */
   groupingValueGetter?: GridGroupingValueGetter<R>;
@@ -74,13 +91,17 @@ export interface GridColDefPremium<
    * @returns {V} The converted value.
    */
   pastedValueParser?: GridPastedValueParser<R, V, F>;
+  /**
+   * If `false`, the column will not be available for pivoting in the pivot panel.
+   * @default true
+   */
+  pivotable?: boolean;
 }
 
 export interface GridRenderCellParamsPremium<
   // @ts-ignore
   R extends GridValidRowModel = any,
-  V = any,
-  // @ts-ignore
+  V = any, // @ts-ignore
   F = V,
 > {
   aggregation?: GridAggregationCellMeta;

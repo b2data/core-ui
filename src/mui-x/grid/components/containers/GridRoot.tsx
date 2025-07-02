@@ -1,11 +1,9 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import {
-  unstable_useForkRef as useForkRef,
-  unstable_capitalize as capitalize,
-  unstable_composeClasses as composeClasses,
-} from "@mui/utils";
+import useForkRef from "@mui/utils/useForkRef";
+import capitalize from "@mui/utils/capitalize";
+import composeClasses from "@mui/utils/composeClasses";
 import { SxProps } from "@mui/system";
 import { Theme } from "@mui/material/styles";
 import { fastMemo } from "@mui/x-internals/fastMemo";
@@ -15,11 +13,14 @@ import { useCSSVariablesContext } from "../../utils/css/context";
 import { useGridSelector } from "../../hooks/utils/useGridSelector";
 import { useGridPrivateApiContext } from "../../hooks/utils/useGridPrivateApiContext";
 import { useGridRootProps } from "../../hooks/utils/useGridRootProps";
-import { getDataGridUtilityClass } from "../../constants/gridClasses";
+import {
+  getDataGridUtilityClass,
+  gridClasses,
+} from "../../constants/gridClasses";
 import { gridDensitySelector } from "../../hooks/features/density/densitySelector";
 import { DataGridProcessedProps } from "../../models/props/DataGridProps";
 import { GridDensity } from "../../models/gridDensity";
-// import { useIsSSR } from '../../hooks/utils/useIsSSR';
+import { useIsSSR } from "../../hooks/utils/useIsSSR";
 import { GridHeader } from "../GridHeader";
 import { GridBody, GridFooterPlaceholder } from "../base";
 
@@ -28,6 +29,7 @@ export interface GridRootProps extends React.HTMLAttributes<HTMLDivElement> {
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
+  sidePanel?: React.ReactNode;
 }
 
 type OwnerState = DataGridProcessedProps;
@@ -52,7 +54,7 @@ const useUtilityClasses = (ownerState: OwnerState, density: GridDensity) => {
 const GridRoot = forwardRef<HTMLDivElement, GridRootProps>(
   function GridRoot(props, ref) {
     const rootProps = useGridRootProps();
-    const { className, children, ...other } = props;
+    const { className, children, sidePanel, ...other } = props;
     const apiRef = useGridPrivateApiContext();
     const density = useGridSelector(apiRef, gridDensitySelector);
     const rootElementRef = apiRef.current.rootElementRef;
@@ -74,22 +76,30 @@ const GridRoot = forwardRef<HTMLDivElement, GridRootProps>(
     const classes = useUtilityClasses(ownerState, density);
     const cssVariables = useCSSVariablesContext();
 
-    // const isSSR = useIsSSR();
+    const isSSR = useIsSSR();
 
-    // if (isSSR) {
-    //   return null;
-    // }
+    if (isSSR) {
+      return null;
+    }
 
     return (
       <GridRootStyles
-        className={clsx(classes.root, className, cssVariables.className)}
+        className={clsx(
+          classes.root,
+          className,
+          cssVariables.className,
+          sidePanel && gridClasses.withSidePanel,
+        )}
         ownerState={ownerState}
         {...other}
         ref={handleRef}
       >
-        <GridHeader />
-        <GridBody>{children}</GridBody>
-        <GridFooterPlaceholder />
+        <div className={gridClasses.mainContent} role="presentation">
+          <GridHeader />
+          <GridBody>{children}</GridBody>
+          <GridFooterPlaceholder />
+        </div>
+        {sidePanel}
         {cssVariables.tag}
       </GridRootStyles>
     );
@@ -101,6 +111,7 @@ GridRoot.propTypes = {
   // | These PropTypes are generated from the TypeScript type definitions |
   // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
+  sidePanel: PropTypes.node,
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

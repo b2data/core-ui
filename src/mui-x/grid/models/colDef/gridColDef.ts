@@ -327,7 +327,7 @@ export interface GridBaseColDef<
   /**
    * Example values that can be used by the grid to get more context about the column.
    */
-  unstable_examples?: V[];
+  examples?: V[];
 }
 
 /**
@@ -405,7 +405,7 @@ export type GridColDef<R extends GridValidRowModel = any, V = any, F = V> =
  * @demos
  *   - [List view](/x/react-data-grid/list-view/)
  */
-export type GridListColDef<
+export type GridListViewColDef<
   R extends GridValidRowModel = any,
   V = any,
   F = V,

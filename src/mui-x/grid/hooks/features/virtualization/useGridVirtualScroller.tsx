@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { RefObject } from "@mui/x-internals/types";
@@ -110,7 +111,7 @@ export const useGridVirtualScroller = () => {
   const apiRef =
     useGridPrivateApiContext() as RefObject<PrivateApiWithInfiniteLoader>;
   const rootProps = useGridRootProps();
-  const { unstable_listView: listView } = rootProps;
+  const { listView } = rootProps;
   const visibleColumns = useGridSelector(apiRef, () =>
     listView
       ? [gridListColumnSelector(apiRef)!]
@@ -396,12 +397,14 @@ export const useGridVirtualScroller = () => {
       scrollCache,
     );
 
-    // Prevents batching render context changes
-    ReactDOM.flushSync(() => {
-      updateRenderContext(nextRenderContext);
-    });
+    if (!areRenderContextsEqual(nextRenderContext, renderContext)) {
+      // Prevents batching render context changes
+      ReactDOM.flushSync(() => {
+        updateRenderContext(nextRenderContext);
+      });
 
-    scrollTimeout.start(1000, triggerUpdateRenderContext);
+      scrollTimeout.start(1000, triggerUpdateRenderContext);
+    }
 
     return nextRenderContext;
   });
@@ -866,7 +869,7 @@ function inputsSelector(
 ): RenderContextInputs {
   const dimensions = gridDimensionsSelector(apiRef);
   const currentPage = getVisibleRows(apiRef, rootProps);
-  const visibleColumns = rootProps.unstable_listView
+  const visibleColumns = rootProps.listView
     ? [gridListColumnSelector(apiRef)!]
     : gridVisibleColumnDefinitionsSelector(apiRef);
   const hiddenCellsOriginMap =
@@ -896,7 +899,7 @@ function inputsSelector(
     pinnedColumns: gridVisiblePinnedColumnDefinitionsSelector(apiRef),
     visibleColumns,
     hiddenCellsOriginMap,
-    listView: rootProps.unstable_listView ?? false,
+    listView: rootProps.listView ?? false,
     virtualizeColumnsWithAutoRowHeight:
       rootProps.virtualizeColumnsWithAutoRowHeight,
   };
@@ -913,13 +916,6 @@ function computeRenderContext(
     firstColumnIndex: 0,
     lastColumnIndex: inputs.visibleColumns.length,
   };
-
-  if (inputs.listView) {
-    return {
-      ...renderContext,
-      lastColumnIndex: 1,
-    };
-  }
 
   const { top, left } = scrollPosition;
   const realLeft = Math.abs(left) + inputs.leftPinnedWidth;
@@ -953,6 +949,13 @@ function computeRenderContext(
 
     renderContext.firstRowIndex = firstRowIndex;
     renderContext.lastRowIndex = lastRowIndex;
+  }
+
+  if (inputs.listView) {
+    return {
+      ...renderContext,
+      lastColumnIndex: 1,
+    };
   }
 
   if (inputs.enabledForColumns) {

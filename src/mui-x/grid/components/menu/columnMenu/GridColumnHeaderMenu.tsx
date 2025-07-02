@@ -29,17 +29,19 @@ function GridColumnHeaderMenu({
   const apiRef = useGridApiContext();
   const colDef = apiRef.current.getColumn(field);
 
-  const hideMenu = useEventCallback((event?: Event) => {
-    if (event) {
-      // Prevent triggering the sorting
-      event.stopPropagation();
+  const hideMenu = useEventCallback(
+    (event?: React.KeyboardEvent | MouseEvent | TouchEvent) => {
+      if (event) {
+        // Prevent triggering the sorting
+        event.stopPropagation();
 
-      if (target?.contains(event.target as HTMLElement)) {
-        return;
+        if (target?.contains(event.target as HTMLElement)) {
+          return;
+        }
       }
-    }
-    apiRef.current.hideColumnMenu();
-  });
+      apiRef.current.hideColumnMenu();
+    },
+  );
 
   if (!target || !colDef) {
     return null;

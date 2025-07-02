@@ -1,8 +1,10 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
+import { warnOnce } from "@mui/x-internals/warning";
 import useEventCallback from "@mui/utils/useEventCallback";
 import useEnhancedEffect from "@mui/utils/useEnhancedEffect";
-import { warnOnce } from "@mui/x-internals/warning";
+import { isDeepEqual } from "@mui/x-internals/isDeepEqual";
 import { useGridEvent, useGridEventPriority } from "../../utils/useGridEvent";
 import { GridEventListener } from "../../../models/events/gridEventListener";
 import {
@@ -36,6 +38,7 @@ import {
   GridCellEditStopReasons,
 } from "../../../models/params/gridEditCellParams";
 import { getDefaultCellValue } from "./utils";
+import { GridUpdateRowParams } from "../../../models/gridDataSource";
 
 export const useGridCellEditing = (
   apiRef: RefObject<GridPrivateApiCommunity>,
@@ -49,6 +52,7 @@ export const useGridCellEditing = (
     | "onCellModesModelChange"
     | "onProcessRowUpdateError"
     | "signature"
+    | "dataSource"
   >,
 ) => {
   const [cellModesModel, setCellModesModel] =
@@ -474,6 +478,7 @@ export const useGridCellEditing = (
 
     const editingState = gridEditRowsStateSelector(apiRef);
     const { error, isProcessingProps } = editingState[id][field];
+    const row = apiRef.current.getRow(id)!;
 
     if (error || isProcessingProps) {
       // Attempt to change cell mode to "view" was not successful
@@ -489,7 +494,29 @@ export const useGridCellEditing = (
       field,
     );
 
-    if (processRowUpdate) {
+    if (props.dataSource?.updateRow) {
+      if (isDeepEqual(row, rowUpdate)) {
+        finishCellEditMode();
+        return;
+      }
+      const handleError = () => {
+        prevCellModesModel.current[id][field].mode = GridCellModes.Edit;
+        // Revert the mode in the cellModesModel prop back to "edit"
+        updateFieldInCellModesModel(id, field, { mode: GridCellModes.Edit });
+      };
+
+      const updateRowParams: GridUpdateRowParams = {
+        rowId: id,
+        updatedRow: rowUpdate,
+        previousRow: row,
+      };
+      try {
+        await apiRef.current.dataSource.editRow(updateRowParams);
+        finishCellEditMode();
+      } catch {
+        handleError();
+      }
+    } else if (processRowUpdate) {
       const handleError = (errorThrown: any) => {
         prevCellModesModel.current[id][field].mode = GridCellModes.Edit;
         // Revert the mode in the cellModesModel prop back to "edit"
@@ -510,7 +537,6 @@ export const useGridCellEditing = (
       };
 
       try {
-        const row = apiRef.current.getRow(id)!;
         Promise.resolve(processRowUpdate(rowUpdate, row, { rowId: id }))
           .then((finalRowUpdate) => {
             apiRef.current.updateRows([finalRowUpdate]);

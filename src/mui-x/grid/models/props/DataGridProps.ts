@@ -17,7 +17,7 @@ import {
 import { GridEventListener } from "../events";
 import { GridCallbackDetails, GridLocaleText } from "../api";
 import { GridApiCommunity } from "../api/gridApiCommunity";
-import type { GridColDef, GridListColDef } from "../colDef/gridColDef";
+import type { GridColDef, GridListViewColDef } from "../colDef/gridColDef";
 import { GridClasses } from "../../constants/gridClasses";
 import {
   GridRowHeightParams,
@@ -86,7 +86,7 @@ export type DataGridForcedPropsKey =
   | "hideFooterRowCount"
   | "pagination"
   | "signature"
-  | "unstable_listView";
+  | "listView";
 
 /**
  * The Data Grid options with a default value that must be merged with the value given through props.
@@ -906,10 +906,17 @@ export interface DataGridProSharedPropsWithDefaultValue {
   rowSelectionPropagation: GridRowSelectionPropagation;
   /**
    * If `true`, displays the data in a list view.
-   * Use in combination with `unstable_listColumn`.
+   * Use in combination with `listViewColumn`.
    * @default false
    */
-  unstable_listView: boolean;
+  listView: boolean;
+  /**
+   * If set to "always", the multi-sorting is applied without modifier key.
+   * Otherwise, the modifier key is required for multi-sorting to be applied.
+   * @see See https://mui.com/x/react-data-grid/sorting/#multi-sorting
+   * @default "withModifierKey"
+   */
+  multipleColumnsSortingMode: "withModifierKey" | "always";
 }
 
 export interface DataGridProSharedPropsWithoutDefaultValue<
@@ -920,9 +927,9 @@ export interface DataGridProSharedPropsWithoutDefaultValue<
    */
   headerFilterHeight?: number;
   /**
-   * Definition of the column rendered when the `unstable_listView` prop is enabled.
+   * Definition of the column rendered when the `listView` prop is enabled.
    */
-  unstable_listColumn?: GridListColDef<R>;
+  listViewColumn?: GridListViewColDef<R>;
 }
 
 export interface DataGridPremiumSharedPropsWithDefaultValue {

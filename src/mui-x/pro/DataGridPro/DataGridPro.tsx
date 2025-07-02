@@ -1,12 +1,17 @@
 "use client";
 import * as React from "react";
 import PropTypes from "prop-types";
+
 import {
   GridRoot,
   GridContextProvider,
   GridValidRowModel,
 } from "@mui/x-data-grid";
-import { validateProps } from "@mui/x-data-grid/internals";
+import {
+  GridConfiguration,
+  validateProps,
+  useGridApiInitialization,
+} from "@mui/x-data-grid/internals";
 import { useMaterialCSSVariables } from "@mui/x-data-grid/material";
 import { forwardRef } from "@mui/x-internals/forwardRef";
 import { useDataGridProComponent } from "./useDataGridProComponent";
@@ -15,14 +20,16 @@ import { useDataGridProProps } from "./useDataGridProProps";
 import { propValidatorsDataGridPro } from "../internals/propValidation";
 import { useGridAriaAttributes } from "../hooks/utils/useGridAriaAttributes";
 import { useGridRowAriaAttributes } from "../hooks/features/rows/useGridRowAriaAttributes";
+import type { GridApiPro, GridPrivateApiPro } from "../models/gridApiPro";
 
 export type { GridProSlotsComponent as GridSlots } from "../models";
 
-const configuration = {
+const configuration: GridConfiguration = {
   hooks: {
     useCSSVariables: useMaterialCSSVariables,
     useGridAriaAttributes,
     useGridRowAriaAttributes,
+    useCellAggregationResult: () => null,
   },
 };
 
@@ -30,7 +37,11 @@ const DataGridProRaw = forwardRef(function DataGridPro<
   R extends GridValidRowModel,
 >(inProps: DataGridProProps<R>, ref: React.Ref<HTMLDivElement>) {
   const props = useDataGridProProps(inProps);
-  const privateApiRef = useDataGridProComponent(props.apiRef, props);
+  const privateApiRef = useGridApiInitialization<GridPrivateApiPro, GridApiPro>(
+    props.apiRef,
+    props,
+  );
+  useDataGridProComponent(privateApiRef, props);
 
   if (process.env.NODE_ENV !== "production") {
     validateProps(props, propValidatorsDataGridPro);
@@ -48,7 +59,7 @@ const DataGridProRaw = forwardRef(function DataGridPro<
         sx={props.sx}
         {...props.slotProps?.root}
         ref={ref}
-      ></GridRoot>
+      />
     </GridContextProvider>
   );
 });
@@ -503,6 +514,21 @@ DataGridProRaw.propTypes = {
    */
   lazyLoadingRequestThrottleMs: PropTypes.number,
   /**
+   * If `true`, displays the data in a list view.
+   * Use in combination with `listViewColumn`.
+   */
+  listView: PropTypes.bool,
+  /**
+   * Definition of the column rendered when the `listView` prop is enabled.
+   */
+  listViewColumn: PropTypes.shape({
+    align: PropTypes.oneOf(["center", "left", "right"]),
+    cellClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    display: PropTypes.oneOf(["flex", "text"]),
+    field: PropTypes.string.isRequired,
+    renderCell: PropTypes.func,
+  }),
+  /**
    * If `true`, a loading overlay is displayed.
    * @default false
    */
@@ -527,6 +553,13 @@ DataGridProRaw.propTypes = {
    * @default "error" ("warn" in dev mode)
    */
   logLevel: PropTypes.oneOf(["debug", "error", "info", "warn", false]),
+  /**
+   * If set to "always", the multi-sorting is applied without modifier key.
+   * Otherwise, the modifier key is required for multi-sorting to be applied.
+   * @see See https://mui.com/x/react-data-grid/sorting/#multi-sorting
+   * @default "withModifierKey"
+   */
+  multipleColumnsSortingMode: PropTypes.oneOf(["always", "withModifierKey"]),
   /**
    * Nonce of the inline styles for [Content Security Policy](https://www.w3.org/TR/2016/REC-CSP2-20161215/#script-src-the-nonce-attribute).
    */
@@ -671,7 +704,7 @@ DataGridProRaw.propTypes = {
    * @param {GridFetchRowsParams} params With all properties from [[GridFetchRowsParams]].
    * @param {MuiEvent<{}>} event The event object.
    * @param {GridCallbackDetails} details Additional details for this callback.
-   * @deprecated Use the {@link https://next.mui.com/x/react-data-grid/server-side-data/lazy-loading/#viewport-loading Server-side data-Viewport loading} instead.
+   * @deprecated Use the {@link https://mui.com/x/react-data-grid/server-side-data/lazy-loading/#viewport-loading Server-side data-Viewport loading} instead.
    */
   onFetchRows: PropTypes.func,
   /**
@@ -793,7 +826,7 @@ DataGridProRaw.propTypes = {
    * @param {GridRowScrollEndParams} params With all properties from [[GridRowScrollEndParams]].
    * @param {MuiEvent<{}>} event The event object.
    * @param {GridCallbackDetails} details Additional details for this callback.
-   * @deprecated Use the {@link https://next.mui.com/x/react-data-grid/server-side-data/lazy-loading/#infinite-loading Server-side data-Infinite loading} instead.
+   * @deprecated Use the {@link https://mui.com/x/react-data-grid/server-side-data/lazy-loading/#infinite-loading Server-side data-Infinite loading} instead.
    */
   onRowsScrollEnd: PropTypes.func,
   /**
@@ -937,7 +970,7 @@ DataGridProRaw.propTypes = {
    * Set it to 'client' if you would like enable infnite loading.
    * Set it to 'server' if you would like to enable lazy loading.
    * @default "client"
-   * @deprecated Use the {@link https://next.mui.com/x/react-data-grid/server-side-data/lazy-loading/#viewport-loading Server-side data-Viewport loading} instead.
+   * @deprecated Use the {@link https://mui.com/x/react-data-grid/server-side-data/lazy-loading/#viewport-loading Server-side data-Viewport loading} instead.
    */
   rowsLoadingMode: PropTypes.oneOf(["client", "server"]),
   /**
@@ -1026,21 +1059,6 @@ DataGridProRaw.propTypes = {
    * @default false
    */
   treeData: PropTypes.bool,
-  /**
-   * Definition of the column rendered when the `unstable_listView` prop is enabled.
-   */
-  unstable_listColumn: PropTypes.shape({
-    align: PropTypes.oneOf(["center", "left", "right"]),
-    cellClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-    display: PropTypes.oneOf(["flex", "text"]),
-    field: PropTypes.string.isRequired,
-    renderCell: PropTypes.func,
-  }),
-  /**
-   * If `true`, displays the data in a list view.
-   * Use in combination with `unstable_listColumn`.
-   */
-  unstable_listView: PropTypes.bool,
   /**
    * If `true`, the Data Grid enables column virtualization when `getRowHeight` is set to `() => 'auto'`.
    * By default, column virtualization is disabled when dynamic row height is enabled to measure the row height correctly.

@@ -1,14 +1,13 @@
+"use client";
 import * as React from "react";
 import PropTypes from "prop-types";
-import {
-  unstable_composeClasses as composeClasses,
-  unstable_useEnhancedEffect as useEnhancedEffect,
-} from "@mui/utils";
+import composeClasses from "@mui/utils/composeClasses";
+import useEnhancedEffect from "@mui/utils/useEnhancedEffect";
 import { styled } from "@mui/material/styles";
 import { forwardRef } from "@mui/x-internals/forwardRef";
 import { NotRendered } from "../../utils/assert";
 import { GridSlotProps } from "../../models/gridSlotsComponent";
-// import { vars } from "../../constants/cssVariables";
+import { vars } from "../../constants/cssVariables";
 import { GridRenderEditCellParams } from "../../models/params/gridCellParams";
 import { getDataGridUtilityClass } from "../../constants/gridClasses";
 import { useGridRootProps } from "../../hooks/utils/useGridRootProps";
@@ -31,10 +30,10 @@ const GridEditInputCellRoot = styled(NotRendered<GridSlotProps["baseInput"]>, {
   name: "MuiDataGrid",
   slot: "EditInputCell",
 })<{ ownerState: OwnerState }>({
-  // font: vars.typography.font.body,
-  // padding: "1px 0",
+  font: vars.typography.font.body,
+  padding: "1px 0",
   "& input": {
-    padding: "0 10px",
+    padding: "0 16px",
     height: "100%",
   },
 });
@@ -90,10 +89,6 @@ const GridEditInputCell = forwardRef<HTMLInputElement, GridEditInputCellProps>(
       async (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
 
-        if (onValueChange) {
-          await onValueChange(event, newValue);
-        }
-
         const column = apiRef.current.getColumn(field);
 
         let parsedValue = newValue;
@@ -117,6 +112,10 @@ const GridEditInputCell = forwardRef<HTMLInputElement, GridEditInputCellProps>(
           },
           event,
         );
+
+        if (onValueChange) {
+          await onValueChange(event, newValue);
+        }
       },
       [apiRef, debounceMs, field, id, onValueChange],
     );

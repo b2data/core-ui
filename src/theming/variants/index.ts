@@ -1,3 +1,4 @@
+import type {} from "@mui/material/themeCssVarsAugmentation";
 import { createTheme } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
@@ -25,7 +26,7 @@ export const lightTheme = createTheme({
   spacing: 4,
   mixins,
   typography,
-  cssVariables: true,
+  // cssVariables: true,
 });
 
 export const darkTheme = createTheme({
@@ -38,7 +39,7 @@ export const darkTheme = createTheme({
   spacing: 4,
   mixins,
   typography,
-  cssVariables: true,
+  // cssVariables: true,
 });
 
 declare module "@mui/material" {

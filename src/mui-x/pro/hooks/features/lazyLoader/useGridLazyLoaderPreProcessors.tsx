@@ -19,10 +19,7 @@ const getSkeletonRowId = (index: number) =>
 
 export const useGridLazyLoaderPreProcessors = (
   privateApiRef: RefObject<GridPrivateApiPro>,
-  props: Pick<
-    DataGridProProcessedProps,
-    "rowCount" | "rowsLoadingMode" | "experimentalFeatures"
-  >,
+  props: Pick<DataGridProProcessedProps, "rowCount" | "rowsLoadingMode">,
 ) => {
   const addSkeletonRows = React.useCallback<GridPipeProcessor<"hydrateRows">>(
     (groupingParams) => {

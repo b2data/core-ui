@@ -3,6 +3,10 @@ export * from "@mui/x-data-grid/internals";
 export { GridColumnHeaders } from "../components/GridColumnHeaders";
 export { DATA_GRID_PRO_DEFAULT_SLOTS_COMPONENTS } from "../constants/dataGridProDefaultSlotsComponents";
 
+/**
+ * x-data-grid-pro internals that are overriding the x-data-grid internals
+ */
+
 export { useGridColumnHeaders } from "../hooks/features/columnHeaders/useGridColumnHeaders";
 export { useGridAriaAttributes } from "../hooks/utils/useGridAriaAttributes";
 export { useGridRowAriaAttributes } from "../hooks/features/rows/useGridRowAriaAttributes";
@@ -39,12 +43,14 @@ export {
 export { useGridLazyLoader } from "../hooks/features/lazyLoader/useGridLazyLoader";
 export { useGridLazyLoaderPreProcessors } from "../hooks/features/lazyLoader/useGridLazyLoaderPreProcessors";
 export { useGridDataSourceLazyLoader } from "../hooks/features/serverSideLazyLoader/useGridDataSourceLazyLoader";
+export { useGridInfiniteLoadingIntersection } from "../hooks/features/serverSideLazyLoader/useGridInfiniteLoadingIntersection";
 export { dataSourceStateInitializer } from "../hooks/features/dataSource/useGridDataSourcePro";
 export { useGridDataSourceBasePro } from "../hooks/features/dataSource/useGridDataSourceBasePro";
 export {
   gridDataSourceErrorSelector,
   gridDataSourceLoadingIdSelector,
 } from "../hooks/features/dataSource/gridDataSourceSelector";
+export { getGroupKeys } from "../hooks/features/dataSource/utils";
 
 export type {
   GridExperimentalProFeatures,

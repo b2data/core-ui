@@ -10,6 +10,8 @@ const deDEGrid: Partial<GridLocaleText> = {
   noResultsOverlayLabel: "Keine Ergebnisse gefunden.",
   noColumnsOverlayLabel: "Keine Spalten",
   noColumnsOverlayManageColumns: "Spalten verwalten",
+  emptyPivotOverlayLabel:
+    "Felder zu Zeilen, Spalten und Werten hinzufügen, um eine Pivot-Tabelle zu erstellen",
 
   // Density selector toolbar button text
   toolbarDensity: "Zeilenhöhe",
@@ -35,25 +37,18 @@ const deDEGrid: Partial<GridLocaleText> = {
   toolbarQuickFilterLabel: "Suchen",
   toolbarQuickFilterDeleteIconLabel: "Löschen",
 
-  // Prompt toolbar field
-  toolbarPromptControlPlaceholder: "Prompt eingeben…",
-  toolbarPromptControlWithRecordingPlaceholder:
-    "Prompt eingeben oder aufnehmen…",
-  toolbarPromptControlRecordingPlaceholder: "Hört Prompteingabe zu…",
-  toolbarPromptControlLabel: "Prompteingabe",
-  toolbarPromptControlRecordButtonDefaultLabel: "Aufnahme starten",
-  toolbarPromptControlRecordButtonActiveLabel: "Aufnahme stoppen",
-  toolbarPromptControlSendActionLabel: "Senden",
-  toolbarPromptControlSendActionAriaLabel: "Prompt senden",
-  toolbarPromptControlErrorMessage:
-    "Ein Fehler ist während der Bearbeitung der Anfrage aufgetreten. Bitte versuche es nochmal mit einem anderen Prompt.",
-
   // Export selector toolbar button text
   toolbarExport: "Exportieren",
   toolbarExportLabel: "Exportieren",
   toolbarExportCSV: "Download als CSV",
   toolbarExportPrint: "Drucken",
   toolbarExportExcel: "Download als Excel",
+
+  // Toolbar pivot button
+  toolbarPivot: "Pivot",
+
+  // Toolbar AI Assistant button
+  toolbarAssistant: "KI-Assistent",
 
   // Columns management text
   columnsManagementSearchTitle: "Suche",
@@ -136,6 +131,7 @@ const deDEGrid: Partial<GridLocaleText> = {
   columnMenuUnsort: "Sortierung deaktivieren",
   columnMenuSortAsc: "Sortiere aufsteigend",
   columnMenuSortDesc: "Sortiere absteigend",
+  columnMenuManagePivot: "Pivot verwalten",
 
   // Column header text
   columnHeaderFiltersTooltipActive: (count) =>
@@ -224,6 +220,97 @@ const deDEGrid: Partial<GridLocaleText> = {
   aggregationFunctionLabelMin: "Minimum",
   aggregationFunctionLabelMax: "Maximum",
   aggregationFunctionLabelSize: "Anzahl",
+
+  // Pivot panel
+  pivotToggleLabel: "Pivot",
+  pivotRows: "Zeilen",
+  pivotColumns: "Spalten",
+  pivotValues: "Werte",
+  pivotCloseButton: "Pivot-Einstellungen schließen",
+  pivotSearchButton: "Felder suchen",
+  pivotSearchControlPlaceholder: "Felder suchen",
+  pivotSearchControlLabel: "Felder suchen",
+  pivotSearchControlClear: "Suche löschen",
+  pivotNoFields: "Keine Felder",
+  pivotMenuMoveUp: "Nach oben",
+  pivotMenuMoveDown: "Nach unten",
+  pivotMenuMoveToTop: "An den Anfang",
+  pivotMenuMoveToBottom: "An das Ende",
+  pivotMenuRows: "Zeilen",
+  pivotMenuColumns: "Spalten",
+  pivotMenuValues: "Werte",
+  pivotMenuOptions: "Feldoptionen",
+  pivotMenuAddToRows: "Zu Zeilen hinzufügen",
+  pivotMenuAddToColumns: "Zu Spalten hinzufügen",
+  pivotMenuAddToValues: "Zu Werten hinzufügen",
+  pivotMenuRemove: "Entfernen",
+  pivotDragToRows: "Hier hinziehen, um Zeilen zu erstellen",
+  pivotDragToColumns: "Hier hinziehen, um Spalten zu erstellen",
+  pivotDragToValues: "Hier hinziehen, um Werte zu erstellen",
+  pivotYearColumnHeaderName: "(Jahr)",
+  pivotQuarterColumnHeaderName: "(Quartal)",
+
+  // AI Assistant panel
+  aiAssistantPanelTitle: "KI-Assistent",
+  aiAssistantPanelClose: "KI-Assistent schließen",
+  aiAssistantPanelNewConversation: "Neue Unterhaltung",
+  aiAssistantPanelConversationHistory: "Unterhaltungsverlauf",
+  aiAssistantPanelEmptyConversation: "Kein Prompt-Verlauf",
+  aiAssistantSuggestions: "Vorschläge",
+
+  // Prompt field
+  promptFieldLabel: "Prompteingabe",
+  promptFieldPlaceholder: "Prompt eingeben…",
+  promptFieldPlaceholderWithRecording: "Prompt eingeben oder aufnehmen…",
+  promptFieldPlaceholderListening: "Hört Prompteingabe zu…",
+  promptFieldSpeechRecognitionNotSupported:
+    "Spracherkennung wird in diesem Browser nicht unterstützt",
+  promptFieldSend: "Senden",
+  promptFieldRecord: "Aufnahme starten",
+  promptFieldStopRecording: "Aufnahme stoppen",
+
+  // Prompt
+  promptRerun: "Erneut ausführen",
+  promptProcessing: "Verarbeitung…",
+  promptAppliedChanges: "Änderungen angewendet",
+
+  // Prompt changes
+  promptChangeGroupDescription: (column: string) => `Gruppieren nach ${column}`,
+  promptChangeAggregationLabel: (column: string, aggregation: string) =>
+    `${column} (${aggregation})`,
+  promptChangeAggregationDescription: (column: string, aggregation: string) =>
+    `${column} aggregieren (${aggregation})`,
+  promptChangeFilterLabel: (
+    column: string,
+    operator: string,
+    value: string,
+  ) => {
+    if (operator === "is any of") {
+      return `${column} entspricht einem der Werte: ${value}`;
+    }
+    return `${column} ${operator} ${value}`;
+  },
+  promptChangeFilterDescription: (
+    column: string,
+    operator: string,
+    value: string,
+  ) => {
+    if (operator === "is any of") {
+      return `Filtern, bei dem ${column} einem der folgenden Werte entspricht: ${value}`;
+    }
+    return `Filtern wo ${column} ${operator} ${value}`;
+  },
+  promptChangeSortDescription: (column: string, direction: string) =>
+    `Sortieren nach ${column} (${direction})`,
+  promptChangePivotEnableLabel: "Pivot",
+  promptChangePivotEnableDescription: "Pivot aktivieren",
+  promptChangePivotColumnsLabel: (count: number) => `Spalten (${count})`,
+  promptChangePivotColumnsDescription: (column: string, direction: string) =>
+    `${column}${direction ? ` (${direction})` : ""}`,
+  promptChangePivotRowsLabel: (count: number) => `Zeilen (${count})`,
+  promptChangePivotValuesLabel: (count: number) => `Werte (${count})`,
+  promptChangePivotValuesDescription: (column: string, aggregation: string) =>
+    `${column} (${aggregation})`,
 };
 
 export const deDE: Localization = getGridLocalization(deDEGrid);

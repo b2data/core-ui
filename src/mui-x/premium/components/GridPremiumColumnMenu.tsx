@@ -10,6 +10,7 @@ import { GridColumnMenuAggregationItem } from "./GridColumnMenuAggregationItem";
 import { isGroupingColumn } from "../hooks/features/rowGrouping";
 import { GridColumnMenuRowGroupItem } from "./GridColumnMenuRowGroupItem";
 import { GridColumnMenuRowUngroupItem } from "./GridColumnMenuRowUngroupItem";
+import { GridColumnMenuPivotItem } from "./GridColumnMenuPivotItem";
 
 export function GridColumnMenuGroupingItem(props: GridColumnMenuItemProps) {
   const { colDef } = props;
@@ -24,12 +25,14 @@ export const GRID_COLUMN_MENU_SLOTS_PREMIUM = {
   ...GRID_COLUMN_MENU_SLOTS,
   columnMenuAggregationItem: GridColumnMenuAggregationItem,
   columnMenuGroupingItem: GridColumnMenuGroupingItem,
+  columnMenuPivotItem: GridColumnMenuPivotItem,
 };
 
 export const GRID_COLUMN_MENU_SLOT_PROPS_PREMIUM = {
   ...GRID_COLUMN_MENU_SLOT_PROPS,
   columnMenuAggregationItem: { displayOrder: 23 },
   columnMenuGroupingItem: { displayOrder: 27 },
+  columnMenuPivotItem: { displayOrder: 28 },
 };
 
 export const GridPremiumColumnMenu = forwardRef<

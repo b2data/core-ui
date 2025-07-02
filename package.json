@@ -1,6 +1,6 @@
 {
   "name": "@b2data/core-ui",
-  "version": "1.2.20",
+  "version": "1.2.21",
   "description": "",
   "files": [
     "lib"
@@ -33,7 +33,6 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.7",
     "@mui/icons-material": "^7.0.1",
-    "@mui/lab": "^7.0.0-beta.10",
     "@mui/material": "^7.0.1",
     "@types/autosuggest-highlight": "^3.2.3",
     "@types/node": "^22.13.16",

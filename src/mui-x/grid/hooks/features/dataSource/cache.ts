@@ -7,7 +7,7 @@ export type GridDataSourceCacheDefaultConfig = {
   /**
    * Time To Live for each cache entry in milliseconds.
    * After this time the cache entry will become stale and the next query will result in cache miss.
-   * @default 300000 (5 minutes)
+   * @default 300_000 (5 minutes)
    */
   ttl?: number;
   /**
@@ -36,7 +36,7 @@ export class GridDataSourceCacheDefault {
   private getKey: (params: GridGetRowsParams) => string;
 
   constructor({
-    ttl = 300000,
+    ttl = 300_000,
     getKey = getKeyDefault,
   }: GridDataSourceCacheDefaultConfig) {
     this.cache = {};

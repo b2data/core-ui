@@ -9,7 +9,7 @@ const GridNoRowsOverlay = forwardRef<HTMLDivElement, GridOverlayProps>(
     const noRowsLabel = apiRef.current.getLocaleText("noRowsLabel");
 
     return (
-      <GridOverlay {...props} ref={ref} style={{ background: "white" }}>
+      <GridOverlay {...props} ref={ref}>
         {noRowsLabel}
       </GridOverlay>
     );

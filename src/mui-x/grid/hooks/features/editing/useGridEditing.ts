@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import { GridPrivateApiCommunity } from "../../../models/api/gridApiCommunity";
@@ -26,14 +27,21 @@ export const useGridEditing = (
   apiRef: RefObject<GridPrivateApiCommunity>,
   props: Pick<
     DataGridProcessedProps,
-    "isCellEditable" | "editMode" | "processRowUpdate"
+    | "isCellEditable"
+    | "editMode"
+    | "processRowUpdate"
+    | "dataSource"
+    | "onDataSourceError"
   >,
 ) => {
   useGridCellEditing(apiRef, props);
   useGridRowEditing(apiRef, props);
 
   const debounceMap = React.useRef<
-    Record<GridRowId, Record<string, [NodeJS.Timeout, () => void]>>
+    Record<
+      GridRowId,
+      Record<string, [ReturnType<typeof setTimeout>, () => void]>
+    >
   >({});
 
   const { isCellEditable: isCellEditableProp } = props;

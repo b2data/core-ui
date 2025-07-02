@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import {
@@ -6,6 +7,7 @@ import {
   GridEventLookup,
   GRID_ROOT_GROUP_ID,
   GridValidRowModel,
+  useGridEvent,
 } from "@mui/x-data-grid-pro";
 import {
   useGridDataSourceBasePro,
@@ -43,8 +45,13 @@ export const useGridDataSourcePremium = (
   apiRef: RefObject<GridPrivateApiPremium>,
   props: DataGridPremiumProcessedProps,
 ) => {
-  const { api, strategyProcessor, events, setStrategyAvailability } =
-    useGridDataSourceBasePro<GridPrivateApiPremium>(apiRef, props, options);
+  const {
+    api,
+    debouncedFetchRows,
+    strategyProcessor,
+    events,
+    setStrategyAvailability,
+  } = useGridDataSourceBasePro<GridPrivateApiPremium>(apiRef, props, options);
   const aggregateRowRef = React.useRef<GridValidRowModel>({});
 
   const processDataSourceRows = React.useCallback<
@@ -117,6 +124,9 @@ export const useGridDataSourcePremium = (
   Object.entries(events).forEach(([event, handler]) => {
     addEventHandler(apiRef, event as keyof GridEventLookup, handler);
   });
+
+  useGridEvent(apiRef, "rowGroupingModelChange", () => debouncedFetchRows());
+  useGridEvent(apiRef, "aggregationModelChange", () => debouncedFetchRows());
 
   React.useEffect(() => {
     setStrategyAvailability();

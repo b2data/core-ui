@@ -27,7 +27,6 @@ const useUtilityClasses = (ownerState: OwnerState) => {
 const GridFooterContainerRoot = styled("div", {
   name: "MuiDataGrid",
   slot: "FooterContainer",
-  overridesResolver: (_props, styles) => styles.footerContainer,
 })<{ ownerState: OwnerState }>({
   display: "flex",
   justifyContent: "space-between",

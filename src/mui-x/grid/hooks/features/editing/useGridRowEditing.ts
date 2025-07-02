@@ -1,8 +1,10 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import useEventCallback from "@mui/utils/useEventCallback";
 import useEnhancedEffect from "@mui/utils/useEnhancedEffect";
 import { warnOnce } from "@mui/x-internals/warning";
+import { isDeepEqual } from "@mui/x-internals/isDeepEqual";
 import { useGridEvent, useGridEventPriority } from "../../utils/useGridEvent";
 import { GridEventListener } from "../../../models/events/gridEventListener";
 import {
@@ -32,7 +34,7 @@ import {
 import { GridRowId, GridValidRowModel } from "../../../models/gridRows";
 import { isPrintableKey, isPasteShortcut } from "../../../utils/keyboardUtils";
 import {
-  gridColumnFieldsSelector,
+  gridColumnDefinitionsSelector,
   gridVisibleColumnFieldsSelector,
 } from "../columns/gridColumnsSelector";
 import { GridCellParams } from "../../../models/params/gridCellParams";
@@ -46,6 +48,7 @@ import {
 } from "../../../models/params/gridRowParams";
 import { GRID_ACTIONS_COLUMN_TYPE } from "../../../colDef";
 import { getDefaultCellValue } from "./utils";
+import type { GridUpdateRowParams } from "../../../models/gridDataSource";
 
 export const useGridRowEditing = (
   apiRef: RefObject<GridPrivateApiCommunity>,
@@ -59,6 +62,7 @@ export const useGridRowEditing = (
     | "rowModesModel"
     | "onRowModesModelChange"
     | "signature"
+    | "dataSource"
   >,
 ) => {
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
@@ -470,10 +474,11 @@ export const useGridRowEditing = (
     const { id, fieldToFocus, deleteValue, initialValue } = params;
 
     const row = apiRef.current.getRow(id);
-    const columnFields = gridColumnFieldsSelector(apiRef);
+    const columns = gridColumnDefinitionsSelector(apiRef);
 
-    const newProps = columnFields.reduce<Record<string, GridEditCellProps>>(
-      (acc, field) => {
+    const newProps = columns.reduce<Record<string, GridEditCellProps>>(
+      (acc, col) => {
+        const field = col.field;
         const cellParams = apiRef.current.getCellParams(id, field);
         if (!cellParams.isEditable) {
           return acc;
@@ -492,7 +497,8 @@ export const useGridRowEditing = (
         acc[field] = {
           value: newValue,
           error: false,
-          isProcessingProps: !!column.preProcessEditCellProps && deleteValue,
+          isProcessingProps:
+            column.editable && !!column.preProcessEditCellProps && deleteValue,
         };
 
         return acc;
@@ -507,14 +513,13 @@ export const useGridRowEditing = (
       apiRef.current.setCellFocus(id, fieldToFocus);
     }
 
-    columnFields
+    columns
       .filter(
-        (field) =>
-          !!apiRef.current.getColumn(field).preProcessEditCellProps &&
-          deleteValue,
+        (column) =>
+          column.editable && !!column.preProcessEditCellProps && deleteValue,
       )
-      .forEach((field) => {
-        const column = apiRef.current.getColumn(field);
+      .forEach((column) => {
+        const field = column.field;
         const value = apiRef.current.getCellValue(id, field);
         const newValue = deleteValue
           ? getDefaultCellValue(column)
@@ -557,7 +562,7 @@ export const useGridRowEditing = (
   const updateStateToStopRowEditMode = useEventCallback<
     [GridStopRowEditModeParams],
     void
-  >((params) => {
+  >(async (params) => {
     const {
       id,
       ignoreModifications,
@@ -606,7 +611,29 @@ export const useGridRowEditing = (
 
     const rowUpdate = apiRef.current.getRowWithUpdatedValuesFromRowEditing(id);
 
-    if (processRowUpdate) {
+    if (props.dataSource?.updateRow) {
+      if (isDeepEqual(row, rowUpdate)) {
+        finishRowEditMode();
+        return;
+      }
+      const handleError = () => {
+        prevRowModesModel.current[id].mode = GridRowModes.Edit;
+        // Revert the mode in the rowModesModel prop back to "edit"
+        updateRowInRowModesModel(id, { mode: GridRowModes.Edit });
+      };
+
+      const updateRowParams: GridUpdateRowParams = {
+        rowId: id,
+        updatedRow: rowUpdate,
+        previousRow: row,
+      };
+      try {
+        await apiRef.current.dataSource.editRow(updateRowParams);
+        finishRowEditMode();
+      } catch {
+        handleError();
+      }
+    } else if (processRowUpdate) {
       const handleError = (errorThrown: any) => {
         // The row might have been deleted
         if (prevRowModesModel.current[id]) {

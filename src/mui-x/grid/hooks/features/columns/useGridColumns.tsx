@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import { GridEventListener } from "../../../models/events";
@@ -42,6 +43,7 @@ import {
 import { GridPreferencePanelsValue } from "../preferencesPanel";
 import { GridColumnOrderChangeParams } from "../../../models/params/gridColumnOrderChangeParams";
 import type { GridStateColDef } from "../../../models/colDef/gridColDef";
+import { gridPivotActiveSelector } from "../pivoting";
 
 export const columnsStateInitializer: GridStateInitializer<
   Pick<
@@ -172,6 +174,10 @@ export function useGridColumns(
 
   const updateColumns = React.useCallback<GridColumnApi["updateColumns"]>(
     (columns) => {
+      if (gridPivotActiveSelector(apiRef)) {
+        apiRef.current.updateNonPivotColumns(columns);
+        return;
+      }
       const columnsState = createColumnsState({
         apiRef,
         columnsToUpsert: columns,
@@ -365,11 +371,10 @@ export function useGridColumns(
     GridPipeProcessor<"restoreState">
   >(
     (params, context) => {
-      const columnVisibilityModelToImport =
-        context.stateToRestore.columns?.columnVisibilityModel;
       const initialState = context.stateToRestore.columns;
+      const columnVisibilityModelToImport = initialState?.columnVisibilityModel;
 
-      if (columnVisibilityModelToImport == null && initialState == null) {
+      if (initialState == null) {
         return params;
       }
 
@@ -380,7 +385,31 @@ export function useGridColumns(
         columnVisibilityModel: columnVisibilityModelToImport,
         keepOnlyColumnsToUpsert: false,
       });
-      apiRef.current.setState(mergeColumnsState(columnsState));
+
+      if (initialState != null) {
+        apiRef.current.setState((prevState) => ({
+          ...prevState,
+          columns: {
+            ...prevState.columns,
+            lookup: columnsState.lookup,
+            orderedFields: columnsState.orderedFields,
+            initialColumnVisibilityModel:
+              columnsState.initialColumnVisibilityModel,
+          },
+        }));
+      }
+
+      // separate column visibility model state update as it can be controlled
+      // https://github.com/mui/mui-x/issues/17681#issuecomment-3012528602
+      if (columnVisibilityModelToImport != null) {
+        apiRef.current.setState((prevState) => ({
+          ...prevState,
+          columns: {
+            ...prevState.columns,
+            columnVisibilityModel: columnVisibilityModelToImport,
+          },
+        }));
+      }
 
       if (initialState != null) {
         apiRef.current.publishEvent(
@@ -410,13 +439,15 @@ export function useGridColumns(
 
   const addColumnMenuItems = React.useCallback<GridPipeProcessor<"columnMenu">>(
     (columnMenuItems) => {
-      if (props.disableColumnSelector) {
+      const isPivotActive = gridPivotActiveSelector(apiRef);
+
+      if (props.disableColumnSelector || isPivotActive) {
         return columnMenuItems;
       }
 
       return [...columnMenuItems, "columnMenuColumnsItem"];
     },
-    [props.disableColumnSelector],
+    [props.disableColumnSelector, apiRef],
   );
 
   useGridRegisterPipeProcessor(apiRef, "columnMenu", addColumnMenuItems);

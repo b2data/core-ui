@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import clsx from "clsx";
 import { styled } from "@mui/material/styles";
@@ -79,7 +80,6 @@ type OwnerState = DataGridProcessedProps;
 export const GridColumnHeaderRow = styled("div", {
   name: "MuiDataGrid",
   slot: "ColumnHeaderRow",
-  overridesResolver: (_, styles) => styles.columnHeaderRow,
 })<{ ownerState: OwnerState }>({
   display: "flex",
 });
@@ -150,7 +150,7 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
     GridEventListener<"columnHeaderDragStart">
   >((params) => setDragCol(params.field), []);
   const handleColumnReorderStop = React.useCallback<
-    GridEventListener<"columnHeaderDragEnd">
+    GridEventListener<"columnHeaderDragEndNative">
   >(() => setDragCol(""), []);
 
   const leftRenderContext = React.useMemo(() => {
@@ -174,7 +174,7 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
   useGridEvent(apiRef, "columnResizeStart", handleColumnResizeStart);
   useGridEvent(apiRef, "columnResizeStop", handleColumnResizeStop);
   useGridEvent(apiRef, "columnHeaderDragStart", handleColumnReorderStart);
-  useGridEvent(apiRef, "columnHeaderDragEnd", handleColumnReorderStop);
+  useGridEvent(apiRef, "columnHeaderDragEndNative", handleColumnReorderStop);
 
   // Helper for computation common between getColumnHeaders and getColumnGroupHeaders
   const getColumnsToRender = (params?: GetHeadersParams) => {

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import useEventCallback from "@mui/utils/useEventCallback";
@@ -177,7 +178,7 @@ export const useGridRowSelection = (
   const setRowSelectionModel = React.useCallback<
     GridRowSelectionApi["setRowSelectionModel"]
   >(
-    (model) => {
+    (model, reason) => {
       if (
         props.signature === GridSignature.DataGrid &&
         !canHaveMultipleSelection &&
@@ -193,10 +194,13 @@ export const useGridRowSelection = (
       const currentModel = gridRowSelectionStateSelector(apiRef);
       if (currentModel !== model) {
         logger.debug(`Setting selection model`);
-        apiRef.current.setState((state) => ({
-          ...state,
-          rowSelection: props.rowSelection ? model : emptyModel,
-        }));
+        apiRef.current.setState(
+          (state) => ({
+            ...state,
+            rowSelection: props.rowSelection ? model : emptyModel,
+          }),
+          reason,
+        );
       }
     },
     [
@@ -277,7 +281,10 @@ export const useGridRowSelection = (
           }
         }
 
-        apiRef.current.setRowSelectionModel(newSelectionModel);
+        apiRef.current.setRowSelectionModel(
+          newSelectionModel,
+          "singleRowSelection",
+        );
       } else {
         logger.debug(`Toggling selection for row ${id}`);
 
@@ -325,7 +332,10 @@ export const useGridRowSelection = (
             newSelectionModel.ids.size < 2) ||
           canHaveMultipleSelection;
         if (isSelectionValid) {
-          apiRef.current.setRowSelectionModel(newSelectionModel);
+          apiRef.current.setRowSelectionModel(
+            newSelectionModel,
+            "singleRowSelection",
+          );
         }
       }
     },
@@ -437,7 +447,10 @@ export const useGridRowSelection = (
           newSelectionModel.ids.size < 2) ||
         canHaveMultipleSelection;
       if (isSelectionValid) {
-        apiRef.current.setRowSelectionModel(newSelectionModel);
+        apiRef.current.setRowSelectionModel(
+          newSelectionModel,
+          "multipleRowsSelection",
+        );
       }
     },
     [
@@ -650,7 +663,10 @@ export const useGridRowSelection = (
             );
           }
         } else {
-          apiRef.current.setRowSelectionModel(newSelectionModel);
+          apiRef.current.setRowSelectionModel(
+            newSelectionModel,
+            "multipleRowsSelection",
+          );
         }
       }
     },
@@ -678,14 +694,15 @@ export const useGridRowSelection = (
         !checkboxSelection && !hasCtrlKey && !isKeyboardEvent(event);
       const resetSelection =
         !canHaveMultipleSelection || isMultipleSelectionDisabled;
+      const isSelected = apiRef.current.isRowSelected(id);
       const selectedRowsCount = gridRowSelectionCountSelector(apiRef);
 
-      if (canHaveMultipleSelection && selectedRowsCount > 1 && !hasCtrlKey) {
-        apiRef.current.selectRow(id, true, resetSelection);
-      } else {
-        const isSelected = apiRef.current.isRowSelected(id);
-        apiRef.current.selectRow(id, !isSelected, resetSelection);
-      }
+      // Clicking on a row should toggle the selection except when a range of rows is already selected and the selection should reset
+      // In that case, we want to keep the current row selected (https://github.com/mui/mui-x/pull/15509#discussion_r1878082687)
+      const shouldStaySelected = selectedRowsCount > 1 && resetSelection;
+      const newSelectionState = shouldStaySelected || !isSelected;
+
+      apiRef.current.selectRow(id, newSelectionState, resetSelection);
     },
     [apiRef, canHaveMultipleSelection, checkboxSelection],
   );
@@ -771,7 +788,9 @@ export const useGridRowSelection = (
       const filterModel = gridFilterModelSelector(apiRef);
       const quickFilterModel = gridQuickFilterValuesSelector(apiRef);
       const hasFilters =
-        filterModel.items.length > 0 || (quickFilterModel?.length || 0) > 0;
+        filterModel.items.length > 0 ||
+        quickFilterModel?.some((val) => val.length);
+
       if (
         !props.isRowSelectable &&
         !props.checkboxSelectionVisibleOnly &&

@@ -1,12 +1,11 @@
+"use client";
 import * as React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import {
-  unstable_useForkRef as useForkRef,
-  unstable_composeClasses as composeClasses,
-  unstable_ownerDocument as ownerDocument,
-  unstable_capitalize as capitalize,
-} from "@mui/utils";
+import useForkRef from "@mui/utils/useForkRef";
+import composeClasses from "@mui/utils/composeClasses";
+import ownerDocument from "@mui/utils/ownerDocument";
+import capitalize from "@mui/utils/capitalize";
 import { fastMemo } from "@mui/x-internals/fastMemo";
 import { useRtl } from "@mui/system/RtlProvider";
 import { forwardRef } from "@mui/x-internals/forwardRef";
@@ -50,6 +49,7 @@ import {
 import { useGridPrivateApiContext } from "../../hooks/utils/useGridPrivateApiContext";
 import { gridEditCellStateSelector } from "../../hooks/features/editing/gridEditingSelectors";
 import { attachPinnedStyle } from "../../internals/utils";
+import { useGridConfiguration } from "../../hooks/utils/useGridConfiguration";
 
 export const gridPinnedColumnPositionLookup = {
   [PinnedColumnPosition.LEFT]: GridPinnedColumnPosition.LEFT,
@@ -180,6 +180,11 @@ const GridCell = forwardRef<HTMLDivElement, GridCellProps>(
       },
     );
 
+    const config = useGridConfiguration();
+    const cellAggregationResult = config.hooks.useCellAggregationResult(
+      rowId,
+      field,
+    );
     const cellMode: GridCellModes = editCellState
       ? GridCellModes.Edit
       : GridCellModes.View;
@@ -208,6 +213,13 @@ const GridCell = forwardRef<HTMLDivElement, GridCellProps>(
         },
       );
     cellParams.api = apiRef.current;
+
+    if (cellAggregationResult) {
+      cellParams.value = cellAggregationResult.value;
+      cellParams.formattedValue = column.valueFormatter
+        ? column.valueFormatter(cellParams.value as never, row, column, apiRef)
+        : cellParams.value;
+    }
 
     const isSelected = useGridSelector(apiRef, () =>
       apiRef.current.unstable_applyPipeProcessors("isCellSelected", false, {

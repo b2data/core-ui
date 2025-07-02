@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { styled } from "@mui/system";
 import useEventCallback from "@mui/utils/useEventCallback";
@@ -176,7 +177,7 @@ const GridVirtualScrollbar = forwardRef<
       ref={useForkRef(ref, scrollbarRef)}
       className={classes.root}
       style={
-        props.position === "vertical" && rootProps.unstable_listView
+        props.position === "vertical" && rootProps.listView
           ? { height: "100%", top: 0 }
           : undefined
       }

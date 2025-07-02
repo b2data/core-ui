@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import { GridPrivateApiCommunity } from "../../../models/api/gridApiCommunity";
@@ -63,7 +64,7 @@ const createGroupLookup = (
 };
 
 export const columnGroupsStateInitializer: GridStateInitializer<
-  Pick<DataGridProcessedProps, "columnGroupingModel" | "experimentalFeatures">
+  Pick<DataGridProcessedProps, "columnGroupingModel">
 > = (state, props, apiRef) => {
   if (!props.columnGroupingModel) {
     return state;

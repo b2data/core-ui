@@ -14,7 +14,7 @@ type Cache = {
 };
 
 type GroupCache = {
-  processors: Map<string, GridPipeProcessor<any>>;
+  processors: Map<string, GridPipeProcessor<any> | null>;
   processorsAsArray: GridPipeProcessor<any>[];
   appliers: {
     [applierId: string]: () => void;
@@ -88,15 +88,15 @@ export const useGridPipeProcessing = (
         groupCache.processors.set(id, processor);
         groupCache.processorsAsArray = Array.from(
           cache.current[group]!.processors.values(),
-        );
+        ).filter((processorValue) => processorValue !== null);
         runAppliers(groupCache);
       }
 
       return () => {
-        cache.current[group]!.processors.delete(id);
+        cache.current[group]!.processors.set(id, null);
         cache.current[group]!.processorsAsArray = Array.from(
           cache.current[group]!.processors.values(),
-        );
+        ).filter((processorValue) => processorValue !== null);
       };
     },
     [runAppliers],

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { RefObject } from "@mui/x-internals/types";
 import { useRtl } from "@mui/system/RtlProvider";
-// import {
-//   GRID_TREE_DATA_GROUPING_FIELD,
-//   GRID_DETAIL_PANEL_TOGGLE_FIELD,
-// } from "../../../internals/constants";
-// import { isGroupingColumn } from "../../../internals/utils/gridRowGroupingUtils";
+import {
+  GRID_TREE_DATA_GROUPING_FIELD,
+  GRID_DETAIL_PANEL_TOGGLE_FIELD,
+} from "../../../internals/constants";
+import { isGroupingColumn } from "../../../internals/utils/gridRowGroupingUtils";
 import { GridEventListener } from "../../../models/events";
 import { GridPrivateApiCommunity } from "../../../models/api/gridApiCommunity";
 import { GridCellParams } from "../../../models/params/gridCellParams";
@@ -70,15 +70,14 @@ export const useGridKeyboardNavigation = (
     | "pagination"
     | "paginationMode"
     | "getRowId"
-    | "experimentalFeatures"
     | "signature"
     | "headerFilters"
-    | "unstable_listView"
+    | "listView"
   >,
 ): void => {
   const logger = useGridLogger(apiRef, "useGridKeyboardNavigation");
   const isRtl = useRtl();
-  const listView = props.unstable_listView;
+  const listView = props.listView;
 
   const getCurrentPageRows = React.useCallback(() => {
     return gridVisibleRowsWithPinnedRowsSelector(apiRef);
@@ -684,27 +683,26 @@ export const useGridKeyboardNavigation = (
         }
 
         case " ": {
-          // prevent Space event from scrolling
-          // const field = (params as GridCellParams).field;
-          // if (field === GRID_DETAIL_PANEL_TOGGLE_FIELD) {
-          //   break;
-          // }
-          // const colDef = (params as GridCellParams).colDef;
-          // if (
-          //   colDef &&
-          //   (colDef.field === GRID_TREE_DATA_GROUPING_FIELD ||
-          //     isGroupingColumn(colDef.field))
-          // ) {
-          //   break;
-          // }
-          // if (!event.shiftKey && rowIndexBefore < lastRowIndexInPage) {
-          //   goToCell(
-          //     colIndexBefore,
-          //     getRowIdFromIndex(
-          //       Math.min(rowIndexBefore + viewportPageSize, lastRowIndexInPage),
-          //     ),
-          //   );
-          // }
+          const field = (params as GridCellParams).field;
+          if (field === GRID_DETAIL_PANEL_TOGGLE_FIELD) {
+            break;
+          }
+          const colDef = (params as GridCellParams).colDef;
+          if (
+            colDef &&
+            (colDef.field === GRID_TREE_DATA_GROUPING_FIELD ||
+              isGroupingColumn(colDef.field))
+          ) {
+            break;
+          }
+          if (!event.shiftKey && rowIndexBefore < lastRowIndexInPage) {
+            goToCell(
+              colIndexBefore,
+              getRowIdFromIndex(
+                Math.min(rowIndexBefore + viewportPageSize, lastRowIndexInPage),
+              ),
+            );
+          }
           break;
         }
 

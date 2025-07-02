@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import PropTypes from "prop-types";
 import useId from "@mui/utils/useId";
@@ -19,6 +20,7 @@ import { vars } from "../../constants/cssVariables";
 import { getDataGridUtilityClass } from "../../constants/gridClasses";
 
 interface GridToolbarInternalProps {
+  additionalItems?: React.ReactNode;
   additionalExportMenuItems?: (onMenuItemClick: () => void) => React.ReactNode;
 }
 
@@ -95,6 +97,7 @@ function GridToolbar(props: GridToolbarProps) {
     quickFilterProps,
     csvOptions,
     printOptions,
+    additionalItems,
     additionalExportMenuItems,
   } = props;
   const apiRef = useGridApiContext();
@@ -131,7 +134,10 @@ function GridToolbar(props: GridToolbarProps) {
         >
           <FilterPanelTrigger
             render={(triggerProps, state) => (
-              <ToolbarButton {...triggerProps} color="default">
+              <ToolbarButton
+                {...triggerProps}
+                color={state.filterCount > 0 ? "primary" : "default"}
+              >
                 <rootProps.slots.baseBadge
                   badgeContent={state.filterCount}
                   color="primary"
@@ -145,6 +151,8 @@ function GridToolbar(props: GridToolbarProps) {
         </rootProps.slots.baseTooltip>
       )}
 
+      {additionalItems}
+
       {showExportMenu &&
         (!rootProps.disableColumnFilter ||
           !rootProps.disableColumnSelector) && <GridToolbarDivider />}
@@ -153,6 +161,7 @@ function GridToolbar(props: GridToolbarProps) {
         <React.Fragment>
           <rootProps.slots.baseTooltip
             title={apiRef.current.getLocaleText("toolbarExport")}
+            disableInteractive={exportMenuOpen}
           >
             <ToolbarButton
               ref={exportMenuTriggerRef}
@@ -226,6 +235,7 @@ GridToolbar.propTypes = {
   // | To update them edit the TypeScript types and run "pnpm proptypes"  |
   // ----------------------------------------------------------------------
   additionalExportMenuItems: PropTypes.func,
+  additionalItems: PropTypes.node,
   csvOptions: PropTypes.object,
   printOptions: PropTypes.object,
   /**
