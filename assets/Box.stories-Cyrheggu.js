@@ -1,0 +1,3 @@
+import{j as a}from"./jsx-runtime-D_zvdyIk.js";import{B as s}from"./Box-BUsa_nNj.js";import"./createTheme-CpmnfvGf.js";import"./index-DQLiH3RP.js";import"./generateUtilityClasses-C4v8O9Po.js";import"./generateUtilityClass-Crd22lsZ.js";import"./useTheme-BB2j23dw.js";import"./extendSxProp-CldLvC6h.js";const f={title:"Components/Box",component:s,tags:["autodocs"]},o={render:p=>a.jsx(s,{...p})};var r,t,e;o.parameters={...o.parameters,docs:{...(r=o.parameters)==null?void 0:r.docs,source:{originalSource:`{
+  render: props => <Box {...props} />
+}`,...(e=(t=o.parameters)==null?void 0:t.docs)==null?void 0:e.source}}};const j=["Base"];export{o as Base,j as __namedExportsOrder,f as default};
