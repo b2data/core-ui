@@ -1,0 +1,5 @@
+import{L as e}from"./Link-CicM9Gco.js";import"./jsx-runtime-D_zvdyIk.js";import"./index-DQLiH3RP.js";import"./generateUtilityClass-Crd22lsZ.js";import"./createTheme-CpmnfvGf.js";import"./useTheme-B1gvnf2G.js";import"./DefaultPropsProvider-D7SvoM6x.js";import"./useTheme-BB2j23dw.js";import"./styled-DnAalvCx.js";import"./memoTheme-6CX_wYOL.js";import"./createSimplePaletteValueFilter-bm0fmN_7.js";import"./generateUtilityClasses-C4v8O9Po.js";import"./Typography-Dwm8olcE.js";import"./index-BklahHT9.js";import"./extendSxProp-CldLvC6h.js";import"./emotion-react.browser.esm-_xrAgkY8.js";import"./isFocusVisible-B8k4qzLc.js";const _={title:"Components/Link",component:e,tags:["autodocs"]},r={args:{children:"Text"}};var o,t,m;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {
+    children: "Text"
+  }
+}`,...(m=(t=r.parameters)==null?void 0:t.docs)==null?void 0:m.source}}};const C=["Base"];export{r as Base,C as __namedExportsOrder,_ as default};

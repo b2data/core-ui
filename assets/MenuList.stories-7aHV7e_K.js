@@ -1,0 +1,8 @@
+import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{M as t}from"./MenuItem-Dsdmt1Gn.js";import{M as p}from"./MenuList-D3vU2uhV.js";import"./index-DQLiH3RP.js";import"./MenuItem-ZAqpjX9M.js";import"./generateUtilityClass-Crd22lsZ.js";import"./createTheme-CpmnfvGf.js";import"./styled-DnAalvCx.js";import"./DefaultPropsProvider-D7SvoM6x.js";import"./memoTheme-6CX_wYOL.js";import"./ListContext-RlEJDmc_.js";import"./generateUtilityClasses-C4v8O9Po.js";import"./useEnhancedEffect-BJoEgHYV.js";import"./useForkRef-8i08ZgmQ.js";import"./ButtonBase-5iSMQWv2.js";import"./useTimeout-fSo4lzeS.js";import"./TransitionGroupContext-BSJTrji_.js";import"./emotion-react.browser.esm-_xrAgkY8.js";import"./useEventCallback-Drq2SckL.js";import"./isFocusVisible-B8k4qzLc.js";import"./listItemTextClasses-Bo5uZj11.js";import"./Box-BUsa_nNj.js";import"./useTheme-BB2j23dw.js";import"./extendSxProp-CldLvC6h.js";import"./MenuList-BPJ61TbX.js";import"./getScrollbarSize-CaCM53D3.js";import"./ownerWindow-HkKU3E4x.js";import"./ownerDocument-DW-IO8s5.js";const w={title:"Components/Menu/Menu List",component:p,tags:["autodocs"]},o={args:{sx:{border:"1px solid"},children:[r.jsx(t,{children:"Profile"},1),r.jsx(t,{children:"My account"},2),r.jsx(t,{children:"Logout"},3)]}};var e,m,i;o.parameters={...o.parameters,docs:{...(e=o.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  args: {
+    sx: {
+      border: "1px solid"
+    },
+    children: [<MenuItem key={1}>Profile</MenuItem>, <MenuItem key={2}>My account</MenuItem>, <MenuItem key={3}>Logout</MenuItem>]
+  }
+}`,...(i=(m=o.parameters)==null?void 0:m.docs)==null?void 0:i.source}}};const z=["Base"];export{o as Base,z as __namedExportsOrder,w as default};
