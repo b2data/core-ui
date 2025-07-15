@@ -66,6 +66,7 @@ export const Alert = React.forwardRef(
       {...props}
       color={!severity ? "default" : undefined}
       severity={severity || "info"}
+      sx={{ wordBreak: "break-word", ...props.sx }}
     >
       {title && <MuiAlertTitle>{title}</MuiAlertTitle>}
       {children}
