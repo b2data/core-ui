@@ -5,12 +5,14 @@ import { Box } from "../../Box";
 import { DataBlockEditorContext } from "../store";
 
 import { DataBlockWrapper } from "./DataBlockWrapper";
+import { DataBlockEditorProps } from "../models";
 
 export const DataBlockEditorRenderer: FC<{
   sx?: SxProps;
   onScroll?: UIEventHandler<HTMLDivElement>;
   editable?: boolean;
-}> = ({ sx, onScroll }) => {
+  getDataBlockSx?: DataBlockEditorProps<any>["getDataBlockSx"];
+}> = ({ sx, onScroll, getDataBlockSx }) => {
   const { state } = useContext(DataBlockEditorContext);
 
   return (
@@ -29,7 +31,12 @@ export const DataBlockEditorRenderer: FC<{
       onScroll={onScroll}
     >
       {state.blocks.map((data, index) => (
-        <DataBlockWrapper key={data.id} index={index} data={data} />
+        <DataBlockWrapper
+          key={data.id}
+          index={index}
+          data={data}
+          sx={getDataBlockSx?.(data)}
+        />
       ))}
     </Box>
   );

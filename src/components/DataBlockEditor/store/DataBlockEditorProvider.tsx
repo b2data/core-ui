@@ -29,7 +29,7 @@ const DataBlockEditorContext = createContext<{
 
 const DataBlockEditorProvider = forwardRef<
   DataBlockEditorApi,
-  PropsWithChildren<{ props: DataBlockEditorProps }>
+  PropsWithChildren<{ props: DataBlockEditorProps<any> }>
 >(({ children, props }, ref) => {
   const { onOpen: openConfirmDialog, portal } = useConfirmationDialog();
 

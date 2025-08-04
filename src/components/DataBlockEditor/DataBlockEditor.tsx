@@ -21,6 +21,7 @@ const EditorRaw = forwardRef(function DataBlockEditor<R extends DataBlockBase>(
           sx={props.sx}
           onScroll={props.onScroll}
           editable={props.editable}
+          getDataBlockSx={props.getDataBlockSx}
         />
       </DataBlockEditorProvider>
     </DndProvider>

@@ -49,6 +49,10 @@ export type DataBlockEditorProps<T extends DataBlockBase = DataBlockBase> = {
    */
   getFilesUrl: (id: string) => string;
   /**
+   * Extra styles for data block
+   */
+  getDataBlockSx?: (data: T) => SxProps;
+  /**
    * Translations
    */
   i18n?: DataBlockEditorTranslations;
