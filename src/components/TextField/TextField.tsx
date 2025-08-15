@@ -25,6 +25,7 @@ export interface TextFieldProps
     | "name"
     | "onChange"
     | "onBlur"
+    | "onFocus"
     | "onKeyDown"
     | "onKeyUp"
     | "onInput"
