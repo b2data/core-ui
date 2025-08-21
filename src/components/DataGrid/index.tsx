@@ -87,6 +87,7 @@ const DataGridRaw = forwardRef(function DataGrid<R extends GridValidRowModel>(
       treeData: false,
       cellSelection: false,
       disableClipboardPaste: true,
+      lazyLoading: true,
       ...inProps,
     }),
     [inProps],
