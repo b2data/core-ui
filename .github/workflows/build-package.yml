@@ -8,13 +8,24 @@ jobs:
   test: 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm install
-      - run: npm run lint
-      - run: npm run test
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        registry-url: https://npm.pkg.github.com/
+
+    - name: Enable Corepack
+      run: corepack enable
+
+    - name: Setup yarnrc
+      run: |
+        echo "nodeLinker: node-modules" >> .yarnrc.yml
+    
+    - name: Install and test
+      run: |
+        yarn install
+        yarn lint
+        yarn test
 
   publish:
     needs: test
@@ -23,23 +34,22 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           registry-url: https://npm.pkg.github.com/
-      - name: Install packages
+      - name: Setup npmrc for publishing
         run: |
-          echo @b2data:registry=https://npm.pkg.github.com > .npmrc
-          echo //npm.pkg.github.com/:_authToken=${{ secrets.REPO_SECRET }} >> .npmrc
-          npm install
-      - name: Build packages
-        run: npm run compile
-      - name: Publish NPM Package
+          echo "@b2data:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_SECRET }}" >> .npmrc
+      - name: Publish package
         run: |
+          corepack enable
+          yarn install
+          yarn compile
           npm pack
           npm publish
-      - name: Cleanup
-        run: rm -f .npmrc
 
   deploy:
     needs: publish
@@ -67,7 +77,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create tag
         run: |
           PACKAGE_VERSION=$(cat package.json| grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')
