@@ -31,7 +31,10 @@ const PickersInputRoot = styled(PickersInputBaseRoot, {
   overridesResolver: (_props, styles) => styles.root,
   shouldForwardProp: (prop) =>
     shouldForwardProp(prop) && prop !== "disableUnderline",
-})<{ ownerState: PickerInputOwnerState }>(({ theme }) => {
+})<{
+  ownerState: PickerInputOwnerState;
+  disableUnderline?: boolean;
+}>(({ theme, ownerState, disableUnderline }) => {
   const light = theme.palette.mode === "light";
   let bottomLineColor = light
     ? "rgba(0, 0, 0, 0.42)"
@@ -43,74 +46,62 @@ const PickersInputRoot = styled(PickersInputBaseRoot, {
     "label + &": {
       marginTop: 16,
     },
-    variants: [
-      ...Object.keys((theme.vars ?? theme).palette)
-        // @ts-ignore
-        .filter((key) => (theme.vars ?? theme).palette[key].main)
-        .map((color) => ({
-          props: { inputColor: color },
-          style: {
-            "&::after": {
-              // @ts-ignore
-              borderBottom: `2px solid ${(theme.vars || theme).palette[color].main}`,
-            },
-          },
-        })),
-      {
-        props: { disableUnderline: false },
-        style: {
-          "&::after": {
-            background: "red",
-            left: 0,
-            bottom: 0,
-            // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
-            content: '""',
-            position: "absolute",
-            right: 0,
-            transform: "scaleX(0)",
-            transition: theme.transitions.create("transform", {
-              duration: theme.transitions.duration.shorter,
-              easing: theme.transitions.easing.easeOut,
-            }),
-            pointerEvents: "none", // Transparent to the hover style.
-          },
-          [`&.${pickersInputClasses.focused}:after`]: {
-            // translateX(0) is a workaround for Safari transform scale bug
-            // See https://github.com/mui/material-ui/issues/31766
-            transform: "scaleX(1) translateX(0)",
-          },
-          [`&.${pickersInputClasses.error}`]: {
-            "&:before, &:after": {
-              borderBottomColor: (theme.vars || theme).palette.error.main,
-            },
-          },
-          "&::before": {
-            borderBottom: `1px solid ${bottomLineColor}`,
-            left: 0,
-            bottom: 0,
-            // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
-            content: '"\\00a0"',
-            position: "absolute",
-            right: 0,
-            transition: theme.transitions.create("border-bottom-color", {
-              duration: theme.transitions.duration.shorter,
-            }),
-            pointerEvents: "none", // Transparent to the hover style.
-          },
-          [`&:hover:not(.${pickersInputClasses.disabled}, .${pickersInputClasses.error}):before`]:
-            {
-              borderBottom: `2px solid ${(theme.vars || theme).palette.text.primary}`,
-              // Reset on touch devices, it doesn't add specificity
-              "@media (hover: none)": {
-                borderBottom: `1px solid ${bottomLineColor}`,
-              },
-            },
-          [`&.${pickersInputClasses.disabled}:before`]: {
-            borderBottomStyle: "dotted",
-          },
+    ...(ownerState.inputColor && {
+      "&::after": {
+        borderBottom: `2px solid ${(theme.vars || theme).palette[ownerState.inputColor].main}`,
+      },
+    }),
+    ...(!disableUnderline && {
+      "&::after": {
+        background: "red",
+        left: 0,
+        bottom: 0,
+        // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
+        content: '""',
+        position: "absolute",
+        right: 0,
+        transform: "scaleX(0)",
+        transition: theme.transitions.create("transform", {
+          duration: theme.transitions.duration.shorter,
+          easing: theme.transitions.easing.easeOut,
+        }),
+        pointerEvents: "none", // Transparent to the hover style.
+      },
+      [`&.${pickersInputClasses.focused}:after`]: {
+        // translateX(0) is a workaround for Safari transform scale bug
+        // See https://github.com/mui/material-ui/issues/31766
+        transform: "scaleX(1) translateX(0)",
+      },
+      [`&.${pickersInputClasses.error}`]: {
+        "&:before, &:after": {
+          borderBottomColor: (theme.vars || theme).palette.error.main,
         },
       },
-    ],
+      "&::before": {
+        borderBottom: `1px solid ${bottomLineColor}`,
+        left: 0,
+        bottom: 0,
+        // Doing the other way around crash on IE11 "''" https://github.com/cssinjs/jss/issues/242
+        content: '"\\00a0"',
+        position: "absolute",
+        right: 0,
+        transition: theme.transitions.create("border-bottom-color", {
+          duration: theme.transitions.duration.shorter,
+        }),
+        pointerEvents: "none", // Transparent to the hover style.
+      },
+      [`&:hover:not(.${pickersInputClasses.disabled}, .${pickersInputClasses.error}):before`]:
+        {
+          borderBottom: `2px solid ${(theme.vars || theme).palette.text.primary}`,
+          // Reset on touch devices, it doesn't add specificity
+          "@media (hover: none)": {
+            borderBottom: `1px solid ${bottomLineColor}`,
+          },
+        },
+      [`&.${pickersInputClasses.disabled}:before`]: {
+        borderBottomStyle: "dotted",
+      },
+    }),
   };
 });
 
@@ -168,7 +159,12 @@ const PickersInput = React.forwardRef(function PickersInput(
   return (
     <PickersInputBase
       slots={{ root: PickersInputRoot }}
-      slotProps={{ root: { disableUnderline } }}
+      slotProps={{
+        root: {
+          disableUnderline,
+          ownerState,
+        },
+      }}
       {...other}
       label={label}
       classes={classes}

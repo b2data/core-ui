@@ -172,47 +172,22 @@ const PickersFilledSectionsContainer = styled(
     shouldForwardProp: (prop) =>
       shouldForwardProp(prop) && prop !== "hiddenLabel",
   },
-)<{ ownerState: PickerFilledInputOwnerState }>({
-  paddingTop: 25,
-  paddingRight: 12,
-  paddingBottom: 8,
-  paddingLeft: 12,
-  variants: [
-    {
-      props: { inputSize: "small" },
-      style: {
-        paddingTop: 21,
-        paddingBottom: 4,
-      },
-    },
-    {
-      props: { hasStartAdornment: true },
-      style: {
-        paddingLeft: 0,
-      },
-    },
-    {
-      props: { hasEndAdornment: true },
-      style: {
-        paddingRight: 0,
-      },
-    },
-    {
-      props: { hiddenLabel: true },
-      style: {
-        paddingTop: 16,
-        paddingBottom: 17,
-      },
-    },
-    {
-      props: { hiddenLabel: true, inputSize: "small" },
-      style: {
-        paddingTop: 8,
-        paddingBottom: 9,
-      },
-    },
-  ],
-});
+)<{
+  ownerState: PickerFilledInputOwnerState;
+  hiddenLabel?: boolean;
+  inputSize?: string;
+  hasStartAdornment?: boolean;
+  hasEndAdornment?: boolean;
+}>(({ hiddenLabel, inputSize, hasStartAdornment, hasEndAdornment }) => ({
+  paddingTop: inputSize === "small" ? 21 : 25,
+  paddingRight: hasEndAdornment ? 0 : 12,
+  paddingBottom: inputSize === "small" ? 4 : 8,
+  paddingLeft: hasStartAdornment ? 0 : 12,
+  ...(hiddenLabel && {
+    paddingTop: inputSize === "small" ? 8 : 16,
+    paddingBottom: inputSize === "small" ? 9 : 17,
+  }),
+}));
 
 const useUtilityClasses = (
   classes: Partial<PickersFilledInputClasses> | undefined,
@@ -271,7 +246,15 @@ const PickersFilledInput = React.forwardRef(function PickersFilledInput(
         root: PickersFilledInputRoot,
         input: PickersFilledSectionsContainer,
       }}
-      slotProps={{ root: { disableUnderline }, input: { hiddenLabel } }}
+      slotProps={{
+        root: { disableUnderline },
+        input: {
+          hiddenLabel,
+          inputSize: ownerState.inputSize,
+          hasStartAdornment: ownerState.hasStartAdornment,
+          hasEndAdornment: ownerState.hasEndAdornment,
+        },
+      }}
       {...other}
       label={label}
       classes={classes}

@@ -14,6 +14,7 @@ import {
 } from "./pickersArrowSwitcherClasses";
 import { usePickerPrivateContext } from "../../hooks/usePickerPrivateContext";
 import { PickerOwnerState } from "../../../models";
+import { PickersArrowSwitcherOwnerState } from "./PickersArrowSwitcher.types";
 
 const PickersArrowSwitcherRoot = styled("div", {
   name: "MuiPickersArrowSwitcher",
@@ -40,15 +41,10 @@ const PickersArrowSwitcherButton = styled(IconButton, {
   slot: "Button",
   overridesResolver: (_props, styles) => styles.button,
 })<{
-  ownerState: PickerOwnerState;
-}>({
-  variants: [
-    {
-      props: { isButtonHidden: true },
-      style: { visibility: "hidden" },
-    },
-  ],
-});
+  ownerState: PickersArrowSwitcherOwnerState;
+}>(({ ownerState }) => ({
+  ...(ownerState.isButtonHidden && { visibility: "hidden" }),
+}));
 
 const useUtilityClasses = (
   classes: Partial<PickersArrowSwitcherClasses> | undefined,
