@@ -13,19 +13,26 @@ jobs:
       with:
         node-version: 24
         registry-url: https://npm.pkg.github.com/
+        cache: 'yarn'
 
     - name: Enable Corepack
       run: corepack enable
 
-    - name: Setup yarnrc
+    - name: Setup Yarn
       run: |
-        echo "nodeLinker: node-modules" >> .yarnrc.yml
-    
+        corepack prepare yarn@4.9.4 --activate
+        yarn --version
+        node --version
+        npm --version
+
     - name: Install and test
       run: |
-        yarn install
+        yarn install --immutable
+        echo "Dependencies installed successfully"rm
         yarn lint
+        echo "Linting passed"
         yarn test
+        echo "Tests passed"
 
   publish:
     needs: test
@@ -39,14 +46,19 @@ jobs:
         with:
           node-version: 24
           registry-url: https://npm.pkg.github.com/
+          cache: 'yarn'
       - name: Setup npmrc for publishing
         run: |
           echo "@b2data:registry=https://npm.pkg.github.com" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPO_SECRET }}" >> .npmrc
+      - name: Setup Yarn
+        run: |
+          corepack prepare yarn@4.9.4 --activate
+          yarn --version
       - name: Publish package
         run: |
           corepack enable
-          yarn install
+          yarn install --immutable
           yarn compile
           npm pack
           npm publish
@@ -58,12 +70,21 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - run: npm install
-      - run: npm run storybook:prepare
+          node-version: 24
+          cache: 'yarn'
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Setup Yarn
+        run: |
+          corepack prepare yarn@4.9.4 --activate
+          yarn --version
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build Storybook
+        run: yarn storybook:prepare
       - uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages

@@ -29,3 +29,5 @@ lib
 .npmrc
 .yarn*
 *.pem
+.pnp.cjs
+.pnp.loader.mjs
