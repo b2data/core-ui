@@ -1,9 +1,10 @@
-import { addons } from "@storybook/manager-api";
-import { create } from "@storybook/theming/create";
+// Storybook v9 manager configuration
+// The manager API has been simplified in v9
+// Theme configuration is now handled differently
 
-addons.setConfig({
-  theme: create({
+export const managerConfig = {
+  theme: {
     base: "light",
     brandTitle: "B2Data UI",
-  }),
-});
+  },
+};

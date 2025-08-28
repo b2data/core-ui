@@ -1,7 +1,7 @@
-import { withThemeFromJSXProvider } from "@storybook/addon-themes";
+import React from "react";
 import type { Preview } from "@storybook/react";
 import { CssBaseline } from "../src/components/CssBaseline";
-import { lightTheme, darkTheme, ThemeProvider } from "../src/theming";
+import { lightTheme, ThemeProvider } from "../src/theming";
 
 import "../src/styles.css";
 
@@ -19,13 +19,11 @@ export const preview: Preview = {
 };
 
 export const decorators = [
-  withThemeFromJSXProvider({
-    themes: {
-      light: lightTheme,
-      dark: darkTheme,
-    },
-    defaultTheme: "light",
-    Provider: ThemeProvider,
-    GlobalStyles: CssBaseline,
-  }),
+  // Theme decorator without the addon-themes dependency
+  (Story: any) => (
+    <ThemeProvider theme={lightTheme}>
+      <CssBaseline />
+      <Story />
+    </ThemeProvider>
+  ),
 ];
