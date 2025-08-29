@@ -1,0 +1,73 @@
+import{j as r}from"./iframe-CPQWTtPx.js";import{S as t}from"./SaveOutlined-C3wHfOit.js";import{S as d,a as u}from"./ListNumberedIcon-CPzJ_Iz7.js";import"./preload-helper-D9Z9MdNV.js";import"./createSvgIcon-CTccOsUD.js";import"./memoTheme-BaYEZ6jo.js";import"./styled-CVYEzxfA.js";import"./generateUtilityClass-BtcU_pBl.js";import"./generateUtilityClasses-DDbjFgb8.js";import"./Alert-DzNW8DTm.js";import"./useSlot-A_Glp2nr.js";import"./mergeSlotProps-CC7Q4nyl.js";import"./useForkRef-BakhbzqY.js";import"./createSimplePaletteValueFilter-bm0fmN_7.js";import"./Close-DQMbQ9NP.js";import"./IconButton-C5_XbxX9.js";import"./ButtonBase-EDIMIaVv.js";import"./useTimeout-DTjciWwP.js";import"./TransitionGroupContext-Cfd4JEJX.js";import"./useEventCallback-Cj11N6aI.js";import"./isFocusVisible-B8k4qzLc.js";import"./CircularProgress-32V-54TS.js";import"./Paper-B8p_ssOJ.js";import"./useTheme-T4B27w73.js";import"./Typography-I-dH0nT8.js";import"./Autocomplete-GIhOci5W.js";import"./Typography-fNUyy1zz.js";import"./ListItem-C73aV3tH.js";import"./ListSubheader-0TbXh5SI.js";import"./MenuList-Bl2p_wQH.js";import"./getScrollbarSize-CaCM53D3.js";import"./ownerWindow-HkKU3E4x.js";import"./ownerDocument-DW-IO8s5.js";import"./ListContext-BIvlDR40.js";import"./IconButton-BBXjrXJT.js";import"./ListItemAvatar-Du8rVfm1.js";import"./ListItemText-iQIub5hf.js";import"./Tooltip-nBpdw_N9.js";import"./useControlled-P7ZiawrM.js";import"./getReactElementRef-zlErzI_n.js";import"./Grow-XH1gVCTx.js";import"./utils-ETLqDsx7.js";import"./index-ClHgv_2Q.js";import"./index-DdDY9x1M.js";import"./Popper-CsOJDGQx.js";import"./Portal-Eo5Y0Fep.js";import"./useSlotProps-BIkjHaxR.js";import"./listItemTextClasses-CiRxluPw.js";import"./ListItemButton-Chg0o59b.js";import"./listItemButtonClasses-CXNhffuE.js";import"./MenuItem-vV9Uou4g.js";import"./Menu-Cc0xrcxE.js";import"./Menu-DYyvmYRs.js";import"./Popover-DFYn66xo.js";import"./isHostComponent-DVu5iVWx.js";import"./debounce-Be36O1Ab.js";import"./mergeSlotProps-B0p2lkCa.js";import"./Modal-B6dHYExC.js";import"./createChainedFunction-BO_9K8Jh.js";import"./Backdrop-BpFn6bBk.js";import"./MenuItem-CgiJH3lX.js";import"./Box-BeujDT_a.js";import"./ListItem-t9sXsFO9.js";import"./isMuiElement-DNzBAE5e.js";import"./Paper-Bq5TJLrQ.js";import"./TextField-_0YL0ybt.js";import"./TextField-CPvpm3Gd.js";import"./useFormControl-CcJMHY6d.js";import"./InputBase-BFRKWLmq.js";import"./FormHelperText-CCAOiCXN.js";import"./CircularProgress-swN6FFfa.js";import"./Chip-3HUzNGZI.js";import"./Avatar-DXoUcQfn.js";import"./AvatarGroup-EC35rQll.js";import"./Backdrop-C8GKWzMr.js";import"./index-BOV59YOU.js";import"./index-OKDTuTBz.js";import"./KeyboardArrowRight-B_ZET3_K.js";import"./styled-BDxuQNyK.js";import"./FormControlLabel-BEoxNcmx.js";import"./Checkbox-CWoSycVN.js";import"./LinearProgress-BXAx2C0R.js";import"./Button-C712vq8Q.js";import"./Skeleton-BcbkmKYa.js";import"./Switch-DbXjxx14.js";import"./ClickAwayListener-CVPCGLbB.js";import"./getThemeProps-Cn6IRSs7.js";import"./Button-CJzhJCxW.js";import"./Link-B92bNbVm.js";import"./Checkbox-NcTtzq6G.js";import"./Divider-zLAs9l2d.js";import"./ClickAwayListener-CR_jA5iS.js";import"./Collapse-DpuzYHSu.js";import"./Collapse-BqjCly_d.js";import"./ConfirmationDialog-DS8lUjOf.js";import"./Dialog-Chl7TXGT.js";import"./DialogActions-VAV_zyxu.js";import"./DialogActions--neY6Xd2.js";import"./DialogContent-IqCtII7S.js";import"./DialogContent-eDovG1mN.js";import"./dialogTitleClasses-Df1yqyCK.js";import"./DialogTitle-BTWxtiqX.js";import"./DialogContext-CpMbjAtS.js";import"./Dialog-J2AhnkaK.js";import"./DataBlock-BvmV1UsB.js";import"./DropZone-CpwoZevW.js";import"./Popover-CwKBNv1J.js";import"./DatePicker-BW6EYT1C.js";import"./useThemeProps-4NBdwSEk.js";import"./visuallyHidden-Dan1xhjv.js";import"./Tab-DHYEdxAC.js";import"./FormHelperText-D7ZxcQrk.js";import"./DateTimePicker-C1kz68Cf.js";import"./Drawer-Dh81Ct02.js";import"./FormControlLabel-BRGqQmoI.js";import"./InputBase-DE1wM5do.js";import"./LinearProgress-CP9cGed-.js";import"./MarkdownContent-DOu5nLO5.js";import"./MarkdownField-DVB-HKsW.js";import"./MenuList-CYbRJUCd.js";import"./Popper-dtNrE5ci.js";import"./Portal-BXK8m7zb.js";import"./ProgressStatistic-BsGjcyNE.js";import"./Radio-C6UsBMyG.js";import"./RadioGroup-CPDBAWP-.js";import"./Skeleton-CZe56fs0.js";import"./SkeletonGroup-0N5haTY9.js";import"./Slider-CugwN4LX.js";import"./SnackbarProvider-CfIxDYhD.js";import"./SnackbarMessage-l6Pr29hJ.js";import"./Stepper-CihteK1d.js";import"./Switch-Dxq-PXR6.js";import"./Tab-BiIwsNv2.js";import"./TimePicker-ChkuesBw.js";const Ft={title:"Components/Section/Section Title",component:d,tags:["autodocs"]},o={args:{title:"Header"}},e={args:{title:"Header",actions:[{label:"Cancel",color:"default",variant:"outlined"},{label:"Save"}]}},i={args:{title:"Header",icon:r.jsx(t,{})}},m={args:{title:"Header",actions:[{icon:r.jsx(t,{})}]}},p={args:{title:"Header",actions:[{menuActions:[{children:"Save",startAdornment:r.jsx(t,{})}]}]}},a={args:{title:"Header",actions:[{icon:r.jsx(t,{}),menuActions:[{children:"Save",startAdornment:r.jsx(t,{})}]}]}},s={args:{title:"Header",withBorder:!0}},n={args:{title:"Header",subtitle:r.jsx(u,{items:[{label:"Home"},{label:"Items"}]})}},c={args:{title:"Header",helperText:"1 / 3"}},l={args:{title:"Header",tooltip:"Tooltip text"}};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header"
+  }
+}`,...o.parameters?.docs?.source}}};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    actions: [{
+      label: "Cancel",
+      color: "default",
+      variant: "outlined"
+    }, {
+      label: "Save"
+    }]
+  }
+}`,...e.parameters?.docs?.source}}};i.parameters={...i.parameters,docs:{...i.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    icon: <SaveIcon />
+  }
+}`,...i.parameters?.docs?.source}}};m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    actions: [{
+      icon: <SaveIcon />
+    }]
+  }
+}`,...m.parameters?.docs?.source}}};p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    actions: [{
+      menuActions: [{
+        children: "Save",
+        startAdornment: <SaveIcon />
+      }]
+    }]
+  }
+}`,...p.parameters?.docs?.source}}};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    actions: [{
+      icon: <SaveIcon />,
+      menuActions: [{
+        children: "Save",
+        startAdornment: <SaveIcon />
+      }]
+    }]
+  }
+}`,...a.parameters?.docs?.source}}};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    withBorder: true
+  }
+}`,...s.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    subtitle: <Breadcrumbs items={[{
+      label: "Home"
+    }, {
+      label: "Items"
+    }]} />
+  }
+}`,...n.parameters?.docs?.source}}};c.parameters={...c.parameters,docs:{...c.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    helperText: "1 / 3"
+  }
+}`,...c.parameters?.docs?.source}}};l.parameters={...l.parameters,docs:{...l.parameters?.docs,source:{originalSource:`{
+  args: {
+    title: "Header",
+    tooltip: "Tooltip text"
+  }
+}`,...l.parameters?.docs?.source}}};const Gt=["Base","WithButton","WithIcon","WithIconButton","WithMenu","WithMenuAndCustomIcon","WithBorder","WithSubtitle","WithHelpText","WithTooltip"];export{o as Base,s as WithBorder,e as WithButton,c as WithHelpText,i as WithIcon,m as WithIconButton,p as WithMenu,a as WithMenuAndCustomIcon,n as WithSubtitle,l as WithTooltip,Gt as __namedExportsOrder,Ft as default};
