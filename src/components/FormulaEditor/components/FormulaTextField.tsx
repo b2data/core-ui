@@ -216,7 +216,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
           }
         }}
         slotProps={{
-          paper: { sx: { minWidth: 200 } },
+          paper: { sx: { minWidth: 200, maxHeight: 500 } },
         }}
         getOptionLabel={(opt) => (typeof opt === "string" ? opt : opt.name)}
         sx={{
