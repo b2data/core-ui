@@ -8,7 +8,13 @@ import { OverrideMuiProps } from "../types";
 export interface CollapseProps
   extends OverrideMuiProps<
     MuiCollapseProps,
-    "collapsedSize" | "component" | "in" | "orientation" | "timeout" | "sx"
+    | "collapsedSize"
+    | "component"
+    | "in"
+    | "orientation"
+    | "timeout"
+    | "sx"
+    | "mountOnEnter"
   > {
   /**
    * @default 0px
