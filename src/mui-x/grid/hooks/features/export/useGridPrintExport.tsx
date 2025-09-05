@@ -173,9 +173,8 @@ export const useGridPrintExport = (
       gridClone!.style.contain = "size";
 
       let gridToolbarElementHeight =
-        gridRootElement!.querySelector<HTMLElement>(
-          `.${gridClasses.toolbarContainer}`,
-        )?.offsetHeight || 0;
+        gridRootElement!.querySelector<HTMLElement>(`.${gridClasses.toolbar}`)
+          ?.offsetHeight || 0;
       let gridFooterElementHeight =
         gridRootElement!.querySelector<HTMLElement>(
           `.${gridClasses.footerContainer}`,
@@ -185,7 +184,7 @@ export const useGridPrintExport = (
       );
 
       if (normalizeOptions.hideToolbar) {
-        gridClone.querySelector(`.${gridClasses.toolbarContainer}`)?.remove();
+        gridClone.querySelector(`.${gridClasses.toolbar}`)?.remove();
         gridToolbarElementHeight = 0;
       }
 
@@ -327,14 +326,7 @@ export const useGridPrintExport = (
         }));
       }
       previousVirtualizationState.current = apiRef.current.state.virtualization;
-      apiRef.current.setState((state) => ({
-        ...state,
-        virtualization: {
-          ...state.virtualization,
-          enabled: false,
-          enabledForColumns: false,
-        },
-      }));
+      apiRef.current.unstable_setVirtualization(false);
 
       await updateGridColumnsForPrint(
         options?.fields,

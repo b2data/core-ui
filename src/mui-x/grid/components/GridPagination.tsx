@@ -106,6 +106,7 @@ function GridPagination() {
       onPageChange={handlePageChange}
       onRowsPerPageChange={handlePageSizeChange}
       disabled={disabled}
+      {...rootProps.slotProps?.basePagination}
     />
   );
 }

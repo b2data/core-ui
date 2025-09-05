@@ -99,10 +99,10 @@ export class EventManager {
 
   once(eventName: string, listener: EventListener): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const that = this;
+    const self = this;
     this.on(eventName, function oneTimeListener(...args) {
-      that.removeListener(eventName, oneTimeListener);
-      listener.apply(that, args);
+      self.removeListener(eventName, oneTimeListener);
+      listener.apply(self, args);
     });
   }
 }

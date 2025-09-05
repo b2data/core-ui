@@ -305,3 +305,6 @@ export const getAggregationFunctionLabel = ({
     return aggregationRule.aggregationFunctionName;
   }
 };
+
+export const defaultGetAggregationPosition = (groupNode: GridGroupNode) =>
+  groupNode.depth === -1 ? "footer" : "inline";

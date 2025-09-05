@@ -68,6 +68,7 @@ export const updateRowTree = (
       treeDepths,
       updatedGroupsManager,
       id: nodeId,
+      groupingName: params.groupingName,
     });
   }
 
@@ -82,6 +83,7 @@ export const updateRowTree = (
         treeDepths,
         updatedGroupsManager,
         id,
+        groupingName: params.groupingName,
       });
 
       insertDataRowInTree({

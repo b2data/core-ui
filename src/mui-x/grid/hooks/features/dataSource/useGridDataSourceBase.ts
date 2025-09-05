@@ -56,6 +56,7 @@ export const useGridDataSourceBase = <Api extends GridPrivateApiCommunity>(
     | "dataSourceCache"
     | "onDataSourceError"
     | "pageSizeOptions"
+    | "pagination"
     | "signature"
   >,
   options: GridDataSourceBaseOptions = {},
@@ -77,6 +78,10 @@ export const useGridDataSourceBase = <Api extends GridPrivateApiCommunity>(
   const onDataSourceErrorProp = props.onDataSourceError;
 
   const cacheChunkManager = useLazyRef<CacheChunkManager, void>(() => {
+    if (!props.pagination) {
+      return new CacheChunkManager(paginationModel.pageSize);
+    }
+
     const sortedPageSizeOptions = props.pageSizeOptions
       .map((option) => (typeof option === "number" ? option : option.value))
       .sort((a, b) => a - b);
@@ -109,16 +114,18 @@ export const useGridDataSourceBase = <Api extends GridPrivateApiCommunity>(
 
       options.clearDataSourceState?.();
 
+      const { skipCache, ...getRowsParams } = params || {};
+
       const fetchParams = {
         ...gridGetRowsParamsSelector(apiRef),
         ...apiRef.current.unstable_applyPipeProcessors("getRowsParams", {}),
-        ...params,
+        ...getRowsParams,
       };
 
       const cacheKeys = cacheChunkManager.getCacheKeys(fetchParams);
       const responses = cacheKeys.map((cacheKey) => cache.get(cacheKey));
 
-      if (responses.every((response) => response !== undefined)) {
+      if (!skipCache && responses.every((response) => response !== undefined)) {
         apiRef.current.applyStrategyProcessor("dataSourceRowsUpdate", {
           response: CacheChunkManager.mergeResponses(
             responses as GridGetRowsResponse[],

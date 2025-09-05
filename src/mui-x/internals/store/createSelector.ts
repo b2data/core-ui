@@ -77,15 +77,15 @@ export const createSelector = ((
 }) as unknown as CreateSelectorFunction;
 
 export const createSelectorMemoized: CreateSelectorFunction = (
-  ...selectors: any[]
+  ...inputs: any[]
 ) => {
   type CacheKey = { id: number };
 
   const cache = new WeakMap<CacheKey, SelectorWithArgs>();
   let nextCacheId = 1;
 
-  const combiner = selectors[selectors.length - 1];
-  const nSelectors = selectors.length - 1 || 1;
+  const combiner = inputs[inputs.length - 1];
+  const nSelectors = inputs.length - 1 || 1;
   // (s1, s2, ..., sN, a1, a2, a3) => { ... }
   const argsLength = Math.max(combiner.length - nSelectors, 0);
 
@@ -104,7 +104,8 @@ export const createSelectorMemoized: CreateSelectorFunction = (
 
     let fn = cache.get(cacheKey);
     if (!fn) {
-      let reselectArgs = selectors;
+      const selectors = inputs.length === 1 ? [((x: any) => x), combiner] : inputs
+      let reselectArgs = inputs;
       const selectorArgs = [undefined, undefined, undefined];
       switch (argsLength) {
         case 0:
@@ -148,12 +149,14 @@ export const createSelectorMemoized: CreateSelectorFunction = (
 
      
 
-    switch (argsLength) {
-      case 3: fn.selectorArgs[2] = a3; break;
-      case 2: fn.selectorArgs[1] = a2; break;
-      case 1: fn.selectorArgs[0] = a1; break;
-      case 0:
-      default:
+    if (argsLength >= 3) {
+      fn.selectorArgs[2] = a3;
+    }
+    if (argsLength >= 2) {
+      fn.selectorArgs[1] = a2;
+    }
+    if (argsLength >= 1) {
+      fn.selectorArgs[0] = a1;
     }
     switch (argsLength) {
       case 0: return fn(state);

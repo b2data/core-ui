@@ -1,3 +1,4 @@
+export * from "@mui/x-internals/useRunOnce";
 export {
   useGridEvent,
   useGridEventPriority,
@@ -9,5 +10,5 @@ export { useGridSelector } from "./useGridSelector";
 export * from "./useGridNativeEventListener";
 export * from "./useFirstRender";
 export * from "./useOnMount";
-export * from "./useRunOnce";
+export * from "./useRunOncePerLoop";
 export type { RenderProp } from "@mui/x-internals/useComponentRenderer";

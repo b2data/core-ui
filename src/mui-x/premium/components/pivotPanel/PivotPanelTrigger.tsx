@@ -13,6 +13,7 @@ import {
   gridPivotPanelOpenSelector,
   gridPivotActiveSelector,
 } from "../../hooks/features/pivoting/gridPivotingSelectors";
+import { GridSidebarValue } from "../../hooks/features/sidebar";
 
 export interface PivotPanelState {
   /**
@@ -65,7 +66,11 @@ const PivotPanelTrigger = forwardRef<HTMLButtonElement, PivotPanelTriggerProps>(
       typeof className === "function" ? className(state) : className;
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      apiRef.current.setPivotPanelOpen(!open);
+      if (open) {
+        apiRef.current.hideSidebar();
+      } else {
+        apiRef.current.showSidebar(GridSidebarValue.Pivot, panelId, buttonId);
+      }
       onClick?.(event);
     };
 

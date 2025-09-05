@@ -40,10 +40,7 @@ const useUtilityClasses = (ownerState: OwnerState) => {
   }, [classes]);
 };
 
-const filterItemsCache: Record<GridStateColDef["field"], GridFilterItem> =
-  Object.create(null);
-
-export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
+export const useGridColumnHeadersPro = (props: UseGridColumnHeadersProps) => {
   const apiRef = useGridPrivateApiContext();
   const { headerGroupingMaxDepth, hasOtherElementInTabSequence } = props;
   const columnHeaderFilterTabIndexState = useGridSelector(
@@ -93,6 +90,10 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
     gridFocusColumnHeaderFilterSelector,
   );
 
+  const filterItemsCache = React.useRef<
+    Record<GridStateColDef["field"], GridFilterItem>
+  >(Object.create(null)).current;
+
   const getFilterItem = React.useCallback(
     (colDef: GridStateColDef) => {
       const filterModelItem = filterModel?.items.find(
@@ -112,6 +113,7 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
       filterItemsCache[colDef.field] = defaultItem;
       return defaultItem;
     },
+
     [filterModel],
   );
 

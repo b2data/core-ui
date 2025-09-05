@@ -4,6 +4,7 @@ import composeClasses from "@mui/utils/composeClasses";
 import {
   getDataGridUtilityClass,
   gridClasses,
+  gridRowTreeSelector,
   useGridSelector,
 } from "@mui/x-data-grid";
 import {
@@ -28,6 +29,7 @@ export function GridPinnedRows({
 
   const pinnedRowsData = useGridSelector(apiRef, gridPinnedRowsSelector);
   const rows = pinnedRowsData[position];
+  const { getRows } = virtualScroller;
 
   const pinnedRenderContext = React.useMemo(
     () => ({
@@ -43,11 +45,14 @@ export function GridPinnedRows({
     return null;
   }
 
-  const pinnedRows = virtualScroller.getRows({
-    position,
-    rows,
-    renderContext: pinnedRenderContext,
-  });
+  const pinnedRows = getRows(
+    {
+      position,
+      rows,
+      renderContext: pinnedRenderContext,
+    },
+    gridRowTreeSelector(apiRef),
+  );
 
   return (
     <div

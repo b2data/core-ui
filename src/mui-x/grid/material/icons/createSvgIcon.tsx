@@ -1,4 +1,4 @@
-import { createSvgIcon as createSvgIconMaterial } from "@mui/material";
+import { createSvgIcon as createSvgIconMaterial } from "@mui/material/utils";
 import { GridBaseIconProps } from "../../models/gridSlotsComponentsProps";
 
 export const createSvgIcon = createSvgIconMaterial as (

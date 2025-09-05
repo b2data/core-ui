@@ -291,11 +291,13 @@ export interface DataGridPremiumPropsWithoutDefaultValue<
   /**
    * If `true`, the pivot side panel is visible.
    * @default false
+   * @deprecated Use `initialState.sidebar.open` instead.
    */
   pivotPanelOpen?: boolean;
   /**
    * Callback fired when the pivot side panel open state changes.
    * @param {boolean} pivotPanelOpen Whether the pivot side panel is visible.
+   * @deprecated Use the `sidebarOpen` and `sidebarClose` events or corresponding event handlers `onSidebarOpen()` and `onSidebarClose()` instead.
    */
   onPivotPanelOpenChange?: (pivotPanelOpen: boolean) => void;
 
@@ -352,4 +354,18 @@ export interface DataGridPremiumPropsWithoutDefaultValue<
     promptContext: string,
     conversationId?: string,
   ) => Promise<PromptResponse>;
+  /**
+   * Callback fired when the sidebar is closed.
+   * @param {GridSidebarParams} params With all properties from [[GridSidebarParams]].
+   * @param {MuiEvent<{}>} event The event object.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  onSidebarClose?: GridEventListener<"sidebarClose">;
+  /**
+   * Callback fired when the sidebar is opened.
+   * @param {GridSidebarParams} params With all properties from [[GridSidebarParams]].
+   * @param {MuiEvent<{}>} event The event object.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  onSidebarOpen?: GridEventListener<"sidebarOpen">;
 }

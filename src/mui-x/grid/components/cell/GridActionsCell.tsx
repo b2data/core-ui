@@ -197,13 +197,21 @@ function GridActionsCell(props: GridActionsCellProps) {
     }
   };
 
+  // role="menu" requires at least one child element
+  const attributes =
+    numberOfButtons > 0
+      ? {
+          role: "menu",
+          onKeyDown: handleRootKeyDown,
+        }
+      : undefined;
+
   return (
     <div
-      role="menu"
       ref={rootRef}
       tabIndex={-1}
       className={gridClasses.actionsCell}
-      onKeyDown={handleRootKeyDown}
+      {...attributes}
       {...other}
     >
       {iconButtons.map((button, index) =>

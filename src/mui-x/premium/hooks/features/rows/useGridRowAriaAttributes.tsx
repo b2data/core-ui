@@ -1,11 +1,11 @@
 import {
-  useGridRowAriaAttributes as useGridRowAriaAttributesPro,
+  useGridRowAriaAttributesPro,
   useGridSelector,
 } from "@mui/x-data-grid-pro/internals";
 import { useGridPrivateApiContext } from "../../utils/useGridPrivateApiContext";
 import { gridRowGroupingSanitizedModelSelector } from "../rowGrouping/gridRowGroupingSelector";
 
-export const useGridRowAriaAttributes = () => {
+export const useGridRowAriaAttributesPremium = () => {
   const apiRef = useGridPrivateApiContext();
   const gridRowGroupingModel = useGridSelector(
     apiRef,

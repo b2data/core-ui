@@ -5,6 +5,10 @@ import {
   gridColumnLookupSelector,
   useGridEvent,
   useGridApiMethod,
+  useRunOncePerLoop,
+  gridRenderContextSelector,
+  gridVisibleColumnFieldsSelector,
+  gridSortModelSelector,
 } from "@mui/x-data-grid-pro";
 import {
   useGridRegisterPipeProcessor,
@@ -16,6 +20,7 @@ import { GridPrivateApiPremium } from "../../../models/gridApiPremium";
 import { gridAggregationModelSelector } from "./gridAggregationSelectors";
 import {
   GridAggregationApi,
+  GridAggregationLookup,
   GridAggregationPrivateApi,
 } from "./gridAggregationInterfaces";
 import {
@@ -23,7 +28,10 @@ import {
   mergeStateWithAggregationModel,
   areAggregationRulesEqual,
 } from "./gridAggregationUtils";
-import { createAggregationLookup } from "./createAggregationLookup";
+import {
+  createAggregationLookup,
+  shouldApplySorting,
+} from "./createAggregationLookup";
 
 export const aggregationStateInitializer: GridStateInitializer<
   Pick<DataGridPremiumProcessedProps, "aggregationModel" | "initialState">,
@@ -81,26 +89,139 @@ export const useGridAggregation = (
     [apiRef],
   );
 
-  const applyAggregation = React.useCallback(() => {
-    const aggregationLookup = createAggregationLookup({
-      apiRef,
-      getAggregationPosition: props.getAggregationPosition,
-      aggregationFunctions: props.aggregationFunctions,
-      aggregationRowsScope: props.aggregationRowsScope,
-      isDataSource: !!props.dataSource,
-    });
+  const abortControllerRef = React.useRef<AbortController | null>(null);
+  const applyAggregation = React.useCallback(
+    (reason?: "filter" | "sort") => {
+      // Abort previous if any
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      const abortController = new AbortController();
+      abortControllerRef.current = abortController;
 
-    apiRef.current.setState((state) => ({
-      ...state,
-      aggregation: { ...state.aggregation, lookup: aggregationLookup },
-    }));
-  }, [
-    apiRef,
-    props.getAggregationPosition,
-    props.aggregationFunctions,
-    props.aggregationRowsScope,
-    props.dataSource,
-  ]);
+      const aggregationRules = getAggregationRules(
+        gridColumnLookupSelector(apiRef),
+        gridAggregationModelSelector(apiRef),
+        props.aggregationFunctions,
+        !!props.dataSource,
+      );
+      const aggregatedFields = Object.keys(aggregationRules);
+      const needsSorting = shouldApplySorting(
+        aggregationRules,
+        aggregatedFields,
+      );
+      if (reason === "sort" && !needsSorting) {
+        // no need to re-apply aggregation on `sortedRowsSet` if sorting is not needed
+        return;
+      }
+
+      const renderContext = gridRenderContextSelector(apiRef);
+      const visibleColumns = gridVisibleColumnFieldsSelector(apiRef);
+
+      const chunks: string[][] = [];
+      const visibleAggregatedFields = visibleColumns
+        .slice(
+          renderContext.firstColumnIndex,
+          renderContext.lastColumnIndex + 1,
+        )
+        .filter((field) => aggregatedFields.includes(field));
+      if (visibleAggregatedFields.length > 0) {
+        chunks.push(visibleAggregatedFields);
+      }
+      const otherAggregatedFields = aggregatedFields.filter(
+        (field) => !visibleAggregatedFields.includes(field),
+      );
+
+      const chunkSize = 20; // columns per chunk
+      for (let i = 0; i < otherAggregatedFields.length; i += chunkSize) {
+        chunks.push(otherAggregatedFields.slice(i, i + chunkSize));
+      }
+
+      let chunkIndex = 0;
+      const aggregationLookup: GridAggregationLookup = {};
+      let chunkStartTime = performance.now();
+      const timeLimit = 1000 / 120;
+
+      const processChunk = () => {
+        if (abortController.signal.aborted) {
+          return;
+        }
+
+        const currentChunk = chunks[chunkIndex];
+        if (!currentChunk) {
+          const sortModel = gridSortModelSelector(apiRef).map((s) => s.field);
+          const hasAggregatedSorting = sortModel.some(
+            (field) => aggregationRules[field],
+          );
+          if (hasAggregatedSorting) {
+            apiRef.current.applySorting();
+          }
+          abortControllerRef.current = null;
+          return;
+        }
+
+        const applySorting = shouldApplySorting(aggregationRules, currentChunk);
+
+        // createAggregationLookup now RETURNS new partial lookup
+        const partialLookup = createAggregationLookup({
+          apiRef,
+          getAggregationPosition: props.getAggregationPosition,
+          aggregatedFields: currentChunk,
+          aggregationRules,
+          aggregationRowsScope: props.aggregationRowsScope,
+          isDataSource: !!props.dataSource,
+          applySorting,
+        });
+
+        for (const key of Object.keys(partialLookup)) {
+          for (const field of Object.keys(partialLookup[key])) {
+            aggregationLookup[key] ??= {};
+            aggregationLookup[key][field] = partialLookup[key][field];
+          }
+        }
+
+        apiRef.current.setState((state) => ({
+          ...state,
+          aggregation: {
+            ...state.aggregation,
+            lookup: { ...aggregationLookup },
+          },
+        }));
+
+        chunkIndex += 1;
+
+        if (performance.now() - chunkStartTime < timeLimit) {
+          processChunk();
+          return;
+        }
+
+        setTimeout(() => {
+          chunkStartTime = performance.now();
+          processChunk();
+        }, 0);
+      };
+
+      processChunk();
+    },
+    [
+      apiRef,
+      props.getAggregationPosition,
+      props.aggregationFunctions,
+      props.aggregationRowsScope,
+      props.dataSource,
+    ],
+  );
+
+  React.useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+    };
+  }, []);
+
+  const deferredApplyAggregation = useRunOncePerLoop(applyAggregation);
 
   const aggregationApi: GridAggregationApi = {
     setAggregationModel,
@@ -149,7 +270,7 @@ export const useGridAggregation = (
       !areAggregationRulesEqual(rulesOnLastRowHydration, aggregationRules)
     ) {
       apiRef.current.requestPipeProcessorsApplication("hydrateRows");
-      applyAggregation();
+      deferredApplyAggregation();
     }
 
     // Re-apply the column hydration to wrap / unwrap the aggregated columns
@@ -160,7 +281,7 @@ export const useGridAggregation = (
     }
   }, [
     apiRef,
-    applyAggregation,
+    deferredApplyAggregation,
     props.aggregationFunctions,
     props.disableAggregation,
     props.dataSource,
@@ -168,7 +289,8 @@ export const useGridAggregation = (
 
   useGridEvent(apiRef, "aggregationModelChange", checkAggregationRulesDiff);
   useGridEvent(apiRef, "columnsChange", checkAggregationRulesDiff);
-  useGridEvent(apiRef, "filteredRowsSet", applyAggregation);
+  useGridEvent(apiRef, "filteredRowsSet", deferredApplyAggregation);
+  useGridEvent(apiRef, "sortedRowsSet", () => deferredApplyAggregation("sort"));
 
   /**
    * EFFECTS

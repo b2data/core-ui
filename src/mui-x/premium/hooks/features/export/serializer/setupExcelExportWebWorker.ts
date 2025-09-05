@@ -14,7 +14,7 @@ export function setupExcelExportWebWorker(
     "exceljsPostProcess" | "exceljsPreProcess"
   > = {},
 ) {
-  addEventListener(
+  globalThis.addEventListener(
     "message",
     async (event: MessageEvent<ExcelExportInitEvent>) => {
       const {

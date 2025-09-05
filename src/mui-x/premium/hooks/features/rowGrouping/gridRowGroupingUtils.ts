@@ -20,6 +20,7 @@ import {
   isGroupingColumn,
   GridStrategyGroup,
   getRowValue,
+  RowGroupingStrategy,
 } from "@mui/x-data-grid-pro/internals";
 import { DataGridPremiumProcessedProps } from "../../../models/dataGridPremiumProps";
 import {
@@ -36,11 +37,6 @@ export {
   getRowGroupingCriteriaFromGroupingField,
   isGroupingColumn,
 };
-
-export enum RowGroupingStrategy {
-  Default = "grouping-columns",
-  DataSource = "grouping-columns-data-source",
-}
 
 export const getRowGroupingFieldFromGroupingCriteria = (
   groupingCriteria: string | null,
@@ -211,6 +207,16 @@ export const setStrategyAvailability = (
   disableRowGrouping: boolean,
   dataSource?: GridDataSource,
 ) => {
+  const strategy = dataSource
+    ? RowGroupingStrategy.DataSource
+    : RowGroupingStrategy.Default;
+  if (
+    privateApiRef.current.getActiveStrategy(GridStrategyGroup.RowTree) ===
+    strategy
+  ) {
+    // If the strategy is already active, we don't need to set it again
+    return;
+  }
   let isAvailable: () => boolean;
   if (disableRowGrouping) {
     isAvailable = () => false;
@@ -221,10 +227,6 @@ export const setStrategyAvailability = (
       return rowGroupingSanitizedModel.length > 0;
     };
   }
-
-  const strategy = dataSource
-    ? RowGroupingStrategy.DataSource
-    : RowGroupingStrategy.Default;
 
   privateApiRef.current.setStrategyAvailability(
     GridStrategyGroup.RowTree,
@@ -272,6 +274,7 @@ export const getGroupingRules = ({
   sanitizedRowGroupingModel.map((field) => ({
     field,
     groupingValueGetter: columnsLookup[field]?.groupingValueGetter,
+    groupingValueSetter: columnsLookup[field]?.groupingValueSetter,
   }));
 
 /**
@@ -289,6 +292,10 @@ export const areGroupingRulesEqual = (
     const previousRule = previousValue[newRuleIndex];
 
     if (previousRule.groupingValueGetter !== newRule.groupingValueGetter) {
+      return false;
+    }
+
+    if (previousRule.groupingValueSetter !== newRule.groupingValueSetter) {
       return false;
     }
 

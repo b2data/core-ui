@@ -55,6 +55,7 @@ export interface GridGroupingRule<
 > {
   field: string;
   groupingValueGetter?: GridColDef<R, V>["groupingValueGetter"];
+  groupingValueSetter?: GridColDef<R, V>["groupingValueSetter"];
 }
 
 export type GridGroupingRules<R extends GridValidRowModel = GridValidRowModel> =

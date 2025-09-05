@@ -382,7 +382,10 @@ const GridFilterForm = forwardRef<HTMLDivElement, GridFilterFormProps>(
                 getValueFromValueOptions(
                   val,
                   valueOptions,
-                  colDef?.getOptionValue!,
+                  colDef?.getOptionValue as Exclude<
+                    GridSingleSelectColDef["getOptionValue"],
+                    undefined
+                  >,
                 ) !== undefined
               );
             });
@@ -390,7 +393,10 @@ const GridFilterForm = forwardRef<HTMLDivElement, GridFilterFormProps>(
             getValueFromValueOptions(
               item.value,
               valueOptions,
-              colDef?.getOptionValue!,
+              colDef?.getOptionValue as Exclude<
+                GridSingleSelectColDef["getOptionValue"],
+                undefined
+              >,
             ) === undefined
           ) {
             // Reset the filter value if it is not in the new value options

@@ -90,11 +90,12 @@ export interface GridRowEventLookup {
   };
   /**
    * Fired when the dragging of a row ends.
+   * It's mapped to the `dragend` DOM event.
    * @ignore - do not document.
    */
   rowDragEnd: {
     params: GridRowParams;
-    event: React.DragEvent<HTMLElement>;
+    event: DragEvent;
   };
 }
 

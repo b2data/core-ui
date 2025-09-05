@@ -270,3 +270,21 @@ export const gridFilterActiveItemsLookupSelector = createSelectorMemoized(
     return result;
   },
 );
+
+/**
+ * Get the index lookup for expanded (visible) rows only.
+ * Does not include collapsed children.
+ * @ignore - do not document.
+ */
+export const gridExpandedSortedRowIndexLookupSelector = createSelectorMemoized(
+  gridExpandedSortedRowIdsSelector,
+  (expandedSortedIds) => {
+    return expandedSortedIds.reduce<Record<GridRowId, number>>(
+      (acc, id, index) => {
+        acc[id] = index;
+        return acc;
+      },
+      Object.create(null),
+    );
+  },
+);

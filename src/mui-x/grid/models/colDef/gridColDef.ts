@@ -380,14 +380,16 @@ export interface GridSingleSelectColDef<
    * Used to determine the label displayed for a given value option.
    * @param {ValueOptions} value The current value option.
    * @returns {string} The text to be displayed.
+   * @default {defaultGetOptionLabel}
    */
-  getOptionLabel?: (value: ValueOptions) => string;
+  getOptionLabel: (value: ValueOptions) => string;
   /**
    * Used to determine the value used for a value option.
    * @param {ValueOptions} value The current value option.
    * @returns {string} The value to be used.
+   * @default {defaultGetOptionValue}
    */
-  getOptionValue?: (value: ValueOptions) => any;
+  getOptionValue: (value: ValueOptions) => any;
 }
 
 /**

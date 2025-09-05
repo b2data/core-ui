@@ -7,19 +7,14 @@ const config: StorybookConfig = {
   ],
   staticDirs: ["../public"],
   addons: [
-    // Storybook v9 addons - removed v8 addons that are not compatible
-    // "@storybook/addon-essentials", // Not available in v9 stable
-    // "@storybook/addon-interactions", // Not available in v9 stable
-    // "@storybook/addon-links", // Not available in v9 stable
-    // "@storybook/addon-onboarding", // Not available in v9 stable
-    // "@storybook/addon-themes", // Not available in v9 stable
+    '@storybook/addon-docs'
   ],
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
   docs: {
-    autodocs: "tag",
+    defaultName: "Docs",
   },
   typescript: {
     check: false,

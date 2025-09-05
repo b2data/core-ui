@@ -3,9 +3,15 @@ import {
   createRootSelector,
 } from "@mui/x-data-grid-pro/internals";
 import type { GridStatePremium } from "../../../models/gridStatePremium";
+import { gridSidebarStateSelector, GridSidebarValue } from "../sidebar";
 
 const gridPivotingStateSelector = createRootSelector(
   (state: GridStatePremium) => state.pivoting,
+);
+
+export const gridPivotPanelOpenSelector = createSelector(
+  gridSidebarStateSelector,
+  (sidebar) => sidebar.value === GridSidebarValue.Pivot && sidebar.open,
 );
 
 export const gridPivotModelSelector = createSelector(
@@ -21,5 +27,4 @@ export const gridPivotPropsOverridesSelector = createSelector(
 export {
   gridPivotActiveSelector,
   gridPivotInitialColumnsSelector,
-  gridPivotPanelOpenSelector,
 } from "@mui/x-data-grid/internals";

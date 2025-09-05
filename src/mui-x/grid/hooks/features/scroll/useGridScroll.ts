@@ -21,7 +21,6 @@ import { GridScrollApi } from "../../../models/api/gridScrollApi";
 import { useGridApiMethod } from "../../utils/useGridApiMethod";
 import { gridExpandedSortedRowEntriesSelector } from "../filter/gridFilterSelector";
 import { gridDimensionsSelector } from "../dimensions";
-import { gridListColumnSelector } from "../listView/gridListViewSelectors";
 
 // Logic copied from https://www.w3.org/TR/wai-aria-practices/examples/listbox/js/listbox.js
 // Similar to https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
@@ -59,7 +58,7 @@ function scrollIntoView(dimensions: {
  */
 export const useGridScroll = (
   apiRef: RefObject<GridPrivateApiCommunity>,
-  props: Pick<DataGridProcessedProps, "pagination" | "listView">,
+  props: Pick<DataGridProcessedProps, "pagination">,
 ): void => {
   const isRtl = useRtl();
   const logger = useGridLogger(apiRef, "useGridScroll");
@@ -74,9 +73,7 @@ export const useGridScroll = (
     (params: Partial<GridCellIndexCoordinates>) => {
       const dimensions = gridDimensionsSelector(apiRef);
       const totalRowCount = gridRowCountSelector(apiRef);
-      const visibleColumns = props.listView
-        ? [gridListColumnSelector(apiRef)!]
-        : gridVisibleColumnDefinitionsSelector(apiRef);
+      const visibleColumns = gridVisibleColumnDefinitionsSelector(apiRef);
       const scrollToHeader = params.rowIndex == null;
       if (
         (!scrollToHeader && totalRowCount === 0) ||
@@ -147,8 +144,8 @@ export const useGridScroll = (
       );
 
       if (
-        typeof scrollCoordinates.left !== undefined ||
-        typeof scrollCoordinates.top !== undefined
+        typeof scrollCoordinates.left !== "undefined" ||
+        typeof scrollCoordinates.top !== "undefined"
       ) {
         apiRef.current.scroll(scrollCoordinates);
         return true;
@@ -156,14 +153,7 @@ export const useGridScroll = (
 
       return false;
     },
-    [
-      logger,
-      apiRef,
-      virtualScrollerRef,
-      props.pagination,
-      visibleSortedRows,
-      props.listView,
-    ],
+    [logger, apiRef, virtualScrollerRef, props.pagination, visibleSortedRows],
   );
 
   const scroll = React.useCallback<GridScrollApi["scroll"]>(

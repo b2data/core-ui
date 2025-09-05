@@ -22,8 +22,3 @@ export const gridPivotInitialColumnsSelector = createSelector(
   gridPivotingStateSelector,
   (pivoting) => pivoting?.initialColumns || emptyColumns,
 );
-
-export const gridPivotPanelOpenSelector = createSelector(
-  gridPivotingStateSelector,
-  (pivoting) => pivoting?.panelOpen,
-);

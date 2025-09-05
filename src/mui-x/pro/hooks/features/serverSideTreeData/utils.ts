@@ -2,10 +2,12 @@ import {
   GridRowId,
   GridRowTreeConfig,
   GRID_ROOT_GROUP_ID,
+  GridDataSourceGroupNode,
 } from "@mui/x-data-grid";
 import {
   defaultGridFilterLookup,
   getTreeNodeDescendants,
+  GridRowTreeCreationParams,
 } from "@mui/x-data-grid/internals";
 
 export function skipFiltering(rowTree: GridRowTreeConfig) {
@@ -27,4 +29,27 @@ export function skipFiltering(rowTree: GridRowTreeConfig) {
 
 export function skipSorting(rowTree: GridRowTreeConfig) {
   return getTreeNodeDescendants(rowTree, GRID_ROOT_GROUP_ID, false);
+}
+
+/**
+ * Retrieves the parent path for a row from the previous tree state.
+ * Used during full tree updates to maintain correct hierarchy.
+ */
+export function getParentPath(
+  rowId: GridRowId,
+  treeCreationParams: GridRowTreeCreationParams,
+): string[] {
+  if (
+    treeCreationParams.updates.type !== "full" ||
+    !treeCreationParams.previousTree?.[rowId] ||
+    treeCreationParams.previousTree[rowId].depth < 1 ||
+    !("path" in treeCreationParams.previousTree[rowId])
+  ) {
+    return [];
+  }
+
+  return (
+    (treeCreationParams.previousTree[rowId] as GridDataSourceGroupNode).path ||
+    []
+  );
 }

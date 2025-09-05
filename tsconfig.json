@@ -61,6 +61,24 @@
       "@mui/x-date-pickers/*": [
         "src/mui-x/pickers/*"
       ],
+      "@mui/x-tree-view": [
+        "src/mui-x/tree-view"
+      ],
+      "@mui/x-tree-view/*": [
+        "src/mui-x/tree-view/*"
+      ],
+      "@mui/x-tree-view-pro": [
+        "src/mui-x/tree-view-pro"
+      ],
+      "@mui/x-tree-view-pro/*": [
+        "src/mui-x/tree-view-pro/*"
+      ],
+      "@mui/x-virtualizer": [
+        "src/mui-x/virtualizer"
+      ],
+      "@mui/x-virtualizer/*": [
+        "src/mui-x/virtualizer/*"
+      ]
     }
   },
   "include": [

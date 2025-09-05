@@ -46,6 +46,10 @@ export class CacheChunkManager {
     response: GridGetRowsResponse,
   ) => {
     const cacheKeys = this.getCacheKeys(key);
+    if (cacheKeys.length === 1) {
+      return new Map([[key, response]]);
+    }
+
     const responses = new Map<GridGetRowsParams, GridGetRowsResponse>();
     cacheKeys.forEach((chunkKey) => {
       const isLastChunk = chunkKey.end === key.end;

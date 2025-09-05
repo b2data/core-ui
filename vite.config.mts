@@ -18,6 +18,9 @@ export default defineConfig({
       ),
       "@mui/x-internals": path.resolve(__dirname, "./src/mui-x/internals"),
       "@mui/x-date-pickers": path.resolve(__dirname, "./src/mui-x/pickers"),
+      "@mui/x-tree-view": path.resolve(__dirname, "./src/mui-x/tree-view"),
+      "@mui/x-tree-view-pro": path.resolve(__dirname, "./src/mui-x/tree-view-pro"),
+      "@mui/x-virtualizer": path.resolve(__dirname, "./src/mui-x/virtualizer"),
     },
   },
 });

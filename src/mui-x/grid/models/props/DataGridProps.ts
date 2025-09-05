@@ -218,6 +218,11 @@ export interface DataGridPropsWithDefaultValues<
    */
   disableRowSelectionOnClick: boolean;
   /**
+   * If `true`, the Data Grid will not use the exclude model optimization when selecting all rows.
+   * @default false
+   */
+  disableRowSelectionExcludeModel: boolean;
+  /**
    * If `true`, the virtualization is disabled.
    * @default false
    */
@@ -238,6 +243,11 @@ export interface DataGridPropsWithDefaultValues<
    * @default 150
    */
   filterDebounceMs: number;
+  /**
+   * The milliseconds delay to wait after a keystroke before triggering filtering in the columns menu.
+   * @default 150
+   */
+  columnFilterDebounceMs: number;
   /**
    * Sets the height in pixel of the column headers in the Data Grid.
    * @default 56
@@ -835,7 +845,6 @@ export interface DataGridPropsWithoutDefaultValue<
    * For each feature, if the flag is not explicitly set to `true`, the feature will be fully disabled and any property / method call will not have any effect.
    */
   experimentalFeatures?: Partial<GridExperimentalFeatures>;
-
   /**
    * Callback called before updating a row with new values in the row and cell editing.
    * @template R
@@ -850,7 +859,7 @@ export interface DataGridPropsWithoutDefaultValue<
     params: { rowId: GridRowId },
   ) => Promise<R> | R;
   /**
-   * Callback called when `processRowUpdate` throws an error or rejects.
+   * Callback called when `processRowUpdate()` throws an error or rejects.
    * @param {any} error The error thrown.
    */
   onProcessRowUpdateError?: (error: any) => void;

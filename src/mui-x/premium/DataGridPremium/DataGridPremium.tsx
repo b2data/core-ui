@@ -24,25 +24,24 @@ import {
 } from "../models/dataGridPremiumProps";
 import { useDataGridPremiumProps } from "./useDataGridPremiumProps";
 import { Sidebar } from "../components/sidebar";
-import { GridPivotPanel } from "../components/pivotPanel/GridPivotPanel";
-import { useGridAriaAttributes } from "../hooks/utils/useGridAriaAttributes";
-import { useGridRowAriaAttributes } from "../hooks/features/rows/useGridRowAriaAttributes";
+import { useGridAriaAttributesPremium } from "../hooks/utils/useGridAriaAttributes";
+import { useGridRowAriaAttributesPremium } from "../hooks/features/rows/useGridRowAriaAttributes";
 import { gridCellAggregationResultSelector } from "../hooks/features/aggregation/gridAggregationSelectors";
 import { useGridApiContext } from "../hooks/utils/useGridApiContext";
 import type {
   GridApiPremium,
   GridPrivateApiPremium,
 } from "../models/gridApiPremium";
-import { gridPivotPanelOpenSelector } from "../hooks/features/pivoting/gridPivotingSelectors";
-import { isPivotingAvailable } from "../hooks/features/pivoting/utils";
+import { useGridRowsOverridableMethods } from "../hooks/features/rows/useGridRowsOverridableMethods";
+import { gridSidebarOpenSelector } from "../hooks/features/sidebar";
 
 export type { GridPremiumSlotsComponent as GridSlots } from "../models";
 
-const configuration: GridConfiguration = {
+const configuration: GridConfiguration<GridPrivateApiPremium> = {
   hooks: {
     useCSSVariables: useMaterialCSSVariables,
-    useGridAriaAttributes,
-    useGridRowAriaAttributes,
+    useGridAriaAttributes: useGridAriaAttributesPremium,
+    useGridRowAriaAttributes: useGridRowAriaAttributesPremium,
     useCellAggregationResult: (id, field) => {
       const apiRef = useGridApiContext();
       return useGridSelector(apiRef, gridCellAggregationResultSelector, {
@@ -50,6 +49,7 @@ const configuration: GridConfiguration = {
         field,
       });
     },
+    useGridRowsOverridableMethods,
   },
 };
 
@@ -71,28 +71,23 @@ const DataGridPremiumRaw = forwardRef(function DataGridPremium<
     GridApiPremium
   >(initialProps.apiRef, initialProps);
 
-  const props = useDataGridPremiumComponent(privateApiRef, initialProps);
-
-  const pivotSettingsOpen = useGridSelector(
+  const props = useDataGridPremiumComponent(
     privateApiRef,
-    gridPivotPanelOpenSelector,
+    initialProps,
+    configuration,
   );
 
   if (process.env.NODE_ENV !== "production") {
     validateProps(props, dataGridPremiumPropValidators);
   }
 
-  const sidePanel =
-    isPivotingAvailable(props) && pivotSettingsOpen ? (
-      <Sidebar>
-        <GridPivotPanel />
-      </Sidebar>
-    ) : null;
+  const sidebarOpen = useGridSelector(privateApiRef, gridSidebarOpenSelector);
+  const sidePanel = sidebarOpen ? <Sidebar /> : null;
 
   return (
     <GridContextProvider
       privateApiRef={privateApiRef}
-      configuration={configuration}
+      configuration={configuration as GridConfiguration}
       props={props}
     >
       <GridRoot
@@ -261,6 +256,11 @@ DataGridPremiumRaw.propTypes = {
    */
   columnBufferPx: PropTypes.number,
   /**
+   * The milliseconds delay to wait after a keystroke before triggering filtering in the columns menu.
+   * @default 150
+   */
+  columnFilterDebounceMs: PropTypes.number,
+  /**
    * Sets the height in pixels of the column group headers in the Data Grid.
    * Inherits the `columnHeaderHeight` value if not set.
    */
@@ -410,6 +410,11 @@ DataGridPremiumRaw.propTypes = {
    * @default false
    */
   disableRowGrouping: PropTypes.bool,
+  /**
+   * If `true`, the Data Grid will not use the exclude model optimization when selecting all rows.
+   * @default false
+   */
+  disableRowSelectionExcludeModel: PropTypes.bool,
   /**
    * If `true`, the selection on click on a row or cell is disabled.
    * @default false
@@ -937,6 +942,7 @@ DataGridPremiumRaw.propTypes = {
   /**
    * Callback fired when the pivot side panel open state changes.
    * @param {boolean} pivotPanelOpen Whether the pivot side panel is visible.
+   * @deprecated Use the `sidebarOpen` and `sidebarClose` events or corresponding event handlers `onSidebarOpen()` and `onSidebarClose()` instead.
    */
   onPivotPanelOpenChange: PropTypes.func,
   /**
@@ -954,7 +960,7 @@ DataGridPremiumRaw.propTypes = {
    */
   onPreferencePanelOpen: PropTypes.func,
   /**
-   * Callback called when `processRowUpdate` throws an error or rejects.
+   * Callback called when `processRowUpdate()` throws an error or rejects.
    * @param {any} error The error thrown.
    */
   onProcessRowUpdateError: PropTypes.func,
@@ -1038,6 +1044,20 @@ DataGridPremiumRaw.propTypes = {
    * @deprecated Use the {@link https://mui.com/x/react-data-grid/server-side-data/lazy-loading/#infinite-loading Server-side data-Infinite loading} instead.
    */
   onRowsScrollEnd: PropTypes.func,
+  /**
+   * Callback fired when the sidebar is closed.
+   * @param {GridSidebarParams} params With all properties from [[GridSidebarParams]].
+   * @param {MuiEvent<{}>} event The event object.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  onSidebarClose: PropTypes.func,
+  /**
+   * Callback fired when the sidebar is opened.
+   * @param {GridSidebarParams} params With all properties from [[GridSidebarParams]].
+   * @param {MuiEvent<{}>} event The event object.
+   * @param {GridCallbackDetails} details Additional details for this callback.
+   */
+  onSidebarOpen: PropTypes.func,
   /**
    * Callback fired when the sort model changes before a column is sorted.
    * @param {GridSortModel} model With all properties from [[GridSortModel]].
@@ -1156,6 +1176,7 @@ DataGridPremiumRaw.propTypes = {
   /**
    * If `true`, the pivot side panel is visible.
    * @default false
+   * @deprecated Use `initialState.sidebar.open` instead.
    */
   pivotPanelOpen: PropTypes.bool,
   /**
