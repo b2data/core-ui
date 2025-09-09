@@ -4,6 +4,8 @@ import { useDevice } from "./use-device";
 
 const { Symbols } = useDevice();
 
+// HINT: To disable DataGrid default space key handling: search `goToCell` in useGridKeyboardNavigation
+
 export const useWindowKeydown = (
   keys: string[],
   callback: (e: KeyboardEvent) => void,

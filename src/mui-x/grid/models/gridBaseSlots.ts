@@ -1,3 +1,5 @@
+import { SxProps } from "@mui/system";
+
 type Ref<T = HTMLElement> =
   | React.RefCallback<T | null>
   | React.RefObject<T | null>
@@ -165,11 +167,13 @@ export type MenuItemProps = CommonProps & {
   /** For items that aren't interactive themselves (but may contain an interactive widget) */
   inert?: boolean;
   disabled?: boolean;
+  divider?: boolean;
   iconStart?: React.ReactNode;
   iconEnd?: React.ReactNode;
   selected?: boolean;
   value?: number | string | readonly string[];
   style?: React.CSSProperties;
+  sx?: SxProps;
 };
 
 type BasePlacement = "top" | "bottom" | "left" | "right";

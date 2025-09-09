@@ -681,14 +681,14 @@ export const useGridKeyboardNavigation = (
           ) {
             break;
           }
-          if (!event.shiftKey && rowIndexBefore < lastRowIndexInPage) {
-            goToCell(
-              colIndexBefore,
-              getRowIdFromIndex(
-                Math.min(rowIndexBefore + viewportPageSize, lastRowIndexInPage),
-              ),
-            );
-          }
+          // if (!event.shiftKey && rowIndexBefore < lastRowIndexInPage) {
+          //   goToCell(
+          //     colIndexBefore,
+          //     getRowIdFromIndex(
+          //       Math.min(rowIndexBefore + viewportPageSize, lastRowIndexInPage),
+          //     ),
+          //   );
+          // }
           break;
         }
 
