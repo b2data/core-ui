@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { EditorView } from "@codemirror/view";
 
 import { FormHelperText } from "../FormHelperText";
-import { DataBlock } from "../DataBlock";
+import { DataBlock, MarkdownPluginProps } from "../DataBlock";
 
 export interface MarkdownFieldProps {
   /**
@@ -61,6 +61,10 @@ export interface MarkdownFieldProps {
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps;
+  /**
+   * The props for the markdown plugin
+   */
+  mdProps?: MarkdownPluginProps;
 }
 
 export const MarkdownField = React.forwardRef(
@@ -80,25 +84,34 @@ export const MarkdownField = React.forwardRef(
       sx,
       onBlur,
       onChange,
+      mdProps,
     }: MarkdownFieldProps,
     ref: React.Ref<HTMLElement>,
   ) => {
     const [isFocus, setIsFocus] = useState(false);
     const [val, setVal] = useState(defaultValue);
+    const [initialValue, setInitialValue] = useState(defaultValue);
 
     const editor = useRef<EditorView>(null);
 
     useEffect(() => {
       if (value !== undefined) {
         setVal(value);
+        setInitialValue(value);
       }
     }, [value]);
 
     useEffect(() => {
       if (defaultValue !== undefined) {
         setVal(defaultValue);
+        setInitialValue(defaultValue);
       }
     }, [defaultValue]);
+
+    const handleChange = (v: string) => {
+      setVal(v);
+      onChange?.(v);
+    };
 
     return (
       <Box
@@ -164,7 +177,7 @@ export const MarkdownField = React.forwardRef(
         </Box>
         <DataBlock
           ref={editor}
-          content={val}
+          content={initialValue}
           editable={!disabled}
           readOnly={readOnly}
           onBlur={(v) => {
@@ -173,7 +186,7 @@ export const MarkdownField = React.forwardRef(
           }}
           onFocus={() => setIsFocus(true)}
           placeholderText={placeholder}
-          onChange={onChange}
+          onChange={handleChange}
           onChangeDebounce={100}
           mdProps={{
             slashCommands: [
@@ -183,6 +196,7 @@ export const MarkdownField = React.forwardRef(
               "strikethrough",
               "highlight",
             ],
+            ...mdProps,
           }}
           sx={(theme) => ({
             position: "relative",

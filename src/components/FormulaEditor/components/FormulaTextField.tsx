@@ -264,14 +264,40 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         }}
         renderTags={(value, getTagProps) =>
           value.map((v, index) => (
-            <Typography
+            <CustomTooltip
               key={getTagProps({ index }).key}
-              data-tag-index={getTagProps({ index })["data-tag-index"]}
-              tabIndex={getTagProps({ index }).tabIndex}
-              className={getTagProps({ index }).className}
+              enterDelay={1000}
+              arrow
+              title={
+                v.photo || v.description ? (
+                  <>
+                    {v.photo && (
+                      <Avatar
+                        src={v.photo}
+                        variant="rounded"
+                        sx={{ width: 100, height: 100 }}
+                      />
+                    )}
+                    <Typography
+                      variant="body1"
+                      noWrap
+                      wrapLines={7}
+                      sx={{ wordBreak: "break-all" }}
+                    >
+                      {v.description}
+                    </Typography>
+                  </>
+                ) : undefined
+              }
             >
-              {v.inputValue || v.name}
-            </Typography>
+              <Typography
+                data-tag-index={getTagProps({ index })["data-tag-index"]}
+                tabIndex={getTagProps({ index }).tabIndex}
+                className={getTagProps({ index }).className}
+              >
+                {v.inputValue || v.name}
+              </Typography>
+            </CustomTooltip>
           ))
         }
         renderOption={(
