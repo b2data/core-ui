@@ -294,6 +294,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
                 data-tag-index={getTagProps({ index })["data-tag-index"]}
                 tabIndex={getTagProps({ index }).tabIndex}
                 className={getTagProps({ index }).className}
+                sx={{ wordBreak: "break-all" }}
               >
                 {v.inputValue || v.name}
               </Typography>

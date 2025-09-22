@@ -17,7 +17,8 @@ export const useWindowKeydown = (
     if (
       keys.includes(" ") &&
       keys.length === 1 &&
-      (e.target as HTMLElement).tagName === "INPUT"
+      ((e.target as HTMLElement).tagName === "INPUT" ||
+        (e.target as HTMLElement).tagName === "TEXTAREA")
     ) {
       // ignore callback on inputs if only space is a key
       return;
