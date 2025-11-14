@@ -155,3 +155,10 @@ interface DataGridComponent {
 
 export type { DataGridPremiumProps as DataGridProps };
 export const DataGrid = React.memo(DataGridRaw) as DataGridComponent;
+
+export {
+  useGridRowKeyboardSelection,
+  type UseGridRowKeyboardSelectionOptions,
+  type KeyboardSelectionKeys,
+  type KeyboardRowEventType,
+} from "./useGridRowKeyboardSelection";
