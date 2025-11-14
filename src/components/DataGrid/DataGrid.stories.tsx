@@ -76,6 +76,9 @@ export const Base: StoryObj<DataGridProps> = {
   args: {
     disableColumnResize: true,
     rowHeight: 40,
+    pinnedColumns: {
+      left: ["name"],
+    },
   },
   render: (props) => {
     const [state, setState] = useState(0);
