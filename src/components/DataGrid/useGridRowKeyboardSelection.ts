@@ -37,7 +37,10 @@ export interface UseGridRowKeyboardSelectionOptions {
  * - Enter/Space (configurable): select the row and trigger row event (configurable)
  */
 export function useGridRowKeyboardSelection(
-  apiRef: RefObject<GridPrivateApiPremium | GridApiPremium | null>,
+  apiRef:
+    | RefObject<GridPrivateApiPremium | GridApiPremium | null>
+    | null
+    | undefined,
   options?: UseGridRowKeyboardSelectionOptions,
 ): void {
   const keys = options?.keys ?? ["Enter", " "];
@@ -46,13 +49,18 @@ export function useGridRowKeyboardSelection(
 
   const handleCellKeyDown = useCallback<GridEventListener<"cellKeyDown">>(
     (params: GridCellParams, event: React.KeyboardEvent<HTMLElement>) => {
+      // Early return if apiRef is not initialized
+      if (!apiRef || !apiRef.current) {
+        return;
+      }
+
       // Only handle configured keys
       if (!allowedKeys.includes(event.key as "Enter" | " ")) {
         return;
       }
 
       // Ignore if cell is in edit mode
-      const cellMode = apiRef.current?.getCellMode(params.id, params.field);
+      const cellMode = apiRef.current.getCellMode(params.id, params.field);
       if (cellMode === GridCellModes.Edit) {
         return;
       }
@@ -71,7 +79,7 @@ export function useGridRowKeyboardSelection(
         return;
       }
 
-      const column = apiRef.current?.getColumn(params.field);
+      const column = apiRef.current.getColumn(params.field);
       if (column?.type === GRID_ACTIONS_COLUMN_TYPE) {
         return;
       }
@@ -81,7 +89,7 @@ export function useGridRowKeyboardSelection(
       event.stopPropagation();
 
       // Select the row if it's selectable
-      if (apiRef.current?.isRowSelectable(params.id)) {
+      if (apiRef.current.isRowSelectable(params.id)) {
         // Use resetSelection: true to clear previous selection and select only this row
         // This mimics the behavior of clicking on a row
         apiRef.current.selectRow(params.id, true, true);
@@ -89,7 +97,7 @@ export function useGridRowKeyboardSelection(
 
       // Trigger row event if eventType is not "none"
       if (eventType !== "none") {
-        const rowParams = apiRef.current?.getRowParams(params.id);
+        const rowParams = apiRef.current.getRowParams(params.id);
         if (rowParams) {
           // Create a synthetic mouse event
           const eventTypeMap: Record<
@@ -120,7 +128,7 @@ export function useGridRowKeyboardSelection(
           } as unknown as React.MouseEvent<HTMLDivElement>;
 
           // Publish the configured row event
-          apiRef.current?.publishEvent(
+          apiRef.current.publishEvent(
             eventType as Exclude<KeyboardRowEventType, "none">,
             rowParams,
             syntheticEvent,
@@ -133,7 +141,7 @@ export function useGridRowKeyboardSelection(
 
   // Only subscribe to events when apiRef is initialized
   useEffect(() => {
-    if (!apiRef.current) {
+    if (!apiRef || !apiRef.current) {
       return;
     }
 
