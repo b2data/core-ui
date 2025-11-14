@@ -6,14 +6,14 @@ import { GridCellModes } from "../../mui-x/grid/models/gridEditRowModel";
 import { GRID_CHECKBOX_SELECTION_COL_DEF } from "../../mui-x/grid/colDef/gridCheckboxSelectionColDef";
 import { GRID_ACTIONS_COLUMN_TYPE } from "../../mui-x/grid/colDef/gridActionsColDef";
 import { GRID_DETAIL_PANEL_TOGGLE_FIELD } from "../../mui-x/grid/internals/constants";
-import type { GridApiPremium, GridPrivateApiPremium } from "../../mui-x/premium/models/gridApiPremium";
+import type {
+  GridApiPremium,
+  GridPrivateApiPremium,
+} from "../../mui-x/premium/models/gridApiPremium";
 
 export type KeyboardSelectionKeys = "Enter" | " " | ("Enter" | " ")[];
 
-export type KeyboardRowEventType =
-  | "rowClick"
-  | "rowDoubleClick"
-  | "none";
+export type KeyboardRowEventType = "rowClick" | "rowDoubleClick" | "none";
 
 export interface UseGridRowKeyboardSelectionOptions {
   /**
@@ -138,11 +138,13 @@ export function useGridRowKeyboardSelection(
     }
 
     // Subscribe to cellKeyDown events
-    const unsubscribe = apiRef.current.subscribeEvent("cellKeyDown", handleCellKeyDown);
+    const unsubscribe = apiRef.current.subscribeEvent(
+      "cellKeyDown",
+      handleCellKeyDown,
+    );
 
     return () => {
       unsubscribe();
     };
   }, [apiRef, handleCellKeyDown]);
 }
-

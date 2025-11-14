@@ -133,10 +133,13 @@ const DataGridRaw = forwardRef(function DataGrid<R extends GridValidRowModel>(
         "& .MuiDataGrid-virtualScroller": {
           "&:has(.MuiDataGrid-overlayWrapper:not([style*='display: none']))": {
             "& .MuiDataGrid-filler": {
-              "& .MuiDataGrid-filler--pinnedLeft, & .MuiDataGrid-filler--pinnedRight": {
-                height: "calc(100% + var(--DataGrid-overlayHeight, calc(var(--height) * 2)))",
-                marginTop: "calc(-1 * var(--DataGrid-overlayHeight, calc(var(--height) * 2)))",
-              },
+              "& .MuiDataGrid-filler--pinnedLeft, & .MuiDataGrid-filler--pinnedRight":
+                {
+                  height:
+                    "calc(100% + var(--DataGrid-overlayHeight, calc(var(--height) * 2)))",
+                  marginTop:
+                    "calc(-1 * var(--DataGrid-overlayHeight, calc(var(--height) * 2)))",
+                },
             },
           },
         },
