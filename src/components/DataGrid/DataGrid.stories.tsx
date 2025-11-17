@@ -123,6 +123,9 @@ function DataGridWithKeyboardSelection(
   useGridRowKeyboardSelection(apiRef, {
     keys: props.keyboardSelectionKeys,
     eventType: props.keyboardEventType,
+    onKeyActivate: (params, event) => {
+      console.log("Key activated:", params, event);
+    },
   });
   return <DataGrid {...props} apiRef={apiRef} />;
 }
