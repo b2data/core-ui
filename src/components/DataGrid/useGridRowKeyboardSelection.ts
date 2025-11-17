@@ -23,12 +23,19 @@ export interface UseGridRowKeyboardSelectionOptions {
   keys?: KeyboardSelectionKeys;
   /**
    * Type of row event to trigger when keys are pressed
-   * - "rowClick": Single click event (default)
+   * - "rowClick": Single click event
    * - "rowDoubleClick": Double click event (useful for opening details/editing)
-   * - "none": Only select row, don't trigger any event
-   * @default "rowClick"
+   * - "none": Only select row, don't trigger any event (default)
+   * @default "none"
    */
   eventType?: KeyboardRowEventType;
+  /**
+   * Callback that runs after the keyboard action is handled
+   */
+  onKeyActivate?: (
+    params: GridCellParams,
+    event: React.KeyboardEvent<HTMLElement>,
+  ) => void;
 }
 
 /**
@@ -45,7 +52,8 @@ export function useGridRowKeyboardSelection(
 ): void {
   const keys = options?.keys ?? ["Enter", " "];
   const allowedKeys = Array.isArray(keys) ? keys : [keys];
-  const eventType = options?.eventType ?? "rowClick";
+  const eventType = options?.eventType ?? "none";
+  const onKeyActivate = options?.onKeyActivate;
 
   const handleCellKeyDown = useCallback<GridEventListener<"cellKeyDown">>(
     (params: GridCellParams, event: React.KeyboardEvent<HTMLElement>) => {
@@ -135,8 +143,10 @@ export function useGridRowKeyboardSelection(
           );
         }
       }
+
+      onKeyActivate?.(params, event);
     },
-    [apiRef, allowedKeys, eventType],
+    [apiRef, allowedKeys, eventType, onKeyActivate],
   );
 
   // Only subscribe to events when apiRef is initialized
