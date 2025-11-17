@@ -3,11 +3,8 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import composeClasses from "@mui/utils/composeClasses";
 import useSlotProps from "@mui/utils/useSlotProps";
-import {
-  useTreeView,
-  TreeViewProvider,
-  RichTreeViewItems,
-} from "@mui/x-tree-view/internals";
+import { useTreeView, TreeViewProvider } from "@mui/x-tree-view/internals";
+import { RichTreeViewItemsPro } from "../internals/components/RichTreeViewItemsPro";
 import { warnOnce } from "@mui/x-internals/warning";
 import { styled, createUseThemeProps } from "../internals/zero-styled";
 import { getRichTreeViewProUtilityClass } from "./richTreeViewProClasses";
@@ -79,7 +76,7 @@ const RichTreeViewPro = React.forwardRef(function RichTreeViewPro<
   ref: React.Ref<HTMLUListElement>,
 ) {
   const props = useThemeProps({ props: inProps, name: "MuiRichTreeViewPro" });
-  const { slots, slotProps, ...other } = props;
+  const { slots, slotProps, getItemActions, ...other } = props;
 
   if (process.env.NODE_ENV !== "production") {
     if ((props as any).children != null) {
@@ -119,7 +116,11 @@ const RichTreeViewPro = React.forwardRef(function RichTreeViewPro<
       slotProps={slotProps}
     >
       <Root {...rootProps}>
-        <RichTreeViewItems slots={slots} slotProps={slotProps} />
+        <RichTreeViewItemsPro
+          slots={slots}
+          slotProps={slotProps}
+          getItemActions={getItemActions}
+        />
       </Root>
     </TreeViewProvider>
   );

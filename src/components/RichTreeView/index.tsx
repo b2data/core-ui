@@ -1,4 +1,5 @@
 import React from "react";
+
 import { forwardRef } from "@mui/x-internals/forwardRef";
 
 // Tree View
@@ -18,16 +19,23 @@ export * from "@mui/x-tree-view/models";
 export * from "@mui/x-tree-view/icons";
 export * from "@mui/x-tree-view/hooks";
 
+// Re-export useTreeViewApiRef for convenience
+export { useTreeViewApiRef } from "@mui/x-tree-view/hooks";
+
 // Import the Pro TreeView and its types
 import { RichTreeViewPro } from "../../mui-x/tree-view-pro/RichTreeViewPro/RichTreeViewPro";
 import type { RichTreeViewProProps } from "../../mui-x/tree-view-pro/RichTreeViewPro/RichTreeViewPro.types";
 
-// The main RichTreeView component, forwarding ref and props to RichTreeViewPro
-const RichTreeView = forwardRef(function RichTreeView<
-  R extends {} = any,
+export * from "../../mui-x/tree-view-pro/RichTreeViewPro";
+
+const RichTreeViewRaw = forwardRef(function RichTreeView<
+  R extends {},
   Multiple extends boolean | undefined = undefined,
->(props: RichTreeViewProProps<R, Multiple>, ref: React.Ref<HTMLUListElement>) {
-  return <RichTreeViewPro ref={ref} {...props} />;
+>(
+  inProps: RichTreeViewProProps<R, Multiple>,
+  ref: React.Ref<HTMLUListElement>,
+) {
+  return <RichTreeViewPro ref={ref} {...inProps} />;
 });
 
 interface RichTreeViewComponent {
@@ -40,9 +48,6 @@ interface RichTreeViewComponent {
 
 export type { RichTreeViewProProps as RichTreeViewProps };
 
-export const RichTreeViewExport = React.memo(
-  RichTreeView,
+export const RichTreeView = React.memo(
+  RichTreeViewRaw,
 ) as RichTreeViewComponent;
-
-// For backward compatibility, also export as RichTreeView
-export { RichTreeViewExport as RichTreeView };

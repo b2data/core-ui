@@ -21,8 +21,10 @@ export type {
   TreeViewState,
   TreeViewItemMeta,
   TreeViewInstance,
+  TreeViewUsedInstance,
   TreeViewItemPlugin,
   TreeViewUsedStore,
+  TreeViewUsedParamsWithDefaults,
 } from "./models";
 
 // Core plugins
@@ -72,6 +74,7 @@ export type {
   UseTreeViewLazyLoadingSignature,
   UseTreeViewLazyLoadingParameters,
   UseTreeViewLazyLoadingInstance,
+  DataSource,
 } from "./plugins/useTreeViewLazyLoading";
 export { lazyLoadingSelectors } from "./plugins/useTreeViewLazyLoading";
 export { useTreeViewJSXItems } from "./plugins/useTreeViewJSXItems";
