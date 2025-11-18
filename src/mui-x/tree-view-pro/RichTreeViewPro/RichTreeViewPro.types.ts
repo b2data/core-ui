@@ -78,4 +78,11 @@ export interface RichTreeViewProProps<
    * @returns Array of menu item props
    */
   getItemActions?: (item: R, itemId: string) => MenuItemProps[];
+  /**
+   * Function to get icon for each item.
+   * @param item The item model
+   * @param itemId The item id
+   * @returns React element type for the icon
+   */
+  getItemIcon?: (item: R, itemId: string) => React.ElementType | undefined;
 }

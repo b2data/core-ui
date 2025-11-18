@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { IconButton } from "../../../../components/IconButton";
-import { Menu } from "../../../../components/Menu";
-import { MenuItem, MenuItemProps } from "../../../../components/MenuItem";
+import { IconButton } from "../IconButton";
+import { Menu } from "../Menu";
+import { MenuItem, MenuItemProps } from "../MenuItem";
 import { Box } from "@mui/material";
 
 export interface TreeItemActionsMenuProps {
@@ -14,6 +14,7 @@ export function TreeItemActionsMenu({ actions }: TreeItemActionsMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
+  const contentRef = React.useRef<HTMLElement | null>(null);
 
   if (!actions || actions.length === 0) {
     return null;
@@ -23,25 +24,42 @@ export function TreeItemActionsMenu({ actions }: TreeItemActionsMenuProps) {
     event.stopPropagation();
     event.preventDefault();
     setAnchorEl(event.currentTarget);
+    const content = event.currentTarget.closest(
+      ".MuiTreeItem-content",
+    ) as HTMLElement | null;
+    if (content) {
+      content.dataset.actionsOpen = "true";
+      contentRef.current = content;
+    }
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    if (contentRef.current) {
+      delete contentRef.current.dataset.actionsOpen;
+      contentRef.current = null;
+    }
   };
 
   const isMenuOpen = Boolean(anchorEl);
 
+  React.useEffect(() => {
+    return () => {
+      if (contentRef.current) {
+        delete contentRef.current.dataset.actionsOpen;
+        contentRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <Box
+      className="MuiTreeItem-actionsMenu"
       sx={{
         display: "flex",
         alignItems: "center",
         marginLeft: "auto",
-        opacity: isMenuOpen ? 1 : 0,
-        transition: "opacity 0.2s",
-        "&:hover": {
-          opacity: 1,
-        },
+        ...(isMenuOpen ? { opacity: 1 } : {}),
       }}
       onClick={(e) => {
         e.stopPropagation();
@@ -68,7 +86,7 @@ export function TreeItemActionsMenu({ actions }: TreeItemActionsMenuProps) {
           handleClose();
         }}
         anchorOrigin={{
-          vertical: "bottom",
+          vertical: "top",
           horizontal: "right",
         }}
         transformOrigin={{
@@ -78,7 +96,7 @@ export function TreeItemActionsMenu({ actions }: TreeItemActionsMenuProps) {
       >
         {actions.map((action, index) => (
           <MenuItem
-            key={index}
+            key={action.id || `action-${index}`}
             {...action}
             onClick={(e) => {
               action.onClick?.(e);

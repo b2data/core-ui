@@ -3,6 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import FolderIcon from "@mui/icons-material/Folder";
+import DescriptionIcon from "@mui/icons-material/Description";
+import ImageIcon from "@mui/icons-material/Image";
+import VideoFileIcon from "@mui/icons-material/VideoFile";
 import {
   RichTreeView,
   RichTreeViewProps,
@@ -27,26 +31,26 @@ export type ItemType = TreeViewBaseItem<{
   disabled?: boolean;
 }>;
 
-export const initialItems: ItemType[] = [
+const initialItems: ItemType[] = [
   {
     id: "1",
     label: "Amy Harris",
-    childrenCount: Math.round(Math.random() * 10) + 1,
+    childrenCount: Math.round(Math.random() * 10),
   },
   {
     id: "2",
     label: "Sam Smith",
-    childrenCount: Math.round(Math.random() * 10) + 1,
+    childrenCount: Math.round(Math.random() * 10),
   },
   {
     id: "3",
     label: "Jordan Miles",
-    childrenCount: Math.round(Math.random() * 10) + 1,
+    childrenCount: Math.round(Math.random() * 10),
   },
   {
     id: "4",
     label: "Amalia Brown",
-    childrenCount: Math.round(Math.random() * 10) + 1,
+    childrenCount: Math.round(Math.random() * 10),
   },
 ];
 
@@ -105,37 +109,6 @@ export const DragAndDrop: StoryObj<RichTreeViewProps<any, any>> = {
     );
   },
 };
-
-// Checkbox selection (single)
-export const CheckboxSelection: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    const [selectedItems, setSelectedItems] = useState<string | null>(null);
-
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <Stack spacing={2}>
-          <Typography variant="body2">
-            Selected: {selectedItems || "None"}
-          </Typography>
-          <RichTreeView
-            items={initialItems}
-            checkboxSelection
-            dataSource={{
-              getChildrenCount: (item) => item?.childrenCount as number,
-              getTreeItems: fetchData,
-            }}
-            selectedItems={selectedItems}
-            onSelectedItemsChange={(_event, itemIds) => {
-              setSelectedItems(itemIds as string);
-            }}
-          />
-        </Stack>
-      </Box>
-    );
-  },
-};
-
 // Multi-select with checkbox
 export const MultiSelect: StoryObj<RichTreeViewProps<any, true>> = {
   args: {},
@@ -164,143 +137,6 @@ export const MultiSelect: StoryObj<RichTreeViewProps<any, true>> = {
             defaultExpandedItems={["1", "2", "3", "4"]}
           />
         </Stack>
-      </Box>
-    );
-  },
-};
-
-// Multi-select with selection propagation
-export const MultiSelectWithPropagation: StoryObj<
-  RichTreeViewProps<any, true>
-> = {
-  args: {},
-  render: () => {
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <Stack spacing={2}>
-          <Typography variant="body2">
-            Selected ({selectedItems.length}):{" "}
-            {selectedItems.join(", ") || "None"}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Selecting a parent selects all descendants
-          </Typography>
-          <RichTreeView
-            items={initialItems}
-            checkboxSelection
-            multiSelect
-            selectionPropagation={{ descendants: true, parents: true }}
-            dataSource={{
-              getChildrenCount: (item) => item?.childrenCount as number,
-              getTreeItems: fetchData,
-            }}
-            selectedItems={selectedItems}
-            onSelectedItemsChange={(_event, itemIds) => {
-              setSelectedItems(itemIds as string[]);
-            }}
-            defaultExpandedItems={["1", "2", "3", "4"]}
-          />
-        </Stack>
-      </Box>
-    );
-  },
-};
-
-// Item editing
-export const ItemEditing: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    const [items, setItems] = useState(initialItems);
-
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <Stack spacing={2}>
-          <Typography variant="body2">
-            Double-click on an item to edit its label
-          </Typography>
-          <RichTreeView
-            items={items}
-            isItemEditable={() => true}
-            onItemLabelChange={(itemId, newLabel) => {
-              console.log("Label changed:", itemId, newLabel);
-              setItems((prev) =>
-                prev.map((item) =>
-                  item.id === itemId ? { ...item, label: newLabel } : item,
-                ),
-              );
-            }}
-            defaultExpandedItems={["1", "2", "3", "4"]}
-          />
-        </Stack>
-      </Box>
-    );
-  },
-};
-
-// Controlled expansion
-export const ControlledExpansion: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    const [expandedItems, setExpandedItems] = useState<string[]>([]);
-
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <Stack spacing={2}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Button
-              size="small"
-              onClick={() => setExpandedItems(["1", "2", "3", "4"])}
-            >
-              Expand All
-            </Button>
-            <Button size="small" onClick={() => setExpandedItems([])}>
-              Collapse All
-            </Button>
-            <Typography variant="body2">
-              Expanded: {expandedItems.join(", ") || "None"}
-            </Typography>
-          </Stack>
-          <RichTreeView
-            items={initialItems}
-            expandedItems={expandedItems}
-            onExpandedItemsChange={(_event, itemIds) => {
-              setExpandedItems(itemIds);
-            }}
-            dataSource={{
-              getChildrenCount: (item) => item?.childrenCount as number,
-              getTreeItems: fetchData,
-            }}
-          />
-        </Stack>
-      </Box>
-    );
-  },
-};
-
-// Disabled items
-export const DisabledItems: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    const itemsWithDisabled: ItemType[] = [
-      { ...initialItems[0], disabled: true },
-      ...initialItems.slice(1),
-    ];
-
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <Typography variant="body2" sx={{ mb: 2 }}>
-          First item is disabled
-        </Typography>
-        <RichTreeView
-          items={itemsWithDisabled}
-          isItemDisabled={(item) => item?.disabled === true}
-          dataSource={{
-            getChildrenCount: (item) => item?.childrenCount as number,
-            getTreeItems: fetchData,
-          }}
-        />
       </Box>
     );
   },
@@ -391,58 +227,6 @@ export const WithAPI: StoryObj<RichTreeViewProps<any, any>> = {
   },
 };
 
-// Custom styling
-export const CustomStyling: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <RichTreeView
-          items={initialItems}
-          dataSource={{
-            getChildrenCount: (item) => item?.childrenCount as number,
-            getTreeItems: fetchData,
-          }}
-          sx={{
-            "& .MuiTreeItem-root": {
-              "&:hover": {
-                backgroundColor: "action.hover",
-              },
-            },
-            "& .MuiTreeItem-content": {
-              padding: "8px 16px",
-            },
-          }}
-          defaultExpandedItems={["1", "2", "3", "4"]}
-        />
-      </Box>
-    );
-  },
-};
-
-// Expansion trigger on icon
-export const ExpansionTriggerIcon: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    return (
-      <Box sx={{ height: 400, width: 400 }}>
-        <Typography variant="body2" sx={{ mb: 2 }}>
-          Click on the icon to expand/collapse (not the content)
-        </Typography>
-        <RichTreeView
-          items={initialItems}
-          expansionTrigger="iconContainer"
-          dataSource={{
-            getChildrenCount: (item) => item?.childrenCount as number,
-            getTreeItems: fetchData,
-          }}
-          defaultExpandedItems={["1", "2", "3", "4"]}
-        />
-      </Box>
-    );
-  },
-};
-
 // With actions menu
 export const WithActionsMenu: StoryObj<RichTreeViewProps<any, any>> = {
   args: {},
@@ -485,67 +269,92 @@ export const WithActionsMenu: StoryObj<RichTreeViewProps<any, any>> = {
   },
 };
 
-// Event handlers
-export const EventHandlers: StoryObj<RichTreeViewProps<any, any>> = {
+// With icons, drag and drop and actions menu
+export const WithIconsDragAndDropActionsMenu: StoryObj<
+  RichTreeViewProps<any, any>
+> = {
   args: {},
   render: () => {
-    const [logs, setLogs] = useState<string[]>([]);
-
-    const addLog = (message: string) => {
-      setLogs((prev) => [message, ...prev].slice(0, 10));
-    };
+    const itemsWithType: (ItemType & {
+      type?: "folder" | "file" | "image" | "video";
+    })[] = [
+      {
+        id: "1",
+        label: "Documents",
+        type: "folder",
+        childrenCount: 5,
+      },
+      {
+        id: "2",
+        label: "Pictures",
+        type: "folder",
+        childrenCount: 3,
+      },
+      {
+        id: "3",
+        label: "Videos",
+        type: "folder",
+        childrenCount: 2,
+      },
+      {
+        id: "4",
+        label: "README.txt",
+        type: "file",
+        childrenCount: 0,
+      },
+    ];
 
     return (
-      <Box sx={{ height: 500, width: 500 }}>
-        <Stack spacing={2}>
-          <Box
-            sx={{
-              maxHeight: 150,
-              overflow: "auto",
-              p: 1,
-              bgcolor: "grey.100",
-              borderRadius: 1,
-            }}
-          >
-            <Typography variant="caption" component="div">
-              <strong>Event Log:</strong>
-            </Typography>
-            {logs.length === 0 ? (
-              <Typography variant="caption" color="text.secondary">
-                No events yet
-              </Typography>
-            ) : (
-              logs.map((log, index) => (
-                <Typography key={index} variant="caption" component="div">
-                  {log}
-                </Typography>
-              ))
-            )}
-          </Box>
-          <RichTreeView
-            items={initialItems}
-            dataSource={{
-              getChildrenCount: (item) => item?.childrenCount as number,
-              getTreeItems: fetchData,
-            }}
-            onItemClick={(_event, itemId) => {
-              addLog(`Item clicked: ${itemId}`);
-            }}
-            onItemExpansionToggle={(_event, itemId, isExpanded) => {
-              addLog(`Item ${itemId} ${isExpanded ? "expanded" : "collapsed"}`);
-            }}
-            onItemFocus={(_event, itemId) => {
-              addLog(`Item focused: ${itemId}`);
-            }}
-            onSelectedItemsChange={(_event, itemIds) => {
-              addLog(
-                `Selection changed: ${Array.isArray(itemIds) ? itemIds.join(", ") : itemIds}`,
-              );
-            }}
-            checkboxSelection
-            defaultExpandedItems={["1", "2"]}
-          />
-        </Stack>
+      <Box sx={{ height: 400, width: 400 }}>
+        <Typography variant="body2" sx={{ mb: 2 }}>
+          Items with custom icons based on their type
+        </Typography>
+        <RichTreeView
+          getItemActions={(item, itemId) => [
+            {
+              children: "Edit",
+              onClick: () => {
+                console.log("Edit clicked for:", itemId, item);
+              },
+            },
+            {
+              children: "Delete",
+              onClick: () => {
+                console.log("Delete clicked for:", itemId, item);
+              },
+            },
+            {
+              children: "Duplicate",
+              onClick: () => {
+                console.log("Duplicate clicked for:", itemId, item);
+              },
+            },
+          ]}
+          items={itemsWithType}
+          itemsReordering
+          getItemIcon={(item) => {
+            const itemWithType = item as ItemType & {
+              type?: "folder" | "file" | "image" | "video";
+            };
+
+            switch (itemWithType.type) {
+              case "folder":
+                return FolderIcon;
+              case "image":
+                return ImageIcon;
+              case "video":
+                return VideoFileIcon;
+              case "file":
+              default:
+                return DescriptionIcon;
+            }
+          }}
+          dataSource={{
+            getChildrenCount: (item) => item?.childrenCount as number,
+            getTreeItems: fetchData,
+          }}
+          defaultExpandedItems={["1", "2", "3"]}
+        />
       </Box>
     );
   },
