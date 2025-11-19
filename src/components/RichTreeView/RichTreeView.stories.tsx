@@ -1,18 +1,12 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import FolderIcon from "@mui/icons-material/Folder";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ImageIcon from "@mui/icons-material/Image";
 import VideoFileIcon from "@mui/icons-material/VideoFile";
-import {
-  RichTreeView,
-  RichTreeViewProps,
-  TreeViewBaseItem,
-  useTreeViewApiRef,
-} from "./index";
+import { RichTreeView, RichTreeViewProps, TreeViewBaseItem } from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -31,28 +25,22 @@ export type ItemType = TreeViewBaseItem<{
   disabled?: boolean;
 }>;
 
-const initialItems: ItemType[] = [
+const defaultExpandedIds = ["nested-1", "nested-1-1", "nested-1-1-1"];
+
+const nestedRootItems: ItemType[] = [
   {
-    id: "1",
-    label: "Amy Harris",
-    childrenCount: Math.round(Math.random() * 10),
+    id: "nested-1",
+    label: "Product Roadmap",
+    childrenCount: 2,
   },
   {
-    id: "2",
-    label: "Sam Smith",
-    childrenCount: Math.round(Math.random() * 10),
-  },
-  {
-    id: "3",
-    label: "Jordan Miles",
-    childrenCount: Math.round(Math.random() * 10),
-  },
-  {
-    id: "4",
-    label: "Amalia Brown",
-    childrenCount: Math.round(Math.random() * 10),
+    id: "nested-2",
+    label: "Archived Projects",
+    childrenCount: 2,
   },
 ];
+
+const NESTED_MAX_DEPTH = 4;
 
 const fetchData = async (): Promise<ItemType[]> => {
   const length: number = Math.round(Math.random() * 10) + 1;
@@ -69,6 +57,45 @@ const fetchData = async (): Promise<ItemType[]> => {
   });
 };
 
+const delay = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+const fetchNestedTreeItems = async (parentId?: string): Promise<ItemType[]> => {
+  await delay(500);
+
+  if (!parentId) {
+    return nestedRootItems;
+  }
+
+  const depth = parentId.split("-").length;
+  const hasChildren = depth < NESTED_MAX_DEPTH;
+  const childrenCount = hasChildren ? 2 : 0;
+
+  return Array.from({ length: childrenCount }, (_, index) => {
+    const id = `${parentId}-${index + 1}`;
+    return {
+      id,
+      label: `Node ${id.replace(/-/g, ".").toUpperCase()}`,
+      childrenCount: depth + 1 < NESTED_MAX_DEPTH ? 2 : 0,
+    };
+  });
+};
+
+const prefetchExpandedItems = async (
+  expandedIds: string[],
+): Promise<Record<string, ItemType[]>> => {
+  const entries = await Promise.all(
+    expandedIds.map(async (id) => {
+      const items = await fetchNestedTreeItems(id);
+      return [id, items] as const;
+    }),
+  );
+
+  return Object.fromEntries(entries);
+};
+
 // Base story with lazy loading
 export const Base: StoryObj<RichTreeViewProps<any, any>> = {
   args: {},
@@ -76,11 +103,13 @@ export const Base: StoryObj<RichTreeViewProps<any, any>> = {
     return (
       <Box sx={{ height: 400, width: 400 }}>
         <RichTreeView
-          items={initialItems}
+          items={nestedRootItems}
           dataSource={{
             getChildrenCount: (item) => item?.childrenCount as number,
             getTreeItems: fetchData,
           }}
+          defaultExpandedItems={defaultExpandedIds}
+          prefetchExpandedItems={prefetchExpandedItems}
         />
       </Box>
     );
@@ -98,9 +127,10 @@ export const DragAndDrop: StoryObj<RichTreeViewProps<any, any>> = {
         </Typography>
         <RichTreeView
           {...props}
-          items={initialItems}
+          items={nestedRootItems}
           itemsReordering
-          defaultExpandedItems={["1", "2", "3", "4"]}
+          defaultExpandedItems={defaultExpandedIds}
+          prefetchExpandedItems={prefetchExpandedItems}
           onItemPositionChange={(params) => {
             console.log("Item moved:", params);
           }}
@@ -109,6 +139,7 @@ export const DragAndDrop: StoryObj<RichTreeViewProps<any, any>> = {
     );
   },
 };
+
 // Multi-select with checkbox
 export const MultiSelect: StoryObj<RichTreeViewProps<any, true>> = {
   args: {},
@@ -123,7 +154,7 @@ export const MultiSelect: StoryObj<RichTreeViewProps<any, true>> = {
             {selectedItems.join(", ") || "None"}
           </Typography>
           <RichTreeView
-            items={initialItems}
+            items={nestedRootItems}
             checkboxSelection
             multiSelect
             dataSource={{
@@ -134,92 +165,8 @@ export const MultiSelect: StoryObj<RichTreeViewProps<any, true>> = {
             onSelectedItemsChange={(_event, itemIds) => {
               setSelectedItems(itemIds as string[]);
             }}
-            defaultExpandedItems={["1", "2", "3", "4"]}
-          />
-        </Stack>
-      </Box>
-    );
-  },
-};
-
-// API usage
-export const WithAPI: StoryObj<RichTreeViewProps<any, any>> = {
-  args: {},
-  render: () => {
-    const apiRef = useTreeViewApiRef();
-    const [info, setInfo] = useState<string>("");
-
-    const handleAction = (action: string) => {
-      if (!apiRef.current) return;
-
-      switch (action) {
-        case "expand-all": {
-          const allIds = initialItems.map((item) => item.id);
-          allIds.forEach((id) => {
-            apiRef.current?.setItemExpansion({
-              itemId: id,
-              shouldBeExpanded: true,
-            });
-          });
-          setInfo("Expanded all items");
-          break;
-        }
-        case "collapse-all": {
-          initialItems.forEach((item) => {
-            apiRef.current?.setItemExpansion({
-              itemId: item.id,
-              shouldBeExpanded: false,
-            });
-          });
-          setInfo("Collapsed all items");
-          break;
-        }
-        case "focus-first": {
-          const syntheticEvent = new Event(
-            "focus",
-          ) as unknown as React.SyntheticEvent;
-          apiRef.current?.focusItem(syntheticEvent, initialItems[0].id);
-          setInfo(`Focused: ${initialItems[0].label}`);
-          break;
-        }
-        case "get-item": {
-          const item = apiRef.current?.getItem(initialItems[0].id);
-          setInfo(`Item: ${item ? JSON.stringify(item) : "Not found"}`);
-          break;
-        }
-      }
-    };
-
-    return (
-      <Box sx={{ height: 500, width: 500 }}>
-        <Stack spacing={2}>
-          <Stack direction="row" spacing={1} flexWrap="wrap">
-            <Button size="small" onClick={() => handleAction("expand-all")}>
-              Expand All
-            </Button>
-            <Button size="small" onClick={() => handleAction("collapse-all")}>
-              Collapse All
-            </Button>
-            <Button size="small" onClick={() => handleAction("focus-first")}>
-              Focus First
-            </Button>
-            <Button size="small" onClick={() => handleAction("get-item")}>
-              Get First Item
-            </Button>
-          </Stack>
-          {info && (
-            <Typography variant="body2" color="primary">
-              {info}
-            </Typography>
-          )}
-          <RichTreeView
-            apiRef={apiRef}
-            items={initialItems}
-            dataSource={{
-              getChildrenCount: (item) => item?.childrenCount as number,
-              getTreeItems: fetchData,
-            }}
-            defaultExpandedItems={["1", "2"]}
+            defaultExpandedItems={defaultExpandedIds}
+            prefetchExpandedItems={prefetchExpandedItems}
           />
         </Stack>
       </Box>
@@ -237,7 +184,7 @@ export const WithActionsMenu: StoryObj<RichTreeViewProps<any, any>> = {
           Hover over items to see the three-dot menu
         </Typography>
         <RichTreeView
-          items={initialItems}
+          items={nestedRootItems}
           getItemActions={(item, itemId) => [
             {
               children: "Edit",
@@ -262,7 +209,8 @@ export const WithActionsMenu: StoryObj<RichTreeViewProps<any, any>> = {
             getChildrenCount: (item) => item?.childrenCount as number,
             getTreeItems: fetchData,
           }}
-          defaultExpandedItems={["1", "2", "3", "4"]}
+          defaultExpandedItems={defaultExpandedIds}
+          prefetchExpandedItems={prefetchExpandedItems}
         />
       </Box>
     );
@@ -275,35 +223,6 @@ export const WithIconsDragAndDropActionsMenu: StoryObj<
 > = {
   args: {},
   render: () => {
-    const itemsWithType: (ItemType & {
-      type?: "folder" | "file" | "image" | "video";
-    })[] = [
-      {
-        id: "1",
-        label: "Documents",
-        type: "folder",
-        childrenCount: 5,
-      },
-      {
-        id: "2",
-        label: "Pictures",
-        type: "folder",
-        childrenCount: 3,
-      },
-      {
-        id: "3",
-        label: "Videos",
-        type: "folder",
-        childrenCount: 2,
-      },
-      {
-        id: "4",
-        label: "README.txt",
-        type: "file",
-        childrenCount: 0,
-      },
-    ];
-
     return (
       <Box sx={{ height: 400, width: 400 }}>
         <Typography variant="body2" sx={{ mb: 2 }}>
@@ -330,7 +249,7 @@ export const WithIconsDragAndDropActionsMenu: StoryObj<
               },
             },
           ]}
-          items={itemsWithType}
+          items={nestedRootItems}
           itemsReordering
           getItemIcon={(item) => {
             const itemWithType = item as ItemType & {
@@ -353,7 +272,8 @@ export const WithIconsDragAndDropActionsMenu: StoryObj<
             getChildrenCount: (item) => item?.childrenCount as number,
             getTreeItems: fetchData,
           }}
-          defaultExpandedItems={["1", "2", "3"]}
+          defaultExpandedItems={defaultExpandedIds}
+          prefetchExpandedItems={prefetchExpandedItems}
         />
       </Box>
     );
