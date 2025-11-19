@@ -14,6 +14,7 @@ import {
   RichTreeViewProPluginParameters,
   RichTreeViewProPluginSignatures,
 } from "./RichTreeViewPro.plugins";
+import { MenuItemProps } from "../../../components/MenuItem";
 
 export interface RichTreeViewProSlots
   extends TreeViewSlots,
@@ -69,4 +70,19 @@ export interface RichTreeViewProProps<
    * The ref object that allows Tree View manipulation. Can be instantiated with `useTreeViewApiRef()`.
    */
   apiRef?: RichTreeViewProApiRef;
+  /**
+   * Function to get actions for each item. Returns an array of menu item props that will be displayed
+   * in a three-dot menu on the right side of each item.
+   * @param item The item model
+   * @param itemId The item id
+   * @returns Array of menu item props
+   */
+  getItemActions?: (item: R, itemId: string) => MenuItemProps[];
+  /**
+   * Function to get icon for each item.
+   * @param item The item model
+   * @param itemId The item id
+   * @returns React element type for the icon
+   */
+  getItemIcon?: (item: R, itemId: string) => React.ElementType | undefined;
 }
