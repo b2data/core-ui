@@ -56,6 +56,7 @@ export * from "./Portal";
 export * from "./ProgressStatistic";
 export * from "./Radio";
 export * from "./RadioGroup";
+export * from "./RichTreeView";
 export * from "./SectionTitle";
 export * from "./SectionTitleAction";
 export * from "./Skeleton";
