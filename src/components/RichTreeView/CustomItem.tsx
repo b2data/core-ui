@@ -163,7 +163,7 @@ export const CustomTreeItem = React.forwardRef(function CustomTreeItem<
       "&:hover .MuiTreeItem-actionsMenu": {
         opacity: 1,
       },
-      ...(itemsReordering && itemIcon
+      ...(itemsReordering && itemIcon && canItemBeReordered
         ? {
             "& .MuiTreeItem-draggable": {
               display: "none",
@@ -172,7 +172,7 @@ export const CustomTreeItem = React.forwardRef(function CustomTreeItem<
               display: "flex",
             },
             "&:hover .MuiTreeItem-draggable": {
-              display: "flex",
+              display: "flex !important",
             },
             "&:hover .MuiTreeItem-icon": {
               display: "none",
@@ -180,7 +180,13 @@ export const CustomTreeItem = React.forwardRef(function CustomTreeItem<
           }
         : {}),
     }),
-    [selectedBackgroundColor, itemsReordering, itemIcon, theme],
+    [
+      selectedBackgroundColor,
+      itemsReordering,
+      itemIcon,
+      canItemBeReordered,
+      theme,
+    ],
   );
 
   const iconColor = (theme.vars || theme).palette.text.secondary;

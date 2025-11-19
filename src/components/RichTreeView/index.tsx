@@ -14,8 +14,6 @@ export * from "@mui/x-tree-view/TreeItemProvider";
 export * from "@mui/x-tree-view/TreeItemDragAndDropOverlay";
 export * from "@mui/x-tree-view/TreeItemLabelInput";
 
-// export { unstable_resetCleanupTracking } from "@mui/x-tree-view/internals";
-
 export * from "@mui/x-tree-view/models";
 export * from "@mui/x-tree-view/icons";
 export * from "@mui/x-tree-view/hooks";
@@ -131,15 +129,26 @@ const RichTreeViewRaw = forwardRef(function RichTreeView<
 
       let timeoutId: ReturnType<typeof setTimeout> | undefined;
       let cancelled = false;
+      let attempts = 0;
+      const MAX_ATTEMPTS = 20; // Max 1 second (20 * 50ms)
 
       const attemptUpdate = () => {
-        if (cancelled) {
+        if (cancelled || attempts >= MAX_ATTEMPTS) {
+          if (
+            attempts >= MAX_ATTEMPTS &&
+            process.env.NODE_ENV !== "production"
+          ) {
+            console.warn(
+              `Failed to trigger children update for item ${itemId} after ${MAX_ATTEMPTS} attempts`,
+            );
+          }
           return;
         }
 
+        attempts++;
         const itemExists = apiRef.current?.getItem
           ? !!apiRef.current.getItem(itemId)
-          : true;
+          : false;
 
         if (itemExists) {
           void apiRef.current?.updateItemChildren?.(itemId);
@@ -222,6 +231,15 @@ const RichTreeViewRaw = forwardRef(function RichTreeView<
     return () => {
       isActive = false;
       cancelUpdates.forEach((cancel) => cancel?.());
+      idsToFetch.forEach((id) => {
+        if (deferredPrefetchRef.current[id]) {
+          deferredPrefetchRef.current[id].reject(
+            new Error("Prefetch cancelled"),
+          );
+          delete deferredPrefetchRef.current[id];
+        }
+        pendingPrefetchIdsRef.current.delete(id);
+      });
     };
   }, [
     apiRef,
