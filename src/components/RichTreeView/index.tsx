@@ -28,23 +28,6 @@ export * from "../../mui-x/tree-view-pro/RichTreeViewPro";
 
 import { CustomTreeItem } from "./CustomItem";
 
-type Deferred<T> = {
-  promise: Promise<T>;
-  resolve: (value: T) => void;
-  reject: (reason?: unknown) => void;
-};
-
-const createDeferred = <T,>(): Deferred<T> => {
-  let resolve!: (value: T) => void;
-  let reject!: (reason?: unknown) => void;
-  const promise = new Promise<T>((res, rej) => {
-    resolve = res;
-    reject = rej;
-  });
-
-  return { promise, resolve, reject };
-};
-
 const RichTreeViewRaw = forwardRef(function RichTreeView<
   R extends {},
   Multiple extends boolean | undefined = undefined,
@@ -59,7 +42,6 @@ const RichTreeViewRaw = forwardRef(function RichTreeView<
     expansionTrigger,
     dataSource,
     defaultExpandedItems,
-    prefetchExpandedItems,
     apiRef: externalApiRef,
     ...otherProps
   } = inProps;
@@ -70,13 +52,6 @@ const RichTreeViewRaw = forwardRef(function RichTreeView<
   const internalApiRef =
     useTreeViewApiRef<RichTreeViewProPluginSignatures>() as ApiRef;
   const apiRef = (externalApiRef ?? internalApiRef) as ApiRef;
-  const prefetchedChildrenRef = React.useRef<Record<TreeViewItemId, R[]>>({});
-  const prefetchedIdsRef = React.useRef(new Set<TreeViewItemId>());
-  const pendingPrefetchIdsRef = React.useRef(new Set<TreeViewItemId>());
-  const deferredPrefetchRef = React.useRef<
-    Record<TreeViewItemId, Deferred<R[]>>
-  >({});
-
   const theme = useTheme();
   const iconColor = (theme.vars || theme).palette.text.secondary;
   const selectedBackgroundColor = theme.palette.primary.light
@@ -121,134 +96,6 @@ const RichTreeViewRaw = forwardRef(function RichTreeView<
     [selectedBackgroundColor, iconColor, sx, theme],
   );
 
-  const triggerChildrenUpdate = React.useCallback(
-    (itemId: TreeViewItemId) => {
-      if (!apiRef?.current?.updateItemChildren) {
-        return undefined;
-      }
-
-      let timeoutId: ReturnType<typeof setTimeout> | undefined;
-      let cancelled = false;
-      let attempts = 0;
-      const MAX_ATTEMPTS = 20; // Max 1 second (20 * 50ms)
-
-      const attemptUpdate = () => {
-        if (cancelled || attempts >= MAX_ATTEMPTS) {
-          if (
-            attempts >= MAX_ATTEMPTS &&
-            process.env.NODE_ENV !== "production"
-          ) {
-            console.warn(
-              `Failed to trigger children update for item ${itemId} after ${MAX_ATTEMPTS} attempts`,
-            );
-          }
-          return;
-        }
-
-        attempts++;
-        const itemExists = apiRef.current?.getItem
-          ? !!apiRef.current.getItem(itemId)
-          : false;
-
-        if (itemExists) {
-          void apiRef.current?.updateItemChildren?.(itemId);
-          return;
-        }
-
-        timeoutId = setTimeout(attemptUpdate, 50);
-      };
-
-      attemptUpdate();
-
-      return () => {
-        cancelled = true;
-        if (timeoutId !== undefined) {
-          clearTimeout(timeoutId);
-        }
-      };
-    },
-    [apiRef],
-  );
-
-  React.useEffect(() => {
-    if (
-      !prefetchExpandedItems ||
-      !apiRef?.current?.updateItemChildren ||
-      !dataSource ||
-      !defaultExpandedItems?.length
-    ) {
-      return;
-    }
-
-    const idsToFetch = defaultExpandedItems.filter(
-      (id) =>
-        !prefetchedIdsRef.current.has(id) &&
-        !pendingPrefetchIdsRef.current.has(id),
-    );
-
-    if (!idsToFetch.length) {
-      return;
-    }
-
-    const cancelUpdates: Array<(() => void) | undefined> = [];
-    idsToFetch.forEach((id) => {
-      pendingPrefetchIdsRef.current.add(id);
-      if (!deferredPrefetchRef.current[id]) {
-        deferredPrefetchRef.current[id] = createDeferred<R[]>();
-      }
-      const cancel = triggerChildrenUpdate(id);
-      cancelUpdates.push(cancel);
-    });
-
-    let isActive = true;
-
-    prefetchExpandedItems(idsToFetch)
-      .then((result) => {
-        if (!isActive) {
-          return;
-        }
-
-        idsToFetch.forEach((id) => {
-          const items = result?.[id] ?? [];
-          prefetchedChildrenRef.current[id] = items;
-          prefetchedIdsRef.current.add(id);
-          pendingPrefetchIdsRef.current.delete(id);
-          deferredPrefetchRef.current[id]?.resolve(items);
-          delete deferredPrefetchRef.current[id];
-        });
-      })
-      .catch((error) => {
-        if (process.env.NODE_ENV !== "production") {
-          console.error("Failed to prefetch expanded items", error);
-        }
-        idsToFetch.forEach((id) => {
-          pendingPrefetchIdsRef.current.delete(id);
-          deferredPrefetchRef.current[id]?.reject(error);
-          delete deferredPrefetchRef.current[id];
-        });
-      });
-
-    return () => {
-      isActive = false;
-      cancelUpdates.forEach((cancel) => cancel?.());
-      idsToFetch.forEach((id) => {
-        if (deferredPrefetchRef.current[id]) {
-          deferredPrefetchRef.current[id].reject(
-            new Error("Prefetch cancelled"),
-          );
-          delete deferredPrefetchRef.current[id];
-        }
-        pendingPrefetchIdsRef.current.delete(id);
-      });
-    };
-  }, [
-    apiRef,
-    dataSource,
-    defaultExpandedItems,
-    prefetchExpandedItems,
-    triggerChildrenUpdate,
-  ]);
-
   const wrappedDataSource = React.useMemo(() => {
     if (!dataSource) {
       return dataSource;
@@ -257,16 +104,6 @@ const RichTreeViewRaw = forwardRef(function RichTreeView<
     return {
       ...dataSource,
       getTreeItems: async (parentId?: TreeViewItemId) => {
-        if (parentId && prefetchedChildrenRef.current[parentId]) {
-          const items = prefetchedChildrenRef.current[parentId];
-          delete prefetchedChildrenRef.current[parentId];
-          return items;
-        }
-
-        if (parentId && deferredPrefetchRef.current[parentId]) {
-          return deferredPrefetchRef.current[parentId].promise;
-        }
-
         return dataSource.getTreeItems(parentId);
       },
     };
@@ -309,15 +146,17 @@ interface RichTreeViewComponent {
   propTypes?: any;
 }
 
-export interface RichTreeViewProps<
+export type RichTreeViewProps<
   R extends {} = any,
   Multiple extends boolean | undefined = undefined,
-> extends RichTreeViewProProps<R, Multiple> {
-  prefetchExpandedItems?: (
-    itemIds: TreeViewItemId[],
-  ) => Promise<Record<TreeViewItemId, R[]>>;
-}
+> = RichTreeViewProProps<R, Multiple>;
 
 export const RichTreeView = React.memo(
   RichTreeViewRaw,
 ) as RichTreeViewComponent;
+
+export {
+  createFlatSearchDataSource,
+  createFlatSearchPrefetch,
+} from "./createFlatSearchDataSource";
+export type { FlatSearchDataSourceConfig } from "./createFlatSearchDataSource";
