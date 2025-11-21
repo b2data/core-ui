@@ -13,6 +13,7 @@ import {
   TreeViewBaseItem,
   createFlatSearchDataSource,
   useTreeViewApiRef,
+  useFlatSearchTreeView,
 } from "./index";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { TreeViewItemId } from "@mui/x-tree-view/models";
@@ -602,6 +603,295 @@ export const LazyLoadWithStateRestoration: StoryObj<
           ) : (
             <Typography>No data</Typography>
           )}
+        </Stack>
+      </Box>
+    );
+  },
+};
+
+// ============================================================================
+// Simplified Story with useFlatSearchTreeView Hook
+// ============================================================================
+
+type SimplifiedFlatSearchItem = {
+  id: string;
+  name: string;
+  parentId: string | null;
+  childrenCount: number;
+  type: "folder" | "file";
+};
+
+// Mock flat search data (same as above, but for simplified story)
+const simplifiedMockFlatSearchData: SimplifiedFlatSearchItem[] = [
+  // Root children
+  {
+    id: "simplified-folder-1",
+    name: "Documents",
+    parentId: null,
+    childrenCount: 3,
+    type: "folder",
+  },
+  {
+    id: "simplified-folder-2",
+    name: "Projects",
+    parentId: null,
+    childrenCount: 2,
+    type: "folder",
+  },
+  {
+    id: "simplified-folder-3",
+    name: "Archive",
+    parentId: null,
+    childrenCount: 0,
+    type: "folder",
+  },
+  // Documents children
+  {
+    id: "simplified-folder-1-1",
+    name: "Reports",
+    parentId: "simplified-folder-1",
+    childrenCount: 2,
+    type: "folder",
+  },
+  {
+    id: "simplified-folder-1-2",
+    name: "Notes",
+    parentId: "simplified-folder-1",
+    childrenCount: 0,
+    type: "folder",
+  },
+  {
+    id: "simplified-file-1-3",
+    name: "readme.txt",
+    parentId: "simplified-folder-1",
+    childrenCount: 0,
+    type: "file",
+  },
+  // Reports children
+  {
+    id: "simplified-folder-1-1-1",
+    name: "2024",
+    parentId: "simplified-folder-1-1",
+    childrenCount: 0,
+    type: "folder",
+  },
+  {
+    id: "simplified-file-1-1-2",
+    name: "summary.pdf",
+    parentId: "simplified-folder-1-1",
+    childrenCount: 0,
+    type: "file",
+  },
+  // Projects children
+  {
+    id: "simplified-folder-2-1",
+    name: "Web App",
+    parentId: "simplified-folder-2",
+    childrenCount: 0,
+    type: "folder",
+  },
+  {
+    id: "simplified-file-2-2",
+    name: "plan.md",
+    parentId: "simplified-folder-2",
+    childrenCount: 0,
+    type: "file",
+  },
+];
+
+// Mock API that simulates /search/flat endpoint with delay
+const simplifiedMockFlatSearchAPI = async (
+  parentIds: (TreeViewItemId | null)[],
+): Promise<Map<TreeViewItemId | null, SimplifiedFlatSearchItem[]>> => {
+  // Simulate network delay
+  await delay(400);
+
+  const result = new Map<TreeViewItemId | null, SimplifiedFlatSearchItem[]>();
+
+  // Filter items by parentId
+  parentIds.forEach((parentId) => {
+    const items = simplifiedMockFlatSearchData.filter(
+      (item) =>
+        (item.parentId ?? null) === (parentId === "root" ? null : parentId),
+    );
+    result.set(parentId === "root" ? null : parentId, items);
+  });
+
+  return result;
+};
+
+export const SimplifiedWithHook: StoryObj<
+  RichTreeViewProps<SimplifiedFlatSearchItem, any>
+> = {
+  args: {},
+  render: () => {
+    // Create root item
+    const rootItem: SimplifiedFlatSearchItem = useMemo(
+      () => ({
+        id: "root",
+        name: "Root",
+        parentId: null,
+        childrenCount: 3,
+        type: "folder",
+      }),
+      [],
+    );
+
+    // Use the hook - all complex logic is handled automatically!
+    const {
+      items,
+      dataSource,
+      expandedItems,
+      onExpandedItemsChange,
+      loading,
+      useLazyLoading,
+    } = useFlatSearchTreeView({
+      // Raw fetch function - just pass your API call
+      fetchItems: simplifiedMockFlatSearchAPI,
+
+      // Transform raw item to tree item (optional, but useful for type safety)
+      transformItem: (rawItem) => ({
+        id: rawItem.id,
+        name: rawItem.name,
+        parentId: rawItem.parentId,
+        childrenCount: rawItem.childrenCount,
+        type: rawItem.type,
+      }),
+
+      // Extract children count
+      getChildrenCount: (item) => item.childrenCount ?? 0,
+
+      // Extract item ID
+      getItemId: (item) => item.id,
+
+      // Root item
+      rootItem,
+
+      // Automatic state restoration from localStorage
+      restoreStateKey: "richTreeView:simplified:expanded",
+
+      // Optional: Callbacks for observability
+      onRequestStart: (parentIds) => {
+        console.log("[Simplified] Request started for:", parentIds);
+      },
+      onRequestEnd: (parentIds, result) => {
+        console.log("[Simplified] Request completed for:", parentIds);
+        console.log("[Simplified] Received items:", result);
+      },
+      onRequestError: (parentIds, error) => {
+        console.error("[Simplified] Request failed for:", parentIds, error);
+      },
+    });
+
+    const apiRef = useTreeViewApiRef();
+
+    const handleRefresh = (parentId: TreeViewItemId) => {
+      // Clear the cache for this parent
+      dataSource.refresh(parentId);
+      // Force reload children using the API
+      if (apiRef.current && "updateItemChildren" in apiRef.current) {
+        (apiRef.current as any).updateItemChildren(parentId);
+      }
+    };
+
+    const handleClearState = () => {
+      // Clear localStorage to reset state
+      localStorage.removeItem("richTreeView:simplified:expanded");
+      window.location.reload();
+    };
+
+    return (
+      <Box sx={{ height: 600, width: 600 }}>
+        <Stack spacing={2}>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            Simplified with useFlatSearchTreeView Hook
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            This story demonstrates the simplified usage with{" "}
+            <code>useFlatSearchTreeView</code> hook. All the complex logic for
+            state restoration, initial data loading, and lazy loading is handled
+            automatically by the hook.
+            <br />
+            <br />
+            <strong>Features:</strong>
+            <br />• Automatic state restoration from localStorage
+            <br />• Automatic initial data loading for expanded items
+            <br />• Automatic cache prefilling for lazy loading
+            <br />• Simple API - just pass fetchItems and config
+            <br />
+            <br />
+            <strong>Try:</strong>
+            <br />• Expand/collapse items - state is saved automatically
+            <br />• Refresh the page - state is restored automatically
+            <br />• Click "Refresh Documents" to clear cache and reload
+            <br />• Click "Clear State" to reset localStorage
+          </Typography>
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => handleRefresh("simplified-folder-1")}
+            >
+              Refresh Documents
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              color="error"
+              onClick={handleClearState}
+            >
+              Clear State
+            </Button>
+          </Stack>
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 400,
+                gap: 2,
+              }}
+            >
+              <CircularProgress />
+              <Typography>Loading tree and restoring state...</Typography>
+              <Typography variant="caption" color="text.secondary">
+                Simulating API request delay (400ms)
+              </Typography>
+            </Box>
+          ) : items.length > 0 ? (
+            <RichTreeView
+              apiRef={apiRef}
+              items={items}
+              dataSource={useLazyLoading ? dataSource : undefined}
+              expandedItems={expandedItems}
+              onExpandedItemsChange={onExpandedItemsChange}
+              getItemId={(item) => item.id}
+              getItemLabel={(item) => item.name}
+              getItemIcon={(item) => {
+                return item.type === "folder" ? FolderIcon : DescriptionIcon;
+              }}
+            />
+          ) : (
+            <Typography>No data</Typography>
+          )}
+          <Box
+            sx={{ mt: 2, p: 2, bgcolor: "background.default", borderRadius: 1 }}
+          >
+            <Typography variant="caption" component="div">
+              <strong>Current State:</strong>
+              <br />
+              Loading: {loading ? "Yes" : "No"}
+              <br />
+              Lazy Loading: {useLazyLoading ? "Enabled" : "Disabled"}
+              <br />
+              Expanded Items:{" "}
+              {expandedItems.length > 0 ? expandedItems.join(", ") : "None"}
+              <br />
+              Items Count: {items.length}
+            </Typography>
+          </Box>
         </Stack>
       </Box>
     );
