@@ -160,3 +160,8 @@ export {
   createFlatSearchPrefetch,
 } from "./createFlatSearchDataSource";
 export type { FlatSearchDataSourceConfig } from "./createFlatSearchDataSource";
+export { useFlatSearchTreeView } from "./useFlatSearchTreeView";
+export type {
+  UseFlatSearchTreeViewConfig,
+  UseFlatSearchTreeViewResult,
+} from "./useFlatSearchTreeView";
