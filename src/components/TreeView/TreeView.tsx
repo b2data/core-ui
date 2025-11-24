@@ -129,6 +129,10 @@ export interface TreeViewProps {
      */
     loading?: boolean;
   };
+  /**
+   * Component to display when there are no items in the tree
+   */
+  emptyState?: React.ReactNode;
 }
 
 type DropPosition = "before" | "after" | "inside";
@@ -163,6 +167,7 @@ export function TreeView({
   expandedItemIds,
   onExpandedItemsChange,
   dataSource,
+  emptyState,
 }: TreeViewProps) {
   const theme = useTheme();
   const [internalExpandedItems, setInternalExpandedItems] = useState<
@@ -952,7 +957,11 @@ export function TreeView({
           />
         )}
 
-      {treeItems.map((item) => renderItem(item, 0))}
+      {treeItems.length === 0 && !loadingState && emptyState ? (
+        <>{emptyState}</>
+      ) : (
+        treeItems.map((item) => renderItem(item, 0))
+      )}
 
       {enableDragAndDrop &&
         dropTargetId === null &&

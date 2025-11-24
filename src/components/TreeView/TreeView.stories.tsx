@@ -11,6 +11,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import DescriptionIcon from "@mui/icons-material/Description";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import { Meta } from "@storybook/react";
 
 const meta: Meta<TreeViewProps> = {
@@ -470,6 +471,83 @@ export const ControlledModeWithLazyLoading = () => {
           }}
           expandedItemIds={expandedItemIds}
           onExpandedItemsChange={handleExpandedItemsChange}
+          getItemLabel={(item) => `Item ${item.id}`}
+          getItemIcon={(item) =>
+            item.childrenCount > 0 ? (
+              <FolderIcon fontSize="small" />
+            ) : (
+              <DescriptionIcon fontSize="small" />
+            )
+          }
+          onItemClick={(item) => {
+            console.log("Clicked:", item);
+          }}
+        />
+      </Stack>
+    </Box>
+  );
+};
+
+export const WithEmptyState = () => {
+  const [hasItems, setHasItems] = useState(false);
+
+  const emptyItems: TreeViewItem[] = [];
+  const itemsWithData: TreeViewItem[] = [
+    { id: "1", parentId: null, childrenCount: 2 },
+    { id: "2", parentId: null, childrenCount: 1 },
+    { id: "1-1", parentId: "1", childrenCount: 0 },
+    { id: "1-2", parentId: "1", childrenCount: 0 },
+    { id: "2-1", parentId: "2", childrenCount: 0 },
+  ];
+
+  const emptyStateComponent = (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        py: 4,
+        px: 2,
+        textAlign: "center",
+      }}
+    >
+      <FolderOpenIcon
+        sx={{
+          fontSize: 48,
+          color: "text.secondary",
+          mb: 2,
+          opacity: 0.5,
+        }}
+      />
+      <Typography variant="h6" color="text.secondary" gutterBottom>
+        No items found
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        The tree view is empty. Add items to get started.
+      </Typography>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ width: 400, p: 2 }}>
+      <Stack spacing={2}>
+        <Typography variant="h6">TreeView with Empty State</Typography>
+        <Typography variant="caption" color="text.secondary">
+          This example demonstrates the emptyState prop. Toggle the button below
+          to show/hide items.
+        </Typography>
+        <Box>
+          <Chip
+            label={hasItems ? "Hide Items" : "Show Items"}
+            onClick={() => setHasItems(!hasItems)}
+            clickable
+            color={hasItems ? "primary" : "default"}
+          />
+        </Box>
+        <TreeView
+          items={hasItems ? itemsWithData : emptyItems}
+          emptyState={emptyStateComponent}
           getItemLabel={(item) => `Item ${item.id}`}
           getItemIcon={(item) =>
             item.childrenCount > 0 ? (
