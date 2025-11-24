@@ -42,6 +42,9 @@ export { default as ArrowBackIcon } from "@mui/icons-material/ArrowBack";
 export { default as InfoIcon } from "@mui/icons-material/InfoOutlined";
 export { default as HistoryIcon } from "@mui/icons-material/HistoryOutlined";
 
+export { default as ChevronRightIcon } from "@mui/icons-material/ChevronRight";
+export { default as DragIndicatorIcon } from "@mui/icons-material/DragIndicator";
+
 export * from "./heading";
 export * from "./TextIcon";
 export * from "./ListBulletedIcon";

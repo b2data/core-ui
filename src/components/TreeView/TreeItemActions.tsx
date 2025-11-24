@@ -1,7 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { Box, IconButton, Menu, MenuItem } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import type { TreeViewItem, TreeViewAction } from "./TreeView";
+import { Box } from "../Box";
+import { IconButton } from "../IconButton";
+import { Menu } from "../Menu";
+import { MenuItem } from "../MenuItem";
+import { MoreVertIcon } from "../../icons";
 
 export interface TreeItemActionsProps {
   item: TreeViewItem;
@@ -62,12 +65,14 @@ export function TreeItemActions({ item, actions }: TreeItemActionsProps) {
               handleClose();
             }}
             disabled={action.disabled}
+            startAdornment={
+              action.icon ? (
+                <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
+                  {action.icon}
+                </Box>
+              ) : undefined
+            }
           >
-            {action.icon && (
-              <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
-                {action.icon}
-              </Box>
-            )}
             {action.label}
           </MenuItem>
         ))}
