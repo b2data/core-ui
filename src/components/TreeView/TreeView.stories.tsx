@@ -285,3 +285,204 @@ export const WithLazyLoadingAndStateRestoration = () => {
     </Box>
   );
 };
+
+export const ControlledMode = () => {
+  const STORAGE_KEY = "treeview-expanded-items";
+
+  // Load from localStorage on mount
+  const loadFromStorage = (): TreeViewItemId[] => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error("Failed to load from localStorage:", error);
+    }
+    return ["1", "1-1"]; // Default expanded items
+  };
+
+  const [expandedItemIds, setExpandedItemIds] =
+    useState<TreeViewItemId[]>(loadFromStorage);
+
+  // Save to localStorage whenever expanded items change
+  const handleExpandedItemsChange = (itemIds: TreeViewItemId[]) => {
+    setExpandedItemIds(itemIds);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(itemIds));
+      console.log("Saved to localStorage:", itemIds);
+    } catch (error) {
+      console.error("Failed to save to localStorage:", error);
+    }
+  };
+
+  return (
+    <Box sx={{ width: 400, p: 2 }}>
+      <Stack spacing={2}>
+        <Typography variant="h6">TreeView - Controlled Mode</Typography>
+        <Typography variant="caption" color="text.secondary">
+          Expanded state is controlled externally and persisted to localStorage.
+          Try expanding/collapsing items, then refresh the page to see state
+          restored.
+        </Typography>
+        <Box>
+          <Typography variant="caption" color="text.secondary">
+            Currently expanded:{" "}
+          </Typography>
+          {expandedItemIds.length > 0 ? (
+            <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mt: 0.5 }}>
+              {expandedItemIds.map((id) => (
+                <Chip key={id} label={id} size="small" />
+              ))}
+            </Box>
+          ) : (
+            <Typography variant="caption" color="text.secondary">
+              None
+            </Typography>
+          )}
+        </Box>
+        <TreeView
+          items={mockItems}
+          expandedItemIds={expandedItemIds}
+          onExpandedItemsChange={handleExpandedItemsChange}
+          getItemLabel={(item) => `Item ${item.id}`}
+          getItemIcon={(item) =>
+            item.childrenCount > 0 ? (
+              <FolderIcon fontSize="small" />
+            ) : (
+              <DescriptionIcon fontSize="small" />
+            )
+          }
+          onItemClick={(item) => {
+            console.log("Clicked:", item);
+          }}
+        />
+      </Stack>
+    </Box>
+  );
+};
+
+export const ControlledModeWithLazyLoading = () => {
+  const STORAGE_KEY = "treeview-expanded-items-lazy";
+
+  const allItems: TreeViewItem[] = [
+    { id: "1", parentId: null, childrenCount: 2 },
+    { id: "2", parentId: null, childrenCount: 1 },
+    { id: "3", parentId: null, childrenCount: 0 },
+    { id: "1-1", parentId: "1", childrenCount: 2 },
+    { id: "1-2", parentId: "1", childrenCount: 0 },
+    { id: "1-1-1", parentId: "1-1", childrenCount: 0 },
+    { id: "1-1-2", parentId: "1-1", childrenCount: 0 },
+    { id: "2-1", parentId: "2", childrenCount: 0 },
+    { id: "4", parentId: null, childrenCount: 1 },
+    { id: "4-1", parentId: "4", childrenCount: 0 },
+  ];
+
+  // Load from localStorage on mount
+  const loadFromStorage = (): TreeViewItemId[] => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error("Failed to load from localStorage:", error);
+    }
+    return ["1", "1-1"]; // Default expanded items
+  };
+
+  const [expandedItemIds, setExpandedItemIds] =
+    useState<TreeViewItemId[]>(loadFromStorage);
+
+  // Save to localStorage whenever expanded items change
+  const handleExpandedItemsChange = (itemIds: TreeViewItemId[]) => {
+    setExpandedItemIds(itemIds);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(itemIds));
+      console.log("Saved to localStorage:", itemIds);
+    } catch (error) {
+      console.error("Failed to save to localStorage:", error);
+    }
+  };
+
+  const fetchItems = async (
+    parentIds: (TreeViewItemId | null)[],
+  ): Promise<TreeViewItem[]> => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const result: TreeViewItem[] = [];
+
+    parentIds.forEach((parentId) => {
+      const children = allItems.filter((item) => item.parentId === parentId);
+      result.push(...children);
+    });
+
+    parentIds.forEach((parentId) => {
+      if (parentId !== null) {
+        const item = allItems.find((item) => item.id === parentId);
+        if (item && !result.find((r) => r.id === item.id)) {
+          result.push(item);
+        }
+      }
+    });
+
+    console.log("API Request - parentIds:", parentIds);
+    console.log("API Response - items:", result);
+
+    return result;
+  };
+
+  return (
+    <Box sx={{ width: 400, p: 2 }}>
+      <Stack spacing={2}>
+        <Typography variant="h6">
+          TreeView - Controlled Mode with Lazy Loading
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          Combines controlled expanded state with lazy loading. Expanded state
+          is persisted to localStorage and restored on page reload.
+        </Typography>
+        <Box>
+          <Typography variant="caption" color="text.secondary">
+            Currently expanded:{" "}
+          </Typography>
+          {expandedItemIds.length > 0 ? (
+            <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mt: 0.5 }}>
+              {expandedItemIds.map((id) => (
+                <Chip key={id} label={id} size="small" />
+              ))}
+            </Box>
+          ) : (
+            <Typography variant="caption" color="text.secondary">
+              None
+            </Typography>
+          )}
+        </Box>
+        <TreeView
+          dataSource={{
+            fetchItems,
+            onItemsLoaded: (items) => {
+              console.log("Items loaded:", items);
+            },
+            onLoadError: (error, parentIds) => {
+              console.error("Load error:", error, "for parentIds:", parentIds);
+            },
+          }}
+          expandedItemIds={expandedItemIds}
+          onExpandedItemsChange={handleExpandedItemsChange}
+          getItemLabel={(item) => `Item ${item.id}`}
+          getItemIcon={(item) =>
+            item.childrenCount > 0 ? (
+              <FolderIcon fontSize="small" />
+            ) : (
+              <DescriptionIcon fontSize="small" />
+            )
+          }
+          onItemClick={(item) => {
+            console.log("Clicked:", item);
+          }}
+        />
+      </Stack>
+    </Box>
+  );
+};

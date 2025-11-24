@@ -18,7 +18,7 @@ import {
   useTreeViewItemsReordering,
   UseTreeViewItemsReorderingParameters,
 } from "../internals/plugins/useTreeViewItemsReordering";
-import { useInitialTreeViewLazyLoading } from "../../../components/RichTreeView/plugins/useInitialTreeViewLazyLoading";
+import { useTreeViewLazyLoading } from "../internals/plugins/useTreeViewLazyLoading";
 
 export const RICH_TREE_VIEW_PRO_PLUGINS = [
   useTreeViewItems,
@@ -27,7 +27,7 @@ export const RICH_TREE_VIEW_PRO_PLUGINS = [
   useTreeViewFocus,
   useTreeViewKeyboardNavigation,
   useTreeViewLabel,
-  useInitialTreeViewLazyLoading,
+  useTreeViewLazyLoading,
   useTreeViewItemsReordering,
 ] as const;
 
