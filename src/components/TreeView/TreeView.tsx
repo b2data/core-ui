@@ -5,18 +5,17 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
+import { Box } from "../Box";
+import { Collapse } from "../Collapse";
+import { IconButton } from "../IconButton";
+import { Typography } from "../Typography";
+import { CircularProgress } from "../CircularProgress";
+import { useTheme, alpha } from "../../theming";
 import {
-  Box,
-  Collapse,
-  IconButton,
-  Typography,
-  useTheme,
-  alpha,
-  CircularProgress,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+  ExpandMoreIcon,
+  ChevronRightIcon,
+  DragIndicatorIcon,
+} from "../../icons";
 import { TreeItemActions } from "./TreeItemActions";
 
 export type TreeViewItemId = string | number;
@@ -720,12 +719,7 @@ export function TreeView({
           : true;
 
       return (
-        <Box
-          key={`${item.id}-${item.children?.length ?? 0}`}
-          sx={{
-            position: "relative",
-          }}
-        >
+        <Box sx={{ position: "relative" }}>
           {enableDragAndDrop && isDropTarget && dropPosition === "before" && (
             <Box
               sx={{
@@ -867,12 +861,7 @@ export function TreeView({
           </Box>
 
           {hasChildren && (
-            <Collapse
-              key={`${item.id}-${item.children?.length ?? 0}`}
-              in={isExpanded && !isLoadingItem}
-              timeout="auto"
-              unmountOnExit
-            >
+            <Collapse in={isExpanded && !isLoadingItem} mountOnEnter>
               <Box>
                 {item.children?.map((child: TreeViewItem) =>
                   renderItem(child, depth + 1),
