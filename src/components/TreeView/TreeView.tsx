@@ -86,10 +86,19 @@ export interface TreeViewProps {
    */
   getDragPreview?: (item: TreeViewItem) => React.ReactNode;
   /**
-   * Initial expanded items IDs for state restoration
-   * Used to restore tree state on mount (e.g., from localStorage)
+   * Initial expanded items IDs (uncontrolled mode only)
+   * Used to set initial expanded state when not using controlled mode
+   * For controlled mode with localStorage, use expandedItemIds instead
    */
   initialExpandedItems?: TreeViewItemId[];
+  /**
+   * Controlled expanded item IDs
+   */
+  expandedItemIds?: TreeViewItemId[];
+  /**
+   * Callback when expanded item IDs change
+   */
+  onExpandedItemsChange?: (itemIds: TreeViewItemId[]) => void;
   /**
    * Data source for lazy loading items from API
    * If provided, component will work in uncontrolled mode with API
@@ -125,6 +134,19 @@ export interface TreeViewProps {
 
 type DropPosition = "before" | "after" | "inside";
 
+const areSetsEqual = (
+  a: Set<TreeViewItemId>,
+  b: Set<TreeViewItemId>,
+): boolean => {
+  if (a.size !== b.size) return false;
+  for (const value of a) {
+    if (!b.has(value)) {
+      return false;
+    }
+  }
+  return true;
+};
+
 export function TreeView({
   items: itemsProp = [],
   getItemLabel = (item) => String(item.id),
@@ -139,12 +161,14 @@ export function TreeView({
   canDropOnItem,
   getDragPreview,
   initialExpandedItems,
+  expandedItemIds,
+  onExpandedItemsChange,
   dataSource,
 }: TreeViewProps) {
   const theme = useTheme();
-  const [expandedItems, setExpandedItems] = useState<Set<TreeViewItemId>>(
-    () => new Set(initialExpandedItems || []),
-  );
+  const [internalExpandedItems, setInternalExpandedItems] = useState<
+    Set<TreeViewItemId>
+  >(() => new Set(initialExpandedItems || []));
   const [internalItems, setInternalItems] = useState<TreeViewItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingItems, setLoadingItems] = useState<Set<TreeViewItemId>>(
@@ -158,6 +182,34 @@ export function TreeView({
   const dragPreviewRef = useRef<HTMLDivElement | null>(null);
   const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef<boolean>(true);
+
+  const isExpandedControlled = expandedItemIds !== undefined;
+  const expandedItems = useMemo<Set<TreeViewItemId>>(
+    () =>
+      isExpandedControlled ? new Set(expandedItemIds) : internalExpandedItems,
+    [isExpandedControlled, expandedItemIds, internalExpandedItems],
+  );
+
+  const emitExpandedItemsChange = useCallback(
+    (next: Set<TreeViewItemId>) => {
+      if (!onExpandedItemsChange) return;
+      if (areSetsEqual(expandedItems, next)) return;
+      onExpandedItemsChange(Array.from(next));
+    },
+    [expandedItems, onExpandedItemsChange],
+  );
+
+  const updateExpandedItems = useCallback(
+    (updater: (prev: Set<TreeViewItemId>) => Set<TreeViewItemId>) => {
+      if (isExpandedControlled) {
+        const next = updater(new Set(expandedItems));
+        emitExpandedItemsChange(next);
+        return;
+      }
+      setInternalExpandedItems((prev) => updater(prev));
+    },
+    [isExpandedControlled, expandedItems, emitExpandedItemsChange],
+  );
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -207,7 +259,11 @@ export function TreeView({
   }, [items]);
 
   const prevExpandedItemsRef = useRef<Set<TreeViewItemId>>(
-    new Set(initialExpandedItems || []),
+    new Set(
+      expandedItemIds !== undefined
+        ? expandedItemIds
+        : initialExpandedItems || [],
+    ),
   );
   const hasInitialLoadRef = useRef<boolean>(false);
   useEffect(() => {
@@ -309,11 +365,12 @@ export function TreeView({
     if (!dataSource || hasInitialLoadRef.current) return;
 
     const parentIds: (TreeViewItemId | null)[] = [null];
-    if (initialExpandedItems) {
-      initialExpandedItems.forEach((itemId) => {
-        parentIds.push(itemId);
-      });
-    }
+    const itemsToLoad = isExpandedControlled
+      ? expandedItemIds || []
+      : initialExpandedItems || [];
+    itemsToLoad.forEach((itemId) => {
+      parentIds.push(itemId);
+    });
 
     hasInitialLoadRef.current = true;
 
@@ -336,7 +393,7 @@ export function TreeView({
           setLoading(false);
         }
       });
-  }, [dataSource, initialExpandedItems]);
+  }, [dataSource, initialExpandedItems, isExpandedControlled, expandedItemIds]);
 
   const itemsMap = useMemo(() => {
     const map = new Map<TreeViewItemId, TreeViewItem>();
@@ -347,7 +404,7 @@ export function TreeView({
   }, [items]);
 
   useEffect(() => {
-    setExpandedItems((prev) => {
+    updateExpandedItems((prev) => {
       const next = new Set(prev);
       let changed = false;
 
@@ -403,7 +460,7 @@ export function TreeView({
 
       return changed ? next : prev;
     });
-  }, [treeItems, itemsMap]);
+  }, [treeItems, itemsMap, updateExpandedItems]);
 
   const isDescendant = useCallback(
     (draggedItem: TreeViewItem, targetItem: TreeViewItem): boolean => {
@@ -625,17 +682,20 @@ export function TreeView({
     ],
   );
 
-  const handleToggleExpand = useCallback((itemId: TreeViewItemId) => {
-    setExpandedItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(itemId)) {
-        next.delete(itemId);
-      } else {
-        next.add(itemId);
-      }
-      return next;
-    });
-  }, []);
+  const handleToggleExpand = useCallback(
+    (itemId: TreeViewItemId) => {
+      updateExpandedItems((prev) => {
+        const next = new Set(prev);
+        if (next.has(itemId)) {
+          next.delete(itemId);
+        } else {
+          next.add(itemId);
+        }
+        return next;
+      });
+    },
+    [updateExpandedItems],
+  );
 
   const renderItem = useCallback(
     (item: TreeViewItem, depth: number = 0) => {
