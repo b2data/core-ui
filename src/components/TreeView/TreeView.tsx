@@ -186,6 +186,8 @@ export function TreeView({
   const dragPreviewRef = useRef<HTMLDivElement | null>(null);
   const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef<boolean>(true);
+  const [activeLoadingItemId, setActiveLoadingItemId] =
+    useState<TreeViewItemId | null>(null);
 
   const isExpandedControlled = expandedItemIds !== undefined;
   const expandedItems = useMemo<Set<TreeViewItemId>>(
@@ -224,7 +226,7 @@ export function TreeView({
 
   const isApiMode = !!dataSource;
   const items = isApiMode ? internalItems : itemsProp;
-  const loadingState = isApiMode
+  const isTreeLoading = isApiMode
     ? loading || (dataSource?.loading ?? false)
     : false;
 
@@ -294,6 +296,8 @@ export function TreeView({
     }
 
     const itemsToLoad = new Set(newlyExpanded);
+    const itemsToLoadArray = Array.from(itemsToLoad);
+    const nextActiveItem = itemsToLoadArray[0] ?? null;
 
     setLoadingItems((prev) => {
       const next = new Set(prev);
@@ -302,6 +306,9 @@ export function TreeView({
       });
       return next;
     });
+    if (nextActiveItem) {
+      setActiveLoadingItemId((current) => current ?? nextActiveItem);
+    }
 
     const debounceMs = dataSource.debounceMs ?? 150;
     fetchTimeoutRef.current = setTimeout(async () => {
@@ -339,6 +346,9 @@ export function TreeView({
             });
             return next;
           });
+          setActiveLoadingItemId((current) =>
+            current && itemsToLoad.has(current) ? null : current,
+          );
         }
       } catch (error) {
         if (isMountedRef.current) {
@@ -350,6 +360,9 @@ export function TreeView({
             });
             return next;
           });
+          setActiveLoadingItemId((current) =>
+            current && itemsToLoad.has(current) ? null : current,
+          );
         }
       } finally {
         if (isMountedRef.current) {
@@ -688,6 +701,24 @@ export function TreeView({
 
   const handleToggleExpand = useCallback(
     (itemId: TreeViewItemId) => {
+      if (activeLoadingItemId && activeLoadingItemId !== itemId) {
+        return;
+      }
+
+      if (loadingItems.has(itemId)) {
+        return;
+      }
+
+      const isCurrentlyExpanded = expandedItems.has(itemId);
+
+      if (activeLoadingItemId === itemId && isCurrentlyExpanded) {
+        return;
+      }
+
+      if (!isCurrentlyExpanded) {
+        setActiveLoadingItemId(itemId);
+      }
+
       updateExpandedItems((prev) => {
         const next = new Set(prev);
         if (next.has(itemId)) {
@@ -698,7 +729,7 @@ export function TreeView({
         return next;
       });
     },
-    [updateExpandedItems],
+    [activeLoadingItemId, loadingItems, expandedItems, updateExpandedItems],
   );
 
   const renderItem = useCallback(
@@ -713,6 +744,8 @@ export function TreeView({
       const isDragging = draggedItemId === item.id;
       const isDropTarget = dropTargetId === item.id && dropPosition !== null;
       const canDrag = enableDragAndDrop && canDragItem(item);
+      const isRowInteractionLocked =
+        activeLoadingItemId !== null && activeLoadingItemId !== item.id;
 
       const draggedItem =
         enableDragAndDrop && draggedItemId
@@ -764,10 +797,9 @@ export function TreeView({
                 draggedItemId && !canDropInsideValue
                   ? theme.palette.action.disabled
                   : "inherit",
+              pointerEvents: isRowInteractionLocked ? "none" : "auto",
               "&:hover": {
-                backgroundColor: onItemClick
-                  ? theme.palette.action.hover
-                  : "transparent",
+                backgroundColor: theme.palette.action.hover,
                 "& .tree-item-actions": {
                   opacity: 1,
                 },
@@ -783,12 +815,25 @@ export function TreeView({
               pl: depth * 2 + 1,
             }}
             onClick={() => {
+              if (isRowInteractionLocked) return;
               onItemClick?.(item);
               const newSelectedId = selectedItemId === item.id ? null : item.id;
               onSelectedItemChange?.(newSelectedId);
             }}
           >
-            {hasChildren ? (
+            {isLoadingItem ? (
+              <Box
+                sx={{
+                  width: 22,
+                  mr: 0.5,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CircularProgress thickness={5} size={16} />
+              </Box>
+            ) : hasChildren ? (
               <IconButton
                 size="small"
                 onClick={(e) => {
@@ -913,6 +958,7 @@ export function TreeView({
       handleDragEnd,
       handleDragOver,
       handleDrop,
+      activeLoadingItemId,
       theme,
       items,
       isApiMode,
@@ -922,25 +968,6 @@ export function TreeView({
 
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
-      {loadingState && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.7)",
-            zIndex: 10,
-          }}
-        >
-          <CircularProgress size={24} />
-        </Box>
-      )}
-
       {enableDragAndDrop &&
         dropTargetId === null &&
         dropPosition === "before" && (
@@ -957,7 +984,7 @@ export function TreeView({
           />
         )}
 
-      {treeItems.length === 0 && !loadingState && emptyState ? (
+      {treeItems.length === 0 && !isTreeLoading && emptyState ? (
         <>{emptyState}</>
       ) : (
         treeItems.map((item) => renderItem(item, 0))

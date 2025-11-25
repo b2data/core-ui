@@ -60,7 +60,8 @@ export function TreeItemActions({ item, actions }: TreeItemActionsProps) {
         {actions.map((action, index) => (
           <MenuItem
             key={index}
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               action.onClick(item);
               handleClose();
             }}
