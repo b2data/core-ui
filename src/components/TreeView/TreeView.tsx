@@ -10,6 +10,7 @@ import { Collapse } from "../Collapse";
 import { IconButton } from "../IconButton";
 import { Typography } from "../Typography";
 import { CircularProgress } from "../CircularProgress";
+import { Skeleton } from "../Skeleton";
 import { useTheme, alpha } from "../../theming";
 import {
   ExpandMoreIcon,
@@ -757,7 +758,10 @@ export function TreeView({
           : true;
 
       return (
-        <Box sx={{ position: "relative" }}>
+        <Box
+          sx={{ position: "relative" }}
+          key={`tree-view-item-${depth}-${item.id}`}
+        >
           {enableDragAndDrop && isDropTarget && dropPosition === "before" && (
             <Box
               sx={{
@@ -966,6 +970,9 @@ export function TreeView({
     ],
   );
 
+  const isInitialLoading =
+    isApiMode && loading && treeItems.length === 0 && hasInitialLoadRef.current;
+
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
       {enableDragAndDrop &&
@@ -984,7 +991,13 @@ export function TreeView({
           />
         )}
 
-      {treeItems.length === 0 && !isTreeLoading && emptyState ? (
+      {isInitialLoading ? (
+        <Box sx={{ p: "6px" }}>
+          <Skeleton height={20} />
+          <Skeleton height={20} sx={{ mt: "6px", ml: "24px" }} />
+          <Skeleton height={20} sx={{ mt: "6px", ml: "32px" }} />
+        </Box>
+      ) : treeItems.length === 0 && !isTreeLoading && emptyState ? (
         <>{emptyState}</>
       ) : (
         treeItems.map((item) => renderItem(item, 0))
