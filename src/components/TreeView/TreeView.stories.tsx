@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Stack, Typography, Chip } from "@mui/material";
+import { Box, Stack, Typography, Chip, Button } from "@mui/material";
 import {
   TreeView,
   TreeViewProps,
@@ -548,6 +548,94 @@ export const WithEmptyState = () => {
         <TreeView
           items={hasItems ? itemsWithData : emptyItems}
           emptyState={emptyStateComponent}
+          getItemLabel={(item) => `Item ${item.id}`}
+          getItemIcon={(item) =>
+            item.childrenCount > 0 ? (
+              <FolderIcon fontSize="small" />
+            ) : (
+              <DescriptionIcon fontSize="small" />
+            )
+          }
+          onItemClick={(item) => {
+            console.log("Clicked:", item);
+          }}
+        />
+      </Stack>
+    </Box>
+  );
+};
+
+export const WithLoaderDemo = () => {
+  const [key, setKey] = useState(0);
+
+  const allItems: TreeViewItem[] = [
+    { id: "1", parentId: null, childrenCount: 2 },
+    { id: "2", parentId: null, childrenCount: 1 },
+    { id: "3", parentId: null, childrenCount: 0 },
+    { id: "1-1", parentId: "1", childrenCount: 2 },
+    { id: "1-2", parentId: "1", childrenCount: 0 },
+    { id: "1-1-1", parentId: "1-1", childrenCount: 0 },
+    { id: "1-1-2", parentId: "1-1", childrenCount: 0 },
+    { id: "2-1", parentId: "2", childrenCount: 0 },
+    { id: "4", parentId: null, childrenCount: 1 },
+    { id: "4-1", parentId: "4", childrenCount: 0 },
+  ];
+
+  const fetchItems = async (
+    parentIds: (TreeViewItemId | null)[],
+  ): Promise<TreeViewItem[]> => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    const result: TreeViewItem[] = [];
+
+    parentIds.forEach((parentId) => {
+      const children = allItems.filter((item) => item.parentId === parentId);
+      result.push(...children);
+    });
+
+    parentIds.forEach((parentId) => {
+      if (parentId !== null) {
+        const item = allItems.find((item) => item.id === parentId);
+        if (item && !result.find((r) => r.id === item.id)) {
+          result.push(item);
+        }
+      }
+    });
+
+    console.log("API Request - parentIds:", parentIds);
+    console.log("API Response - items:", result);
+
+    return result;
+  };
+
+  const handleReload = () => {
+    setKey((prev) => prev + 1);
+  };
+
+  return (
+    <Box sx={{ width: 400, p: 2 }}>
+      <Stack spacing={2}>
+        <Typography variant="h6">TreeView with Loader Demo</Typography>
+        <Typography variant="caption" color="text.secondary">
+          Click the "Reload" button to see the skeleton loader during initial
+          loading.
+        </Typography>
+        <Box>
+          <Button variant="contained" onClick={handleReload}>
+            Reload
+          </Button>
+        </Box>
+        <TreeView
+          key={key}
+          dataSource={{
+            fetchItems,
+            onItemsLoaded: (items) => {
+              console.log("Items loaded:", items);
+            },
+            onLoadError: (error, parentIds) => {
+              console.error("Load error:", error, "for parentIds:", parentIds);
+            },
+          }}
           getItemLabel={(item) => `Item ${item.id}`}
           getItemIcon={(item) =>
             item.childrenCount > 0 ? (
