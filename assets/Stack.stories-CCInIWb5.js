@@ -1,0 +1,3 @@
+import{j as e}from"./iframe-D-Af2_6K.js";import{S as o}from"./Stack-D48Qrqo_.js";import"./preload-helper-PPVm8Dsz.js";import"./styled-D-PotgPw.js";import"./styled-DHu3hs5B.js";import"./useThemeProps-B8ieNPvK.js";import"./getThemeProps-De-FS8Tl.js";import"./generateUtilityClass-BtcU_pBl.js";const u={title:"Components/Stack",component:o,tags:["autodocs"]},r={render:t=>e.jsx(o,{...t})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  render: props => <Stack {...props} />
+}`,...r.parameters?.docs?.source}}};const x=["Base"];export{r as Base,x as __namedExportsOrder,u as default};

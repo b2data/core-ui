@@ -1,0 +1,5 @@
+import{j as t}from"./iframe-D-Af2_6K.js";import{A as s}from"./1-eVbzYFfd.js";import{A as m}from"./Avatar-mjORW2_0.js";import{L as a}from"./ListItemAvatar-DYHRV2_S.js";import"./preload-helper-PPVm8Dsz.js";import"./styled-D-PotgPw.js";import"./memoTheme-CHvOgVXV.js";import"./createSvgIcon-BJIzGPGW.js";import"./generateUtilityClass-BtcU_pBl.js";import"./generateUtilityClasses-DDbjFgb8.js";import"./useSlot-28DLoccJ.js";import"./mergeSlotProps-BHlnBqKQ.js";import"./isHostComponent-DVu5iVWx.js";import"./useForkRef-C3l1oI6e.js";import"./ListContext-E6wSDjnG.js";const h={title:"Components/List/List Item Avatar",component:a,tags:["autodocs"]},r={render:o=>t.jsx(a,{...o,children:t.jsx(m,{size:"small",alt:"Remy Sharp",src:s})})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  render: props => <ListItemAvatar {...props}>
+      <Avatar size="small" alt="Remy Sharp" src={Avatar1} />
+    </ListItemAvatar>
+}`,...r.parameters?.docs?.source}}};const R=["Base"];export{r as Base,R as __namedExportsOrder,h as default};
