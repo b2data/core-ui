@@ -66,6 +66,8 @@ export function TreeItemActions({ item, actions }: TreeItemActionsProps) {
               handleClose();
             }}
             disabled={action.disabled}
+            divider={action.withDivider}
+            sx={action.sx}
             startAdornment={
               action.icon ? (
                 <Box sx={{ mr: 1, display: "flex", alignItems: "center" }}>
