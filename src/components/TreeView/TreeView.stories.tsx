@@ -79,12 +79,14 @@ export const WithActions = () => {
             {
               label: "Edit",
               icon: <EditIcon fontSize="small" />,
+              withDivider: true,
               onClick: () => {
                 console.log("Edit:", item);
               },
             },
             {
               label: "Delete",
+              sx: { color: "error.main" },
               icon: <DeleteIcon fontSize="small" />,
               onClick: () => {
                 console.log("Delete:", item);

@@ -18,6 +18,7 @@ import {
   DragIndicatorIcon,
 } from "../../icons";
 import { TreeItemActions } from "./TreeItemActions";
+import { SxProps, Theme } from "@mui/material";
 
 export type TreeViewItemId = string | number;
 
@@ -34,6 +35,15 @@ export interface TreeViewAction {
   onClick: (item: TreeViewItem) => void;
   icon?: React.ReactNode;
   disabled?: boolean;
+  /**
+   * If true, displays a divider under this action
+   * @default false
+   */
+  withDivider?: boolean;
+  /**
+   * Custom styles for the action
+   */
+  sx?: SxProps<Theme>;
 }
 
 export interface TreeViewProps {
@@ -150,6 +160,8 @@ const areSetsEqual = (
   }
   return true;
 };
+
+const ICON_SIZE = 24;
 
 export function TreeView({
   items: itemsProp = [],
@@ -702,22 +714,24 @@ export function TreeView({
 
   const handleToggleExpand = useCallback(
     (itemId: TreeViewItemId) => {
-      if (activeLoadingItemId && activeLoadingItemId !== itemId) {
-        return;
-      }
+      if (isApiMode) {
+        if (activeLoadingItemId && activeLoadingItemId !== itemId) {
+          return;
+        }
 
-      if (loadingItems.has(itemId)) {
-        return;
-      }
+        if (loadingItems.has(itemId)) {
+          return;
+        }
 
-      const isCurrentlyExpanded = expandedItems.has(itemId);
+        const isCurrentlyExpanded = expandedItems.has(itemId);
 
-      if (activeLoadingItemId === itemId && isCurrentlyExpanded) {
-        return;
-      }
+        if (activeLoadingItemId === itemId && isCurrentlyExpanded) {
+          return;
+        }
 
-      if (!isCurrentlyExpanded) {
-        setActiveLoadingItemId(itemId);
+        if (!isCurrentlyExpanded) {
+          setActiveLoadingItemId(itemId);
+        }
       }
 
       updateExpandedItems((prev) => {
@@ -730,7 +744,13 @@ export function TreeView({
         return next;
       });
     },
-    [activeLoadingItemId, loadingItems, expandedItems, updateExpandedItems],
+    [
+      isApiMode,
+      activeLoadingItemId,
+      loadingItems,
+      expandedItems,
+      updateExpandedItems,
+    ],
   );
 
   const renderItem = useCallback(
@@ -746,7 +766,9 @@ export function TreeView({
       const isDropTarget = dropTargetId === item.id && dropPosition !== null;
       const canDrag = enableDragAndDrop && canDragItem(item);
       const isRowInteractionLocked =
-        activeLoadingItemId !== null && activeLoadingItemId !== item.id;
+        isApiMode &&
+        activeLoadingItemId !== null &&
+        activeLoadingItemId !== item.id;
 
       const draggedItem =
         enableDragAndDrop && draggedItemId
@@ -828,8 +850,7 @@ export function TreeView({
             {isLoadingItem ? (
               <Box
                 sx={{
-                  width: 22,
-                  mr: 0.5,
+                  width: ICON_SIZE,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -838,22 +859,26 @@ export function TreeView({
                 <CircularProgress thickness={5} size={16} />
               </Box>
             ) : hasChildren ? (
-              <IconButton
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleToggleExpand(item.id);
-                }}
-                sx={{ mr: 0.5, p: 0.5 }}
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: ICON_SIZE }}
               >
-                {isExpanded ? (
-                  <ExpandMoreIcon fontSize="small" />
-                ) : (
-                  <ChevronRightIcon fontSize="small" />
-                )}
-              </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleToggleExpand(item.id);
+                  }}
+                  sx={{ p: 0.5 }}
+                >
+                  {isExpanded ? (
+                    <ExpandMoreIcon fontSize="small" />
+                  ) : (
+                    <ChevronRightIcon fontSize="small" />
+                  )}
+                </IconButton>
+              </Box>
             ) : (
-              <Box sx={{ width: 24, mr: 0.5 }} />
+              <Box sx={{ width: ICON_SIZE }} />
             )}
 
             {getItemIcon && (
@@ -862,9 +887,10 @@ export function TreeView({
                   mr: 1,
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   position: "relative",
-                  width: 24,
-                  height: 24,
+                  width: ICON_SIZE,
+                  height: ICON_SIZE,
                 }}
               >
                 <Box
