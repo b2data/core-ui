@@ -4,4 +4,5 @@ export type {
   TreeViewItem,
   TreeViewItemId,
   TreeViewAction,
+  TreeViewRef,
 } from "./TreeView";
