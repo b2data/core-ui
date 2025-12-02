@@ -302,7 +302,6 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
     );
     const hasInitialLoadRef = useRef<boolean>(false);
 
-    // Extract fetch logic into reusable function
     const fetchItemsForParents = useCallback(
       async (
         parentIds: (TreeViewItemId | null)[],
@@ -316,7 +315,6 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         const itemsToLoad = options?.itemsToLoad || new Set<TreeViewItemId>();
         const skipDebounce = options?.skipDebounce || false;
 
-        // Set loading state for specific items
         if (itemsToLoad.size > 0) {
           setLoadingItems((prev) => {
             const next = new Set(prev);
@@ -469,7 +467,6 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       return map;
     }, [items]);
 
-    // Expose refresh method via ref
     useImperativeHandle(
       ref,
       () => ({
