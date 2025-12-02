@@ -36,8 +36,13 @@ export interface TreeViewRef {
   /**
    * Refresh items in the tree view
    * @param parentIds Optional array of parent IDs to refresh. If not provided, refreshes all currently expanded items.
+   * @param options Optional configuration for the refresh operation
+   * @param options.showLoadingOn Optional array of item IDs that should show loading spinner during refresh (instead of parent items)
    */
-  refresh: (parentIds?: (TreeViewItemId | null)[]) => void;
+  refresh: (
+    parentIds?: (TreeViewItemId | null)[],
+    options?: { showLoadingOn?: TreeViewItemId[] },
+  ) => void;
 }
 
 export interface TreeViewAction {
@@ -342,13 +347,47 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
 
             setInternalItems((prevItems) => {
               const itemsMap = new Map<TreeViewItemId, TreeViewItem>();
+
+              const refreshedParentIdsSet = new Set(parentIds);
               prevItems.forEach((item) => {
-                itemsMap.set(item.id, { ...item, children: undefined });
+                if (!refreshedParentIdsSet.has(item.parentId ?? null)) {
+                  itemsMap.set(item.id, { ...item, children: undefined });
+                }
               });
+
               fetchedItems.forEach((item) => {
                 itemsMap.set(item.id, { ...item, children: undefined });
               });
-              return Array.from(itemsMap.values());
+
+              const updatedItems = Array.from(itemsMap.values());
+              const fetchedItemIds = new Set(
+                fetchedItems.map((item) => item.id),
+              );
+              const fetchedItemsMap = new Map(
+                fetchedItems.map((item) => [item.id, item.childrenCount ?? 0]),
+              );
+
+              const childrenCountMap = new Map<TreeViewItemId, number>();
+              updatedItems.forEach((item) => {
+                if (refreshedParentIdsSet.has(item.id ?? null)) {
+                  const count = updatedItems.filter(
+                    (child) => child.parentId === item.id,
+                  ).length;
+                  childrenCountMap.set(item.id, count);
+                } else if (fetchedItemIds.has(item.id)) {
+                  childrenCountMap.set(
+                    item.id,
+                    fetchedItemsMap.get(item.id) ?? item.childrenCount ?? 0,
+                  );
+                } else {
+                  childrenCountMap.set(item.id, item.childrenCount ?? 0);
+                }
+              });
+
+              return updatedItems.map((item) => ({
+                ...item,
+                childrenCount: childrenCountMap.get(item.id) ?? 0,
+              }));
             });
             dataSource.onItemsLoaded?.(fetchedItems);
 
@@ -470,7 +509,10 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
     useImperativeHandle(
       ref,
       () => ({
-        refresh: (parentIds?: (TreeViewItemId | null)[]) => {
+        refresh: (
+          parentIds?: (TreeViewItemId | null)[],
+          options?: { showLoadingOn?: TreeViewItemId[] },
+        ) => {
           if (!dataSource) return;
 
           const idsToRefresh =
@@ -483,7 +525,26 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
               return result;
             })();
 
+          const itemsToShowLoading = options?.showLoadingOn
+            ? new Set(options.showLoadingOn)
+            : new Set(
+                idsToRefresh.filter((id): id is TreeViewItemId => id !== null),
+              );
+
+          if (itemsToShowLoading.size > 0) {
+            setLoadingItems((prev) => {
+              const next = new Set(prev);
+              itemsToShowLoading.forEach((itemId) => {
+                next.add(itemId);
+              });
+              return next;
+            });
+            const itemsArray = Array.from(itemsToShowLoading);
+            setActiveLoadingItemId((current) => current ?? itemsArray[0]);
+          }
+
           fetchItemsForParents(idsToRefresh, {
+            itemsToLoad: itemsToShowLoading,
             skipDebounce: true,
           });
         },
@@ -776,21 +837,17 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
     const handleToggleExpand = useCallback(
       (itemId: TreeViewItemId) => {
         if (isApiMode) {
-          if (activeLoadingItemId && activeLoadingItemId !== itemId) {
-            return;
-          }
-
-          if (loadingItems.has(itemId)) {
-            return;
-          }
-
           const isCurrentlyExpanded = expandedItems.has(itemId);
 
-          if (activeLoadingItemId === itemId && isCurrentlyExpanded) {
-            return;
-          }
-
           if (!isCurrentlyExpanded) {
+            if (activeLoadingItemId && activeLoadingItemId !== itemId) {
+              return;
+            }
+
+            if (loadingItems.has(itemId)) {
+              return;
+            }
+
             setActiveLoadingItemId(itemId);
           }
         }
@@ -1007,7 +1064,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
             </Box>
 
             {hasChildren && (
-              <Collapse in={isExpanded && !isLoadingItem} mountOnEnter>
+              <Collapse in={isExpanded} mountOnEnter>
                 <Box>
                   {item.children?.map((child: TreeViewItem) =>
                     renderItem(child, depth + 1),
