@@ -36,8 +36,13 @@ export interface TreeViewRef {
   /**
    * Refresh items in the tree view
    * @param parentIds Optional array of parent IDs to refresh. If not provided, refreshes all currently expanded items.
+   * @param options Optional configuration for the refresh operation
+   * @param options.showLoadingOn Optional array of item IDs that should show loading spinner during refresh (instead of parent items)
    */
-  refresh: (parentIds?: (TreeViewItemId | null)[]) => void;
+  refresh: (
+    parentIds?: (TreeViewItemId | null)[],
+    options?: { showLoadingOn?: TreeViewItemId[] },
+  ) => void;
 }
 
 export interface TreeViewAction {
@@ -504,7 +509,10 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
     useImperativeHandle(
       ref,
       () => ({
-        refresh: (parentIds?: (TreeViewItemId | null)[]) => {
+        refresh: (
+          parentIds?: (TreeViewItemId | null)[],
+          options?: { showLoadingOn?: TreeViewItemId[] },
+        ) => {
           if (!dataSource) return;
 
           const idsToRefresh =
@@ -517,22 +525,26 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
               return result;
             })();
 
-          const refreshItemIds = idsToRefresh.filter(
-            (id): id is TreeViewItemId => id !== null,
-          );
-          if (refreshItemIds.length > 0) {
+          const itemsToShowLoading = options?.showLoadingOn
+            ? new Set(options.showLoadingOn)
+            : new Set(
+                idsToRefresh.filter((id): id is TreeViewItemId => id !== null),
+              );
+
+          if (itemsToShowLoading.size > 0) {
             setLoadingItems((prev) => {
               const next = new Set(prev);
-              refreshItemIds.forEach((itemId) => {
+              itemsToShowLoading.forEach((itemId) => {
                 next.add(itemId);
               });
               return next;
             });
-            setActiveLoadingItemId((current) => current ?? refreshItemIds[0]);
+            const itemsArray = Array.from(itemsToShowLoading);
+            setActiveLoadingItemId((current) => current ?? itemsArray[0]);
           }
 
           fetchItemsForParents(idsToRefresh, {
-            itemsToLoad: new Set(refreshItemIds),
+            itemsToLoad: itemsToShowLoading,
             skipDebounce: true,
           });
         },
