@@ -1,5 +1,17 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
-import { Box, Stack, Typography, Chip, Button } from "@mui/material";
+import { createPortal } from "react-dom";
+import {
+  Box,
+  Stack,
+  Typography,
+  Chip,
+  Button,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Avatar,
+} from "@mui/material";
 import {
   TreeView,
   TreeViewProps,
@@ -14,7 +26,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import PersonIcon from "@mui/icons-material/Person";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import { Meta } from "@storybook/react";
+import {
+  DndContext,
+  DragOverlay,
+  DragStartEvent,
+  useDraggable,
+} from "@dnd-kit/core";
 
 const meta: Meta<TreeViewProps> = {
   title: "Components/TreeView",
@@ -212,6 +232,232 @@ export const WithDragAndDrop = () => {
   );
 };
 
+const mockUsers = [
+  { id: "user-1", name: "John Doe", email: "john@example.com" },
+  { id: "user-2", name: "Jane Smith", email: "jane@example.com" },
+  { id: "user-3", name: "Bob Johnson", email: "bob@example.com" },
+  { id: "user-4", name: "Alice Williams", email: "alice@example.com" },
+];
+
+const DraggableUserItem = ({ user }: { user: (typeof mockUsers)[0] }) => {
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: user.id,
+    data: {
+      type: "Users",
+      data: [user],
+    },
+  });
+
+  return (
+    <ListItem
+      ref={setNodeRef}
+      sx={{
+        border: "1px solid",
+        borderColor: "divider",
+        borderRadius: 1,
+        mb: 1,
+        bgcolor: "background.paper",
+        cursor: isDragging ? "grabbing" : "grab",
+        opacity: isDragging ? 0.3 : 1,
+        pointerEvents: isDragging ? "none" : "auto",
+      }}
+    >
+      <DragIndicatorIcon
+        sx={{ mr: 1, color: "text.secondary", cursor: "grab" }}
+        {...attributes}
+        {...listeners}
+      />
+      <Avatar sx={{ width: 32, height: 32, mr: 1, bgcolor: "primary.main" }}>
+        <PersonIcon fontSize="small" />
+      </Avatar>
+      <ListItemText primary={user.name} secondary={user.email} />
+    </ListItem>
+  );
+};
+
+export const WithExternalDrops = () => {
+  const items = [
+    { id: "folder-1", parentId: null, childrenCount: 2, name: "Team A" },
+    { id: "folder-2", parentId: null, childrenCount: 1, name: "Team B" },
+    { id: "folder-3", parentId: null, childrenCount: 0, name: "Team C" },
+    {
+      id: "folder-1-1",
+      parentId: "folder-1",
+      childrenCount: 0,
+      name: "Subteam 1",
+    },
+    {
+      id: "folder-1-2",
+      parentId: "folder-1",
+      childrenCount: 0,
+      name: "Subteam 2",
+    },
+    {
+      id: "folder-2-1",
+      parentId: "folder-2",
+      childrenCount: 0,
+      name: "Subteam 3",
+    },
+  ];
+
+  const [droppedUsers, setDroppedUsers] = useState<
+    Record<string, typeof mockUsers>
+  >({});
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeUser = activeId ? mockUsers.find((u) => u.id === activeId) : null;
+
+  const handleExternalDrop = useCallback(
+    (
+      event: { type: string; data: any[] },
+      targetItem: TreeViewItem,
+      position: "before" | "after" | "inside",
+    ) => {
+      console.log("External drop:", {
+        type: event.type,
+        data: event.data,
+        targetItem: targetItem.id,
+        position,
+      });
+
+      const folderId = String(targetItem.id);
+      const users = event.data as typeof mockUsers;
+      setDroppedUsers((prev) => ({
+        ...prev,
+        [folderId]: [...(prev[folderId] || []), ...users],
+      }));
+
+      alert(
+        `Dropped ${users.length} user(s) into "${targetItem.name || targetItem.id}"`,
+      );
+    },
+    [],
+  );
+
+  const canAcceptExternalDrop = useCallback((dropType: string) => {
+    if (dropType !== "Users") return false;
+    return true;
+  }, []);
+
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    setActiveId(String(event.active.id));
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    setActiveId(null);
+  }, []);
+
+  return (
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <Box sx={{ width: "100%", p: 2 }}>
+        <Stack spacing={3} direction="row" sx={{ height: 600 }}>
+          <Paper
+            sx={{
+              width: 300,
+              p: 2,
+              overflow: "auto",
+              position: "relative",
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Users (Drag to folders)
+            </Typography>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ mb: 2, display: "block" }}
+            >
+              Drag users from this list and drop them into folders in the tree
+            </Typography>
+            <List>
+              {mockUsers.map((user) => (
+                <DraggableUserItem key={user.id} user={user} />
+              ))}
+            </List>
+          </Paper>
+
+          <Paper sx={{ flex: 1, p: 2, overflow: "auto" }}>
+            <Typography variant="h6" gutterBottom>
+              Folders (Drop users here)
+            </Typography>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ mb: 2, display: "block" }}
+            >
+              Drag users from the left panel and drop them into folders. Items
+              will highlight when you drag over them.
+            </Typography>
+            <TreeView
+              items={items}
+              enableExternalDrops={true}
+              onExternalDrop={handleExternalDrop}
+              canAcceptExternalDrop={canAcceptExternalDrop}
+              getItemLabel={(item) => {
+                const name = (item as any).name || `Item ${item.id}`;
+                const userCount = droppedUsers[String(item.id)]?.length || 0;
+                return userCount > 0 ? `${name} (${userCount} users)` : name;
+              }}
+              getItemIcon={(item) =>
+                item.childrenCount > 0 ? (
+                  <FolderIcon fontSize="small" />
+                ) : (
+                  <FolderOpenIcon fontSize="small" />
+                )
+              }
+              onItemClick={(item) => {
+                const users = droppedUsers[String(item.id)];
+                if (users && users.length > 0) {
+                  console.log(`Users in ${item.id}:`, users);
+                  alert(
+                    `Users in this folder:\n${users.map((u) => `- ${u.name}`).join("\n")}`,
+                  );
+                } else {
+                  console.log("Clicked:", item);
+                }
+              }}
+            />
+          </Paper>
+        </Stack>
+      </Box>
+      {createPortal(
+        <DragOverlay style={{ zIndex: 1500 }}>
+          {activeUser ? (
+            <Paper
+              sx={{
+                width: 280,
+                p: 1.5,
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 1,
+                bgcolor: "background.paper",
+                boxShadow: 3,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <DragIndicatorIcon sx={{ mr: 1, color: "text.secondary" }} />
+              <Avatar
+                sx={{ width: 32, height: 32, mr: 1, bgcolor: "primary.main" }}
+              >
+                <PersonIcon fontSize="small" />
+              </Avatar>
+              <Box>
+                <Typography variant="body2" fontWeight="medium">
+                  {activeUser.name}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {activeUser.email}
+                </Typography>
+              </Box>
+            </Paper>
+          ) : null}
+        </DragOverlay>,
+        document.body,
+      )}
+    </DndContext>
+  );
+};
+
 export const ControlledModeWithLazyLoading = () => {
   const STORAGE_KEY = "treeview-expanded-items-lazy";
 
@@ -228,7 +474,6 @@ export const ControlledModeWithLazyLoading = () => {
     { id: "4-1", parentId: "4", childrenCount: 0 },
   ];
 
-  // Load from localStorage on mount
   const loadFromStorage = (): TreeViewItemId[] => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -238,13 +483,12 @@ export const ControlledModeWithLazyLoading = () => {
     } catch (error) {
       console.error("Failed to load from localStorage:", error);
     }
-    return ["1", "1-1"]; // Default expanded items
+    return ["1", "1-1"];
   };
 
   const [expandedItemIds, setExpandedItemIds] =
     useState<TreeViewItemId[]>(loadFromStorage);
 
-  // Save to localStorage whenever expanded items change
   const handleExpandedItemsChange = (itemIds: TreeViewItemId[]) => {
     setExpandedItemIds(itemIds);
     try {
