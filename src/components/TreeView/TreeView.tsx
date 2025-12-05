@@ -8,18 +8,10 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { Box } from "../Box";
-import { Collapse } from "../Collapse";
-import { IconButton } from "../IconButton";
-import { Typography } from "../Typography";
-import { CircularProgress } from "../CircularProgress";
 import { Skeleton } from "../Skeleton";
-import { useTheme, alpha } from "../../theming";
-import {
-  ExpandMoreIcon,
-  ChevronRightIcon,
-  DragIndicatorIcon,
-} from "../../icons";
-import { TreeItemActions } from "./TreeItemActions";
+import { useTheme } from "../../theming";
+import { TreeViewItemComponent } from "./TreeViewItem";
+import { ExternalDropMonitor } from "./ExternalDropMonitor";
 import { SxProps, Theme } from "@mui/material";
 
 export type TreeViewItemId = string | number;
@@ -159,6 +151,35 @@ export interface TreeViewProps {
    * Component to display when there are no items in the tree
    */
   emptyState?: React.ReactNode;
+  /**
+   * Enable accepting drops from external sources (e.g., DataGrid using dnd-kit)
+   * @default false
+   */
+  enableExternalDrops?: boolean;
+  /**
+   * Callback when external item is dropped on tree item
+   * @param event Drop event with external data
+   * @param targetItem Tree item that received the drop
+   * @param position Drop position relative to target item
+   */
+  onExternalDrop?: (
+    event: {
+      type: string;
+      data: any[];
+    },
+    targetItem: TreeViewItem,
+    position: "before" | "after" | "inside",
+  ) => void;
+  /**
+   * Determines if external drop type can be dropped on item
+   * @param dropType The type of the external drop (e.g., "Users", "Documents")
+   * @param targetItem The tree item that would receive the drop
+   * @returns true if the drop is allowed, false otherwise
+   */
+  canAcceptExternalDrop?: (
+    dropType: string,
+    targetItem: TreeViewItem,
+  ) => boolean;
 }
 
 type DropPosition = "before" | "after" | "inside";
@@ -176,8 +197,71 @@ const areSetsEqual = (
   return true;
 };
 
-const ICON_SIZE = 24;
+const findItemInTree = (
+  items: TreeViewItem[],
+  id: TreeViewItemId,
+): TreeViewItem | null => {
+  for (const item of items) {
+    if (item.id === id) return item;
+    if (item.children) {
+      const found = findItemInTree(item.children, id);
+      if (found) return found;
+    }
+  }
+  return null;
+};
 
+const collectDescendants = (
+  items: TreeViewItem[],
+  parentId: TreeViewItemId,
+): Set<TreeViewItemId> => {
+  const descendants = new Set<TreeViewItemId>();
+  items.forEach((item) => {
+    if (item.parentId === parentId) {
+      descendants.add(item.id);
+      const childDescendants = collectDescendants(items, item.id);
+      childDescendants.forEach((id) => descendants.add(id));
+    }
+  });
+  return descendants;
+};
+
+const updateLoadingItems = (
+  setLoadingItems: React.Dispatch<React.SetStateAction<Set<TreeViewItemId>>>,
+  itemIds: Set<TreeViewItemId> | TreeViewItemId[],
+  add: boolean,
+) => {
+  setLoadingItems((prev) => {
+    const next = new Set(prev);
+    const ids = itemIds instanceof Set ? itemIds : new Set(itemIds);
+    if (add) {
+      ids.forEach((itemId) => next.add(itemId));
+    } else {
+      ids.forEach((itemId) => next.delete(itemId));
+    }
+    return next;
+  });
+};
+/**
+ * TODO
+ * Analysis: Should we migrate internal drag-and-drop to @dnd-kit?
+ * Conclusion
+ * Don't migrate now. Reasons:
+ * Current system works well
+ * External drops are the priority
+ * Migration is high risk, low immediate benefit
+ * Can be done later as a refactor
+ * Focus on:
+ * Completing external drops feature
+ * Testing external drops thoroughly
+ * Documenting the hybrid approach
+ * Consider migration when:
+ * You have dedicated time for refactoring
+ * You need @dnd-kit-specific features
+ * You're doing other major TreeView changes
+ * You can thoroughly test all use cases
+ * The current hybrid approach (HTML5 internal + @dnd-kit external) is a reasonable solution that balances functionality, risk, and time investment.
+ */
 export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
   function TreeView(
     {
@@ -198,6 +282,9 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       onExpandedItemsChange,
       dataSource,
       emptyState,
+      enableExternalDrops = false,
+      onExternalDrop,
+      canAcceptExternalDrop,
     },
     ref,
   ) {
@@ -217,8 +304,15 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       null,
     );
     const [dropPosition, setDropPosition] = useState<DropPosition | null>(null);
+    const [externalDropTargetId, setExternalDropTargetId] =
+      useState<TreeViewItemId | null>(null);
+    const [externalDropPosition, setExternalDropPosition] =
+      useState<DropPosition | null>(null);
     const dragPreviewRef = useRef<HTMLDivElement | null>(null);
     const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const collapseCacheTimeoutRef = useRef<Map<TreeViewItemId, NodeJS.Timeout>>(
+      new Map(),
+    );
     const isMountedRef = useRef<boolean>(true);
     const [activeLoadingItemId, setActiveLoadingItemId] =
       useState<TreeViewItemId | null>(null);
@@ -255,6 +349,13 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       isMountedRef.current = true;
       return () => {
         isMountedRef.current = false;
+        if (fetchTimeoutRef.current) {
+          clearTimeout(fetchTimeoutRef.current);
+        }
+        collapseCacheTimeoutRef.current.forEach((timeout) => {
+          clearTimeout(timeout);
+        });
+        collapseCacheTimeoutRef.current.clear();
       };
     }, []);
 
@@ -282,15 +383,17 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       });
 
       items.forEach((item) => {
+        const mappedItem = itemMap.get(item.id);
+        if (!mappedItem) return;
         if (item.parentId === null) {
-          rootItems.push(itemMap.get(item.id)!);
+          rootItems.push(mappedItem);
         } else {
           const parent = itemMap.get(item.parentId);
           if (parent) {
             if (!parent.children) {
               parent.children = [];
             }
-            parent.children.push(itemMap.get(item.id)!);
+            parent.children.push(mappedItem);
           }
         }
       });
@@ -321,13 +424,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         const skipDebounce = options?.skipDebounce || false;
 
         if (itemsToLoad.size > 0) {
-          setLoadingItems((prev) => {
-            const next = new Set(prev);
-            itemsToLoad.forEach((itemId) => {
-              next.add(itemId);
-            });
-            return next;
-          });
+          updateLoadingItems(setLoadingItems, itemsToLoad, true);
           const itemsToLoadArray = Array.from(itemsToLoad);
           const nextActiveItem = itemsToLoadArray[0] ?? null;
           if (nextActiveItem) {
@@ -368,12 +465,21 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
               );
 
               const childrenCountMap = new Map<TreeViewItemId, number>();
+              const childrenCountByParent = new Map<TreeViewItemId, number>();
+              updatedItems.forEach((item) => {
+                if (item.parentId !== null) {
+                  childrenCountByParent.set(
+                    item.parentId,
+                    (childrenCountByParent.get(item.parentId) ?? 0) + 1,
+                  );
+                }
+              });
               updatedItems.forEach((item) => {
                 if (refreshedParentIdsSet.has(item.id ?? null)) {
-                  const count = updatedItems.filter(
-                    (child) => child.parentId === item.id,
-                  ).length;
-                  childrenCountMap.set(item.id, count);
+                  childrenCountMap.set(
+                    item.id,
+                    childrenCountByParent.get(item.id) ?? 0,
+                  );
                 } else if (fetchedItemIds.has(item.id)) {
                   childrenCountMap.set(
                     item.id,
@@ -392,13 +498,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
             dataSource.onItemsLoaded?.(fetchedItems);
 
             if (isMountedRef.current && itemsToLoad.size > 0) {
-              setLoadingItems((prev) => {
-                const next = new Set(prev);
-                itemsToLoad.forEach((itemId) => {
-                  next.delete(itemId);
-                });
-                return next;
-              });
+              updateLoadingItems(setLoadingItems, itemsToLoad, false);
               setActiveLoadingItemId((current) =>
                 current && itemsToLoad.has(current) ? null : current,
               );
@@ -407,13 +507,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
             if (isMountedRef.current) {
               dataSource.onLoadError?.(error as Error, parentIds);
               if (itemsToLoad.size > 0) {
-                setLoadingItems((prev) => {
-                  const next = new Set(prev);
-                  itemsToLoad.forEach((itemId) => {
-                    next.delete(itemId);
-                  });
-                  return next;
-                });
+                updateLoadingItems(setLoadingItems, itemsToLoad, false);
                 setActiveLoadingItemId((current) =>
                   current && itemsToLoad.has(current) ? null : current,
                 );
@@ -444,11 +538,52 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       if (!hasInitialLoadRef.current) return;
 
       const newlyExpanded = new Set<TreeViewItemId>();
+      const newlyCollapsed = new Set<TreeViewItemId>();
+
       expandedItems.forEach((itemId) => {
         if (!prevExpandedItemsRef.current.has(itemId)) {
           newlyExpanded.add(itemId);
         }
       });
+
+      prevExpandedItemsRef.current.forEach((itemId) => {
+        if (!expandedItems.has(itemId)) {
+          newlyCollapsed.add(itemId);
+        }
+      });
+
+      if (newlyCollapsed.size > 0) {
+        newlyCollapsed.forEach((collapsedId) => {
+          const existingTimeout =
+            collapseCacheTimeoutRef.current.get(collapsedId);
+          if (existingTimeout) {
+            clearTimeout(existingTimeout);
+          }
+
+          const timeout = setTimeout(() => {
+            if (!isMountedRef.current) return;
+
+            setInternalItems((prevItems) => {
+              const itemsMap = new Map<TreeViewItemId, TreeViewItem>();
+
+              const descendants = collectDescendants(prevItems, collapsedId);
+              const allIdsToRemove = new Set(descendants);
+
+              prevItems.forEach((item) => {
+                if (!allIdsToRemove.has(item.id)) {
+                  itemsMap.set(item.id, { ...item, children: undefined });
+                }
+              });
+
+              return Array.from(itemsMap.values());
+            });
+
+            collapseCacheTimeoutRef.current.delete(collapsedId);
+          }, 350);
+
+          collapseCacheTimeoutRef.current.set(collapsedId, timeout);
+        });
+      }
 
       if (newlyExpanded.size === 0) {
         prevExpandedItemsRef.current = new Set(expandedItems);
@@ -532,13 +667,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
               );
 
           if (itemsToShowLoading.size > 0) {
-            setLoadingItems((prev) => {
-              const next = new Set(prev);
-              itemsToShowLoading.forEach((itemId) => {
-                next.add(itemId);
-              });
-              return next;
-            });
+            updateLoadingItems(setLoadingItems, itemsToShowLoading, true);
             const itemsArray = Array.from(itemsToShowLoading);
             setActiveLoadingItemId((current) => current ?? itemsArray[0]);
           }
@@ -563,21 +692,8 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
           if (itemFromMap) {
             item = treeItems.find((r) => r.id === itemId) || null;
             if (!item) {
-              const findInTree = (
-                items: TreeViewItem[],
-                id: TreeViewItemId,
-              ): TreeViewItem | null => {
-                for (const treeItem of items) {
-                  if (treeItem.id === id) return treeItem;
-                  if (treeItem.children) {
-                    const found = findInTree(treeItem.children, id);
-                    if (found) return found;
-                  }
-                }
-                return null;
-              };
               for (const rootItem of treeItems) {
-                const found = findInTree(rootItem.children || [], itemId);
+                const found = findItemInTree(rootItem.children || [], itemId);
                 if (found) {
                   item = found;
                   break;
@@ -879,9 +995,12 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         const isLoadingItem = isApiMode && loadingItems.has(item.id);
         const isSelected = selectedItemId === item.id;
         const actions = getItemActions?.(item) || [];
-        const hasActions = actions.length > 0;
         const isDragging = draggedItemId === item.id;
         const isDropTarget = dropTargetId === item.id && dropPosition !== null;
+        const isExternalDropTarget =
+          enableExternalDrops &&
+          externalDropTargetId === item.id &&
+          externalDropPosition !== null;
         const canDrag = enableDragAndDrop && canDragItem(item);
         const isRowInteractionLocked =
           isApiMode &&
@@ -898,195 +1017,44 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
             : true;
 
         return (
-          <Box
-            sx={{ position: "relative" }}
+          <TreeViewItemComponent
             key={`tree-view-item-${depth}-${item.id}`}
+            item={item}
+            depth={depth}
+            isExpanded={isExpanded}
+            hasChildren={hasChildren}
+            isLoadingItem={isLoadingItem}
+            isSelected={isSelected}
+            isDragging={isDragging}
+            isDropTarget={isDropTarget}
+            dropPosition={dropPosition}
+            isExternalDropTarget={isExternalDropTarget}
+            externalDropPosition={externalDropPosition}
+            canDrag={canDrag}
+            isRowInteractionLocked={isRowInteractionLocked}
+            canDropInsideValue={canDropInsideValue}
+            actions={actions}
+            enableExternalDrops={enableExternalDrops}
+            enableDragAndDrop={enableDragAndDrop}
+            canAcceptExternalDrop={canAcceptExternalDrop}
+            getItemLabel={getItemLabel}
+            getItemIcon={getItemIcon}
+            onItemClick={onItemClick}
+            selectedItemId={selectedItemId ?? null}
+            onSelectedItemChange={onSelectedItemChange}
+            handleToggleExpand={handleToggleExpand}
+            handleDragStart={handleDragStart}
+            handleDragEnd={handleDragEnd}
+            handleDragOver={handleDragOver}
+            handleDrop={handleDrop}
+            draggedItemId={draggedItemId}
+            theme={theme}
           >
-            {enableDragAndDrop && isDropTarget && dropPosition === "before" && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: -1,
-                  left: 0,
-                  right: 0,
-                  height: 2,
-                  backgroundColor: theme.palette.primary.main,
-                  zIndex: 1,
-                }}
-              />
-            )}
-
-            <Box
-              onDragOver={(e) => handleDragOver(e, item)}
-              onDrop={handleDrop}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                py: 0.5,
-                px: 1,
-                height: "32px",
-                cursor: onItemClick ? "pointer" : "default",
-                backgroundColor: isSelected
-                  ? alpha(theme.palette.primary.main, 0.08)
-                  : isDropTarget && dropPosition === "inside"
-                    ? alpha(theme.palette.primary.main, 0.12)
-                    : "transparent",
-                position: "relative",
-                opacity: isDragging
-                  ? 0.5
-                  : draggedItemId && !canDropInsideValue
-                    ? 0.4
-                    : 1,
-                color:
-                  draggedItemId && !canDropInsideValue
-                    ? theme.palette.action.disabled
-                    : "inherit",
-                pointerEvents: isRowInteractionLocked ? "none" : "auto",
-                "&:hover": {
-                  backgroundColor: theme.palette.action.hover,
-                  "& .tree-item-actions": {
-                    opacity: 1,
-                  },
-                  ...(canDrag && {
-                    "& .drag-indicator": {
-                      display: "flex",
-                    },
-                    "& .item-icon": {
-                      display: "none",
-                    },
-                  }),
-                },
-                pl: depth * 2 + 1,
-              }}
-              onClick={() => {
-                if (isRowInteractionLocked) return;
-                onItemClick?.(item);
-                const newSelectedId =
-                  selectedItemId === item.id ? null : item.id;
-                onSelectedItemChange?.(newSelectedId);
-              }}
-            >
-              {isLoadingItem ? (
-                <Box
-                  sx={{
-                    width: ICON_SIZE,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <CircularProgress thickness={5} size={16} />
-                </Box>
-              ) : hasChildren ? (
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: ICON_SIZE,
-                  }}
-                >
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleToggleExpand(item.id);
-                    }}
-                    sx={{ p: 0.5 }}
-                  >
-                    {isExpanded ? (
-                      <ExpandMoreIcon fontSize="small" />
-                    ) : (
-                      <ChevronRightIcon fontSize="small" />
-                    )}
-                  </IconButton>
-                </Box>
-              ) : (
-                <Box sx={{ width: ICON_SIZE }} />
+            {hasChildren &&
+              item.children?.map((child: TreeViewItem) =>
+                renderItem(child, depth + 1),
               )}
-
-              {getItemIcon && (
-                <Box
-                  sx={{
-                    mr: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    width: ICON_SIZE,
-                    height: ICON_SIZE,
-                  }}
-                >
-                  <Box
-                    className="item-icon"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      position: "absolute",
-                    }}
-                  >
-                    {getItemIcon(item)}
-                  </Box>
-                  {canDrag && (
-                    <Box
-                      className="drag-indicator"
-                      draggable={true}
-                      onDragStart={(e) => handleDragStart(e, item)}
-                      onDragEnd={handleDragEnd}
-                      sx={{
-                        display: "none",
-                        alignItems: "center",
-                        position: "absolute",
-                        cursor: isDragging ? "grabbing" : "grab",
-                        "&:active": {
-                          cursor: "grabbing",
-                        },
-                      }}
-                    >
-                      <DragIndicatorIcon fontSize="small" />
-                    </Box>
-                  )}
-                </Box>
-              )}
-
-              <Typography
-                variant="body2"
-                sx={{
-                  flex: 1,
-                  minWidth: 0,
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {getItemLabel(item)}
-              </Typography>
-
-              {hasActions && <TreeItemActions item={item} actions={actions} />}
-            </Box>
-
-            {hasChildren && (
-              <Collapse in={isExpanded} mountOnEnter>
-                <Box>
-                  {item.children?.map((child: TreeViewItem) =>
-                    renderItem(child, depth + 1),
-                  )}
-                </Box>
-              </Collapse>
-            )}
-
-            {enableDragAndDrop && isDropTarget && dropPosition === "after" && (
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: -1,
-                  left: 0,
-                  right: 0,
-                  height: 2,
-                  backgroundColor: theme.palette.primary.main,
-                  zIndex: 1,
-                }}
-              />
-            )}
-          </Box>
+          </TreeViewItemComponent>
         );
       },
       [
@@ -1095,9 +1063,13 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         draggedItemId,
         dropTargetId,
         dropPosition,
+        externalDropTargetId,
+        externalDropPosition,
         enableDragAndDrop,
+        enableExternalDrops,
         canDragItem,
         canDropOnItem,
+        canAcceptExternalDrop,
         itemsMap,
         isDescendant,
         canDropInside,
@@ -1127,6 +1099,16 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
 
     return (
       <Box sx={{ width: "100%", position: "relative" }}>
+        {/* Conditionally render external drop monitor only when enableExternalDrops is true */}
+        {enableExternalDrops && (
+          <ExternalDropMonitor
+            onExternalDrop={onExternalDrop}
+            canAcceptExternalDrop={canAcceptExternalDrop}
+            itemsMap={itemsMap}
+            setExternalDropTargetId={setExternalDropTargetId}
+            setExternalDropPosition={setExternalDropPosition}
+          />
+        )}
         {enableDragAndDrop &&
           dropTargetId === null &&
           dropPosition === "before" && (

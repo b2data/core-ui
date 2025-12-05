@@ -9,20 +9,44 @@ import { MoreVertIcon } from "../../icons";
 export interface TreeItemActionsProps {
   item: TreeViewItem;
   actions: TreeViewAction[];
+  onMenuStateChange?: (isOpen: boolean) => void;
 }
 
-export function TreeItemActions({ item, actions }: TreeItemActionsProps) {
+export function TreeItemActions({
+  item,
+  actions,
+  onMenuStateChange,
+}: TreeItemActionsProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const isOpen = Boolean(anchorEl);
 
-  const handleOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  }, []);
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      setAnchorEl(event.currentTarget);
+      onMenuStateChange?.(true);
+    },
+    [onMenuStateChange],
+  );
 
-  const handleClose = useCallback(() => {
+  const handleClose = useCallback(
+    (event: {}, reason: "backdropClick" | "escapeKeyDown") => {
+      if (
+        reason === "backdropClick" &&
+        (event as React.MouseEvent | TouchEvent).stopPropagation
+      ) {
+        (event as React.MouseEvent | TouchEvent).stopPropagation();
+      }
+      setAnchorEl(null);
+      onMenuStateChange?.(false);
+    },
+    [onMenuStateChange],
+  );
+
+  const handleMenuItemClose = useCallback(() => {
     setAnchorEl(null);
-  }, []);
+    onMenuStateChange?.(false);
+  }, [onMenuStateChange]);
 
   if (actions.length === 0) {
     return null;
@@ -48,6 +72,9 @@ export function TreeItemActions({ item, actions }: TreeItemActionsProps) {
         anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -63,7 +90,7 @@ export function TreeItemActions({ item, actions }: TreeItemActionsProps) {
             onClick={(event) => {
               event.stopPropagation();
               action.onClick(item);
-              handleClose();
+              handleMenuItemClose();
             }}
             disabled={action.disabled}
             divider={action.withDivider}
