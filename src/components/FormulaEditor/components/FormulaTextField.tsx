@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Box,
   debounce,
@@ -10,7 +10,7 @@ import {
 import dayjs from "dayjs";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { equals, omit } from "ramda";
+import { omit } from "ramda";
 
 import { Autocomplete, AutocompleteProps } from "../../Autocomplete";
 import { CircularProgress } from "../../CircularProgress";
@@ -94,43 +94,78 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
   helperText,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<FormulaSearchOption[]>([]);
-
-  const loadData = (searchTerm: string) => {
-    if (onSearch) {
-      setIsLoading(true);
-      onSearch(searchTerm)
-        .then(setOptions)
-        .finally(() => setIsLoading(false));
+  const [options, setOptions] = useState<FormulaSearchOption[]>(() => {
+    if (!isEditable && value) {
+      return Array.isArray(value) ? value : [value];
     }
-  };
+    return [];
+  });
 
-  const handleChange = (
-    val?:
-      | null
-      | (FormulaSearchOption & { inputValue?: string })
-      | FormulaSearchOption[],
-  ) => {
-    if (!equals(val, value)) {
-      onChange?.(val);
-    }
-  };
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    loadData(e.target.value);
-  };
-
-  const selectedValue = useMemo(
-    () =>
-      multiple
-        ? Array.isArray(value)
-          ? value
-          : []
-        : value && !Array.isArray(value)
-          ? value
-          : null,
-    [value, multiple, type],
+  const loadData = useCallback(
+    (searchTerm: string) => {
+      if (onSearch) {
+        setIsLoading(true);
+        onSearch(searchTerm)
+          .then((newOptions) => {
+            setOptions((prev) => {
+              const existingIds = new Set(prev.map((opt) => opt.id));
+              const uniqueNewOptions = newOptions.filter(
+                (opt) => !existingIds.has(opt.id),
+              );
+              return [...prev, ...uniqueNewOptions];
+            });
+          })
+          .finally(() => setIsLoading(false));
+      }
+    },
+    [onSearch],
   );
+
+  useEffect(() => {
+    if (!isEditable && value) {
+      setOptions((prev) => {
+        if (!Array.isArray(value)) {
+          const valueInOptions = prev.find((opt) => opt.id === value.id);
+          if (!valueInOptions) {
+            return [value, ...prev];
+          }
+        } else if (value.length > 0) {
+          const existingIds = new Set(prev.map((opt) => opt.id));
+          const missingValues = value.filter((val) => !existingIds.has(val.id));
+          if (missingValues.length > 0) {
+            return [...missingValues, ...prev];
+          }
+        }
+        return prev;
+      });
+    }
+  }, [isEditable, value]);
+
+  const handleChange = useCallback(
+    (
+      val?:
+        | null
+        | (FormulaSearchOption & { inputValue?: string })
+        | FormulaSearchOption[],
+    ) => {
+      onChange?.(val);
+    },
+    [onChange],
+  );
+
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      loadData(e.target.value);
+    },
+    [loadData],
+  );
+
+  const selectedValue = useMemo(() => {
+    if (multiple) {
+      return Array.isArray(value) ? value : value ? [value] : [];
+    }
+    return value && !Array.isArray(value) ? value : null;
+  }, [value, multiple]);
 
   if (type === "date") {
     return (
@@ -211,9 +246,7 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
         noOptionsText={i18n?.noOptions}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         onChange={(_, newValue) => {
-          if (typeof newValue !== "string") {
-            handleChange(newValue);
-          }
+          handleChange(newValue ?? null);
         }}
         slotProps={{
           paper: { sx: { minWidth: 200, maxHeight: 500 } },
@@ -375,31 +408,29 @@ export const FormulaTextField: React.FC<FormulaTextFieldProps> = ({
             />
           );
         }}
-        filterOptions={(opts: any, { inputValue }) => {
+        filterOptions={(opts: FormulaSearchOption[], { inputValue }) => {
           const filtered =
             inputValue === ""
               ? opts
               : opts.filter(
-                  (opt: any) =>
+                  (opt) =>
                     match(opt.name, inputValue, { insideWords: true }).length,
                 );
 
-          const isExisting = opts.some((opt: any) => inputValue === opt.name);
+          const isExisting = opts.some((opt) => inputValue === opt.name);
 
           if (inputValue !== "" && !isExisting && !disableValueCreation) {
             filtered.push({
               inputValue,
               name: `${i18n?.addNewOption || "Add new"}: ${inputValue}`,
               id: inputValue,
-            });
+            } as FormulaSearchOption & { inputValue?: string });
           }
-          return (
-            filtered.length
-              ? filtered
-              : i18n?.noOptions
-                ? [i18n?.noOptions]
-                : []
-          ) as FormulaSearchOption[];
+          return filtered.length
+            ? filtered
+            : i18n?.noOptions
+              ? [{ id: i18n.noOptions, name: i18n.noOptions }]
+              : [];
         }}
       />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}

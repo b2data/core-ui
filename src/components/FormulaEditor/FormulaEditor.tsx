@@ -103,12 +103,23 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({
   };
 
   const commitChanges = (result: FormulaRow[]) => {
-    const isValidRows =
-      result.filter(
-        (opt) =>
-          !(opt.field && (opt.value || opt.value == null) && opt.operator),
-      ).length === 0;
-    if (isValidRows && onChange) {
+    const invalidRows = result.filter((opt) => {
+      if (opt.disabled) {
+        return false;
+      }
+
+      if (!opt.field || !opt.operator) {
+        return false;
+      }
+
+      if (opt.operator === FormulaOperator.Exist) {
+        return false;
+      }
+
+      return !opt.value;
+    });
+
+    if (invalidRows.length === 0 && onChange) {
       onChange(result);
     }
   };
