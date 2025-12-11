@@ -105,14 +105,29 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
   });
 
   const externalDropType = active?.data?.current?.type;
+  const externalDropData = active?.data?.current?.data;
   const canAcceptExternal = useMemo(
     () =>
       enableExternalDrops &&
       externalDropType &&
       (canAcceptExternalDrop
-        ? canAcceptExternalDrop(externalDropType, item)
+        ? canAcceptExternalDrop(
+            externalDropType,
+            item,
+            Array.isArray(externalDropData)
+              ? externalDropData
+              : externalDropData
+                ? [externalDropData]
+                : undefined,
+          )
         : true),
-    [enableExternalDrops, externalDropType, canAcceptExternalDrop, item],
+    [
+      enableExternalDrops,
+      externalDropType,
+      externalDropData,
+      canAcceptExternalDrop,
+      item,
+    ],
   );
 
   const hasActions = actions.length > 0;
