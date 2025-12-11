@@ -44,7 +44,13 @@ export const ExternalDropMonitor: React.FC<ExternalDropMonitorProps> = ({
       }
 
       const dropType = active.data.current.type;
-      const canAccept = canAcceptExternalDrop?.(dropType, targetItem) ?? true;
+      const dropData = active.data.current.data || [];
+      const canAccept =
+        canAcceptExternalDrop?.(
+          dropType,
+          targetItem,
+          Array.isArray(dropData) ? dropData : [dropData],
+        ) ?? true;
 
       if (canAccept) {
         setExternalDropTargetId(itemId as TreeViewItemId);
@@ -84,7 +90,12 @@ export const ExternalDropMonitor: React.FC<ExternalDropMonitorProps> = ({
 
       const dropType = active.data.current.type;
       const dropData = active.data.current.data || [];
-      const canAccept = canAcceptExternalDrop?.(dropType, targetItem) ?? true;
+      const canAccept =
+        canAcceptExternalDrop?.(
+          dropType,
+          targetItem,
+          Array.isArray(dropData) ? dropData : [dropData],
+        ) ?? true;
 
       if (canAccept) {
         const position: "before" | "after" | "inside" = "inside";
