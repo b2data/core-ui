@@ -174,11 +174,13 @@ export interface TreeViewProps {
    * Determines if external drop type can be dropped on item
    * @param dropType The type of the external drop (e.g., "Users", "Documents")
    * @param targetItem The tree item that would receive the drop
+   * @param dropData Optional data being dropped
    * @returns true if the drop is allowed, false otherwise
    */
   canAcceptExternalDrop?: (
     dropType: string,
     targetItem: TreeViewItem,
+    dropData?: any[],
   ) => boolean;
 }
 

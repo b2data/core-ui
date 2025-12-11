@@ -219,16 +219,18 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
         : ("auto" as const),
       "&:hover": {
         backgroundColor: theme.palette.action.hover,
-        "& .tree-item-actions": {
-          opacity: 1,
-        },
-        ...(canDrag && {
-          "& .drag-indicator": {
-            display: "flex",
+        ...(!externalDropType && {
+          "& .tree-item-actions": {
+            opacity: 1,
           },
-          "& .item-icon": {
-            display: "none",
-          },
+          ...(canDrag && {
+            "& .drag-indicator": {
+              display: "flex",
+            },
+            "& .item-icon": {
+              display: "none",
+            },
+          }),
         }),
       },
       pl: depth * 2 + 1,
@@ -249,6 +251,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
       isRowInteractionLocked,
       canDrag,
       depth,
+      externalDropType,
     ],
   );
 
@@ -361,7 +364,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
             >
               {getItemIcon(item)}
             </Box>
-            {canDrag && (
+            {canDrag && !externalDropType && (
               <Box
                 className="drag-indicator"
                 draggable={true}
@@ -395,7 +398,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
           {getItemLabel(item)}
         </Typography>
 
-        {hasActions && (
+        {hasActions && !externalDropType && (
           <TreeItemActions
             item={item}
             actions={actions}
