@@ -1,0 +1,6 @@
+import{j as r}from"./iframe-DYeT7bW8.js";import{C as t}from"./Checkbox-BV-7_ZEl.js";import{F as m}from"./FormControlLabel-Dxa3iPYk.js";import"./preload-helper-PPVm8Dsz.js";import"./Checkbox-Qz9htvJc.js";import"./FormControlLabel-y1iSLj9Q.js";import"./styled-GE-e2l_1.js";import"./useFormControl-NnoCKCTX.js";import"./generateUtilityClass-BtcU_pBl.js";import"./generateUtilityClasses-DDbjFgb8.js";import"./useSlot-BOZP11gd.js";import"./mergeSlotProps-Cb7kcP9N.js";import"./isHostComponent-DVu5iVWx.js";import"./useForkRef-CHATcp2n.js";import"./useControlled-DU3pSEC3.js";import"./ButtonBase-DXCvwUzG.js";import"./useTimeout-gGYJwrGn.js";import"./TransitionGroupContext-FZWsME-w.js";import"./useEventCallback-B4Rt0DiH.js";import"./isFocusVisible-B8k4qzLc.js";import"./memoTheme-B_iRBWsH.js";import"./Typography-DvpPHrRU.js";import"./createSimplePaletteValueFilter-bm0fmN_7.js";import"./createSvgIcon-DBrONcpz.js";import"./mergeSlotProps-r0Y4YYvP.js";const R={title:"Components/Inputs/Form Control Label",component:m,tags:["autodocs"]},o={args:{label:"Checkbox",control:r.jsx(t,{})}};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  args: {
+    label: "Checkbox",
+    control: <Checkbox />
+  }
+}`,...o.parameters?.docs?.source}}};const S=["Base"];export{o as Base,S as __namedExportsOrder,R as default};
