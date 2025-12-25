@@ -1,0 +1,4 @@
+import{j as p}from"./iframe-Bt0NHjzt.js";import{I as o}from"./InputBase-2-Gk462K.js";import"./preload-helper-PPVm8Dsz.js";import"./InputBase-Bv7eM5nS.js";import"./useFormControl-CrJJaZ8v.js";import"./memoTheme-BgU4zM9I.js";import"./styled-BEaRT_Fa.js";import"./generateUtilityClasses-DDbjFgb8.js";import"./generateUtilityClass-BtcU_pBl.js";import"./useForkRef-hJSLhPXd.js";import"./ownerWindow-HkKU3E4x.js";import"./ownerDocument-DW-IO8s5.js";import"./useEventCallback-DRFCyGqk.js";import"./debounce-Be36O1Ab.js";import"./isHostComponent-DVu5iVWx.js";const l={title:"Components/Inputs/Input Base",component:o,tags:["autodocs"]},r={args:{},render:t=>p.jsx(o,{...t})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  args: {},
+  render: props => <InputBase {...props} />
+}`,...r.parameters?.docs?.source}}};const E=["Base"];export{r as Base,E as __namedExportsOrder,l as default};
