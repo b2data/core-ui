@@ -182,6 +182,12 @@ export interface TreeViewProps {
     targetItem: TreeViewItem,
     dropData?: any[],
   ) => boolean;
+  /**
+   * Offset for root level items in icon units (ICON_SIZE = 24px).
+   * Useful when using TreeView with TreeViewHeader to align items with header.
+   * @default 0
+   */
+  rootOffset?: number;
 }
 
 type DropPosition = "before" | "after" | "inside";
@@ -287,6 +293,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       enableExternalDrops = false,
       onExternalDrop,
       canAcceptExternalDrop,
+      rootOffset = 0,
     },
     ref,
   ) {
@@ -311,6 +318,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
     const [externalDropPosition, setExternalDropPosition] =
       useState<DropPosition | null>(null);
     const dragPreviewRef = useRef<HTMLDivElement | null>(null);
+    const treeViewContainerRef = useRef<HTMLDivElement | null>(null);
     const fetchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const collapseCacheTimeoutRef = useRef<Map<TreeViewItemId, NodeJS.Timeout>>(
       new Map(),
@@ -743,6 +751,40 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       [itemsMap],
     );
 
+    useEffect(() => {
+      if (
+        !enableDragAndDrop ||
+        !draggedItemId ||
+        !treeViewContainerRef.current
+      ) {
+        return;
+      }
+
+      const handleGlobalDragOver = (e: DragEvent) => {
+        if (!treeViewContainerRef.current) return;
+
+        const containerRect =
+          treeViewContainerRef.current.getBoundingClientRect();
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        if (
+          mouseX < containerRect.left ||
+          mouseX > containerRect.right ||
+          mouseY < containerRect.top ||
+          mouseY > containerRect.bottom
+        ) {
+          setDropTargetId(null);
+          setDropPosition(null);
+        }
+      };
+
+      document.addEventListener("dragover", handleGlobalDragOver);
+      return () => {
+        document.removeEventListener("dragover", handleGlobalDragOver);
+      };
+    }, [enableDragAndDrop, draggedItemId]);
+
     const recalculateItems = useCallback(
       (
         draggedItemId: TreeViewItemId,
@@ -868,6 +910,34 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       (e: React.DragEvent, item: TreeViewItem) => {
         if (!enableDragAndDrop || !draggedItemId) return;
 
+        const elementAtPoint = document.elementFromPoint(e.clientX, e.clientY);
+        if (elementAtPoint) {
+          const headerElement = elementAtPoint.closest("[data-tree-header-id]");
+          if (headerElement) {
+            setDropTargetId(null);
+            setDropPosition(null);
+            return;
+          }
+
+          if (treeViewContainerRef.current) {
+            const containerRect =
+              treeViewContainerRef.current.getBoundingClientRect();
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            if (
+              mouseX < containerRect.left ||
+              mouseX > containerRect.right ||
+              mouseY < containerRect.top ||
+              mouseY > containerRect.bottom
+            ) {
+              setDropTargetId(null);
+              setDropPosition(null);
+              return;
+            }
+          }
+        }
+
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
 
@@ -882,6 +952,36 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         const elementTop = rect.top;
         const elementHeight = rect.height;
         const relativeY = mouseY - elementTop;
+
+        const element = e.currentTarget as HTMLElement;
+        const hasChildren =
+          (item.children?.length ?? 0) > 0 || (item.childrenCount ?? 0) > 0;
+        const isExpanded = expandedItems.has(item.id);
+
+        if (hasChildren && isExpanded) {
+          const elementAtPoint = document.elementFromPoint(
+            e.clientX,
+            e.clientY,
+          );
+          if (elementAtPoint && elementAtPoint !== element) {
+            const childItemElement = elementAtPoint.closest(
+              "[data-tree-item-id]",
+            ) as HTMLElement | null;
+            if (
+              childItemElement &&
+              childItemElement !== element &&
+              childItemElement.getAttribute("data-tree-item-id") !==
+                String(item.id)
+            ) {
+              const childItemId =
+                childItemElement.getAttribute("data-tree-item-id");
+              const childItem = childItemId ? itemsMap.get(childItemId) : null;
+              if (childItem && childItem.parentId === item.id) {
+                return;
+              }
+            }
+          }
+        }
 
         let position: DropPosition;
         if (relativeY < elementHeight / 3) {
@@ -898,7 +998,14 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         setDropTargetId(item.id);
         setDropPosition(position);
       },
-      [enableDragAndDrop, draggedItemId, itemsMap, isDescendant, canDropOnItem],
+      [
+        enableDragAndDrop,
+        draggedItemId,
+        itemsMap,
+        isDescendant,
+        canDropOnItem,
+        expandedItems,
+      ],
     );
 
     const canDropInside = useCallback(
@@ -991,6 +1098,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
 
     const renderItem = useCallback(
       (item: TreeViewItem, depth: number = 0) => {
+        const effectiveDepth = depth + rootOffset;
         const isExpanded = expandedItems.has(item.id);
         const hasChildren =
           (item.children?.length ?? 0) > 0 || (item.childrenCount ?? 0) > 0;
@@ -1022,7 +1130,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
           <TreeViewItemComponent
             key={`tree-view-item-${depth}-${item.id}`}
             item={item}
-            depth={depth}
+            depth={effectiveDepth}
             isExpanded={isExpanded}
             hasChildren={hasChildren}
             isLoadingItem={isLoadingItem}
@@ -1090,6 +1198,7 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
         items,
         isApiMode,
         loadingItems,
+        rootOffset,
       ],
     );
 
@@ -1100,7 +1209,11 @@ export const TreeView = forwardRef<TreeViewRef, TreeViewProps>(
       hasInitialLoadRef.current;
 
     return (
-      <Box sx={{ width: "100%", position: "relative" }}>
+      <Box
+        ref={treeViewContainerRef}
+        data-tree-view-container="true"
+        sx={{ width: "100%", position: "relative" }}
+      >
         {/* Conditionally render external drop monitor only when enableExternalDrops is true */}
         {enableExternalDrops && (
           <ExternalDropMonitor
