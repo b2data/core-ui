@@ -248,7 +248,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
           }),
         }),
       },
-      pl: depth * 2 + 1,
+      pl: `${depth * ICON_SIZE}px`,
     }),
     [
       onItemClick,
@@ -317,6 +317,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
 
       <Box
         ref={setDroppableRef}
+        data-tree-item-id={item.id}
         onDragOver={handleDragOverMemoized}
         onDrop={handleDropMemoized}
         sx={rowSx}
@@ -338,6 +339,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
               width: ICON_SIZE,
             }}
           >
@@ -347,9 +349,15 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
               sx={{ p: 0.5 }}
             >
               {isExpanded ? (
-                <ExpandMoreIcon fontSize="small" />
+                <ExpandMoreIcon
+                  fontSize="small"
+                  sx={{ color: theme.palette.action.active }}
+                />
               ) : (
-                <ChevronRightIcon fontSize="small" />
+                <ChevronRightIcon
+                  fontSize="small"
+                  sx={{ color: theme.palette.action.active }}
+                />
               )}
             </IconButton>
           </Box>
@@ -375,6 +383,10 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
                 display: "flex",
                 alignItems: "center",
                 position: "absolute",
+                color: theme.palette.action.active,
+                "& svg": {
+                  color: theme.palette.action.active,
+                },
               }}
             >
               {getItemIcon(item)}
@@ -390,12 +402,16 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
                   alignItems: "center",
                   position: "absolute",
                   cursor: isDragging ? "grabbing" : "grab",
+                  color: theme.palette.action.active,
                   "&:active": {
                     cursor: "grabbing",
                   },
                 }}
               >
-                <DragIndicatorIcon fontSize="small" />
+                <DragIndicatorIcon
+                  fontSize="small"
+                  sx={{ color: theme.palette.action.active }}
+                />
               </Box>
             )}
           </Box>

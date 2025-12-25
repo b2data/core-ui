@@ -6,3 +6,5 @@ export type {
   TreeViewAction,
   TreeViewRef,
 } from "./TreeView";
+export { TreeViewHeader } from "./TreeViewHeader";
+export type { TreeViewHeaderProps } from "./TreeViewHeader";
