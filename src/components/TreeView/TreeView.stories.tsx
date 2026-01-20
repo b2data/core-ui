@@ -1105,46 +1105,179 @@ export const WithLargeDataset = () => {
 };
 
 export const HeaderWithTreeView = () => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded1, setIsExpanded1] = useState(true);
+  const [isExpanded2, setIsExpanded2] = useState(true);
+  const [isExpanded3, setIsExpanded3] = useState(true);
+  const [selectedHeader, setSelectedHeader] = useState<string | null>(null);
+
+  const manyItems = useMemo(() => {
+    const items = [];
+    for (let i = 1; i <= 20; i++) {
+      items.push({
+        id: `item-${i}`,
+        parentId: null,
+        childrenCount: i % 3 === 0 ? 3 : 0,
+      });
+      if (i % 3 === 0) {
+        for (let j = 1; j <= 3; j++) {
+          items.push({
+            id: `item-${i}-${j}`,
+            parentId: `item-${i}`,
+            childrenCount: 0,
+          });
+        }
+      }
+    }
+    return items;
+  }, []);
 
   return (
-    <Box sx={{ width: 400, p: 2 }}>
-      <Stack spacing={2}>
-        <Typography variant="h6">TreeViewHeader with TreeView</Typography>
-        <List>
-          <TreeViewHeader
-            icon={<FolderIcon />}
-            title="My Folders"
-            collapseButton={{
-              isExpanded,
-              onToggle: () => setIsExpanded(!isExpanded),
-            }}
-            action={{
-              icon: <AddIcon />,
-              tooltip: "Create new folder",
-              onClick: () => console.log("Create clicked"),
-            }}
-            onClick={() => console.log("Header clicked")}
-          />
-          {isExpanded && (
-            <TreeView
-              items={mockItems}
-              getItemLabel={(item) => `Item ${item.id}`}
-              getItemIcon={(item) =>
-                item.childrenCount > 0 ? (
-                  <FolderIcon fontSize="small" />
-                ) : (
-                  <DescriptionIcon fontSize="small" />
-                )
-              }
-              onItemClick={(item) => {
-                console.log("Clicked:", item);
+    <Box sx={{ width: 500, height: 600, position: "relative" }}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background:
+            "linear-gradient(45deg, #ff6b6b 25%, #4ecdc4 25%, #4ecdc4 50%, #ff6b6b 50%, #ff6b6b 75%, #4ecdc4 75%, #4ecdc4)",
+          backgroundSize: "40px 40px",
+          opacity: 0.1,
+          zIndex: 0,
+        }}
+      />
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Box sx={{ p: 2, pb: 1 }}>
+          <Typography variant="h6" gutterBottom>
+            Sticky Headers Demo
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Scroll to see sticky headers. Headers are opaque and hide content
+            below. Try hovering and selecting headers.
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            flex: 1,
+            overflow: "auto",
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: 1,
+            mx: 2,
+            mb: 2,
+          }}
+        >
+          <List sx={{ p: 0 }}>
+            <TreeViewHeader
+              icon={<FolderIcon />}
+              title="Personal Folders"
+              selected={selectedHeader === "personal"}
+              collapseButton={{
+                isExpanded: isExpanded1,
+                onToggle: () => setIsExpanded1(!isExpanded1),
               }}
-              rootOffset={1}
+              action={{
+                icon: <AddIcon />,
+                tooltip: "Create new folder",
+                onClick: () => console.log("Create clicked"),
+              }}
+              onClick={() => setSelectedHeader("personal")}
+              sx={{ position: "sticky", top: 0, zIndex: 2 }}
             />
-          )}
-        </List>
-      </Stack>
+            {isExpanded1 && (
+              <TreeView
+                items={manyItems}
+                getItemLabel={(item) => `Item ${item.id}`}
+                getItemIcon={(item) =>
+                  item.childrenCount > 0 ? (
+                    <FolderIcon fontSize="small" />
+                  ) : (
+                    <DescriptionIcon fontSize="small" />
+                  )
+                }
+                onItemClick={(item) => {
+                  console.log("Clicked:", item);
+                }}
+                rootOffset={1}
+              />
+            )}
+            <TreeViewHeader
+              icon={<FolderIcon />}
+              title="Shared Folders"
+              selected={selectedHeader === "shared"}
+              collapseButton={{
+                isExpanded: isExpanded2,
+                onToggle: () => setIsExpanded2(!isExpanded2),
+              }}
+              action={{
+                icon: <AddIcon />,
+                tooltip: "Create new folder",
+                onClick: () => console.log("Create clicked"),
+              }}
+              onClick={() => setSelectedHeader("shared")}
+              sx={{ position: "sticky", top: 36, zIndex: 2 }}
+            />
+            {isExpanded2 && (
+              <TreeView
+                items={manyItems}
+                getItemLabel={(item) => `Item ${item.id}`}
+                getItemIcon={(item) =>
+                  item.childrenCount > 0 ? (
+                    <FolderIcon fontSize="small" />
+                  ) : (
+                    <DescriptionIcon fontSize="small" />
+                  )
+                }
+                onItemClick={(item) => {
+                  console.log("Clicked:", item);
+                }}
+                rootOffset={1}
+              />
+            )}
+            <TreeViewHeader
+              icon={<FolderIcon />}
+              title="Trash"
+              selected={selectedHeader === "trash"}
+              collapseButton={{
+                isExpanded: isExpanded3,
+                onToggle: () => setIsExpanded3(!isExpanded3),
+              }}
+              onClick={() => setSelectedHeader("trash")}
+              sx={{
+                position: "sticky",
+                top: 72,
+                zIndex: 2,
+              }}
+            />
+            {isExpanded3 && (
+              <TreeView
+                items={manyItems}
+                getItemLabel={(item) => `Item ${item.id}`}
+                getItemIcon={(item) =>
+                  item.childrenCount > 0 ? (
+                    <FolderIcon fontSize="small" />
+                  ) : (
+                    <DescriptionIcon fontSize="small" />
+                  )
+                }
+                onItemClick={(item) => {
+                  console.log("Clicked:", item);
+                }}
+                rootOffset={1}
+              />
+            )}
+          </List>
+        </Box>
+      </Box>
     </Box>
   );
 };
