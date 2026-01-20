@@ -186,7 +186,7 @@ export const TreeViewHeader = React.forwardRef<
       if (isTreeItemDragging && enableTreeItemDrops) {
         return alpha(theme.palette.primary.main, 0.12);
       }
-      return "transparent";
+      return theme.palette.background.default;
     }, [
       selected,
       isOver,
@@ -198,7 +198,7 @@ export const TreeViewHeader = React.forwardRef<
 
     const hoverBackgroundColor = useMemo(() => {
       if (selected) {
-        return alpha(theme.palette.primary.main, 0.08);
+        return alpha(theme.palette.primary.main, 0.12);
       }
       if (isOver && canAcceptExternal) {
         return alpha(theme.palette.secondary.main, 0.12);
@@ -206,7 +206,11 @@ export const TreeViewHeader = React.forwardRef<
       if (isTreeItemDragging && enableTreeItemDrops) {
         return alpha(theme.palette.primary.main, 0.12);
       }
-      return theme.palette.action.hover;
+      const hoverColor = theme.palette.action.hover;
+      if (hoverColor && hoverColor !== "transparent") {
+        return hoverColor;
+      }
+      return alpha(theme.palette.action.active, 0.04);
     }, [
       selected,
       isOver,
@@ -234,13 +238,34 @@ export const TreeViewHeader = React.forwardRef<
             cursor: onClick ? "pointer" : "default",
             minHeight: 36,
             ...typography.h6,
-            backgroundColor,
+            position: "relative",
+            backgroundColor: "transparent",
             opacity: isOver && !canAcceptExternal ? 0.4 : 1,
             color:
               isOver && !canAcceptExternal
                 ? theme.palette.action.disabled
                 : "inherit",
-            "&:hover": {
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: theme.palette.background.default,
+              zIndex: -1,
+            },
+            "&::after": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor,
+              zIndex: -1,
+            },
+            "&:hover::after": {
               backgroundColor: hoverBackgroundColor,
             },
           }),
