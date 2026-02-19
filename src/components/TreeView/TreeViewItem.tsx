@@ -425,6 +425,7 @@ const TreeViewItemComponentInternal: React.FC<TreeViewItemComponentProps> = ({
             overflow: "hidden",
             textOverflow: "ellipsis",
           }}
+          wrapLines={2}
         >
           {getItemLabel(item)}
         </Typography>
