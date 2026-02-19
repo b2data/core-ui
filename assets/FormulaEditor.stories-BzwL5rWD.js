@@ -1,0 +1,134 @@
+import{j as o,r as l}from"./iframe-CXZ_NyuK.js";import"./ru-BGqXEAit.js";import{e as n,f as s}from"./ListNumberedIcon-DY3flfdi.js";import{P as m}from"./Preview-BP4qyNbO.js";import"./preload-helper-PPVm8Dsz.js";import"./DatePicker-D39PqVA4.js";import"./KeyboardArrowRight-DJ8lP80V.js";import"./memoTheme-DTk_V_hg.js";import"./styled-BvUIjKhn.js";import"./MenuItem-DYtArEDb.js";import"./ListContext-C8lwboQi.js";import"./generateUtilityClasses-DDbjFgb8.js";import"./generateUtilityClass-BtcU_pBl.js";import"./useForkRef-CG8Sv1UH.js";import"./ButtonBase-C7cht_mo.js";import"./useTimeout-ZSFSp5cI.js";import"./TransitionGroupContext-CxxqYawP.js";import"./useEventCallback-EozOT64W.js";import"./isFocusVisible-B8k4qzLc.js";import"./listItemTextClasses-CiRxluPw.js";import"./createSvgIcon-CwIJRQJW.js";import"./useThemeProps-DCgJxgRW.js";import"./getThemeProps-DG6MYMcO.js";import"./useSlotProps-lLW0FBW-.js";import"./mergeSlotProps-MFdmIzEm.js";import"./isHostComponent-DVu5iVWx.js";import"./Typography-eBWB5IMU.js";import"./createSimplePaletteValueFilter-bm0fmN_7.js";import"./IconButton-DBCDmklt.js";import"./CircularProgress-C5n-wVtT.js";import"./useControlled-HlXZK1Hp.js";import"./MenuList-DB-HnPRY.js";import"./getScrollbarSize-CaCM53D3.js";import"./ownerWindow-HkKU3E4x.js";import"./ownerDocument-DW-IO8s5.js";import"./useFormControl-DG3vJQE-.js";import"./visuallyHidden-Dan1xhjv.js";import"./TextField-Dvut5_Ww.js";import"./useSlot-ML2559-c.js";import"./InputBase-j-qFhmyF.js";import"./debounce-Be36O1Ab.js";import"./FormHelperText-8zE6iEsR.js";import"./Menu-C6_HQ9Cz.js";import"./Popover-CadfQ21_.js";import"./Grow-BNrzv2mz.js";import"./useTheme-DWoggi07.js";import"./utils-DFraDq1z.js";import"./index-BvG9M3NN.js";import"./index-By5H4shY.js";import"./getReactElementRef-DWRjfN76.js";import"./mergeSlotProps-Cw1N6ud7.js";import"./Modal-CuHv0e9C.js";import"./createChainedFunction-BO_9K8Jh.js";import"./Portal-BKU-ZVzg.js";import"./Backdrop-EFsSiZOY.js";import"./Paper-DWrtNxDa.js";import"./isMuiElement-CUSA2aUE.js";import"./Skeleton-Cmb7SJA1.js";import"./Popper-329D8CB1.js";import"./Button-Cd7qYsOu.js";import"./DialogActions-Chhh3DWD.js";import"./ListItem-DZs0nZI1.js";import"./listItemButtonClasses-CXNhffuE.js";import"./Chip-zJsV7PSP.js";import"./Dialog-CEh_NiOt.js";import"./DialogContext-BrehRoKC.js";import"./DialogContent-CYoKnpud.js";import"./dialogTitleClasses-Df1yqyCK.js";import"./Tab-CsXPowWj.js";import"./FormHelperText-ucn8bywg.js";import"./Box-BEeFVL2s.js";import"./Alert-BUYlq8um.js";import"./Close-DcYJIMHu.js";import"./Autocomplete-CsdLIM7G.js";import"./Typography-DNXmMN63.js";import"./ListItem-CTUOb7uc.js";import"./ListSubheader-muwUmU60.js";import"./IconButton-Bjku2Iu_.js";import"./ListItemAvatar-CFTeS7-j.js";import"./ListItemText-DoKgZHmX.js";import"./Tooltip-DDnKXK4R.js";import"./ListItemButton-BiS9BEJ5.js";import"./Menu-MVcH3Vwo.js";import"./MenuItem-CcrQ1wJC.js";import"./Paper-d4EF3EHt.js";import"./TextField-D1C0ODzn.js";import"./CircularProgress-DxJCyMvT.js";import"./Avatar-CeLF-hYQ.js";import"./AvatarGroup-DIW90TIM.js";import"./Backdrop-DvgULvIK.js";import"./index-Banp4iT2.js";import"./index-BjLIQmLn.js";import"./styled-ClZCcxms.js";import"./FormControlLabel-CBR_b8em.js";import"./Checkbox-CsDQWnaU.js";import"./LinearProgress-CzhaD_l9.js";import"./Switch-0yc3jTXp.js";import"./ClickAwayListener-PEeDIHWv.js";import"./Button-DLTGKrGg.js";import"./Link-DnRhWEQN.js";import"./Checkbox-LpGrL2dj.js";import"./Divider-BI-jVs7e.js";import"./ClickAwayListener-BRtiYdKb.js";import"./Collapse-DFjEOwEu.js";import"./Collapse-k_ogPl5m.js";import"./ConfirmationDialog-DPp9jMjO.js";import"./Dialog-DgEZY7Sb.js";import"./DialogActions-CCEDMIbq.js";import"./DialogContent-9UYA0Bsa.js";import"./DialogTitle-YEG0T-xg.js";import"./DataBlock-Ct5cnJpf.js";import"./DropZone-BxATwqbA.js";import"./Popover-DVtCLpg0.js";import"./DateTimePicker-Pz5KtxXA.js";import"./Drawer-3l3HR4LY.js";import"./FormControlLabel-BFGaT87m.js";import"./InputBase-WSFtUnhf.js";import"./LinearProgress-DyiYGhJW.js";import"./MarkdownContent-ChtCcuvJ.js";import"./MarkdownField-Me9YvTZZ.js";import"./MenuList-DHyEjjdP.js";import"./Popper-Dk5ulGK9.js";import"./Portal-B-8fCmvG.js";import"./ProgressStatistic-DF3JLDUq.js";import"./Radio-C3TvSVz5.js";import"./RadioGroup-DePawxmg.js";import"./Skeleton-Buok_Hx_.js";import"./SkeletonGroup-DBQII5J3.js";import"./Slider-tLN9m0Pn.js";import"./SnackbarProvider-BRppCXgp.js";import"./SnackbarMessage-BgQ1vVXi.js";import"./Stepper-DT_GsXjI.js";import"./Switch-BLuDnPlf.js";import"./Tab-vI7KMYMD.js";import"./TimePicker-B9PfEdOX.js";const zo={title:"Components/Formula Editor/Formula Editor",component:n,tags:["autodocs"]},i={args:{rows:[],onChange:console.log,isEditable:!0},render:r=>o.jsx(m,{children:o.jsx(n,{...r})})},e={args:{rows:[],isEditable:!0,onSearch:()=>Promise.resolve([{id:"Option 1",name:"Option 1",description:"Demo description"},{id:"Option 2",name:"Option 2",description:"Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 ",photo:"/favicon.svg"},{id:"Option 3",name:"Option 3"},{id:"Длина",name:"Длина",unit:"метр",systemUnit:"m",coeff:1},{id:"Дата производства",name:"Дата производства",unit:"день",systemUnit:"s",coeff:1440*60}])},render:r=>o.jsx(m,{children:o.jsx(n,{...r})})},t={args:{isEditable:!0,onSearch:r=>r.key==="field"?Promise.resolve([{id:"__PARENT__",name:"Родительская папка"},{id:"Type",name:"Тип"},{id:"Tag",name:"Тег"},{id:"Creator",name:"Создатель"}]):r.state.field?.id==="__PARENT__"?Promise.resolve([{id:"folder-1",name:"Папка 1"},{id:"folder-2",name:"Папка 2"},{id:"folder-3",name:"Папка 3"}]):r.state.field?.id==="Type"?Promise.resolve([{id:"type-1",name:"Тип 1"},{id:"type-2",name:"Тип 2"}]):r.state.field?.id==="Tag"?Promise.resolve([{id:"tag-1",name:"Тег 1"},{id:"tag-2",name:"Тег 2"}]):r.state.field?.id==="Creator"?Promise.resolve([{id:"user-1",name:"Пользователь 1"},{id:"user-2",name:"Пользователь 2"}]):Promise.resolve([])},render:r=>{const[a,d]=l.useState([{index:1,type:"text",field:{id:"__PARENT__",name:"Родительская папка"},operator:s.Equal,value:{id:"folder-1",name:"Папка 1"},disabled:!0},{index:2,type:"text",field:{id:"Type",name:"Тип"},operator:s.Equal}]);return o.jsx(m,{children:o.jsx(n,{...r,rows:a,onChange:p=>{console.log("Changed rows:",p),d(p)}})})}};i.parameters={...i.parameters,docs:{...i.parameters?.docs,source:{originalSource:`{
+  args: {
+    rows: [],
+    onChange: console.log,
+    isEditable: true
+  },
+  render: props => <Preview>
+      <FormulaEditor {...props} />
+    </Preview>
+}`,...i.parameters?.docs?.source}}};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
+  args: {
+    rows: [],
+    isEditable: true,
+    onSearch: () => Promise.resolve([{
+      id: "Option 1",
+      name: "Option 1",
+      description: "Demo description"
+    }, {
+      id: "Option 2",
+      name: "Option 2",
+      description: "Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 Demo description 2 ",
+      photo: "/favicon.svg"
+    }, {
+      id: "Option 3",
+      name: "Option 3"
+    }, {
+      id: "Длина",
+      name: "Длина",
+      unit: "метр",
+      systemUnit: "m",
+      coeff: 1
+    }, {
+      id: "Дата производства",
+      name: "Дата производства",
+      unit: "день",
+      systemUnit: "s",
+      coeff: 24 * 60 * 60
+    }])
+  },
+  render: props => <Preview>
+      <FormulaEditor {...props} />
+    </Preview>
+}`,...e.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  args: {
+    isEditable: true,
+    onSearch: request => {
+      if (request.key === "field") {
+        return Promise.resolve([{
+          id: "__PARENT__",
+          name: "Родительская папка"
+        }, {
+          id: "Type",
+          name: "Тип"
+        }, {
+          id: "Tag",
+          name: "Тег"
+        }, {
+          id: "Creator",
+          name: "Создатель"
+        }]);
+      }
+      if (request.state.field?.id === "__PARENT__") {
+        return Promise.resolve([{
+          id: "folder-1",
+          name: "Папка 1"
+        }, {
+          id: "folder-2",
+          name: "Папка 2"
+        }, {
+          id: "folder-3",
+          name: "Папка 3"
+        }]);
+      }
+      if (request.state.field?.id === "Type") {
+        return Promise.resolve([{
+          id: "type-1",
+          name: "Тип 1"
+        }, {
+          id: "type-2",
+          name: "Тип 2"
+        }]);
+      }
+      if (request.state.field?.id === "Tag") {
+        return Promise.resolve([{
+          id: "tag-1",
+          name: "Тег 1"
+        }, {
+          id: "tag-2",
+          name: "Тег 2"
+        }]);
+      }
+      if (request.state.field?.id === "Creator") {
+        return Promise.resolve([{
+          id: "user-1",
+          name: "Пользователь 1"
+        }, {
+          id: "user-2",
+          name: "Пользователь 2"
+        }]);
+      }
+      return Promise.resolve([]);
+    }
+  },
+  render: props => {
+    const [rows, setRows] = useState<FormulaRow[]>([{
+      index: 1,
+      type: "text",
+      field: {
+        id: "__PARENT__",
+        name: "Родительская папка"
+      },
+      operator: FormulaOperator.Equal,
+      value: {
+        id: "folder-1",
+        name: "Папка 1"
+      },
+      disabled: true
+    }, {
+      index: 2,
+      type: "text",
+      field: {
+        id: "Type",
+        name: "Тип"
+      },
+      operator: FormulaOperator.Equal
+    }]);
+    return <Preview>
+        <FormulaEditor {...props} rows={rows} onChange={newRows => {
+        console.log("Changed rows:", newRows);
+        setRows(newRows);
+      }} />
+      </Preview>;
+  }
+}`,...t.parameters?.docs?.source}}};const Go=["Base","WithUnit","WithDisabledRow"];export{i as Base,t as WithDisabledRow,e as WithUnit,Go as __namedExportsOrder,zo as default};
